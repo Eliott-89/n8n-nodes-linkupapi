@@ -49,5 +49,8 @@
   },
   "peerDependencies": {
     "n8n-workflow": ">=1.0.0"
+  },
+  "dependencies": {
+    "n8n-nodes-linkup-clean": "^1.1.3"
   }
 }

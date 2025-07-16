@@ -68,6 +68,30 @@ export class Linkup implements INodeType {
                         description: 'Extraire les infos d\'un profil LinkedIn public',
                         action: 'Extract LinkedIn profile info',
                     },
+                    {
+                        name: 'Search Profile',
+                        value: 'searchProfile',
+                        description: 'Rechercher des profils LinkedIn',
+                        action: 'Search LinkedIn profiles',
+                    },
+                    {
+                        name: 'Search Companies',
+                        value: 'searchCompanies',
+                        description: 'Rechercher des entreprises LinkedIn',
+                        action: 'Search LinkedIn companies',
+                    },
+                    {
+                        name: 'Get Company Information',
+                        value: 'getCompanyInfo',
+                        description: 'Obtenir les infos d\'une entreprise LinkedIn',
+                        action: 'Get LinkedIn company info',
+                    },
+                    {
+                        name: 'Send Connection Request',
+                        value: 'sendConnectionRequest',
+                        description: 'Envoyer une invitation LinkedIn',
+                        action: 'Send LinkedIn connection request',
+                    },
                 ],
                 default: 'login',
             },
@@ -280,6 +304,417 @@ export class Linkup implements INodeType {
                 default: 'FR',
                 description: 'Code pays pour la sélection du proxy',
             },
+            // Champs pour Search Profile
+            {
+                displayName: 'Company URL(s)',
+                name: 'searchProfileCompanyUrl',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                placeholder: 'google;microsoft;apple',
+                description: 'URL(s) ou identifiant(s) d\'entreprise LinkedIn (séparés par ;)',
+            },
+            {
+                displayName: 'Location(s)',
+                name: 'searchProfileLocation',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                placeholder: 'Paris;London;New York',
+                description: 'Lieu(x) géographique(s) (séparés par ;)',
+            },
+            {
+                displayName: 'School URL(s)',
+                name: 'searchProfileSchoolUrl',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                placeholder: 'harvard;stanford;mit',
+                description: 'URL(s) ou identifiant(s) d\'école LinkedIn (séparés par ;)',
+            },
+            {
+                displayName: 'Network',
+                name: 'searchProfileNetwork',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                placeholder: 'F;S;O',
+                description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau, séparés par ;)',
+            },
+            {
+                displayName: 'Keyword',
+                name: 'searchProfileKeyword',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                description: 'Mot-clé de recherche',
+            },
+            {
+                displayName: 'Nombre de résultats',
+                name: 'searchProfileTotalResults',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: 10,
+                description: 'Nombre de profils à récupérer',
+            },
+            {
+                displayName: 'Page de début',
+                name: 'searchProfileStartPage',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: 1,
+                description: 'Première page à récupérer (pagination)',
+            },
+            {
+                displayName: 'Page de fin',
+                name: 'searchProfileEndPage',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: 1,
+                description: 'Dernière page à récupérer (pagination)',
+            },
+            {
+                displayName: 'Pays',
+                name: 'searchProfileCountry',
+                type: 'options',
+                options: [
+                    { name: 'France', value: 'FR' },
+                    { name: 'États-Unis', value: 'US' },
+                    { name: 'Royaume-Uni', value: 'UK' },
+                ],
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: 'FR',
+                description: 'Code pays pour la sélection du proxy',
+            },
+            {
+                displayName: 'Prénom',
+                name: 'searchProfileFirstName',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                description: 'Filtrer par prénom',
+            },
+            {
+                displayName: 'Nom',
+                name: 'searchProfileLastName',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                description: 'Filtrer par nom',
+            },
+            {
+                displayName: 'Titre',
+                name: 'searchProfileTitle',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: '',
+                description: 'Filtrer par titre',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'searchProfileLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                        useCustomCredentials: [true],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Afficher l\'état d\'invitation',
+                name: 'searchProfileFetchInvitationState',
+                type: 'boolean',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile'],
+                    },
+                },
+                default: true,
+                description: 'Inclure l\'état d\'invitation/connexion pour chaque profil',
+            },
+            // Champs pour Search Companies
+            {
+                displayName: 'Location(s)',
+                name: 'searchCompaniesLocation',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: '',
+                placeholder: 'Paris;France;Europe',
+                description: 'Lieu(x) géographique(s) (séparés par ;)',
+            },
+            {
+                displayName: 'Secteur(s)',
+                name: 'searchCompaniesSector',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: '',
+                placeholder: 'Software;Finance;Marketing',
+                description: 'Secteur(s) d\'activité (séparés par ;)',
+            },
+            {
+                displayName: 'Mot-clé',
+                name: 'searchCompaniesKeyword',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: '',
+                description: 'Mot-clé de recherche',
+            },
+            {
+                displayName: 'Taille de l\'entreprise',
+                name: 'searchCompaniesSize',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: '',
+                placeholder: '1-10;11-50;51-200',
+                description: 'Plage de taille d\'entreprise (séparées par ;)',
+            },
+            {
+                displayName: 'Nombre de résultats',
+                name: 'searchCompaniesTotalResults',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: 10,
+                description: 'Nombre d\'entreprises à récupérer',
+            },
+            {
+                displayName: 'Page de début',
+                name: 'searchCompaniesStartPage',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: 1,
+                description: 'Première page à récupérer (pagination)',
+            },
+            {
+                displayName: 'Page de fin',
+                name: 'searchCompaniesEndPage',
+                type: 'number',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: 1,
+                description: 'Dernière page à récupérer (pagination)',
+            },
+            {
+                displayName: 'Pays',
+                name: 'searchCompaniesCountry',
+                type: 'options',
+                options: [
+                    { name: 'France', value: 'FR' },
+                    { name: 'États-Unis', value: 'US' },
+                    { name: 'Royaume-Uni', value: 'UK' },
+                ],
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                    },
+                },
+                default: 'FR',
+                description: 'Code pays pour la sélection du proxy',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'searchCompaniesLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompanies'],
+                        useCustomCredentials: [true],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            // Champs pour Get Company Information
+            {
+                displayName: 'URL de l\'entreprise',
+                name: 'getCompanyInfoUrl',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['getCompanyInfo'],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'https://www.linkedin.com/company/stripe/',
+                description: 'URL de l\'entreprise LinkedIn',
+            },
+            {
+                displayName: 'Pays',
+                name: 'getCompanyInfoCountry',
+                type: 'options',
+                options: [
+                    { name: 'France', value: 'FR' },
+                    { name: 'États-Unis', value: 'US' },
+                    { name: 'Royaume-Uni', value: 'UK' },
+                ],
+                displayOptions: {
+                    show: {
+                        operation: ['getCompanyInfo'],
+                    },
+                },
+                default: 'FR',
+                description: 'Code pays pour la sélection du proxy',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'getCompanyInfoLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                displayOptions: {
+                    show: {
+                        operation: ['getCompanyInfo'],
+                        useCustomCredentials: [true],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            // Champs pour Send Connection Request
+            {
+                displayName: 'URL du profil LinkedIn',
+                name: 'sendConnectionLinkedinUrl',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['sendConnectionRequest'],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'https://www.linkedin.com/in/username',
+                description: 'URL du profil LinkedIn à connecter',
+            },
+            {
+                displayName: 'Message',
+                name: 'sendConnectionMessage',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        operation: ['sendConnectionRequest'],
+                    },
+                },
+                default: '',
+                description: 'Message personnalisé à envoyer avec l\'invitation',
+            },
+            {
+                displayName: 'Pays',
+                name: 'sendConnectionCountry',
+                type: 'options',
+                options: [
+                    { name: 'France', value: 'FR' },
+                    { name: 'États-Unis', value: 'US' },
+                    { name: 'Royaume-Uni', value: 'UK' },
+                ],
+                displayOptions: {
+                    show: {
+                        operation: ['sendConnectionRequest'],
+                    },
+                },
+                default: 'FR',
+                description: 'Code pays pour la sélection du proxy',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'sendConnectionLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                displayOptions: {
+                    show: {
+                        operation: ['sendConnectionRequest'],
+                        useCustomCredentials: [true],
+                    },
+                },
+                default: '',
+                required: true,
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
             // Additional options
             {
                 displayName: 'Options avancées',
@@ -478,6 +913,108 @@ export class Linkup implements INodeType {
                     };
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/info',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    response = await this.helpers.httpRequest(requestOptions);
+                } else if (operation === 'searchProfile') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    let country = creds.country;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('searchProfileLoginToken', i) as string;
+                        country = this.getNodeParameter('searchProfileCountry', i) as string;
+                    }
+                    const body: any = {
+                        company_url: this.getNodeParameter('searchProfileCompanyUrl', i) as string,
+                        location: this.getNodeParameter('searchProfileLocation', i) as string,
+                        school_url: this.getNodeParameter('searchProfileSchoolUrl', i) as string,
+                        network: this.getNodeParameter('searchProfileNetwork', i) as string,
+                        keyword: this.getNodeParameter('searchProfileKeyword', i) as string,
+                        total_results: this.getNodeParameter('searchProfileTotalResults', i) as number,
+                        start_page: this.getNodeParameter('searchProfileStartPage', i) as number,
+                        end_page: this.getNodeParameter('searchProfileEndPage', i) as number,
+                        country,
+                        first_name: this.getNodeParameter('searchProfileFirstName', i) as string,
+                        last_name: this.getNodeParameter('searchProfileLastName', i) as string,
+                        title: this.getNodeParameter('searchProfileTitle', i) as string,
+                        login_token: loginToken,
+                        fetch_invitation_state: this.getNodeParameter('searchProfileFetchInvitationState', i) as boolean,
+                    };
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/profile/search',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    response = await this.helpers.httpRequest(requestOptions);
+                } else if (operation === 'searchCompanies') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    let country = creds.country;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('searchCompaniesLoginToken', i) as string;
+                        country = this.getNodeParameter('searchCompaniesCountry', i) as string;
+                    }
+                    const body: any = {
+                        location: this.getNodeParameter('searchCompaniesLocation', i) as string,
+                        sector: this.getNodeParameter('searchCompaniesSector', i) as string,
+                        keyword: this.getNodeParameter('searchCompaniesKeyword', i) as string,
+                        company_size: this.getNodeParameter('searchCompaniesSize', i) as string,
+                        total_results: this.getNodeParameter('searchCompaniesTotalResults', i) as number,
+                        start_page: this.getNodeParameter('searchCompaniesStartPage', i) as number,
+                        end_page: this.getNodeParameter('searchCompaniesEndPage', i) as number,
+                        country,
+                        login_token: loginToken,
+                    };
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/companies/search',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    response = await this.helpers.httpRequest(requestOptions);
+                } else if (operation === 'getCompanyInfo') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    let country = creds.country;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('getCompanyInfoLoginToken', i) as string;
+                        country = this.getNodeParameter('getCompanyInfoCountry', i) as string;
+                    }
+                    const body: any = {
+                        company_url: this.getNodeParameter('getCompanyInfoUrl', i) as string,
+                        country,
+                        login_token: loginToken,
+                    };
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/companies/info',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    response = await this.helpers.httpRequest(requestOptions);
+                } else if (operation === 'sendConnectionRequest') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    let country = creds.country;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('sendConnectionLoginToken', i) as string;
+                        country = this.getNodeParameter('sendConnectionCountry', i) as string;
+                    }
+                    const body: any = {
+                        linkedin_url: this.getNodeParameter('sendConnectionLinkedinUrl', i) as string,
+                        message: this.getNodeParameter('sendConnectionMessage', i) as string,
+                        country,
+                        login_token: loginToken,
+                    };
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/connect',
                         'POST',
                         creds.apiKey,
                         body,
