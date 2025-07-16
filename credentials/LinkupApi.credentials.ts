@@ -33,6 +33,7 @@ export class LinkupApi implements ICredentialType {
             type: 'string',
             typeOptions: {
                 password: true,
+                hiddenName: 'linkedinPassword',
             },
             default: '',
             required: true,

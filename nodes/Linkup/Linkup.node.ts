@@ -61,7 +61,7 @@ export class Linkup implements INodeType {
                     },
                 },
                 default: false,
-                description: 'Whether to use custom credentials instead of stored ones',
+                description: 'Use custom credentials instead of stored ones (workaround for password issues)',
             },
             {
                 displayName: 'Email',
@@ -204,6 +204,14 @@ export class Linkup implements INodeType {
                         email = credentials.linkedinEmail as string;
                         password = credentials.linkedinPassword as string;
                         country = credentials.country as string;
+                        
+                        // Gérer le problème des valeurs BLANK de n8n
+                        if (password && password.includes('__n8n_BLANK_VALUE_')) {
+                            throw new NodeOperationError(
+                                this.getNode(),
+                                'Password not saved correctly. Please use "Use Custom Credentials" option and enter your password directly in the node.'
+                            );
+                        }
                     }
 
                     // Validation
