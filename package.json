@@ -1,0 +1,58 @@
+{
+  "name": "n8n-nodes-linkup",
+  "version": "1.0.0",
+  "description": "n8n node for LINKUP API - LinkedIn automation and data extraction",
+  "keywords": [
+    "n8n",
+    "linkup",
+    "n8n-community-node-package",
+    "linkedin",
+    "automation",
+    "scraping",
+    "data-extraction"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/linkup-api/n8n-nodes-linkup",
+  "author": {
+    "name": "LINKUP API",
+    "email": "support@linkupapi.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linkup-api/n8n-nodes-linkup.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -s"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/LinkupApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Linkup/Linkup.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "eslint-plugin-n8n-nodes-base": "^1.11.0",
+    "gulp": "^4.0.2",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=0.174.0"
+  }
+}
