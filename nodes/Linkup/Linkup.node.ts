@@ -308,7 +308,7 @@ export class Linkup implements INodeType {
     };
 
     // Fonction pour détecter et gérer les valeurs BLANK
-    private sanitizeCredentialValue(value: string): string | null {
+    static sanitizeCredentialValue(value: string): string | null {
         if (!value || value.includes('__n8n_BLANK_VALUE_')) {
             return null;
         }
@@ -348,15 +348,15 @@ export class Linkup implements INodeType {
             // Utiliser les credentials sauvegardées
             const credentials = await context.getCredentials('linkupApi');
             
-            const apiKey = this.sanitizeCredentialValue(credentials.apiKey as string);
+            const apiKey = Linkup.sanitizeCredentialValue(credentials.apiKey as string);
             const email = operation === 'login' 
-                ? this.sanitizeCredentialValue(credentials.linkedinEmail as string)
+                ? Linkup.sanitizeCredentialValue(credentials.linkedinEmail as string)
                 : context.getNodeParameter('verifyEmail', itemIndex) as string;
             const password = operation === 'login' 
-                ? this.sanitizeCredentialValue(credentials.linkedinPassword as string)
+                ? Linkup.sanitizeCredentialValue(credentials.linkedinPassword as string)
                 : '';
-            const country = this.sanitizeCredentialValue(credentials.country as string);
-            const loginToken = this.sanitizeCredentialValue(credentials.loginToken as string);
+            const country = Linkup.sanitizeCredentialValue(credentials.country as string);
+            const loginToken = Linkup.sanitizeCredentialValue(credentials.loginToken as string);
 
             // Vérifier si les credentials sont corrompues
             if (!apiKey || (operation === 'login' && (!email || !password))) {
