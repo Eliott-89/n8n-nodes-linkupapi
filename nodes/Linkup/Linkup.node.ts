@@ -5,6 +5,7 @@ import {
     INodeTypeDescription,
     IHttpRequestOptions,
     NodeOperationError,
+    NodeConnectionType,
 } from 'n8n-workflow';
 
 export class Linkup implements INodeType {
@@ -19,8 +20,8 @@ export class Linkup implements INodeType {
             name: 'LINKUP',
             color: '#0077b5',
         },
-        inputs: ['main'],
-        outputs: ['main'],
+        inputs: [NodeConnectionType.Main],
+        outputs: [NodeConnectionType.Main],
         credentials: [
             {
                 name: 'linkupApi',
@@ -280,11 +281,11 @@ export class Linkup implements INodeType {
 
                 returnData.push(executionData);
 
-            } catch (error) {
+            } catch (error: any) {
                 if (this.continueOnFail()) {
                     returnData.push({
                         json: {
-                            error: error.message,
+                            error: error.message || 'Unknown error',
                             operation,
                             timestamp: new Date().toISOString(),
                         },
@@ -307,10 +308,10 @@ export class Linkup implements INodeType {
                 } else if (error.response?.status === 400) {
                     throw new NodeOperationError(
                         this.getNode(),
-                        `Bad request: ${error.response?.data?.message || error.message}`
+                        `Bad request: ${error.response?.data?.message || error.message || 'Unknown error'}`
                     );
                 } else {
-                    throw new NodeOperationError(this.getNode(), error.message);
+                    throw new NodeOperationError(this.getNode(), error.message || 'Unknown error');
                 }
             }
         }
