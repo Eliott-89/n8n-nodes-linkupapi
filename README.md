@@ -1,7 +1,7 @@
-# n8n-nodes-linkup
+# n8n-nodes-linkup-api
 
-[![NPM Version](https://img.shields.io/npm/v/n8n-nodes-linkup)](https://www.npmjs.com/package/n8n-nodes-linkup)
-[![License](https://img.shields.io/npm/l/n8n-nodes-linkup)](https://github.com/linkup-api/n8n-nodes-linkup/blob/main/LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/n8n-nodes-linkup-api)](https://www.npmjs.com/package/n8n-nodes-linkup-api)
+[![License](https://img.shields.io/npm/l/n8n-nodes-linkup-api)](https://github.com/Eliott-89/n8n-nodes-linkup/blob/main/LICENSE)
 
 This is an n8n community node that integrates with the LINKUP API for LinkedIn automation and data extraction.
 
@@ -11,7 +11,7 @@ This is an n8n community node that integrates with the LINKUP API for LinkedIn a
 
 1. Go to **Settings > Community Nodes** in your n8n instance
 2. Select **Install**
-3. Enter `n8n-nodes-linkup`
+3. Enter `n8n-nodes-linkup-api`
 4. Click **Install**
 
 ### Manual Installation
@@ -19,7 +19,7 @@ This is an n8n community node that integrates with the LINKUP API for LinkedIn a
 To install this node locally:
 
 ```bash
-npm install n8n-nodes-linkup
+npm install n8n-nodes-linkup-api
 ```
 
 ## Prerequisites

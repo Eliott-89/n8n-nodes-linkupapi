@@ -1,10 +1,11 @@
 {
-  "name": "n8n-nodes-linkup",
-  "version": "1.0.1",
+  "name": "n8n-nodes-linkup-api",
+  "version": "1.0.0",
   "description": "n8n node for LINKUP API - LinkedIn automation and data extraction",
   "keywords": [
     "n8n",
     "linkup",
+    "linkup-api",
     "n8n-community-node-package",
     "linkedin",
     "automation",
