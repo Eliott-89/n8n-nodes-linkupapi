@@ -304,106 +304,22 @@ export class Linkup implements INodeType {
                 default: 'FR',
                 description: 'Code pays pour la sélection du proxy',
             },
-            // Champs pour Search Profile
+            // Champs pour Search Profile (nouvelle structure)
             {
-                displayName: 'Company URL(s)',
-                name: 'searchProfileCompanyUrl',
+                displayName: 'Login Token',
+                name: 'searchProfileLoginToken',
                 type: 'string',
+                typeOptions: { password: true },
                 displayOptions: {
                     show: {
                         operation: ['searchProfile'],
+                        useCustomCredentials: [true],
                     },
                 },
                 default: '',
-                placeholder: 'google;microsoft;apple',
-                description: 'URL(s) ou identifiant(s) d\'entreprise LinkedIn (séparés par ;)',
-            },
-            {
-                displayName: 'Location(s)',
-                name: 'searchProfileLocation',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                placeholder: 'Paris;London;New York',
-                description: 'Lieu(x) géographique(s) (séparés par ;)',
-            },
-            {
-                displayName: 'School URL(s)',
-                name: 'searchProfileSchoolUrl',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                placeholder: 'harvard;stanford;mit',
-                description: 'URL(s) ou identifiant(s) d\'école LinkedIn (séparés par ;)',
-            },
-            {
-                displayName: 'Network',
-                name: 'searchProfileNetwork',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                placeholder: 'F;S;O',
-                description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau, séparés par ;)',
-            },
-            {
-                displayName: 'Keyword',
-                name: 'searchProfileKeyword',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'Mot-clé de recherche',
-            },
-            {
-                displayName: 'Nombre de résultats',
-                name: 'searchProfileTotalResults',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: 10,
-                description: 'Nombre de profils à récupérer',
-            },
-            {
-                displayName: 'Page de début',
-                name: 'searchProfileStartPage',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: 1,
-                description: 'Première page à récupérer (pagination)',
-            },
-            {
-                displayName: 'Page de fin',
-                name: 'searchProfileEndPage',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: 1,
-                description: 'Dernière page à récupérer (pagination)',
+                required: true,
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
             },
             {
                 displayName: 'Pays',
@@ -423,49 +339,116 @@ export class Linkup implements INodeType {
                 description: 'Code pays pour la sélection du proxy',
             },
             {
-                displayName: 'Prénom',
-                name: 'searchProfileFirstName',
-                type: 'string',
+                displayName: 'Options avancées',
+                name: 'searchProfileOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
                 displayOptions: {
                     show: {
                         operation: ['searchProfile'],
                     },
                 },
-                default: '',
-                description: 'Filtrer par prénom',
-            },
-            {
-                displayName: 'Nom',
-                name: 'searchProfileLastName',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
+                default: {},
+                options: [
+                    {
+                        displayName: 'Company URL(s)',
+                        name: 'company_url',
+                        type: 'string',
+                        placeholder: 'google;microsoft;apple',
+                        description: 'URL(s) ou identifiant(s) d\'entreprise LinkedIn (séparés par ;)',
+                        default: '',
                     },
-                },
-                default: '',
-                description: 'Filtrer par nom',
-            },
-            {
-                displayName: 'Titre',
-                name: 'searchProfileTitle',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
+                    {
+                        displayName: 'Location(s)',
+                        name: 'location',
+                        type: 'string',
+                        placeholder: 'Paris;London;New York',
+                        description: 'Lieu(x) géographique(s) (séparés par ;)',
+                        default: '',
                     },
-                },
-                default: '',
-                description: 'Filtrer par titre',
+                    {
+                        displayName: 'School URL(s)',
+                        name: 'school_url',
+                        type: 'string',
+                        placeholder: 'harvard;stanford;mit',
+                        description: 'URL(s) ou identifiant(s) d\'école LinkedIn (séparés par ;)',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Network',
+                        name: 'network',
+                        type: 'string',
+                        placeholder: 'F;S;O',
+                        description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau, séparés par ;)',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Keyword',
+                        name: 'keyword',
+                        type: 'string',
+                        description: 'Mot-clé de recherche',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre de profils à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Prénom',
+                        name: 'first_name',
+                        type: 'string',
+                        description: 'Filtrer par prénom',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Nom',
+                        name: 'last_name',
+                        type: 'string',
+                        description: 'Filtrer par nom',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Titre',
+                        name: 'title',
+                        type: 'string',
+                        description: 'Filtrer par titre',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Afficher l\'état d\'invitation',
+                        name: 'fetch_invitation_state',
+                        type: 'boolean',
+                        default: true,
+                        description: 'Inclure l\'état d\'invitation/connexion pour chaque profil',
+                    },
+                ],
             },
+            // Champs pour Search Companies (nouvelle structure)
             {
                 displayName: 'Login Token',
-                name: 'searchProfileLoginToken',
+                name: 'searchCompaniesLoginToken',
                 type: 'string',
                 typeOptions: { password: true },
                 displayOptions: {
                     show: {
-                        operation: ['searchProfile'],
+                        operation: ['searchCompanies'],
                         useCustomCredentials: [true],
                     },
                 },
@@ -473,106 +456,6 @@ export class Linkup implements INodeType {
                 required: true,
                 placeholder: 'Token d\'authentification LinkedIn',
                 description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
-                displayName: 'Afficher l\'état d\'invitation',
-                name: 'searchProfileFetchInvitationState',
-                type: 'boolean',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: true,
-                description: 'Inclure l\'état d\'invitation/connexion pour chaque profil',
-            },
-            // Champs pour Search Companies
-            {
-                displayName: 'Location(s)',
-                name: 'searchCompaniesLocation',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                placeholder: 'Paris;France;Europe',
-                description: 'Lieu(x) géographique(s) (séparés par ;)',
-            },
-            {
-                displayName: 'Secteur(s)',
-                name: 'searchCompaniesSector',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                placeholder: 'Software;Finance;Marketing',
-                description: 'Secteur(s) d\'activité (séparés par ;)',
-            },
-            {
-                displayName: 'Mot-clé',
-                name: 'searchCompaniesKeyword',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                description: 'Mot-clé de recherche',
-            },
-            {
-                displayName: 'Taille de l\'entreprise',
-                name: 'searchCompaniesSize',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                placeholder: '1-10;11-50;51-200',
-                description: 'Plage de taille d\'entreprise (séparées par ;)',
-            },
-            {
-                displayName: 'Nombre de résultats',
-                name: 'searchCompaniesTotalResults',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: 10,
-                description: 'Nombre d\'entreprises à récupérer',
-            },
-            {
-                displayName: 'Page de début',
-                name: 'searchCompaniesStartPage',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: 1,
-                description: 'Première page à récupérer (pagination)',
-            },
-            {
-                displayName: 'Page de fin',
-                name: 'searchCompaniesEndPage',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: 1,
-                description: 'Dernière page à récupérer (pagination)',
             },
             {
                 displayName: 'Pays',
@@ -592,20 +475,70 @@ export class Linkup implements INodeType {
                 description: 'Code pays pour la sélection du proxy',
             },
             {
-                displayName: 'Login Token',
-                name: 'searchCompaniesLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
+                displayName: 'Options avancées',
+                name: 'searchCompaniesOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
                 displayOptions: {
                     show: {
                         operation: ['searchCompanies'],
-                        useCustomCredentials: [true],
                     },
                 },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+                default: {},
+                options: [
+                    {
+                        displayName: 'Location(s)',
+                        name: 'location',
+                        type: 'string',
+                        placeholder: 'Paris;France;Europe',
+                        description: 'Lieu(x) géographique(s) (séparés par ;)',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Secteur(s)',
+                        name: 'sector',
+                        type: 'string',
+                        placeholder: 'Software;Finance;Marketing',
+                        description: 'Secteur(s) d\'activité (séparés par ;)',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Mot-clé',
+                        name: 'keyword',
+                        type: 'string',
+                        description: 'Mot-clé de recherche',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Taille de l\'entreprise',
+                        name: 'company_size',
+                        type: 'string',
+                        placeholder: '1-10;11-50;51-200',
+                        description: 'Plage de taille d\'entreprise (séparées par ;)',
+                        default: '',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre d\'entreprises à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer (pagination)',
+                    },
+                ],
             },
             // Champs pour Get Company Information
             {
@@ -927,22 +860,34 @@ export class Linkup implements INodeType {
                         loginToken = this.getNodeParameter('searchProfileLoginToken', i) as string;
                         country = this.getNodeParameter('searchProfileCountry', i) as string;
                     }
+                    // Champs obligatoires
                     const body: any = {
-                        company_url: this.getNodeParameter('searchProfileCompanyUrl', i) as string,
-                        location: this.getNodeParameter('searchProfileLocation', i) as string,
-                        school_url: this.getNodeParameter('searchProfileSchoolUrl', i) as string,
-                        network: this.getNodeParameter('searchProfileNetwork', i) as string,
-                        keyword: this.getNodeParameter('searchProfileKeyword', i) as string,
-                        total_results: this.getNodeParameter('searchProfileTotalResults', i) as number,
-                        start_page: this.getNodeParameter('searchProfileStartPage', i) as number,
-                        end_page: this.getNodeParameter('searchProfileEndPage', i) as number,
-                        country,
-                        first_name: this.getNodeParameter('searchProfileFirstName', i) as string,
-                        last_name: this.getNodeParameter('searchProfileLastName', i) as string,
-                        title: this.getNodeParameter('searchProfileTitle', i) as string,
                         login_token: loginToken,
-                        fetch_invitation_state: this.getNodeParameter('searchProfileFetchInvitationState', i) as boolean,
+                        country,
                     };
+                    // Champs optionnels (collection)
+                    const options = this.getNodeParameter('searchProfileOptions', i, {}) as Record<string, any>;
+                    // Gestion spéciale pagination/total_results
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    if (!hasPagination && options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
+                        body.total_results = options.total_results;
+                    }
+                    // Autres champs optionnels
+                    const skipFields = ['start_page', 'end_page', 'total_results'];
+                    for (const [key, value] of Object.entries(options)) {
+                        if (skipFields.includes(key)) continue;
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/search',
                         'POST',
@@ -950,7 +895,12 @@ export class Linkup implements INodeType {
                         body,
                         timeout
                     );
-                    response = await this.helpers.httpRequest(requestOptions);
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                    } catch (error: any) {
+                        // Affiche le message d'erreur complet de l'API
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
                 } else if (operation === 'searchCompanies') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
