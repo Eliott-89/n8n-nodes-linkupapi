@@ -273,7 +273,7 @@ export class Linkup implements INodeType {
                         _meta: {
                             operation,
                             timestamp: new Date().toISOString(),
-                            nodeVersion: this.description.version,
+                            nodeVersion: '1.0.0',
                         },
                     },
                     pairedItem: { item: i },
