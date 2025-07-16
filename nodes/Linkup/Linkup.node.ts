@@ -88,32 +88,6 @@ export class Linkup implements INodeType {
                 placeholder: 'Your LinkedIn password',
                 description: 'Your LinkedIn password',
             },
-            {
-                displayName: 'Country',
-                name: 'country',
-                type: 'options',
-                options: [
-                    {
-                        name: 'France',
-                        value: 'FR',
-                    },
-                    {
-                        name: 'United States',
-                        value: 'US',
-                    },
-                    {
-                        name: 'United Kingdom',
-                        value: 'UK',
-                    },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['login'],
-                    },
-                },
-                default: 'FR',
-                description: 'Country code for proxy selection',
-            },
             // Verify code operation fields
             {
                 displayName: 'Email',
@@ -142,6 +116,32 @@ export class Linkup implements INodeType {
                 required: true,
                 placeholder: '123456',
                 description: 'Security code received by email',
+            },
+            {
+                displayName: 'Country',
+                name: 'country',
+                type: 'options',
+                options: [
+                    {
+                        name: 'France',
+                        value: 'FR',
+                    },
+                    {
+                        name: 'United States',
+                        value: 'US',
+                    },
+                    {
+                        name: 'United Kingdom',
+                        value: 'UK',
+                    },
+                ],
+                displayOptions: {
+                    show: {
+                        operation: ['login', 'verifyCode'],
+                    },
+                },
+                default: 'FR',
+                description: 'Country code for proxy selection',
             },
             // Additional options
             {
@@ -216,6 +216,7 @@ export class Linkup implements INodeType {
                     const apiKey = this.getNodeParameter('apiKey', i) as string;
                     const email = this.getNodeParameter('verifyEmail', i) as string;
                     const verificationCode = this.getNodeParameter('verificationCode', i) as string;
+                    const country = this.getNodeParameter('country', i) as string;
 
                     // Validation
                     if (!apiKey || !email || !verificationCode) {
@@ -227,14 +228,15 @@ export class Linkup implements INodeType {
 
                     const requestOptions: IHttpRequestOptions = {
                         method: 'POST',
-                        url: 'https://api.linkupapi.com/v1/auth/verify-code',
+                        url: 'https://api.linkupapi.com/v1/auth/verify',
                         headers: {
                             'x-api-key': apiKey,
                             'Content-Type': 'application/json',
                         },
                         body: {
                             email,
-                            verification_code: verificationCode,
+                            code: verificationCode,
+                            country,
                         },
                         timeout: additionalFields.timeout || 30000,
                     };
