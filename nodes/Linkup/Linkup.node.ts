@@ -22,6 +22,17 @@ export class Linkup implements INodeType {
         },
         inputs: [NodeConnectionType.Main],
         outputs: [NodeConnectionType.Main],
+        credentials: [
+            {
+                name: 'linkupApi',
+                required: false,
+                displayOptions: {
+                    show: {
+                        useCustomCredentials: [false],
+                    },
+                },
+            },
+        ],
         properties: [
             {
                 displayName: 'Operation',
@@ -44,14 +55,21 @@ export class Linkup implements INodeType {
                 ],
                 default: 'login',
             },
-            // API Key direct dans le node
+            {
+                displayName: 'Use Custom Credentials',
+                name: 'useCustomCredentials',
+                type: 'boolean',
+                default: false,
+                description: 'Use custom credentials instead of saved credentials (fallback option)',
+            },
+            // Credentials personnalisées (fallback)
             {
                 displayName: 'LINKUP API Key',
-                name: 'apiKey',
+                name: 'customApiKey',
                 type: 'string',
                 displayOptions: {
                     show: {
-                        operation: ['login', 'verifyCode'],
+                        useCustomCredentials: [true],
                     },
                 },
                 default: '',
@@ -59,13 +77,13 @@ export class Linkup implements INodeType {
                 placeholder: 'Enter your LINKUP API key',
                 description: 'Your LINKUP API key from linkupapi.com dashboard',
             },
-            // Login operation fields
             {
                 displayName: 'LinkedIn Email',
-                name: 'linkedinEmail',
+                name: 'customLinkedinEmail',
                 type: 'string',
                 displayOptions: {
                     show: {
+                        useCustomCredentials: [true],
                         operation: ['login'],
                     },
                 },
@@ -76,10 +94,11 @@ export class Linkup implements INodeType {
             },
             {
                 displayName: 'LinkedIn Password',
-                name: 'linkedinPassword',
+                name: 'customLinkedinPassword',
                 type: 'string',
                 displayOptions: {
                     show: {
+                        useCustomCredentials: [true],
                         operation: ['login'],
                     },
                 },
@@ -87,6 +106,47 @@ export class Linkup implements INodeType {
                 required: true,
                 placeholder: 'Your LinkedIn password',
                 description: 'Your LinkedIn password',
+            },
+            {
+                displayName: 'Login Token (Optional)',
+                name: 'customLoginToken',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        useCustomCredentials: [true],
+                        operation: ['login'],
+                    },
+                },
+                default: '',
+                placeholder: 'LinkedIn authentication token',
+                description: 'LinkedIn authentication token if you have one',
+            },
+            {
+                displayName: 'Country',
+                name: 'customCountry',
+                type: 'options',
+                options: [
+                    {
+                        name: 'France',
+                        value: 'FR',
+                    },
+                    {
+                        name: 'United States',
+                        value: 'US',
+                    },
+                    {
+                        name: 'United Kingdom',
+                        value: 'UK',
+                    },
+                ],
+                displayOptions: {
+                    show: {
+                        useCustomCredentials: [true],
+                        operation: ['login', 'verifyCode'],
+                    },
+                },
+                default: 'FR',
+                description: 'Country code for proxy selection',
             },
             // Verify code operation fields
             {
@@ -117,32 +177,6 @@ export class Linkup implements INodeType {
                 placeholder: '123456',
                 description: 'Security code received by email',
             },
-            {
-                displayName: 'Country',
-                name: 'country',
-                type: 'options',
-                options: [
-                    {
-                        name: 'France',
-                        value: 'FR',
-                    },
-                    {
-                        name: 'United States',
-                        value: 'US',
-                    },
-                    {
-                        name: 'United Kingdom',
-                        value: 'UK',
-                    },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['login', 'verifyCode'],
-                    },
-                },
-                default: 'FR',
-                description: 'Country code for proxy selection',
-            },
             // Additional options
             {
                 displayName: 'Additional Fields',
@@ -170,6 +204,75 @@ export class Linkup implements INodeType {
         ],
     };
 
+    // Fonction pour détecter et gérer les valeurs BLANK
+    private sanitizeCredentialValue(value: string): string | null {
+        if (!value || value.includes('__n8n_BLANK_VALUE_')) {
+            return null;
+        }
+        return value;
+    }
+
+    // Fonction pour obtenir les credentials avec fallback
+    private async getCredentialsWithFallback(
+        executeFunctions: IExecuteFunctions,
+        itemIndex: number,
+        operation: string
+    ): Promise<{
+        apiKey: string;
+        email: string;
+        password: string;
+        country: string;
+        loginToken?: string;
+    }> {
+        const useCustomCredentials = executeFunctions.getNodeParameter('useCustomCredentials', itemIndex) as boolean;
+
+        if (useCustomCredentials) {
+            // Utiliser les credentials personnalisées
+            const apiKey = executeFunctions.getNodeParameter('customApiKey', itemIndex) as string;
+            const email = operation === 'login' 
+                ? executeFunctions.getNodeParameter('customLinkedinEmail', itemIndex) as string
+                : executeFunctions.getNodeParameter('verifyEmail', itemIndex) as string;
+            const password = operation === 'login' 
+                ? executeFunctions.getNodeParameter('customLinkedinPassword', itemIndex) as string
+                : '';
+            const country = executeFunctions.getNodeParameter('customCountry', itemIndex) as string;
+            const loginToken = operation === 'login' 
+                ? executeFunctions.getNodeParameter('customLoginToken', itemIndex) as string
+                : '';
+
+            return { apiKey, email, password, country, loginToken };
+        } else {
+            // Utiliser les credentials sauvegardées
+            const credentials = await executeFunctions.getCredentials('linkupApi');
+            
+            const apiKey = this.sanitizeCredentialValue(credentials.apiKey as string);
+            const email = operation === 'login' 
+                ? this.sanitizeCredentialValue(credentials.linkedinEmail as string)
+                : executeFunctions.getNodeParameter('verifyEmail', itemIndex) as string;
+            const password = operation === 'login' 
+                ? this.sanitizeCredentialValue(credentials.linkedinPassword as string)
+                : '';
+            const country = this.sanitizeCredentialValue(credentials.country as string);
+            const loginToken = this.sanitizeCredentialValue(credentials.loginToken as string);
+
+            // Vérifier si les credentials sont corrompues
+            if (!apiKey || (operation === 'login' && (!email || !password))) {
+                throw new NodeOperationError(
+                    executeFunctions.getNode(),
+                    'Credentials are corrupted or incomplete. Please use "Use Custom Credentials" option or recreate your saved credentials.'
+                );
+            }
+
+            return { 
+                apiKey: apiKey!, 
+                email: email!, 
+                password: password!, 
+                country: country || 'FR',
+                loginToken: loginToken || ''
+            };
+        }
+    }
+
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
         const items = this.getInputData();
         const returnData: INodeExecutionData[] = [];
@@ -182,30 +285,20 @@ export class Linkup implements INodeType {
                 let response: any;
 
                 if (operation === 'login') {
-                    const apiKey = this.getNodeParameter('apiKey', i) as string;
-                    const email = this.getNodeParameter('linkedinEmail', i) as string;
-                    const password = this.getNodeParameter('linkedinPassword', i) as string;
-                    const country = this.getNodeParameter('country', i) as string;
-
-                    // Validation
-                    if (!apiKey || !email || !password) {
-                        throw new NodeOperationError(
-                            this.getNode(),
-                            'API key, email and password are required for login'
-                        );
-                    }
+                    const creds = await this.getCredentialsWithFallback(this, i, 'login');
 
                     const requestOptions: IHttpRequestOptions = {
                         method: 'POST',
                         url: 'https://api.linkupapi.com/v1/auth/login',
                         headers: {
-                            'x-api-key': apiKey,
+                            'x-api-key': creds.apiKey,
                             'Content-Type': 'application/json',
                         },
                         body: {
-                            email,
-                            password,
-                            country,
+                            email: creds.email,
+                            password: creds.password,
+                            country: creds.country,
+                            ...(creds.loginToken && { token: creds.loginToken }),
                         },
                         timeout: additionalFields.timeout || 30000,
                     };
@@ -213,30 +306,20 @@ export class Linkup implements INodeType {
                     response = await this.helpers.httpRequest(requestOptions);
 
                 } else if (operation === 'verifyCode') {
-                    const apiKey = this.getNodeParameter('apiKey', i) as string;
-                    const email = this.getNodeParameter('verifyEmail', i) as string;
+                    const creds = await this.getCredentialsWithFallback(this, i, 'verifyCode');
                     const verificationCode = this.getNodeParameter('verificationCode', i) as string;
-                    const country = this.getNodeParameter('country', i) as string;
-
-                    // Validation
-                    if (!apiKey || !email || !verificationCode) {
-                        throw new NodeOperationError(
-                            this.getNode(),
-                            'API key, email and verification code are required'
-                        );
-                    }
 
                     const requestOptions: IHttpRequestOptions = {
                         method: 'POST',
                         url: 'https://api.linkupapi.com/v1/auth/verify',
                         headers: {
-                            'x-api-key': apiKey,
+                            'x-api-key': creds.apiKey,
                             'Content-Type': 'application/json',
                         },
                         body: {
-                            email,
+                            email: creds.email,
                             code: verificationCode,
-                            country,
+                            country: creds.country,
                         },
                         timeout: additionalFields.timeout || 30000,
                     };
@@ -251,7 +334,7 @@ export class Linkup implements INodeType {
                         _meta: {
                             operation,
                             timestamp: new Date().toISOString(),
-                            nodeVersion: '1.0.4',
+                            nodeVersion: '1.1.0',
                         },
                     },
                     pairedItem: { item: i },
@@ -276,7 +359,7 @@ export class Linkup implements INodeType {
                 if (error.response?.status === 401) {
                     throw new NodeOperationError(
                         this.getNode(),
-                        'Invalid API key or credentials'
+                        'Invalid API key or credentials. Please check your LINKUP API key and LinkedIn credentials.'
                     );
                 } else if (error.response?.status === 429) {
                     throw new NodeOperationError(
