@@ -877,8 +877,13 @@ export class Linkup implements INodeType {
                         body.end_page = options.end_page;
                         hasPagination = true;
                     }
-                    if (!hasPagination && options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
-                        body.total_results = options.total_results;
+                    // Toujours envoyer total_results (10 par défaut) si pas de pagination et pas explicitement renseigné
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
                     }
                     // Autres champs optionnels
                     const skipFields = ['start_page', 'end_page', 'total_results'];
