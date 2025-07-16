@@ -897,6 +897,23 @@ export class Linkup implements INodeType {
                     );
                     try {
                         response = await this.helpers.httpRequest(requestOptions);
+                        // Ajout du body envoyé et de la réponse brute pour debug
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
                     } catch (error: any) {
                         // Affiche le message d'erreur complet de l'API
                         throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
