@@ -28,12 +28,6 @@ export class Linkup implements INodeType {
                 required: true,
             },
         ],
-        requestDefaults: {
-            baseURL: 'https://api.linkupapi.com/v1',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        },
         properties: [
             {
                 displayName: 'Operation',
@@ -222,7 +216,7 @@ export class Linkup implements INodeType {
 
                     const requestOptions: IHttpRequestOptions = {
                         method: 'POST',
-                        url: '/auth/login',
+                        url: 'https://api.linkupapi.com/v1/auth/login',
                         headers: {
                             'x-api-key': credentials.apiKey,
                             'Content-Type': 'application/json',
@@ -251,7 +245,7 @@ export class Linkup implements INodeType {
 
                     const requestOptions: IHttpRequestOptions = {
                         method: 'POST',
-                        url: '/auth/verify-code',
+                        url: 'https://api.linkupapi.com/v1/auth/verify-code',
                         headers: {
                             'x-api-key': credentials.apiKey,
                             'Content-Type': 'application/json',
