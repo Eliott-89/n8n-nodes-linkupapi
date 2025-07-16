@@ -931,17 +931,39 @@ export class Linkup implements INodeType {
                         loginToken = this.getNodeParameter('searchCompaniesLoginToken', i) as string;
                         country = this.getNodeParameter('searchCompaniesCountry', i) as string;
                     }
+                    // Champs obligatoires
                     const body: any = {
-                        location: this.getNodeParameter('searchCompaniesLocation', i) as string,
-                        sector: this.getNodeParameter('searchCompaniesSector', i) as string,
-                        keyword: this.getNodeParameter('searchCompaniesKeyword', i) as string,
-                        company_size: this.getNodeParameter('searchCompaniesSize', i) as string,
-                        total_results: this.getNodeParameter('searchCompaniesTotalResults', i) as number,
-                        start_page: this.getNodeParameter('searchCompaniesStartPage', i) as number,
-                        end_page: this.getNodeParameter('searchCompaniesEndPage', i) as number,
-                        country,
                         login_token: loginToken,
+                        country,
                     };
+                    // Champs optionnels (collection)
+                    const options = this.getNodeParameter('searchCompaniesOptions', i, {}) as Record<string, any>;
+                    // Gestion spéciale pagination/total_results
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    // Toujours envoyer total_results (10 par défaut) si pas de pagination et pas explicitement renseigné
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
+                    }
+                    // Autres champs optionnels
+                    const skipFields = ['start_page', 'end_page', 'total_results'];
+                    for (const [key, value] of Object.entries(options)) {
+                        if (skipFields.includes(key)) continue;
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/companies/search',
                         'POST',
@@ -949,7 +971,28 @@ export class Linkup implements INodeType {
                         body,
                         timeout
                     );
-                    response = await this.helpers.httpRequest(requestOptions);
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        // Ajout du body envoyé et de la réponse brute pour debug
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
                 } else if (operation === 'getCompanyInfo') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
