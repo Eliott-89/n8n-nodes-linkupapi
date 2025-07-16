@@ -64,6 +64,23 @@ export class Linkup implements INodeType {
                 description: 'Use custom credentials instead of stored ones (workaround for password issues)',
             },
             {
+                displayName: 'API Key',
+                name: 'customApiKey',
+                type: 'string',
+                typeOptions: {
+                    password: true,
+                },
+                displayOptions: {
+                    show: {
+                        operation: ['login'],
+                        useCustomCredentials: [true],
+                    },
+                },
+                default: '',
+                placeholder: 'Your LINKUP API key',
+                description: 'Your LINKUP API key',
+            },
+            {
                 displayName: 'Email',
                 name: 'customEmail',
                 type: 'string',
@@ -195,30 +212,34 @@ export class Linkup implements INodeType {
                     let email: string;
                     let password: string;
                     let country: string;
+                    let apiKey: string;
 
                     if (useCustomCredentials) {
+                        apiKey = this.getNodeParameter('customApiKey', i) as string;
                         email = this.getNodeParameter('customEmail', i) as string;
                         password = this.getNodeParameter('customPassword', i) as string;
                         country = this.getNodeParameter('customCountry', i) as string;
                     } else {
+                        apiKey = credentials.apiKey as string;
                         email = credentials.linkedinEmail as string;
                         password = credentials.linkedinPassword as string;
                         country = credentials.country as string;
                         
                         // Gérer le problème des valeurs BLANK de n8n
-                        if (password && password.includes('__n8n_BLANK_VALUE_')) {
+                        if ((password && password.includes('__n8n_BLANK_VALUE_')) || 
+                            (apiKey && apiKey.includes('__n8n_BLANK_VALUE_'))) {
                             throw new NodeOperationError(
                                 this.getNode(),
-                                'Password not saved correctly. Please use "Use Custom Credentials" option and enter your password directly in the node.'
+                                'Credentials not saved correctly due to n8n bug. Please use "Use Custom Credentials" option and enter your API key and password directly in the node.'
                             );
                         }
                     }
 
                     // Validation
-                    if (!email || !password) {
+                    if (!email || !password || !apiKey) {
                         throw new NodeOperationError(
                             this.getNode(),
-                            'Email and password are required for login'
+                            'API key, email and password are required for login'
                         );
                     }
 
@@ -226,7 +247,7 @@ export class Linkup implements INodeType {
                         method: 'POST',
                         url: 'https://api.linkupapi.com/v1/auth/login',
                         headers: {
-                            'x-api-key': credentials.apiKey,
+                            'x-api-key': apiKey,
                             'Content-Type': 'application/json',
                         },
                         body: {
@@ -242,12 +263,23 @@ export class Linkup implements INodeType {
                 } else if (operation === 'verifyCode') {
                     const email = this.getNodeParameter('verifyEmail', i) as string;
                     const verificationCode = this.getNodeParameter('verificationCode', i) as string;
-
-                    // Validation
-                    if (!email || !verificationCode) {
+                    
+                    // Pour verify-code, on utilise toujours l'API key des credentials
+                    let apiKey = credentials.apiKey as string;
+                    
+                    // Vérifier si l'API key est corrompue
+                    if (apiKey && apiKey.includes('__n8n_BLANK_VALUE_')) {
                         throw new NodeOperationError(
                             this.getNode(),
-                            'Email and verification code are required'
+                            'API key not saved correctly. Please recreate your LINKUP credentials or use a Login node with "Use Custom Credentials" first.'
+                        );
+                    }
+
+                    // Validation
+                    if (!email || !verificationCode || !apiKey) {
+                        throw new NodeOperationError(
+                            this.getNode(),
+                            'Email, verification code and API key are required'
                         );
                     }
 
@@ -255,7 +287,7 @@ export class Linkup implements INodeType {
                         method: 'POST',
                         url: 'https://api.linkupapi.com/v1/auth/verify-code',
                         headers: {
-                            'x-api-key': credentials.apiKey,
+                            'x-api-key': apiKey,
                             'Content-Type': 'application/json',
                         },
                         body: {
