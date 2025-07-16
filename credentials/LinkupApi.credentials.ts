@@ -1,6 +1,4 @@
 import {
-    IAuthenticateGeneric,
-    ICredentialTestRequest,
     ICredentialType,
     INodeProperties,
 } from 'n8n-workflow';
@@ -9,7 +7,6 @@ export class LinkupApi implements ICredentialType {
     name = 'linkupApi';
     displayName = 'LINKUP API';
     documentationUrl = 'https://docs.linkupapi.com/';
-    icon = 'file:linkup.svg';
     
     properties: INodeProperties[] = [
         {
@@ -65,41 +62,4 @@ export class LinkupApi implements ICredentialType {
             description: 'Country code for proxy selection',
         },
     ];
-
-    // Test de connexion
-    test: ICredentialTestRequest = {
-        request: {
-            baseURL: 'https://api.linkupapi.com/v1',
-            url: '/auth/login',
-            method: 'POST',
-            headers: {
-                'x-api-key': '={{$credentials.apiKey}}',
-                'Content-Type': 'application/json',
-            },
-            body: {
-                email: '={{$credentials.linkedinEmail}}',
-                password: '={{$credentials.linkedinPassword}}',
-                country: '={{$credentials.country}}',
-            },
-        },
-        rules: [
-            {
-                type: 'responseSuccessBody',
-                properties: {
-                    key: 'status',
-                    value: 'success',
-                },
-            },
-        ],
-    };
-
-    // Authentification générique
-    authenticate: IAuthenticateGeneric = {
-        type: 'generic',
-        properties: {
-            headers: {
-                'x-api-key': '={{$credentials.apiKey}}',
-            },
-        },
-    };
 }
