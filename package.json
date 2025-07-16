@@ -1,7 +1,7 @@
 {
-  "name": "n8n-nodes-linkup-api",
+  "name": "n8n-community-nodes-linkup",
   "version": "1.0.0",
-  "description": "n8n node for LINKUP API - LinkedIn automation and data extraction",
+  "description": "n8n community node for LINKUP API - LinkedIn automation and data extraction",
   "keywords": [
     "n8n",
     "linkup",
@@ -27,8 +27,6 @@
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
     "prepublishOnly": "npm run build"
   },
   "files": [
@@ -45,11 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.0",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
-    "eslint": "^8.35.0",
     "gulp": "^4.0.2",
-    "prettier": "^2.8.4",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
