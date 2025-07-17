@@ -1015,6 +1015,24 @@ export class Linkup implements INodeType {
                     },
                 },
             },
+            {
+                displayName: 'Options avancées',
+                name: 'getConnectionsOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
+                displayOptions: {
+                    show: {
+                        operation: ['getConnections'],
+                    },
+                },
+                default: {},
+                options: [
+                    { displayName: 'Pays', name: 'country', type: 'string', default: 'FR', description: 'Code pays (FR, US, UK, ...)' },
+                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Pagination - début' },
+                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Pagination - fin' },
+                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats' },
+                ],
+            },
         ],
     };
 
