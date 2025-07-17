@@ -327,7 +327,7 @@ export class Linkup implements INodeType {
                 },
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'searchProfileOptions',
                 type: 'collection',
                 placeholder: 'Ajouter une option',
@@ -463,7 +463,7 @@ export class Linkup implements INodeType {
                 description: 'Code pays pour la sélection du proxy',
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'searchCompaniesOptions',
                 type: 'collection',
                 placeholder: 'Ajouter une option',
@@ -749,7 +749,7 @@ export class Linkup implements INodeType {
                 },
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'getReceivedInvitationsOptions',
                 type: 'collection',
                 placeholder: 'Ajouter une option',
@@ -821,7 +821,7 @@ export class Linkup implements INodeType {
                 },
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'getSentInvitationsOptions',
                 type: 'collection',
                 placeholder: 'Ajouter une option',
@@ -937,7 +937,7 @@ export class Linkup implements INodeType {
                 },
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'getNetworkRecommendationsOptions',
                 type: 'collection',
                 placeholder: 'Ajouter une option',
