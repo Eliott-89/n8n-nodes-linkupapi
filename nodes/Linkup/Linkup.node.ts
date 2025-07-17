@@ -361,6 +361,7 @@ export class Linkup implements INodeType {
                         default: true,
                         description: 'Inclure l\'état d\'invitation/connexion pour chaque profil',
                     },
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
                 ],
             },
             // Champs pour Search Companies (nouvelle structure)
@@ -445,6 +446,13 @@ export class Linkup implements INodeType {
                         default: 1,
                         description: 'Dernière page à récupérer (pagination)',
                     },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'string',
+                        default: '',
+                        description: 'Code pays',
+                    },
                 ],
             },
             // Champs pour Get Company Information
@@ -493,18 +501,6 @@ export class Linkup implements INodeType {
                 required: true,
                 placeholder: 'https://www.linkedin.com/in/username',
                 description: 'URL du profil LinkedIn à connecter',
-            },
-            {
-                displayName: 'Message',
-                name: 'sendConnectionMessage',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['sendConnectionRequest'],
-                    },
-                },
-                default: '',
-                description: 'Message personnalisé à envoyer avec l\'invitation',
             },
             {
                 displayName: 'Pays',
@@ -810,10 +806,10 @@ export class Linkup implements INodeType {
                 },
                 default: {},
                 options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: 'FR', description: 'Code pays (FR, US, UK, ...)' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Pagination - début' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Pagination - fin' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats' },
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer (pagination)' },
+                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer (pagination)' },
+                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de connexions à récupérer' },
                 ],
             },
             // Champs pour Send Message
@@ -1291,239 +1287,6 @@ export class Linkup implements INodeType {
             },
             // Champs pour Create Post
             {
-                displayName: 'Message',
-                name: 'createPostMessage',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['createPost'],
-                    },
-                },
-                default: '',
-                description: 'Contenu du post',
-            },
-            {
-                displayName: 'Pays',
-                name: 'createPostCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['createPost'],
-                    },
-                },
-            },
-            {
-                displayName: 'Fichier',
-                name: 'createPostFile',
-                type: 'string',
-                default: '',
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['createPost'],
-                    },
-                },
-                description: 'Fichier à joindre au post (optionnel)',
-            },
-            // Champs pour Get Feed
-            {
-                displayName: 'Pays',
-                name: 'getFeedCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getFeed'],
-                    },
-                },
-            },
-            {
-                displayName: 'Nombre de résultats',
-                name: 'getFeedTotalResults',
-                type: 'number',
-                default: 10,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['getFeed'],
-                    },
-                },
-                description: 'Nombre de résultats à récupérer',
-            },
-            // Champs pour Time Spent
-            {
-                displayName: 'Pays',
-                name: 'timeSpentCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-            },
-            {
-                displayName: 'Durée',
-                name: 'timeSpentDuration',
-                type: 'number',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-                default: 0,
-                description: 'Durée passée sur le post (en secondes)',
-            },
-            {
-                displayName: 'Heure de début',
-                name: 'timeSpentDurationStartTime',
-                type: 'number',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-                default: 0,
-                description: 'Timestamp du début de la durée',
-            },
-            {
-                displayName: 'Pays',
-                name: 'timeSpentCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-            },
-            // Pour reactToPost
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'reactToPostOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['reactToPost'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' }
-                ]
-            },
-            // Pour repost
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'repostOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['repost'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' }
-                ]
-            },
-            // Pour commentPost
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'commentPostOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['commentPost'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' }
-                ]
-            },
-            // Pour extractComments
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'extractCommentsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats à récupérer' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer' }
-                ]
-            },
-            // Pour answerComment
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'answerCommentOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Mentionner l\'utilisateur', name: 'mention_user', type: 'boolean', default: false, description: 'Mentionner l\'utilisateur dans la réponse' },
-                    { displayName: 'Nom du commentateur', name: 'commenter_name', type: 'string', default: '', description: 'Nom du commentateur (optionnel)' }
-                ]
-            },
-            // Pour searchPosts
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'searchPostsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Type de post', name: 'post_type', type: 'string', default: '', description: 'Type de post à rechercher' },
-                    { displayName: 'Trier par', name: 'sort_by', type: 'string', default: '', description: 'Critère de tri' },
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Mot-clé', name: 'keyword', type: 'string', default: '', description: 'Mot-clé de recherche' },
-                    { displayName: 'Date du post', name: 'post_date', type: 'string', default: '', description: 'Date du post' },
-                    { displayName: 'URL LinkedIn', name: 'linkedin_url', type: 'string', default: '', description: 'URL LinkedIn' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Pagination - début' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Pagination - fin' }
-                ]
-            },
-            // Pour createPost
-            {
                 displayName: 'Linkup Paramètres',
                 name: 'createPostOptions',
                 type: 'collection',
@@ -1571,6 +1334,68 @@ export class Linkup implements INodeType {
                 options: [
                     { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' }
                 ]
+            },
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'getMyProfileOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['getMyProfile'],
+                    },
+                },
+                default: {},
+                options: [
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'extractProfileInfoOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['extractProfileInfo'],
+                    },
+                },
+                default: {},
+                options: [
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                    { displayName: 'URL LinkedIn', name: 'linkedin_url', type: 'string', default: '', description: 'URL du profil LinkedIn à extraire' },
+                ],
+            },
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'getCompanyInfoOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['getCompanyInfo'],
+                    },
+                },
+                default: {},
+                options: [
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'sendConnectionRequestOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['sendConnectionRequest'],
+                    },
+                },
+                default: {},
+                options: [
+                    { displayName: 'Message', name: 'message', type: 'string', default: '', description: 'Message personnalisé à envoyer avec l\'invitation' },
+                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
             },
         ],
     };
@@ -1715,13 +1540,12 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getMyProfileLoginToken', i) as string;
                     }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getMyProfileCountry', i, '');
-                    if (country) {
-                        body.country = country;
+                    const options = this.getNodeParameter('getMyProfileOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/me',
@@ -1737,15 +1561,12 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('extractProfileLoginToken', i) as string;
                     }
-                    const linkedinUrl = this.getNodeParameter('linkedinUrl', i) as string;
-                    const body: any = {
-                        linkedin_url: linkedinUrl,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('extractProfileCountry', i, '');
-                    if (country) {
-                        body.country = country;
+                    const options = this.getNodeParameter('extractProfileInfoOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/info',
@@ -1761,34 +1582,9 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('searchProfileLoginToken', i) as string;
                     }
-                    // Champs obligatoires
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Champs optionnels (collection)
                     const options = this.getNodeParameter('searchProfileOptions', i, {}) as Record<string, any>;
-                    // Gestion spéciale pagination/total_results (identique à searchCompanies)
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    // Toujours envoyer total_results (10 par défaut) si pas de pagination et pas explicitement renseigné
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    // Autres champs optionnels
-                    const skipFields = ['start_page', 'end_page', 'total_results'];
+                    const body: any = { login_token: loginToken };
                     for (const [key, value] of Object.entries(options)) {
-                        if (skipFields.includes(key)) continue;
                         if (value !== undefined && value !== null && value !== '') {
                             body[key] = value;
                         }
@@ -1802,7 +1598,6 @@ export class Linkup implements INodeType {
                     );
                     try {
                         response = await this.helpers.httpRequest(requestOptions);
-                        // Ajout du body envoyé, des headers et de la réponse brute pour debug
                         returnData.push({
                             json: {
                                 _debug: {
@@ -1821,46 +1616,17 @@ export class Linkup implements INodeType {
                         });
                         continue;
                     } catch (error: any) {
-                        // Affiche le message d'erreur complet de l'API
                         throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
                     }
                 } else if (operation === 'searchCompanies') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('searchCompaniesLoginToken', i) as string;
-                        country = this.getNodeParameter('searchCompaniesCountry', i) as string;
                     }
-                    // Champs obligatoires
-                    const body: any = {
-                        login_token: loginToken,
-                        country,
-                    };
-                    // Champs optionnels (collection)
                     const options = this.getNodeParameter('searchCompaniesOptions', i, {}) as Record<string, any>;
-                    // Gestion spéciale pagination/total_results
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    // Toujours envoyer total_results (10 par défaut) si pas de pagination et pas explicitement renseigné
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    // Autres champs optionnels
-                    const skipFields = ['start_page', 'end_page', 'total_results'];
+                    const body: any = { login_token: loginToken };
                     for (const [key, value] of Object.entries(options)) {
-                        if (skipFields.includes(key)) continue;
                         if (value !== undefined && value !== null && value !== '') {
                             body[key] = value;
                         }
@@ -1874,11 +1640,11 @@ export class Linkup implements INodeType {
                     );
                     try {
                         response = await this.helpers.httpRequest(requestOptions);
-                        // Ajout du body envoyé et de la réponse brute pour debug
                         returnData.push({
                             json: {
                                 _debug: {
                                     requestBody: body,
+                                    requestHeaders: requestOptions.headers,
                                     apiResponse: response,
                                 },
                                 ...response,
@@ -1900,14 +1666,13 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getCompanyInfoLoginToken', i) as string;
                     }
-                    const body: any = {
-                        company_url: this.getNodeParameter('getCompanyInfoUrl', i) as string,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getCompanyInfoCountry', i, '');
-                    if (country) {
-                        body.country = country;
+                    const companyUrl = this.getNodeParameter('getCompanyInfoUrl', i) as string;
+                    const options = this.getNodeParameter('getCompanyInfoOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken, company_url: companyUrl };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/companies/info',
@@ -1923,15 +1688,13 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('sendConnectionLoginToken', i) as string;
                     }
-                    const body: any = {
-                        linkedin_url: this.getNodeParameter('sendConnectionLinkedinUrl', i) as string,
-                        message: this.getNodeParameter('sendConnectionMessage', i) as string,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('sendConnectionCountry', i, '');
-                    if (country) {
-                        body.country = country;
+                    const linkedinUrl = this.getNodeParameter('sendConnectionLinkedinUrl', i) as string;
+                    const options = this.getNodeParameter('sendConnectionRequestOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken, linkedin_url: linkedinUrl };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/network/connect',
@@ -1947,30 +1710,11 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getConnectionsLoginToken', i) as string;
                     }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getConnectionsCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Gestion spéciale pagination/total_results
                     const options = this.getNodeParameter('getConnectionsOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
                         }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
@@ -2817,38 +2561,12 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('createPostLoginToken', i) as string;
                     }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('createPostCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Ajout dynamique de title si présent
-                    const title = this.getNodeParameter('createPostTitle', i, '');
-                    if (title) {
-                        body.title = title;
-                    }
-                    // Ajout dynamique de summary si présent
-                    const summary = this.getNodeParameter('createPostSummary', i, '');
-                    if (summary) {
-                        body.summary = summary;
-                    }
-                    // Ajout dynamique de content si présent
-                    const content = this.getNodeParameter('createPostContent', i, '');
-                    if (content) {
-                        body.content = content;
-                    }
-                    // Ajout dynamique de media_link si présent
-                    const mediaLink = this.getNodeParameter('createPostMediaLink', i, '');
-                    if (mediaLink) {
-                        body.media_link = mediaLink;
-                    }
-                    // Ajout dynamique de media_file si présent
-                    const mediaFile = this.getNodeParameter('createPostMediaFile', i, '');
-                    if (mediaFile) {
-                        body.media_file = mediaFile;
+                    const options = this.getNodeParameter('createPostOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/posts/create',
@@ -2885,23 +2603,12 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getFeedLoginToken', i) as string;
                     }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getFeedCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Ajout dynamique de start_time si présent
-                    const startTime = this.getNodeParameter('getFeedStartTime', i, '');
-                    if (startTime) {
-                        body.start_time = startTime;
-                    }
-                    // Ajout dynamique de end_time si présent
-                    const endTime = this.getNodeParameter('getFeedEndTime', i, '');
-                    if (endTime) {
-                        body.end_time = endTime;
+                    const options = this.getNodeParameter('getFeedOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/posts/feed',
@@ -2938,23 +2645,12 @@ export class Linkup implements INodeType {
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('timeSpentLoginToken', i) as string;
                     }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('timeSpentCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Ajout dynamique de start_time si présent
-                    const startTime = this.getNodeParameter('timeSpentStartTime', i, '');
-                    if (startTime) {
-                        body.start_time = startTime;
-                    }
-                    // Ajout dynamique de end_time si présent
-                    const endTime = this.getNodeParameter('timeSpentEndTime', i, '');
-                    if (endTime) {
-                        body.end_time = endTime;
+                    const options = this.getNodeParameter('timeSpentOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/posts/time-spent',
