@@ -1397,6 +1397,101 @@ export class Linkup implements INodeType {
                     { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
                 ],
             },
+            // Ajout des opérations recruiter dans properties :
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterCandidatesOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['getCandidates'] } },
+                default: {},
+                options: [
+                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
+                    { displayName: 'total_results', name: 'total_results', type: 'number', default: '', description: 'Nombre de résultats' },
+                    { displayName: 'start_page', name: 'start_page', type: 'number', default: '', description: 'Page de début' },
+                    { displayName: 'end_page', name: 'end_page', type: 'number', default: '', description: 'Page de fin' },
+                    { displayName: 'start', name: 'start', type: 'string', default: '', description: 'Début' },
+                    { displayName: 'sortType', name: 'sortType', type: 'string', default: '', description: 'Type de tri' },
+                    { displayName: 'sortOrder', name: 'sortOrder', type: 'string', default: '', description: 'Ordre de tri' },
+                    { displayName: 'ratings', name: 'ratings', type: 'string', default: '', description: 'Notes' },
+                    { displayName: 'location', name: 'location', type: 'string', default: '', description: 'Lieu' },
+                    { displayName: 'yearsOfExperience', name: 'yearsOfExperience', type: 'string', default: '', description: 'Années d'expérience' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterCVOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['getCandidateCV'] } },
+                default: {},
+                options: [
+                    { displayName: 'application_id', name: 'application_id', type: 'string', default: '', description: 'ID de la candidature' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterPostsOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['getJobPosts'] } },
+                default: {},
+                options: [
+                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
+                    { displayName: 'fetch_details', name: 'fetch_details', type: 'boolean', default: false, description: 'Récupérer les détails' },
+                    { displayName: 'total_results', name: 'total_results', type: 'number', default: '', description: 'Nombre de résultats' },
+                    { displayName: 'start_page', name: 'start_page', type: 'number', default: '', description: 'Page de début' },
+                    { displayName: 'end_page', name: 'end_page', type: 'number', default: '', description: 'Page de fin' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterPublishOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['publishJob'] } },
+                default: {},
+                options: [
+                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterCloseOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['closeJob'] } },
+                default: {},
+                options: [
+                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
+            {
+                displayName: 'Linkup Paramètres',
+                name: 'recruiterCreateOptions',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: { show: { operation: ['createJob'] } },
+                default: {},
+                options: [
+                    { displayName: 'company_url', name: 'company_url', type: 'string', default: '', description: 'URL de l'entreprise' },
+                    { displayName: 'title', name: 'title', type: 'string', default: '', description: 'Titre du poste' },
+                    { displayName: 'place', name: 'place', type: 'string', default: '', description: 'Lieu' },
+                    { displayName: 'html_description', name: 'html_description', type: 'string', default: '', description: 'Description HTML' },
+                    { displayName: 'employment_status', name: 'employment_status', type: 'string', default: '', description: 'Statut d'emploi' },
+                    { displayName: 'workplace', name: 'workplace', type: 'string', default: '', description: 'Lieu de travail' },
+                    { displayName: 'skills', name: 'skills', type: 'json', default: '', description: 'Compétences (array)' },
+                    { displayName: 'screening_questions', name: 'screening_questions', type: 'json', default: '', description: 'Questions de présélection (array)' },
+                    { displayName: 'auto_rejection_template', name: 'auto_rejection_template', type: 'string', default: '', description: 'Template de rejet auto' },
+                    { displayName: 'contact_email', name: 'contact_email', type: 'string', default: '', description: 'Email de contact' },
+                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
+                ],
+            },
         ],
     };
 
@@ -2654,6 +2749,258 @@ export class Linkup implements INodeType {
                     }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/posts/time-spent',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getCandidates') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('getCandidatesLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterCandidatesOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/candidates',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getCandidateCV') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('getCandidateCVLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterCVOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/cv',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getJobPosts') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('getJobPostsLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterPostsOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/job-posts',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'publishJob') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('publishJobLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterPublishOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/publish-job',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'closeJob') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('closeJobLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterCloseOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/close-job',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'createJob') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('createJobLoginToken', i) as string;
+                    }
+                    const options = this.getNodeParameter('recruiterCreateOptions', i, {}) as Record<string, any>;
+                    const body: any = { login_token: loginToken };
+                    for (const [key, value] of Object.entries(options)) {
+                        if (value !== undefined && value !== null && value !== '') {
+                            body[key] = value;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/recruiter/create-job',
                         'POST',
                         creds.apiKey,
                         body,
