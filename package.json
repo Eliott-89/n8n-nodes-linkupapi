@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkup-clean",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "description": "n8n community node for LINKUP API - LinkedIn automation and data extraction",
   "keywords": [
     "n8n",
