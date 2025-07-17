@@ -153,21 +153,6 @@ export class Linkup implements INodeType {
                 description: 'Mot de passe de votre compte LinkedIn',
             },
             {
-                displayName: 'Login Token (optionnel)',
-                name: 'customLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [true],
-                        operation: ['login'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn si vous en avez un',
-            },
-            {
                 displayName: 'Pays',
                 name: 'customCountry',
                 type: 'options',
@@ -225,22 +210,6 @@ export class Linkup implements INodeType {
             },
             // Champs pour Get My Profile
             {
-                displayName: 'Login Token',
-                name: 'getMyProfileLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['getMyProfile'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
                 displayName: 'Pays',
                 name: 'getMyProfileCountry',
                 type: 'options',
@@ -260,36 +229,6 @@ export class Linkup implements INodeType {
             },
             // Champs pour Extract Profile Information
             {
-                displayName: 'URL du profil LinkedIn',
-                name: 'linkedinUrl',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['extractProfileInfo'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'https://www.linkedin.com/in/xxx',
-                description: 'URL du profil LinkedIn à extraire',
-            },
-            {
-                displayName: 'Login Token',
-                name: 'extractProfileLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['extractProfileInfo'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
                 displayName: 'Pays',
                 name: 'extractProfileCountry',
                 type: 'options',
@@ -308,22 +247,6 @@ export class Linkup implements INodeType {
                 description: 'Code pays pour la sélection du proxy',
             },
             // Champs pour Search Profile (nouvelle structure)
-            {
-                displayName: 'Login Token',
-                name: 'searchProfileLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'searchProfileCountry',
@@ -442,22 +365,6 @@ export class Linkup implements INodeType {
             },
             // Champs pour Search Companies (nouvelle structure)
             {
-                displayName: 'Login Token',
-                name: 'searchCompaniesLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
                 displayName: 'Pays',
                 name: 'searchCompaniesCountry',
                 type: 'options',
@@ -572,22 +479,6 @@ export class Linkup implements INodeType {
                 default: 'FR',
                 description: 'Code pays pour la sélection du proxy',
             },
-            {
-                displayName: 'Login Token',
-                name: 'getCompanyInfoLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['getCompanyInfo'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             // Champs pour Send Connection Request
             {
                 displayName: 'URL du profil LinkedIn',
@@ -631,22 +522,6 @@ export class Linkup implements INodeType {
                 },
                 default: 'FR',
                 description: 'Code pays pour la sélection du proxy',
-            },
-            {
-                displayName: 'Login Token',
-                name: 'sendConnectionLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        operation: ['sendConnectionRequest'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
             },
             // Additional options
             {
@@ -702,21 +577,6 @@ export class Linkup implements INodeType {
                 description: 'URN de l\'invitation',
             },
             {
-                displayName: 'Login Token',
-                name: 'acceptConnectionLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['acceptConnectionInvitation'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
                 displayName: 'Pays',
                 name: 'acceptConnectionCountry',
                 type: 'string',
@@ -731,21 +591,6 @@ export class Linkup implements INodeType {
                 },
             },
             // 3. Ajout des champs pour l'opération getReceivedInvitations
-            {
-                displayName: 'Login Token',
-                name: 'getReceivedInvitationsLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getReceivedInvitations'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'getReceivedInvitationsCountry',
@@ -803,21 +648,6 @@ export class Linkup implements INodeType {
                 ],
             },
             // 2. Ajout des champs pour l'opération getSentInvitations
-            {
-                displayName: 'Login Token',
-                name: 'getSentInvitationsLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getSentInvitations'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'getSentInvitationsCountry',
@@ -890,21 +720,6 @@ export class Linkup implements INodeType {
                 description: 'ID de l\'invitation à retirer',
             },
             {
-                displayName: 'Login Token',
-                name: 'withdrawInvitationLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['withdrawInvitation'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
                 displayName: 'Pays',
                 name: 'withdrawInvitationCountry',
                 type: 'string',
@@ -919,21 +734,6 @@ export class Linkup implements INodeType {
                 },
             },
             // 2. Ajout des champs pour l'opération getNetworkRecommendations
-            {
-                displayName: 'Login Token',
-                name: 'getNetworkRecommendationsLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getNetworkRecommendations'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'getNetworkRecommendationsCountry',
@@ -984,35 +784,6 @@ export class Linkup implements INodeType {
                 ],
             },
             // 2. Ajout des champs pour l'opération getInvitationStatus
-            {
-                displayName: 'URL du profil LinkedIn',
-                name: 'getInvitationStatusLinkedinUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getInvitationStatus'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/in/username',
-                description: 'URL du profil LinkedIn à vérifier',
-            },
-            {
-                displayName: 'Login Token',
-                name: 'getInvitationStatusLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getInvitationStatus'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'getInvitationStatusCountry',
@@ -1074,20 +845,21 @@ export class Linkup implements INodeType {
                 description: 'Contenu du message à envoyer',
             },
             {
-                displayName: 'Login Token',
-                name: 'sendMessageLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
+                displayName: 'Pays',
+                name: 'sendMessageCountry',
+                type: 'options',
+                options: [
+                    { name: 'France', value: 'FR' },
+                    { name: 'États-Unis', value: 'US' },
+                    { name: 'Royaume-Uni', value: 'UK' },
+                ],
                 displayOptions: {
                     show: {
                         operation: ['sendMessage'],
-                        useCustomCredentials: [true],
                     },
                 },
-                default: '',
-                required: true,
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+                default: 'FR',
+                description: 'Code pays pour la sélection du proxy',
             },
             {
                 displayName: 'Paramètres Linkup',
@@ -1107,21 +879,6 @@ export class Linkup implements INodeType {
                 ],
             },
             // Champs pour Get Message Inbox
-            {
-                displayName: 'Login Token',
-                name: 'getMessageInboxLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getMessageInbox'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Pays',
                 name: 'getMessageInboxCountry',
@@ -1167,21 +924,6 @@ export class Linkup implements INodeType {
                 default: '',
                 placeholder: 'ID de la conversation',
                 description: 'Identifiant unique de la conversation LinkedIn',
-            },
-            {
-                displayName: 'Login Token',
-                name: 'getConversationMessagesLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getConversationMessages'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
             },
             {
                 displayName: 'Pays',
@@ -1246,35 +988,6 @@ export class Linkup implements INodeType {
                     { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer' },
                     { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer' }
                 ]
-            },
-            {
-                displayName: 'Login Token',
-                name: 'getPostReactionsLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
-            {
-                displayName: 'Pays',
-                name: 'getPostReactionsCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
             },
             {
                 displayName: 'Nombre de résultats',
@@ -1372,21 +1085,6 @@ export class Linkup implements INodeType {
                 default: '',
                 placeholder: 'https://www.linkedin.com/feed/update/xxx',
                 description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Login Token',
-                name: 'repostLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['repost'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
             },
             {
                 displayName: 'Pays',
@@ -1568,21 +1266,6 @@ export class Linkup implements INodeType {
                 },
             },
             // Champs pour Search Posts
-            {
-                displayName: 'Login Token',
-                name: 'searchPostsLoginToken',
-                type: 'string',
-                typeOptions: { password: true },
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: '',
-                placeholder: 'Token d\'authentification LinkedIn',
-                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
-            },
             {
                 displayName: 'Paramètres de recherche',
                 name: 'searchPostsOptions',
