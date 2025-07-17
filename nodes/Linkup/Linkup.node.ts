@@ -14,7 +14,7 @@ const NODE_VERSION = '1.1.0';
 
 export class Linkup implements INodeType {
     description: INodeTypeDescription = {
-        displayName: 'LINKUP',
+        displayName: 'Linkup API for LinkedIn',
         name: 'linkup',
         icon: 'file:linkup.svg',
         group: ['transform'],
@@ -1016,10 +1016,10 @@ export class Linkup implements INodeType {
                 },
             },
             {
-                displayName: 'Options avancées',
+                displayName: 'Paramètres Linkup',
                 name: 'getConnectionsOptions',
                 type: 'collection',
-                placeholder: 'Ajouter une option',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['getConnections'],
