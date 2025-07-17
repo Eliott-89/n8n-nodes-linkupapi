@@ -44,54 +44,45 @@ export class Linkup implements INodeType {
                 type: 'options',
                 noDataExpression: true,
                 options: [
-                    {
-                        name: 'Login',
-                        value: 'login',
-                        description: 'Authentifier votre compte LinkedIn via Linkup',
-                        action: 'Login to LinkedIn',
-                    },
-                    {
-                        name: 'Verify Code',
-                        value: 'verifyCode',
-                        description: 'Vérifier le code de sécurité reçu par email',
-                        action: 'Verify security code',
-                    },
-                    {
-                        name: 'Get My Profile',
-                        value: 'getMyProfile',
-                        description: 'Récupérer le profil LinkedIn lié au login_token',
-                        action: 'Get my LinkedIn profile',
-                    },
-                    {
-                        name: 'Extract Profile Information',
-                        value: 'extractProfileInfo',
-                        description: 'Extraire les infos d\'un profil LinkedIn public',
-                        action: 'Extract LinkedIn profile info',
-                    },
-                    {
-                        name: 'Search Profile',
-                        value: 'searchProfile',
-                        description: 'Rechercher des profils LinkedIn',
-                        action: 'Search LinkedIn profiles',
-                    },
-                    {
-                        name: 'Search Companies',
-                        value: 'searchCompanies',
-                        description: 'Rechercher des entreprises LinkedIn',
-                        action: 'Search LinkedIn companies',
-                    },
-                    {
-                        name: 'Get Company Information',
-                        value: 'getCompanyInfo',
-                        description: 'Obtenir les infos d\'une entreprise LinkedIn',
-                        action: 'Get LinkedIn company info',
-                    },
-                    {
-                        name: 'Send Connection Request',
-                        value: 'sendConnectionRequest',
-                        description: 'Envoyer une invitation LinkedIn',
-                        action: 'Send LinkedIn connection request',
-                    },
+                    // --- AUTHENTICATION ---
+                    { name: '🔑 AUTH | Login to LinkedIn', value: 'login', description: 'Authentifier votre compte LinkedIn via Linkup', action: 'Login to LinkedIn' },
+                    { name: '🔑 AUTH | Verify security code', value: 'verifyCode', description: 'Valider le code de sécurité reçu par email', action: 'Verify security code' },
+
+                    // --- PROFILE ---
+                    { name: '👤 PROFILE | Get my LinkedIn profile', value: 'getMyProfile', description: 'Récupérer les infos de votre profil LinkedIn', action: 'Get my LinkedIn profile' },
+                    { name: '👤 PROFILE | Extract LinkedIn profile info', value: 'extractProfileInfo', description: 'Extraire les infos d’un profil LinkedIn public', action: 'Extract LinkedIn profile info' },
+                    { name: '👤 PROFILE | Search LinkedIn profiles', value: 'searchProfile', description: 'Rechercher des profils LinkedIn', action: 'Search LinkedIn profiles' },
+
+                    // --- COMPANIES ---
+                    { name: '🏢 COMPANIES | Search LinkedIn companies', value: 'searchCompanies', description: 'Rechercher des entreprises LinkedIn', action: 'Search LinkedIn companies' },
+                    { name: '🏢 COMPANIES | Get LinkedIn company info', value: 'getCompanyInfo', description: 'Obtenir les infos d’une entreprise LinkedIn', action: 'Get LinkedIn company info' },
+
+                    // --- NETWORK ---
+                    { name: '🤝 NETWORK | Send LinkedIn connection request', value: 'sendConnectionRequest', description: 'Envoyer une invitation LinkedIn', action: 'Send LinkedIn connection request' },
+                    { name: '🤝 NETWORK | Get LinkedIn connections', value: 'getConnections', description: 'Récupérer la liste de vos connexions LinkedIn', action: 'Get LinkedIn connections' },
+                    { name: '🤝 NETWORK | Accept LinkedIn connection invitation', value: 'acceptConnectionInvitation', description: 'Accepter une invitation LinkedIn reçue', action: 'Accept LinkedIn connection invitation' },
+                    { name: '🤝 NETWORK | Get LinkedIn received invitations', value: 'getReceivedInvitations', description: 'Lister les invitations LinkedIn reçues', action: 'Get LinkedIn received invitations' },
+                    { name: '🤝 NETWORK | Get LinkedIn sent invitations', value: 'getSentInvitations', description: 'Lister les invitations LinkedIn envoyées', action: 'Get LinkedIn sent invitations' },
+                    { name: '🤝 NETWORK | Withdraw LinkedIn invitation', value: 'withdrawInvitation', description: 'Annuler une invitation LinkedIn envoyée', action: 'Withdraw LinkedIn invitation' },
+                    { name: '🤝 NETWORK | Get LinkedIn network recommendations', value: 'getNetworkRecommendations', description: 'Obtenir des recommandations de profils à ajouter', action: 'Get LinkedIn network recommendations' },
+                    { name: '🤝 NETWORK | Get LinkedIn invitation status', value: 'getInvitationStatus', description: 'Vérifier le statut d’une invitation LinkedIn', action: 'Get LinkedIn invitation status' },
+
+                    // --- MESSAGES ---
+                    { name: '💬 MESSAGES | Send LinkedIn message', value: 'sendMessage', description: 'Envoyer un message LinkedIn', action: 'Send LinkedIn message' },
+                    { name: '💬 MESSAGES | Get LinkedIn message inbox', value: 'getMessageInbox', description: 'Récupérer la liste des conversations LinkedIn', action: 'Get LinkedIn message inbox' },
+                    { name: '💬 MESSAGES | Get LinkedIn conversation messages', value: 'getConversationMessages', description: 'Récupérer l’historique d’une conversation LinkedIn', action: 'Get LinkedIn conversation messages' },
+
+                    // --- RECRUITER ---
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidates', value: 'getCandidates', description: 'Lister les candidats d’une offre LinkedIn Recruiter', action: 'Get LinkedIn candidates' },
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidate CV', value: 'getCandidateCV', description: 'Télécharger le CV d’un candidat LinkedIn Recruiter', action: 'Get LinkedIn candidate CV' },
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn job posts', value: 'getJobPosts', description: 'Lister les offres d’emploi LinkedIn Recruiter', action: 'Get LinkedIn job posts' },
+                    { name: '🧑‍💼 RECRUITER | Publish LinkedIn job', value: 'publishJob', description: 'Publier une offre d’emploi LinkedIn Recruiter', action: 'Publish LinkedIn job' },
+                    { name: '🧑‍💼 RECRUITER | Close LinkedIn job', value: 'closeJob', description: 'Fermer une offre d’emploi LinkedIn Recruiter', action: 'Close LinkedIn job' },
+                    { name: '🧑‍💼 RECRUITER | Create LinkedIn job', value: 'createJob', description: 'Créer une nouvelle offre d’emploi LinkedIn Recruiter', action: 'Create LinkedIn job' },
+
+                    // --- DATA ---
+                    { name: '📊 DATA | Search companies (Data)', value: 'searchCompaniesData', description: 'Recherche avancée d’entreprises (Data/Enrichment)', action: 'Search companies (Data)' },
+                    { name: '📊 DATA | Search profiles (Data)', value: 'searchProfilesData', description: 'Recherche avancée de profils (Data/Enrichment)', action: 'Search profiles (Data)' },
                 ],
                 default: 'login',
             },
@@ -324,19 +315,16 @@ export class Linkup implements INodeType {
             {
                 displayName: 'Pays',
                 name: 'searchProfileCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
                 displayOptions: {
                     show: {
                         operation: ['searchProfile'],
                     },
                 },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
             },
             {
                 displayName: 'Options avancées',
@@ -672,6 +660,361 @@ export class Linkup implements INodeType {
                     },
                 ],
             },
+            // 2. Ajout des champs pour l'opération acceptConnectionInvitation
+            {
+                displayName: 'Shared Secret',
+                name: 'acceptConnectionSharedSecret',
+                type: 'string',
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['acceptConnectionInvitation'],
+                    },
+                },
+                default: '',
+                placeholder: 'Shared secret de l\'invitation',
+                description: 'Shared secret de l\'invitation',
+            },
+            {
+                displayName: 'Entity URN',
+                name: 'acceptConnectionEntityUrn',
+                type: 'string',
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['acceptConnectionInvitation'],
+                    },
+                },
+                default: '',
+                placeholder: 'URN de l\'invitation',
+                description: 'URN de l\'invitation',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'acceptConnectionLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['acceptConnectionInvitation'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'acceptConnectionCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['acceptConnectionInvitation'],
+                    },
+                },
+            },
+            // 3. Ajout des champs pour l'opération getReceivedInvitations
+            {
+                displayName: 'Login Token',
+                name: 'getReceivedInvitationsLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['getReceivedInvitations'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'getReceivedInvitationsCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['getReceivedInvitations'],
+                    },
+                },
+            },
+            {
+                displayName: 'Options avancées',
+                name: 'getReceivedInvitationsOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
+                displayOptions: {
+                    show: {
+                        operation: ['getReceivedInvitations'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Première page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Dernière page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Nombre d\'invitations à récupérer',
+                    },
+                    {
+                        displayName: 'Type d\'invitation',
+                        name: 'invitation_type',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par type d\'invitation (CONNECTION, ORGANIZATION, CONTENT_SERIES)',
+                    },
+                ],
+            },
+            // 2. Ajout des champs pour l'opération getSentInvitations
+            {
+                displayName: 'Login Token',
+                name: 'getSentInvitationsLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['getSentInvitations'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'getSentInvitationsCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['getSentInvitations'],
+                    },
+                },
+            },
+            {
+                displayName: 'Options avancées',
+                name: 'getSentInvitationsOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
+                displayOptions: {
+                    show: {
+                        operation: ['getSentInvitations'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Première page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Dernière page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Nombre d\'invitations à récupérer',
+                    },
+                    {
+                        displayName: 'Type d\'invitation',
+                        name: 'invitation_type',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par type d\'invitation (CONNECTION, ORGANIZATION, CONTENT_SERIES)',
+                    },
+                ],
+            },
+            // 2. Ajout des champs pour l'opération withdrawInvitation
+            {
+                displayName: 'Invitation ID',
+                name: 'withdrawInvitationId',
+                type: 'string',
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['withdrawInvitation'],
+                    },
+                },
+                default: '',
+                placeholder: 'ID de l\'invitation',
+                description: 'ID de l\'invitation à retirer',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'withdrawInvitationLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['withdrawInvitation'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'withdrawInvitationCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['withdrawInvitation'],
+                    },
+                },
+            },
+            // 2. Ajout des champs pour l'opération getNetworkRecommendations
+            {
+                displayName: 'Login Token',
+                name: 'getNetworkRecommendationsLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['getNetworkRecommendations'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'getNetworkRecommendationsCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['getNetworkRecommendations'],
+                    },
+                },
+            },
+            {
+                displayName: 'Options avancées',
+                name: 'getNetworkRecommendationsOptions',
+                type: 'collection',
+                placeholder: 'Ajouter une option',
+                displayOptions: {
+                    show: {
+                        operation: ['getNetworkRecommendations'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Première page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Dernière page à récupérer (pagination)',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: undefined,
+                        description: 'Nombre de recommandations à récupérer',
+                    },
+                ],
+            },
+            // 2. Ajout des champs pour l'opération getInvitationStatus
+            {
+                displayName: 'URL du profil LinkedIn',
+                name: 'getInvitationStatusLinkedinUrl',
+                type: 'string',
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['getInvitationStatus'],
+                    },
+                },
+                default: '',
+                placeholder: 'https://www.linkedin.com/in/username',
+                description: 'URL du profil LinkedIn à vérifier',
+            },
+            {
+                displayName: 'Login Token',
+                name: 'getInvitationStatusLoginToken',
+                type: 'string',
+                typeOptions: { password: true },
+                required: true,
+                displayOptions: {
+                    show: {
+                        operation: ['getInvitationStatus'],
+                    },
+                },
+                default: '',
+                placeholder: 'Token d\'authentification LinkedIn',
+                description: 'Token d\'authentification LinkedIn obtenu après login/verify',
+            },
+            {
+                displayName: 'Pays',
+                name: 'getInvitationStatusCountry',
+                type: 'string',
+                default: '',
+                required: false,
+                placeholder: 'FR, US, UK, ...',
+                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
+                displayOptions: {
+                    show: {
+                        operation: ['getInvitationStatus'],
+                    },
+                },
+            },
         ],
     };
 
@@ -758,6 +1101,7 @@ export class Linkup implements INodeType {
             headers: {
                 'x-api-key': apiKey,
                 'Content-Type': 'application/json',
+                'User-Agent': 'curl/7.68.0',
             },
             body,
             timeout,
@@ -809,19 +1153,19 @@ export class Linkup implements INodeType {
                     );
                     response = await this.helpers.httpRequest(requestOptions);
                 } else if (operation === 'getMyProfile') {
-                    // Gestion des credentials (toujours via getCredentialsWithFallback pour la clé API)
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    // login_token et country peuvent venir soit des credentials, soit des params custom
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getMyProfileLoginToken', i) as string;
-                        country = this.getNodeParameter('getMyProfileCountry', i) as string;
                     }
-                    const body = {
-                        country,
+                    const body: any = {
                         login_token: loginToken,
                     };
+                    // Ajout dynamique de country si présent
+                    const country = this.getNodeParameter('getMyProfileCountry', i, '');
+                    if (country) {
+                        body.country = country;
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/me',
                         'POST',
@@ -833,17 +1177,19 @@ export class Linkup implements INodeType {
                 } else if (operation === 'extractProfileInfo') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('extractProfileLoginToken', i) as string;
-                        country = this.getNodeParameter('extractProfileCountry', i) as string;
                     }
                     const linkedinUrl = this.getNodeParameter('linkedinUrl', i) as string;
-                    const body = {
+                    const body: any = {
                         linkedin_url: linkedinUrl,
-                        country,
                         login_token: loginToken,
                     };
+                    // Ajout dynamique de country si présent
+                    const country = this.getNodeParameter('extractProfileCountry', i, '');
+                    if (country) {
+                        body.country = country;
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/profile/info',
                         'POST',
@@ -855,19 +1201,16 @@ export class Linkup implements INodeType {
                 } else if (operation === 'searchProfile') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('searchProfileLoginToken', i) as string;
-                        country = this.getNodeParameter('searchProfileCountry', i) as string;
                     }
                     // Champs obligatoires
                     const body: any = {
                         login_token: loginToken,
-                        country,
                     };
                     // Champs optionnels (collection)
                     const options = this.getNodeParameter('searchProfileOptions', i, {}) as Record<string, any>;
-                    // Gestion spéciale pagination/total_results
+                    // Gestion spéciale pagination/total_results (identique à searchCompanies)
                     let hasPagination = false;
                     if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
                         body.start_page = options.start_page;
@@ -902,11 +1245,12 @@ export class Linkup implements INodeType {
                     );
                     try {
                         response = await this.helpers.httpRequest(requestOptions);
-                        // Ajout du body envoyé et de la réponse brute pour debug
+                        // Ajout du body envoyé, des headers et de la réponse brute pour debug
                         returnData.push({
                             json: {
                                 _debug: {
                                     requestBody: body,
+                                    requestHeaders: requestOptions.headers,
                                     apiResponse: response,
                                 },
                                 ...response,
@@ -996,16 +1340,18 @@ export class Linkup implements INodeType {
                 } else if (operation === 'getCompanyInfo') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('getCompanyInfoLoginToken', i) as string;
-                        country = this.getNodeParameter('getCompanyInfoCountry', i) as string;
                     }
                     const body: any = {
                         company_url: this.getNodeParameter('getCompanyInfoUrl', i) as string,
-                        country,
                         login_token: loginToken,
                     };
+                    // Ajout dynamique de country si présent
+                    const country = this.getNodeParameter('getCompanyInfoCountry', i, '');
+                    if (country) {
+                        body.country = country;
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/companies/info',
                         'POST',
@@ -1017,17 +1363,19 @@ export class Linkup implements INodeType {
                 } else if (operation === 'sendConnectionRequest') {
                     const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
                     let loginToken = creds.loginToken;
-                    let country = creds.country;
                     if (this.getNodeParameter('useCustomCredentials', i)) {
                         loginToken = this.getNodeParameter('sendConnectionLoginToken', i) as string;
-                        country = this.getNodeParameter('sendConnectionCountry', i) as string;
                     }
                     const body: any = {
                         linkedin_url: this.getNodeParameter('sendConnectionLinkedinUrl', i) as string,
                         message: this.getNodeParameter('sendConnectionMessage', i) as string,
-                        country,
                         login_token: loginToken,
                     };
+                    // Ajout dynamique de country si présent
+                    const country = this.getNodeParameter('sendConnectionCountry', i, '');
+                    if (country) {
+                        body.country = country;
+                    }
                     const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
                         '/network/connect',
                         'POST',
@@ -1036,6 +1384,348 @@ export class Linkup implements INodeType {
                         timeout
                     );
                     response = await this.helpers.httpRequest(requestOptions);
+                } else if (operation === 'getConnections') {
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    let loginToken = creds.loginToken;
+                    if (this.getNodeParameter('useCustomCredentials', i)) {
+                        loginToken = this.getNodeParameter('getConnectionsLoginToken', i) as string;
+                    }
+                    const body: any = {
+                        login_token: loginToken,
+                    };
+                    // Ajout dynamique de country si présent
+                    const country = this.getNodeParameter('getConnectionsCountry', i, '');
+                    if (country) {
+                        body.country = country;
+                    }
+                    // Gestion spéciale pagination/total_results
+                    const options = this.getNodeParameter('getConnectionsOptions', i, {}) as Record<string, any>;
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
+                    }
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/connections',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'acceptConnectionInvitation') {
+                    const body: any = {};
+                    const sharedSecret = this.getNodeParameter('acceptConnectionSharedSecret', i) as string;
+                    const entityUrn = this.getNodeParameter('acceptConnectionEntityUrn', i) as string;
+                    const loginToken = this.getNodeParameter('acceptConnectionLoginToken', i) as string;
+                    const country = this.getNodeParameter('acceptConnectionCountry', i, '');
+                    if (sharedSecret) body.shared_secret = sharedSecret;
+                    if (entityUrn) body.entity_urn = entityUrn;
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/accept-invitations',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getReceivedInvitations') {
+                    const body: any = {};
+                    const loginToken = this.getNodeParameter('getReceivedInvitationsLoginToken', i) as string;
+                    const country = this.getNodeParameter('getReceivedInvitationsCountry', i, '');
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const options = this.getNodeParameter('getReceivedInvitationsOptions', i, {}) as Record<string, any>;
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
+                    }
+                    if (options.invitation_type) {
+                        body.invitation_type = options.invitation_type;
+                    }
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/invitations',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getSentInvitations') {
+                    const body: any = {};
+                    const loginToken = this.getNodeParameter('getSentInvitationsLoginToken', i) as string;
+                    const country = this.getNodeParameter('getSentInvitationsCountry', i, '');
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const options = this.getNodeParameter('getSentInvitationsOptions', i, {}) as Record<string, any>;
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
+                    }
+                    if (options.invitation_type) {
+                        body.invitation_type = options.invitation_type;
+                    }
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/sent-invitations',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'withdrawInvitation') {
+                    const body: any = {};
+                    const invitationId = this.getNodeParameter('withdrawInvitationId', i) as string;
+                    const loginToken = this.getNodeParameter('withdrawInvitationLoginToken', i) as string;
+                    const country = this.getNodeParameter('withdrawInvitationCountry', i, '');
+                    if (invitationId) body.invitation_id = invitationId;
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/withdraw-invitation',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getNetworkRecommendations') {
+                    const body: any = {};
+                    const loginToken = this.getNodeParameter('getNetworkRecommendationsLoginToken', i) as string;
+                    const country = this.getNodeParameter('getNetworkRecommendationsCountry', i, '');
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const options = this.getNodeParameter('getNetworkRecommendationsOptions', i, {}) as Record<string, any>;
+                    let hasPagination = false;
+                    if (options.start_page !== undefined && options.start_page !== null) {
+                        body.start_page = options.start_page;
+                        hasPagination = true;
+                    }
+                    if (options.end_page !== undefined && options.end_page !== null) {
+                        body.end_page = options.end_page;
+                        hasPagination = true;
+                    }
+                    if (!hasPagination) {
+                        if (options.total_results !== undefined && options.total_results !== null) {
+                            body.total_results = options.total_results;
+                        } else {
+                            body.total_results = 10;
+                        }
+                    }
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/recommendations',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
+                } else if (operation === 'getInvitationStatus') {
+                    const body: any = {};
+                    const linkedinUrl = this.getNodeParameter('getInvitationStatusLinkedinUrl', i) as string;
+                    const loginToken = this.getNodeParameter('getInvitationStatusLoginToken', i) as string;
+                    const country = this.getNodeParameter('getInvitationStatusCountry', i, '');
+                    if (linkedinUrl) body.linkedin_url = linkedinUrl;
+                    if (loginToken) body.login_token = loginToken;
+                    if (country) body.country = country;
+                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
+                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
+                        '/network/invitation-status',
+                        'POST',
+                        creds.apiKey,
+                        body,
+                        timeout
+                    );
+                    try {
+                        response = await this.helpers.httpRequest(requestOptions);
+                        returnData.push({
+                            json: {
+                                _debug: {
+                                    requestBody: body,
+                                    requestHeaders: requestOptions.headers,
+                                    apiResponse: response,
+                                },
+                                ...response,
+                                _meta: {
+                                    operation,
+                                    timestamp: new Date().toISOString(),
+                                    nodeVersion: NODE_VERSION,
+                                },
+                            },
+                            pairedItem: { item: i },
+                        });
+                        continue;
+                    } catch (error: any) {
+                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
+                    }
                 }
 
                 // Ajout de métadonnées utiles

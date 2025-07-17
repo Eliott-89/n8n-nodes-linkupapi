@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkup-clean",
-  "version": "1.1.7",
+  "version": "1.1.13",
   "description": "n8n community node for LINKUP API - LinkedIn automation and data extraction",
   "keywords": [
     "n8n",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "micromatch": "^4.0.8",
     "typescript": "^4.9.5"
   },
@@ -51,6 +51,7 @@
     "n8n-workflow": ">=1.0.0"
   },
   "dependencies": {
-    "n8n-nodes-linkup-clean": "^1.1.7"
+    "n8n-nodes-linkup-clean": "^1.1.8",
+    "regex-not": "^1.0.2"
   }
 }
