@@ -1650,6 +1650,22 @@ export class Linkup implements INodeType {
                 if (recruiterParams.end_page) body.end_page = recruiterParams.end_page;
                 break;
 
+            case 'getMyProfile':
+                // Pas de paramètres spécifiques, juste le login token
+                break;
+
+            case 'getCandidateCV':
+                // Pas de paramètres spécifiques, juste le login token
+                break;
+
+            case 'publishJob':
+                // Pas de paramètres spécifiques, juste le login token
+                break;
+
+            case 'closeJob':
+                // Pas de paramètres spécifiques, juste le login token
+                break;
+
             case 'createJob':
                 const createJobParams = context.getNodeParameter('createJobParams', itemIndex, {}) as any;
                 if (createJobParams.country) body.country = createJobParams.country;
