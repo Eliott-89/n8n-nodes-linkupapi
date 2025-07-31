@@ -1757,8 +1757,7 @@ export class Linkup implements INodeType {
             const operation = this.getNodeParameter('operation', i) as string;
 
             try {
-                const additionalFields = this.getNodeParameter('additionalFields', i) as any;
-                const timeout = additionalFields.timeout || 30000;
+                const timeout = 30000; // Timeout par défaut
 
                 // Obtenir les credentials
                 const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i);
