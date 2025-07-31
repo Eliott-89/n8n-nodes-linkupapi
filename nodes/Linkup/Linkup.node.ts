@@ -3,9 +3,6 @@ import {
     INodeExecutionData,
     INodeType,
     INodeTypeDescription,
-    IHttpRequestOptions,
-    NodeOperationError,
-    NodeConnectionType,
 } from 'n8n-workflow';
 
 // Centralisation des constantes
@@ -37,8 +34,8 @@ export class Linkup implements INodeType {
             name: 'LINKUP',
             color: '#0077b5',
         },
-        inputs: [NodeConnectionType.Main],
-        outputs: [NodeConnectionType.Main],
+        inputs: ['main'],
+        outputs: ['main'],
         credentials: [
             {
                 name: 'linkupApi',
@@ -646,6 +643,10 @@ export class Linkup implements INodeType {
         // Toujours utiliser les credentials sauvegardées (plus de custom credentials)
         const credentials = await context.getCredentials('linkupApi');
         
+        if (!credentials) {
+            throw new Error('Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud.');
+        }
+        
         const apiKey = Linkup.sanitizeCredentialValue(credentials.apiKey as string);
         const email = Linkup.sanitizeCredentialValue(credentials.linkedinEmail as string);
         const password = Linkup.sanitizeCredentialValue(credentials.linkedinPassword as string);
@@ -653,10 +654,7 @@ export class Linkup implements INodeType {
         const loginToken = Linkup.sanitizeCredentialValue(credentials.loginToken as string);
 
         if (!apiKey) {
-            throw new NodeOperationError(
-                context.getNode(),
-                'Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud.'
-            );
+            throw new Error('Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud.');
         }
 
         return { 
@@ -674,7 +672,7 @@ export class Linkup implements INodeType {
         apiKey: string,
         body: RequestBody,
         timeout: number
-    ): IHttpRequestOptions {
+    ): any {
         return {
             method,
             url: `${LINKUP_API_BASE_URL}${endpoint}`,
@@ -708,16 +706,20 @@ export class Linkup implements INodeType {
         switch (operation) {
             case 'login':
                 const creds = await context.getCredentials('linkupApi');
-                body.email = creds.linkedinEmail;
-                body.password = creds.linkedinPassword;
-                body.country = linkupParams.country || creds.country || 'FR';
+                if (creds) {
+                    body.email = creds.linkedinEmail;
+                    body.password = creds.linkedinPassword;
+                    body.country = linkupParams.country || creds.country || 'FR';
+                }
                 break;
 
             case 'verifyCode':
                 const credsVerify = await context.getCredentials('linkupApi');
-                body.email = credsVerify.linkedinEmail;
-                body.code = linkupParams.verificationCode;
-                body.country = linkupParams.country || credsVerify.country || 'FR';
+                if (credsVerify) {
+                    body.email = credsVerify.linkedinEmail;
+                    body.code = linkupParams.verificationCode;
+                    body.country = linkupParams.country || credsVerify.country || 'FR';
+                }
                 break;
 
             case 'extractProfileInfo':
@@ -928,29 +930,7 @@ export class Linkup implements INodeType {
 
 
 
-    private handleApiError(context: IExecuteFunctions, error: any, operation: string): NodeOperationError {
-        if (error.response?.status === 401) {
-            return new NodeOperationError(
-                context.getNode(),
-                'Clé API ou credentials invalides. Vérifiez votre clé API LINKUP et vos identifiants LinkedIn.'
-            );
-        } else if (error.response?.status === 429) {
-            return new NodeOperationError(
-                context.getNode(),
-                'Limite de requêtes atteinte. Veuillez réessayer plus tard.'
-            );
-        } else if (error.response?.status === 400) {
-            return new NodeOperationError(
-                context.getNode(),
-                `Requête invalide pour l'opération ${operation}: ${error.response?.data?.message || error.message}`
-            );
-        } else {
-            return new NodeOperationError(
-                context.getNode(), 
-                `Erreur lors de l'opération ${operation}: ${error.response?.data?.message || error.message || 'Erreur inconnue'}`
-            );
-        }
-    }
+
 
     // === MAIN EXECUTION METHOD ===
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -998,18 +978,14 @@ export class Linkup implements INodeType {
                 
                 returnData.push(result);
             } catch (error: any) {
-                if (this.continueOnFail()) {
-                    returnData.push({
-                        json: {
-                            error: error.message || 'Unknown error',
-                            operation,
-                            timestamp: new Date().toISOString(),
-                        },
-                        pairedItem: { item: i },
-                    });
-                    continue;
-                }
-                throw Linkup.prototype.handleApiError.call(this, this, error, operation);
+                returnData.push({
+                    json: {
+                        error: error.message || 'Unknown error',
+                        operation,
+                        timestamp: new Date().toISOString(),
+                    },
+                    pairedItem: { item: i },
+                });
             }
         }
 
