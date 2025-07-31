@@ -107,820 +107,1250 @@ export class Linkup implements INodeType {
 
             // === PARAMÈTRES SPÉCIFIQUES PAR OPÉRATION ===
             
-            // AUTH - Code de vérification
+            // AUTH - Paramètres Linkup
             {
-                displayName: 'Code de vérification',
-                name: 'verificationCode',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'authParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['verifyCode'],
                     },
                 },
-                default: '',
-                description: 'Code de sécurité reçu par email',
+                default: {},
+                options: [
+                    {
+                        displayName: 'Code de vérification',
+                        name: 'verificationCode',
+                        type: 'string',
+                        default: '',
+                        description: 'Code de sécurité reçu par email',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // PROFILE - URL profil LinkedIn
+            // PROFILE - Paramètres Linkup
             {
-                displayName: 'URL profil LinkedIn',
-                name: 'profileUrl',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'profileParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['extractProfileInfo', 'sendConnectionRequest', 'getInvitationStatus'],
                     },
                 },
-                default: '',
-                placeholder: 'https://www.linkedin.com/in/username',
-                description: 'URL du profil LinkedIn',
+                default: {},
+                options: [
+                    {
+                        displayName: 'URL profil LinkedIn',
+                        name: 'profileUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // COMPANIES - URL entreprise LinkedIn
+            // COMPANIES - Paramètres Linkup
             {
-                displayName: 'URL entreprise LinkedIn',
-                name: 'companyUrl',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'companiesParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['getCompanyInfo'],
                     },
                 },
-                default: '',
-                placeholder: 'https://www.linkedin.com/company/stripe/',
-                description: 'URL de l\'entreprise LinkedIn',
+                default: {},
+                options: [
+                    {
+                        displayName: 'URL entreprise LinkedIn',
+                        name: 'companyUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/company/stripe/',
+                        description: 'URL de l\'entreprise LinkedIn',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // NETWORK - Paramètres spécifiques
+            // NETWORK - Paramètres Linkup
             {
-                displayName: 'Message connexion',
-                name: 'connectionMessage',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'networkParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['sendConnectionRequest'],
                     },
                 },
-                default: '',
-                description: 'Message personnalisé pour invitation',
+                default: {},
+                options: [
+                    {
+                        displayName: 'URL profil LinkedIn',
+                        name: 'profileUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn',
+                    },
+                    {
+                        displayName: 'Message connexion',
+                        name: 'connectionMessage',
+                        type: 'string',
+                        default: '',
+                        description: 'Message personnalisé pour invitation',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
+
+            // ACCEPT CONNECTION - Paramètres Linkup
             {
-                displayName: 'Shared Secret',
-                name: 'sharedSecret',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'acceptConnectionParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['acceptConnectionInvitation'],
                     },
                 },
-                default: '',
-                description: 'Shared secret de l\'invitation',
-            },
-            {
-                displayName: 'Entity URN',
-                name: 'entityUrn',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['acceptConnectionInvitation'],
+                default: {},
+                options: [
+                    {
+                        displayName: 'Shared Secret',
+                        name: 'sharedSecret',
+                        type: 'string',
+                        default: '',
+                        description: 'Shared secret de l\'invitation',
                     },
-                },
-                default: '',
-                description: 'URN de l\'invitation',
+                    {
+                        displayName: 'Entity URN',
+                        name: 'entityUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN de l\'invitation',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
+
+            // WITHDRAW INVITATION - Paramètres Linkup
             {
-                displayName: 'Invitation ID',
-                name: 'invitationId',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'withdrawInvitationParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['withdrawInvitation'],
                     },
                 },
-                default: '',
-                description: 'ID de l\'invitation à retirer',
+                default: {},
+                options: [
+                    {
+                        displayName: 'Invitation ID',
+                        name: 'invitationId',
+                        type: 'string',
+                        default: '',
+                        description: 'ID de l\'invitation à retirer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // MESSAGES - Paramètres spécifiques
+            // GET INVITATION STATUS - Paramètres Linkup
             {
-                displayName: 'URL destinataire message',
-                name: 'messageRecipientUrl',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'getInvitationStatusParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['getInvitationStatus'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'URL profil LinkedIn',
+                        name: 'profileUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
+            },
+
+            // MESSAGES - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'messagesParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['sendMessage'],
                     },
                 },
-                default: '',
-                placeholder: 'https://www.linkedin.com/in/username',
-                description: 'URL du profil LinkedIn du destinataire',
-            },
-            {
-                displayName: 'Texte du message',
-                name: 'messageText',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
+                default: {},
+                options: [
+                    {
+                        displayName: 'URL destinataire message',
+                        name: 'messageRecipientUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn du destinataire',
                     },
-                },
-                default: '',
-                description: 'Contenu du message à envoyer',
-            },
-            {
-                displayName: 'Lien média',
-                name: 'mediaLink',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
+                    {
+                        displayName: 'Texte du message',
+                        name: 'messageText',
+                        type: 'string',
+                        default: '',
+                        description: 'Contenu du message à envoyer',
                     },
-                },
-                default: '',
-                description: 'URL directe d\'un média à joindre',
+                    {
+                        displayName: 'Lien média',
+                        name: 'mediaLink',
+                        type: 'string',
+                        default: '',
+                        description: 'URL directe d\'un média à joindre',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
+
+            // CONVERSATION MESSAGES - Paramètres Linkup
             {
-                displayName: 'Conversation ID',
-                name: 'conversationId',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'conversationMessagesParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['getConversationMessages'],
                     },
                 },
-                default: '',
-                description: 'Identifiant unique de la conversation LinkedIn',
+                default: {},
+                options: [
+                    {
+                        displayName: 'Conversation ID',
+                        name: 'conversationId',
+                        type: 'string',
+                        default: '',
+                        description: 'Identifiant unique de la conversation LinkedIn',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre de messages à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // POSTS - Paramètres spécifiques
+            // POSTS - Paramètres Linkup
             {
-                displayName: 'URL post LinkedIn',
-                name: 'postUrl',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'postsParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['getPostReactions', 'reactToPost', 'repost', 'commentPost', 'extractComments', 'timeSpent'],
                     },
                 },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Type de réaction',
-                name: 'reactionType',
-                type: 'options',
-                displayOptions: {
-                    show: {
-                        operation: ['reactToPost'],
-                    },
-                },
+                default: {},
                 options: [
-                    { name: '👍 Like', value: 'LIKE' },
-                    { name: '🎉 Celebrate', value: 'CELEBRATE' },
-                    { name: '💪 Support', value: 'SUPPORT' },
-                    { name: '❤️ Love', value: 'LOVE' },
-                    { name: '💡 Insightful', value: 'INSIGHTFUL' },
-                    { name: '🤔 Curious', value: 'CURIOUS' },
+                    {
+                        displayName: 'URL post LinkedIn',
+                        name: 'postUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/feed/update/xxx',
+                        description: 'URL du post LinkedIn',
+                    },
+                    {
+                        displayName: 'Type de réaction',
+                        name: 'reactionType',
+                        type: 'options',
+                        displayOptions: {
+                            show: {
+                                operation: ['reactToPost'],
+                            },
+                        },
+                        options: [
+                            { name: '👍 Like', value: 'LIKE' },
+                            { name: '🎉 Celebrate', value: 'CELEBRATE' },
+                            { name: '💪 Support', value: 'SUPPORT' },
+                            { name: '❤️ Love', value: 'LOVE' },
+                            { name: '💡 Insightful', value: 'INSIGHTFUL' },
+                            { name: '🤔 Curious', value: 'CURIOUS' },
+                        ],
+                        default: 'LIKE',
+                        description: 'Type de réaction à appliquer',
+                    },
+                    {
+                        displayName: 'Message/Texte',
+                        name: 'messageText',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['commentPost'],
+                            },
+                        },
+                        default: '',
+                        description: 'Texte du commentaire',
+                    },
+                    {
+                        displayName: 'Durée (secondes)',
+                        name: 'duration',
+                        type: 'number',
+                        displayOptions: {
+                            show: {
+                                operation: ['timeSpent'],
+                            },
+                        },
+                        default: 30,
+                        description: 'Durée passée sur le post en secondes',
+                    },
+                    {
+                        displayName: 'Heure de début (timestamp)',
+                        name: 'durationStartTime',
+                        type: 'number',
+                        displayOptions: {
+                            show: {
+                                operation: ['timeSpent'],
+                            },
+                        },
+                        default: '',
+                        description: 'Timestamp Unix du début de visualisation en millisecondes',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        displayOptions: {
+                            show: {
+                                operation: ['getPostReactions', 'extractComments'],
+                            },
+                        },
+                        default: 10,
+                        description: 'Nombre de résultats à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        displayOptions: {
+                            show: {
+                                operation: ['getPostReactions', 'extractComments'],
+                            },
+                        },
+                        default: 1,
+                        description: 'Première page à récupérer',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        displayOptions: {
+                            show: {
+                                operation: ['getPostReactions', 'extractComments'],
+                            },
+                        },
+                        default: 1,
+                        description: 'Dernière page à récupérer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
                 ],
-                default: 'LIKE',
-                description: 'Type de réaction à appliquer',
-            },
-            {
-                displayName: 'Message/Texte',
-                name: 'messageText',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['commentPost', 'createPost'],
-                    },
-                },
-                default: '',
-                description: 'Texte du commentaire ou post',
             },
 
-            // ANSWER COMMENT - Paramètres spécifiques
+            // ANSWER COMMENT - Paramètres Linkup
             {
-                displayName: 'Tracking ID',
-                name: 'trackingId',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'answerCommentParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['answerComment'],
                     },
                 },
-                default: '',
-                description: 'Tracking ID du post',
-            },
-            {
-                displayName: 'Profile URN',
-                name: 'profileUrn',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
+                default: {},
+                options: [
+                    {
+                        displayName: 'Tracking ID',
+                        name: 'trackingId',
+                        type: 'string',
+                        default: '',
+                        description: 'Tracking ID du post',
                     },
-                },
-                default: '',
-                description: 'URN du profil qui répond',
-            },
-            {
-                displayName: 'Comment URN',
-                name: 'commentUrn',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
+                    {
+                        displayName: 'Profile URN',
+                        name: 'profileUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN du profil qui répond',
                     },
-                },
-                default: '',
-                description: 'URN du commentaire parent',
-            },
-            {
-                displayName: 'Texte du commentaire',
-                name: 'commentText',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
+                    {
+                        displayName: 'Comment URN',
+                        name: 'commentUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN du commentaire parent',
                     },
-                },
-                default: '',
-                description: 'Texte de la réponse au commentaire',
-            },
-            {
-                displayName: 'Mentionner l\'utilisateur',
-                name: 'mentionUser',
-                type: 'boolean',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
+                    {
+                        displayName: 'Texte du commentaire',
+                        name: 'commentText',
+                        type: 'string',
+                        default: '',
+                        description: 'Texte de la réponse au commentaire',
                     },
-                },
-                default: false,
-                description: 'Mentionner l\'utilisateur dans la réponse',
-            },
-            {
-                displayName: 'Nom du commentateur',
-                name: 'commenterName',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
+                    {
+                        displayName: 'Mentionner l\'utilisateur',
+                        name: 'mentionUser',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Mentionner l\'utilisateur dans la réponse',
                     },
-                },
-                default: '',
-                description: 'Nom du commentateur original',
+                    {
+                        displayName: 'Nom du commentateur',
+                        name: 'commenterName',
+                        type: 'string',
+                        default: '',
+                        description: 'Nom du commentateur original',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
-            // TIME SPENT
+            // CREATE POST - Paramètres Linkup
             {
-                displayName: 'Durée (secondes)',
-                name: 'duration',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-                default: 30,
-                description: 'Durée passée sur le post en secondes',
-            },
-            {
-                displayName: 'Heure de début (timestamp)',
-                name: 'durationStartTime',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-                default: '',
-                description: 'Timestamp Unix du début de visualisation en millisecondes',
-            },
-
-            // RECHERCHE & FILTRES - Paramètres communs
-            {
-                displayName: 'Mot-clé',
-                name: 'keyword',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile', 'searchCompanies', 'searchPosts', 'searchCompaniesData', 'searchProfilesData'],
-                    },
-                },
-                default: '',
-                description: 'Mot-clé de recherche',
-            },
-            {
-                displayName: 'Lieu(x)',
-                name: 'location',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile', 'searchCompanies'],
-                    },
-                },
-                default: '',
-                description: 'Lieu(x) géographique(s) (séparés par ;)',
-            },
-            {
-                displayName: 'Entreprise(s)',
-                name: 'company_url',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'URL(s) d\'entreprise LinkedIn (séparées par ;)',
-            },
-            {
-                displayName: 'École(s)',
-                name: 'school_url',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'URL(s) d\'école LinkedIn (séparées par ;)',
-            },
-            {
-                displayName: 'Réseau',
-                name: 'network',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau)',
-            },
-            {
-                displayName: 'Secteur(s)',
-                name: 'sector',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                description: 'Secteur(s) d\'activité (séparés par ;)',
-            },
-            {
-                displayName: 'Taille entreprise',
-                name: 'company_size',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: '',
-                description: 'Plage de taille d\'entreprise',
-            },
-            {
-                displayName: 'Prénom',
-                name: 'first_name',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'Filtrer par prénom',
-            },
-            {
-                displayName: 'Nom',
-                name: 'last_name',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'Filtrer par nom',
-            },
-            {
-                displayName: 'Titre/Poste',
-                name: 'title',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: '',
-                description: 'Filtrer par titre/poste',
-            },
-            {
-                displayName: 'Type d\'invitation',
-                name: 'invitation_type',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getReceivedInvitations', 'getSentInvitations'],
-                    },
-                },
-                default: '',
-                description: 'Type d\'invitation (CONNECTION, ORGANIZATION, etc.)',
-            },
-
-            // PAGINATION - Paramètres communs
-            {
-                displayName: 'Nombre de résultats',
-                name: 'total_results',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile', 'searchCompanies', 'getConnections', 'getReceivedInvitations', 
-                                   'getSentInvitations', 'getNetworkRecommendations', 'getMessageInbox', 
-                                   'getConversationMessages', 'getPostReactions', 'extractComments', 'searchPosts', 
-                                   'getFeed', 'getCandidates', 'getJobPosts', 'searchCompaniesData', 'searchProfilesData'],
-                    },
-                },
-                default: 10,
-                description: 'Nombre de résultats à récupérer',
-            },
-            {
-                displayName: 'Page de début',
-                name: 'start_page',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile', 'searchCompanies', 'getConnections', 'getReceivedInvitations', 
-                                   'getSentInvitations', 'getNetworkRecommendations', 'getMessageInbox', 
-                                   'getConversationMessages', 'getPostReactions', 'extractComments', 'searchPosts', 
-                                   'getFeed', 'getCandidates', 'getJobPosts', 'searchCompaniesData', 'searchProfilesData'],
-                    },
-                },
-                default: 1,
-                description: 'Première page à récupérer',
-            },
-            {
-                displayName: 'Page de fin',
-                name: 'end_page',
-                type: 'number',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile', 'searchCompanies', 'getConnections', 'getReceivedInvitations', 
-                                   'getSentInvitations', 'getNetworkRecommendations', 'getMessageInbox', 
-                                   'getConversationMessages', 'getPostReactions', 'extractComments', 'searchPosts', 
-                                   'getFeed', 'getCandidates', 'getJobPosts', 'searchCompaniesData', 'searchProfilesData'],
-                    },
-                },
-                default: 1,
-                description: 'Dernière page à récupérer',
-            },
-
-            // OPTIONS DIVERSES
-            {
-                displayName: 'Afficher état invitation',
-                name: 'fetch_invitation_state',
-                type: 'boolean',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-                default: true,
-                description: 'Inclure l\'état d\'invitation pour chaque profil',
-            },
-
-            // CHAMPS DATA
-            {
-                displayName: 'Secteur d\'activité (Data)',
-                name: 'industry',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompaniesData'],
-                    },
-                },
-                default: '',
-                description: 'Secteur d\'activité pour recherche Data',
-            },
-            {
-                displayName: 'Taille d\'équipe (Data)',
-                name: 'employee_range',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompaniesData'],
-                    },
-                },
-                default: '',
-                description: 'Plage d\'employés (ex: 1-10, 11-50, 51-200)',
-            },
-            {
-                displayName: 'Entreprise fondatrice',
-                name: 'founding_company',
-                type: 'boolean',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompaniesData'],
-                    },
-                },
-                default: false,
-                description: 'Filtrer les entreprises fondatrices (Data)',
-            },
-            {
-                displayName: 'Titre du poste (Data)',
-                name: 'job_title',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfilesData'],
-                    },
-                },
-                default: '',
-                description: 'Titre du poste actuel pour recherche Data',
-            },
-            {
-                displayName: 'École (Data)',
-                name: 'school',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfilesData'],
-                    },
-                },
-                default: '',
-                description: 'École ou université pour recherche Data',
-            },
-            {
-                displayName: 'Entreprise actuelle (Data)',
-                name: 'current_company',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfilesData'],
-                    },
-                },
-                default: '',
-                description: 'Entreprise actuelle pour recherche Data',
-            },
-
-            // CHAMPS RECRUITER
-            {
-                displayName: 'Années d\'expérience',
-                name: 'yearsOfExperience',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCandidates'],
-                    },
-                },
-                default: '',
-                description: 'Années d\'expérience requises (Recruiter)',
-            },
-            {
-                displayName: 'Type de tri',
-                name: 'sortType',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCandidates'],
-                    },
-                },
-                default: '',
-                description: 'Type de tri pour les candidats (Recruiter)',
-            },
-            {
-                displayName: 'Ordre de tri',
-                name: 'sortOrder',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCandidates'],
-                    },
-                },
-                default: '',
-                description: 'Ordre de tri (ASC/DESC) (Recruiter)',
-            },
-            {
-                displayName: 'Notes',
-                name: 'ratings',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCandidates'],
-                    },
-                },
-                default: '',
-                description: 'Filtrer par notes (Recruiter)',
-            },
-            {
-                displayName: 'Début',
-                name: 'start',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCandidates'],
-                    },
-                },
-                default: '',
-                description: 'Point de départ pour la pagination (Recruiter)',
-            },
-
-            // CHAMPS CREATE JOB
-            {
-                displayName: 'Titre du poste (Job)',
-                name: 'jobTitle',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Titre du poste à créer (createJob)',
-            },
-            {
-                displayName: 'Lieu du poste (Job)',
-                name: 'place',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Lieu du poste (createJob)',
-            },
-            {
-                displayName: 'Description HTML',
-                name: 'html_description',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Description du poste en HTML (createJob)',
-            },
-            {
-                displayName: 'Statut d\'emploi',
-                name: 'employment_status',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Statut d\'emploi (CDD, CDI, etc.) (createJob)',
-            },
-            {
-                displayName: 'Lieu de travail',
-                name: 'workplace',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Type de lieu de travail (Bureau, Remote, etc.) (createJob)',
-            },
-            {
-                displayName: 'Compétences (JSON)',
-                name: 'skills',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Compétences requises au format JSON array (createJob)',
-            },
-            {
-                displayName: 'Questions de présélection (JSON)',
-                name: 'screening_questions',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Questions de présélection au format JSON array (createJob)',
-            },
-            {
-                displayName: 'Template de rejet automatique',
-                name: 'auto_rejection_template',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Template de rejet automatique (createJob)',
-            },
-            {
-                displayName: 'Email de contact',
-                name: 'contact_email',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['createJob'],
-                    },
-                },
-                default: '',
-                description: 'Email de contact pour le poste (createJob)',
-            },
-
-            // FICHIER
-            {
-                displayName: 'Fichier',
-                name: 'file',
-                type: 'string',
+                displayName: 'Paramètres Linkup',
+                name: 'createPostParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
                 displayOptions: {
                     show: {
                         operation: ['createPost'],
                     },
                 },
-                default: '',
-                description: 'Fichier à joindre (createPost, etc.)',
-            },
-
-            // POSTS RECHERCHE
-            {
-                displayName: 'Type de post',
-                name: 'post_type',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: '',
-                description: 'Type de post à rechercher',
-            },
-            {
-                displayName: 'Trier par',
-                name: 'sort_by',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: '',
-                description: 'Critère de tri des posts',
-            },
-            {
-                displayName: 'Date du post',
-                name: 'post_date',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: '',
-                description: 'Date du post pour filtrer',
-            },
-            {
-                displayName: 'URL LinkedIn (recherche)',
-                name: 'linkedin_url',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: '',
-                description: 'URL LinkedIn pour recherche',
-            },
-
-            // PAYS
-            {
-                displayName: 'Pays',
-                name: 'country',
-                type: 'options',
+                default: {},
                 options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                    { name: 'Allemagne', value: 'DE' },
-                    { name: 'Espagne', value: 'ES' },
-                    { name: 'Italie', value: 'IT' },
-                    { name: 'Canada', value: 'CA' },
-                    { name: 'Australie', value: 'AU' },
+                    {
+                        displayName: 'Message/Texte',
+                        name: 'messageText',
+                        type: 'string',
+                        default: '',
+                        description: 'Texte du post',
+                    },
+                    {
+                        displayName: 'Fichier',
+                        name: 'file',
+                        type: 'string',
+                        default: '',
+                        description: 'Fichier à joindre au post',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
                 ],
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
+            },
+
+            // SEARCH - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'searchParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfile', 'searchCompanies', 'searchPosts', 'searchCompaniesData', 'searchProfilesData'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Mot-clé',
+                        name: 'keyword',
+                        type: 'string',
+                        default: '',
+                        description: 'Mot-clé de recherche',
+                    },
+                    {
+                        displayName: 'Lieu(x)',
+                        name: 'location',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile', 'searchCompanies'],
+                            },
+                        },
+                        default: '',
+                        description: 'Lieu(x) géographique(s) (séparés par ;)',
+                    },
+                    {
+                        displayName: 'Entreprise(s)',
+                        name: 'company_url',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'URL(s) d\'entreprise LinkedIn (séparées par ;)',
+                    },
+                    {
+                        displayName: 'École(s)',
+                        name: 'school_url',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'URL(s) d\'école LinkedIn (séparées par ;)',
+                    },
+                    {
+                        displayName: 'Réseau',
+                        name: 'network',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau)',
+                    },
+                    {
+                        displayName: 'Secteur(s)',
+                        name: 'sector',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchCompanies'],
+                            },
+                        },
+                        default: '',
+                        description: 'Secteur(s) d\'activité (séparés par ;)',
+                    },
+                    {
+                        displayName: 'Taille entreprise',
+                        name: 'company_size',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchCompanies'],
+                            },
+                        },
+                        default: '',
+                        description: 'Plage de taille d\'entreprise',
+                    },
+                    {
+                        displayName: 'Prénom',
+                        name: 'first_name',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'Filtrer par prénom',
+                    },
+                    {
+                        displayName: 'Nom',
+                        name: 'last_name',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'Filtrer par nom',
+                    },
+                    {
+                        displayName: 'Titre/Poste',
+                        name: 'title',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: '',
+                        description: 'Filtrer par titre/poste',
+                    },
+                    {
+                        displayName: 'Afficher état invitation',
+                        name: 'fetch_invitation_state',
+                        type: 'boolean',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfile'],
+                            },
+                        },
+                        default: true,
+                        description: 'Inclure l\'état d\'invitation pour chaque profil',
+                    },
+                    {
+                        displayName: 'Secteur d\'activité (Data)',
+                        name: 'industry',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchCompaniesData'],
+                            },
+                        },
+                        default: '',
+                        description: 'Secteur d\'activité pour recherche Data',
+                    },
+                    {
+                        displayName: 'Taille d\'équipe (Data)',
+                        name: 'employee_range',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchCompaniesData'],
+                            },
+                        },
+                        default: '',
+                        description: 'Plage d\'employés (ex: 1-10, 11-50, 51-200)',
+                    },
+                    {
+                        displayName: 'Entreprise fondatrice',
+                        name: 'founding_company',
+                        type: 'boolean',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchCompaniesData'],
+                            },
+                        },
+                        default: false,
+                        description: 'Filtrer les entreprises fondatrices (Data)',
+                    },
+                    {
+                        displayName: 'Titre du poste (Data)',
+                        name: 'job_title',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfilesData'],
+                            },
+                        },
+                        default: '',
+                        description: 'Titre du poste actuel pour recherche Data',
+                    },
+                    {
+                        displayName: 'École (Data)',
+                        name: 'school',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfilesData'],
+                            },
+                        },
+                        default: '',
+                        description: 'École ou université pour recherche Data',
+                    },
+                    {
+                        displayName: 'Entreprise actuelle (Data)',
+                        name: 'current_company',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchProfilesData'],
+                            },
+                        },
+                        default: '',
+                        description: 'Entreprise actuelle pour recherche Data',
+                    },
+                    {
+                        displayName: 'Type de post',
+                        name: 'post_type',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchPosts'],
+                            },
+                        },
+                        default: '',
+                        description: 'Type de post à rechercher',
+                    },
+                    {
+                        displayName: 'Trier par',
+                        name: 'sort_by',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchPosts'],
+                            },
+                        },
+                        default: '',
+                        description: 'Critère de tri des posts',
+                    },
+                    {
+                        displayName: 'Date du post',
+                        name: 'post_date',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchPosts'],
+                            },
+                        },
+                        default: '',
+                        description: 'Date du post pour filtrer',
+                    },
+                    {
+                        displayName: 'URL LinkedIn (recherche)',
+                        name: 'linkedin_url',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['searchPosts'],
+                            },
+                        },
+                        default: '',
+                        description: 'URL LinkedIn pour recherche',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre de résultats à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
+            },
+
+            // NETWORK LIST - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'networkListParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['getConnections', 'getReceivedInvitations', 'getSentInvitations', 'getNetworkRecommendations', 'getMessageInbox', 'getFeed'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Type d\'invitation',
+                        name: 'invitation_type',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getReceivedInvitations', 'getSentInvitations'],
+                            },
+                        },
+                        default: '',
+                        description: 'Type d\'invitation (CONNECTION, ORGANIZATION, etc.)',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre de résultats à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
+            },
+
+            // RECRUITER - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'recruiterParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['getCandidates', 'getJobPosts'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Années d\'expérience',
+                        name: 'yearsOfExperience',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getCandidates'],
+                            },
+                        },
+                        default: '',
+                        description: 'Années d\'expérience requises (Recruiter)',
+                    },
+                    {
+                        displayName: 'Type de tri',
+                        name: 'sortType',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getCandidates'],
+                            },
+                        },
+                        default: '',
+                        description: 'Type de tri pour les candidats (Recruiter)',
+                    },
+                    {
+                        displayName: 'Ordre de tri',
+                        name: 'sortOrder',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getCandidates'],
+                            },
+                        },
+                        default: '',
+                        description: 'Ordre de tri (ASC/DESC) (Recruiter)',
+                    },
+                    {
+                        displayName: 'Notes',
+                        name: 'ratings',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getCandidates'],
+                            },
+                        },
+                        default: '',
+                        description: 'Filtrer par notes (Recruiter)',
+                    },
+                    {
+                        displayName: 'Début',
+                        name: 'start',
+                        type: 'string',
+                        displayOptions: {
+                            show: {
+                                operation: ['getCandidates'],
+                            },
+                        },
+                        default: '',
+                        description: 'Point de départ pour la pagination (Recruiter)',
+                    },
+                    {
+                        displayName: 'Nombre de résultats',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Nombre de résultats à récupérer',
+                    },
+                    {
+                        displayName: 'Page de début',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Première page à récupérer',
+                    },
+                    {
+                        displayName: 'Page de fin',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Dernière page à récupérer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
+            },
+
+            // CREATE JOB - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'createJobParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['createJob'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Titre du poste (Job)',
+                        name: 'jobTitle',
+                        type: 'string',
+                        default: '',
+                        description: 'Titre du poste à créer (createJob)',
+                    },
+                    {
+                        displayName: 'Lieu du poste (Job)',
+                        name: 'place',
+                        type: 'string',
+                        default: '',
+                        description: 'Lieu du poste (createJob)',
+                    },
+                    {
+                        displayName: 'Description HTML',
+                        name: 'html_description',
+                        type: 'string',
+                        default: '',
+                        description: 'Description du poste en HTML (createJob)',
+                    },
+                    {
+                        displayName: 'Statut d\'emploi',
+                        name: 'employment_status',
+                        type: 'string',
+                        default: '',
+                        description: 'Statut d\'emploi (CDD, CDI, etc.) (createJob)',
+                    },
+                    {
+                        displayName: 'Lieu de travail',
+                        name: 'workplace',
+                        type: 'string',
+                        default: '',
+                        description: 'Type de lieu de travail (Bureau, Remote, etc.) (createJob)',
+                    },
+                    {
+                        displayName: 'Compétences (JSON)',
+                        name: 'skills',
+                        type: 'string',
+                        default: '',
+                        description: 'Compétences requises au format JSON array (createJob)',
+                    },
+                    {
+                        displayName: 'Questions de présélection (JSON)',
+                        name: 'screening_questions',
+                        type: 'string',
+                        default: '',
+                        description: 'Questions de présélection au format JSON array (createJob)',
+                    },
+                    {
+                        displayName: 'Template de rejet automatique',
+                        name: 'auto_rejection_template',
+                        type: 'string',
+                        default: '',
+                        description: 'Template de rejet automatique (createJob)',
+                    },
+                    {
+                        displayName: 'Email de contact',
+                        name: 'contact_email',
+                        type: 'string',
+                        default: '',
+                        description: 'Email de contact pour le poste (createJob)',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
             },
 
             // === GLOBAL OPTIONS ===
@@ -1028,8 +1458,7 @@ export class Linkup implements INodeType {
                 if (creds) {
                     body.email = creds.linkedinEmail;
                     body.password = creds.linkedinPassword;
-                    const country = context.getNodeParameter('country', itemIndex, 'FR') as string;
-                    body.country = country;
+                    body.country = 'FR'; // Par défaut
                 }
                 break;
 
@@ -1037,183 +1466,221 @@ export class Linkup implements INodeType {
                 const credsVerify = await context.getCredentials('linkupApi');
                 if (credsVerify) {
                     body.email = credsVerify.linkedinEmail;
-                    const verificationCode = context.getNodeParameter('verificationCode', itemIndex, '') as string;
-                    body.code = verificationCode;
-                    const country = context.getNodeParameter('country', itemIndex, 'FR') as string;
-                    body.country = country;
+                    const authParams = context.getNodeParameter('authParams', itemIndex, {}) as any;
+                    if (authParams.verificationCode) body.code = authParams.verificationCode;
+                    if (authParams.country) body.country = authParams.country;
                 }
                 break;
 
             case 'extractProfileInfo':
-                const profileUrl = context.getNodeParameter('profileUrl', itemIndex, '') as string;
-                body.linkedin_url = profileUrl;
+            case 'sendConnectionRequest':
+            case 'getInvitationStatus':
+                const profileParams = context.getNodeParameter('profileParams', itemIndex, {}) as any;
+                if (profileParams.profileUrl) body.linkedin_url = profileParams.profileUrl;
+                if (profileParams.country) body.country = profileParams.country;
+                if (operation === 'sendConnectionRequest' && profileParams.connectionMessage) {
+                    body.message = profileParams.connectionMessage;
+                }
                 break;
 
             case 'getCompanyInfo':
-                const companyUrl = context.getNodeParameter('companyUrl', itemIndex, '') as string;
-                body.company_url = companyUrl;
-                break;
-
-            case 'sendConnectionRequest':
-                const profileUrlConnect = context.getNodeParameter('profileUrl', itemIndex, '') as string;
-                body.linkedin_url = profileUrlConnect;
-                const connectionMessage = context.getNodeParameter('connectionMessage', itemIndex, '') as string;
-                if (connectionMessage) body.message = connectionMessage;
+                const companiesParams = context.getNodeParameter('companiesParams', itemIndex, {}) as any;
+                if (companiesParams.companyUrl) body.company_url = companiesParams.companyUrl;
+                if (companiesParams.country) body.country = companiesParams.country;
                 break;
 
             case 'acceptConnectionInvitation':
-                const sharedSecret = context.getNodeParameter('sharedSecret', itemIndex, '') as string;
-                const entityUrn = context.getNodeParameter('entityUrn', itemIndex, '') as string;
-                body.shared_secret = sharedSecret;
-                body.entity_urn = entityUrn;
+                const acceptConnectionParams = context.getNodeParameter('acceptConnectionParams', itemIndex, {}) as any;
+                if (acceptConnectionParams.sharedSecret) body.shared_secret = acceptConnectionParams.sharedSecret;
+                if (acceptConnectionParams.entityUrn) body.entity_urn = acceptConnectionParams.entityUrn;
+                if (acceptConnectionParams.country) body.country = acceptConnectionParams.country;
                 break;
 
             case 'withdrawInvitation':
-                const invitationId = context.getNodeParameter('invitationId', itemIndex, '') as string;
-                body.invitation_id = invitationId;
-                break;
-
-            case 'getInvitationStatus':
-                const profileUrlStatus = context.getNodeParameter('profileUrl', itemIndex, '') as string;
-                body.linkedin_url = profileUrlStatus;
+                const withdrawInvitationParams = context.getNodeParameter('withdrawInvitationParams', itemIndex, {}) as any;
+                if (withdrawInvitationParams.invitationId) body.invitation_id = withdrawInvitationParams.invitationId;
+                if (withdrawInvitationParams.country) body.country = withdrawInvitationParams.country;
                 break;
 
             case 'sendMessage':
-                const messageRecipientUrl = context.getNodeParameter('messageRecipientUrl', itemIndex, '') as string;
-                const messageText = context.getNodeParameter('messageText', itemIndex, '') as string;
-                const mediaLink = context.getNodeParameter('mediaLink', itemIndex, '') as string;
-                body.linkedin_url = messageRecipientUrl;
-                body.message_text = messageText;
-                if (mediaLink) body.media_link = mediaLink;
+                const messagesParams = context.getNodeParameter('messagesParams', itemIndex, {}) as any;
+                if (messagesParams.messageRecipientUrl) body.linkedin_url = messagesParams.messageRecipientUrl;
+                if (messagesParams.messageText) body.message_text = messagesParams.messageText;
+                if (messagesParams.mediaLink) body.media_link = messagesParams.mediaLink;
+                if (messagesParams.country) body.country = messagesParams.country;
                 break;
 
             case 'getConversationMessages':
-                const conversationId = context.getNodeParameter('conversationId', itemIndex, '') as string;
-                body.conversation_id = conversationId;
+                const conversationMessagesParams = context.getNodeParameter('conversationMessagesParams', itemIndex, {}) as any;
+                if (conversationMessagesParams.conversationId) body.conversation_id = conversationMessagesParams.conversationId;
+                if (conversationMessagesParams.total_results) body.total_results = conversationMessagesParams.total_results;
+                if (conversationMessagesParams.start_page) body.start_page = conversationMessagesParams.start_page;
+                if (conversationMessagesParams.end_page) body.end_page = conversationMessagesParams.end_page;
+                if (conversationMessagesParams.country) body.country = conversationMessagesParams.country;
                 break;
 
             case 'getPostReactions':
             case 'repost':
             case 'extractComments':
-                const postUrl = context.getNodeParameter('postUrl', itemIndex, '') as string;
-                body.post_url = postUrl;
-                break;
-
             case 'reactToPost':
-                const postUrlReact = context.getNodeParameter('postUrl', itemIndex, '') as string;
-                const reactionType = context.getNodeParameter('reactionType', itemIndex, 'LIKE') as string;
-                body.post_url = postUrlReact;
-                body.reaction_type = reactionType;
-                break;
-
             case 'commentPost':
-                const postUrlComment = context.getNodeParameter('postUrl', itemIndex, '') as string;
-                const commentText = context.getNodeParameter('messageText', itemIndex, '') as string;
-                body.post_url = postUrlComment;
-                body.message = commentText;
+            case 'timeSpent':
+                const postsParams = context.getNodeParameter('postsParams', itemIndex, {}) as any;
+                if (postsParams.postUrl) body.post_url = postsParams.postUrl;
+                if (postsParams.country) body.country = postsParams.country;
+                
+                if (operation === 'reactToPost' && postsParams.reactionType) {
+                    body.reaction_type = postsParams.reactionType;
+                }
+                if (operation === 'commentPost' && postsParams.messageText) {
+                    body.message = postsParams.messageText;
+                }
+                if (operation === 'timeSpent') {
+                    if (postsParams.duration) body.duration = postsParams.duration;
+                    if (postsParams.durationStartTime) body.duration_start_time = postsParams.durationStartTime;
+                }
+                if (operation === 'getPostReactions' || operation === 'extractComments') {
+                    if (postsParams.total_results) body.total_results = postsParams.total_results;
+                    if (postsParams.start_page) body.start_page = postsParams.start_page;
+                    if (postsParams.end_page) body.end_page = postsParams.end_page;
+                }
                 break;
 
             case 'answerComment':
-                const trackingId = context.getNodeParameter('trackingId', itemIndex, '') as string;
-                const profileUrn = context.getNodeParameter('profileUrn', itemIndex, '') as string;
-                const commentUrn = context.getNodeParameter('commentUrn', itemIndex, '') as string;
-                const answerText = context.getNodeParameter('commentText', itemIndex, '') as string;
-                const mentionUser = context.getNodeParameter('mentionUser', itemIndex, false) as boolean;
-                const commenterName = context.getNodeParameter('commenterName', itemIndex, '') as string;
-                body.tracking_id = trackingId;
-                body.profile_urn = profileUrn;
-                body.comment_urn = commentUrn;
-                body.comment_text = answerText;
-                body.mention_user = mentionUser;
-                if (commenterName) body.commenter_name = commenterName;
+                const answerCommentParams = context.getNodeParameter('answerCommentParams', itemIndex, {}) as any;
+                if (answerCommentParams.trackingId) body.tracking_id = answerCommentParams.trackingId;
+                if (answerCommentParams.profileUrn) body.profile_urn = answerCommentParams.profileUrn;
+                if (answerCommentParams.commentUrn) body.comment_urn = answerCommentParams.commentUrn;
+                if (answerCommentParams.commentText) body.comment_text = answerCommentParams.commentText;
+                if (answerCommentParams.mentionUser !== undefined) body.mention_user = answerCommentParams.mentionUser;
+                if (answerCommentParams.commenterName) body.commenter_name = answerCommentParams.commenterName;
+                if (answerCommentParams.country) body.country = answerCommentParams.country;
                 break;
 
             case 'createPost':
-                const postText = context.getNodeParameter('messageText', itemIndex, '') as string;
-                const file = context.getNodeParameter('file', itemIndex, '') as string;
-                body.message = postText;
-                if (file) body.file = file;
+                const createPostParams = context.getNodeParameter('createPostParams', itemIndex, {}) as any;
+                if (createPostParams.messageText) body.message = createPostParams.messageText;
+                if (createPostParams.file) body.file = createPostParams.file;
+                if (createPostParams.country) body.country = createPostParams.country;
                 break;
 
-            case 'timeSpent':
-                const postUrlTime = context.getNodeParameter('postUrl', itemIndex, '') as string;
-                const duration = context.getNodeParameter('duration', itemIndex, 30) as number;
-                const durationStartTime = context.getNodeParameter('durationStartTime', itemIndex, Date.now()) as number;
-                body.post_url = postUrlTime;
-                body.duration = duration;
-                body.duration_start_time = durationStartTime;
+            case 'searchProfile':
+            case 'searchCompanies':
+            case 'searchPosts':
+            case 'searchCompaniesData':
+            case 'searchProfilesData':
+                const searchParams = context.getNodeParameter('searchParams', itemIndex, {}) as any;
+                if (searchParams.keyword) body.keyword = searchParams.keyword;
+                if (searchParams.country) body.country = searchParams.country;
+                
+                // Paramètres spécifiques par type de recherche
+                if (operation === 'searchProfile') {
+                    if (searchParams.location) body.location = searchParams.location;
+                    if (searchParams.company_url) body.company_url = searchParams.company_url;
+                    if (searchParams.school_url) body.school_url = searchParams.school_url;
+                    if (searchParams.network) body.network = searchParams.network;
+                    if (searchParams.first_name) body.first_name = searchParams.first_name;
+                    if (searchParams.last_name) body.last_name = searchParams.last_name;
+                    if (searchParams.title) body.title = searchParams.title;
+                    if (searchParams.fetch_invitation_state !== undefined) body.fetch_invitation_state = searchParams.fetch_invitation_state;
+                }
+                if (operation === 'searchCompanies') {
+                    if (searchParams.location) body.location = searchParams.location;
+                    if (searchParams.sector) body.sector = searchParams.sector;
+                    if (searchParams.company_size) body.company_size = searchParams.company_size;
+                }
+                if (operation === 'searchCompaniesData') {
+                    if (searchParams.industry) body.industry = searchParams.industry;
+                    if (searchParams.employee_range) body.employee_range = searchParams.employee_range;
+                    if (searchParams.founding_company !== undefined) body.founding_company = searchParams.founding_company;
+                }
+                if (operation === 'searchProfilesData') {
+                    if (searchParams.job_title) body.job_title = searchParams.job_title;
+                    if (searchParams.school) body.school = searchParams.school;
+                    if (searchParams.current_company) body.current_company = searchParams.current_company;
+                }
+                if (operation === 'searchPosts') {
+                    if (searchParams.post_type) body.post_type = searchParams.post_type;
+                    if (searchParams.sort_by) body.sort_by = searchParams.sort_by;
+                    if (searchParams.post_date) body.post_date = searchParams.post_date;
+                    if (searchParams.linkedin_url) body.linkedin_url = searchParams.linkedin_url;
+                }
+                
+                // Pagination commune
+                if (searchParams.total_results) body.total_results = searchParams.total_results;
+                if (searchParams.start_page) body.start_page = searchParams.start_page;
+                if (searchParams.end_page) body.end_page = searchParams.end_page;
                 break;
 
-            // Opérations RECRUITER
+            case 'getConnections':
+            case 'getReceivedInvitations':
+            case 'getSentInvitations':
+            case 'getNetworkRecommendations':
+            case 'getMessageInbox':
+            case 'getFeed':
+                const networkListParams = context.getNodeParameter('networkListParams', itemIndex, {}) as any;
+                if (networkListParams.country) body.country = networkListParams.country;
+                
+                if (operation === 'getReceivedInvitations' || operation === 'getSentInvitations') {
+                    if (networkListParams.invitation_type) body.invitation_type = networkListParams.invitation_type;
+                }
+                
+                // Pagination commune
+                if (networkListParams.total_results) body.total_results = networkListParams.total_results;
+                if (networkListParams.start_page) body.start_page = networkListParams.start_page;
+                if (networkListParams.end_page) body.end_page = networkListParams.end_page;
+                break;
+
             case 'getCandidates':
-                const yearsOfExperience = context.getNodeParameter('yearsOfExperience', itemIndex, '') as string;
-                const sortType = context.getNodeParameter('sortType', itemIndex, '') as string;
-                const sortOrder = context.getNodeParameter('sortOrder', itemIndex, '') as string;
-                const ratings = context.getNodeParameter('ratings', itemIndex, '') as string;
-                const start = context.getNodeParameter('start', itemIndex, '') as string;
-                if (yearsOfExperience) body.yearsOfExperience = yearsOfExperience;
-                if (sortType) body.sortType = sortType;
-                if (sortOrder) body.sortOrder = sortOrder;
-                if (ratings) body.ratings = ratings;
-                if (start) body.start = start;
+            case 'getJobPosts':
+                const recruiterParams = context.getNodeParameter('recruiterParams', itemIndex, {}) as any;
+                if (recruiterParams.country) body.country = recruiterParams.country;
+                
+                if (operation === 'getCandidates') {
+                    if (recruiterParams.yearsOfExperience) body.yearsOfExperience = recruiterParams.yearsOfExperience;
+                    if (recruiterParams.sortType) body.sortType = recruiterParams.sortType;
+                    if (recruiterParams.sortOrder) body.sortOrder = recruiterParams.sortOrder;
+                    if (recruiterParams.ratings) body.ratings = recruiterParams.ratings;
+                    if (recruiterParams.start) body.start = recruiterParams.start;
+                }
+                
+                // Pagination commune
+                if (recruiterParams.total_results) body.total_results = recruiterParams.total_results;
+                if (recruiterParams.start_page) body.start_page = recruiterParams.start_page;
+                if (recruiterParams.end_page) body.end_page = recruiterParams.end_page;
                 break;
 
             case 'createJob':
-                const jobTitle = context.getNodeParameter('jobTitle', itemIndex, '') as string;
-                const place = context.getNodeParameter('place', itemIndex, '') as string;
-                const htmlDescription = context.getNodeParameter('html_description', itemIndex, '') as string;
-                const employmentStatus = context.getNodeParameter('employment_status', itemIndex, '') as string;
-                const workplace = context.getNodeParameter('workplace', itemIndex, '') as string;
-                const skills = context.getNodeParameter('skills', itemIndex, '') as string;
-                const screeningQuestions = context.getNodeParameter('screening_questions', itemIndex, '') as string;
-                const autoRejectionTemplate = context.getNodeParameter('auto_rejection_template', itemIndex, '') as string;
-                const contactEmail = context.getNodeParameter('contact_email', itemIndex, '') as string;
-                if (jobTitle) body.title = jobTitle;
-                if (place) body.place = place;
-                if (htmlDescription) body.html_description = htmlDescription;
-                if (employmentStatus) body.employment_status = employmentStatus;
-                if (workplace) body.workplace = workplace;
-                if (skills) {
+                const createJobParams = context.getNodeParameter('createJobParams', itemIndex, {}) as any;
+                if (createJobParams.country) body.country = createJobParams.country;
+                
+                if (createJobParams.jobTitle) body.title = createJobParams.jobTitle;
+                if (createJobParams.place) body.place = createJobParams.place;
+                if (createJobParams.html_description) body.html_description = createJobParams.html_description;
+                if (createJobParams.employment_status) body.employment_status = createJobParams.employment_status;
+                if (createJobParams.workplace) body.workplace = createJobParams.workplace;
+                if (createJobParams.skills) {
                     try {
-                        body.skills = JSON.parse(skills);
+                        body.skills = JSON.parse(createJobParams.skills);
                     } catch {
-                        body.skills = skills;
+                        body.skills = createJobParams.skills;
                     }
                 }
-                if (screeningQuestions) {
+                if (createJobParams.screening_questions) {
                     try {
-                        body.screening_questions = JSON.parse(screeningQuestions);
+                        body.screening_questions = JSON.parse(createJobParams.screening_questions);
                     } catch {
-                        body.screening_questions = screeningQuestions;
+                        body.screening_questions = createJobParams.screening_questions;
                     }
                 }
-                if (autoRejectionTemplate) body.auto_rejection_template = autoRejectionTemplate;
-                if (contactEmail) body.contact_email = contactEmail;
+                if (createJobParams.auto_rejection_template) body.auto_rejection_template = createJobParams.auto_rejection_template;
+                if (createJobParams.contact_email) body.contact_email = createJobParams.contact_email;
                 break;
-        }
-
-        // Ajouter les paramètres communs selon l'opération
-        const commonParams = ['keyword', 'location', 'company_url', 'school_url', 'network', 'sector', 
-                             'company_size', 'first_name', 'last_name', 'title', 'invitation_type',
-                             'total_results', 'start_page', 'end_page', 'fetch_invitation_state',
-                             'industry', 'employee_range', 'founding_company', 'job_title', 'school', 
-                             'current_company', 'post_type', 'sort_by', 'post_date', 'linkedin_url'];
-
-        for (const param of commonParams) {
-            try {
-                const value = context.getNodeParameter(param, itemIndex, '') as any;
-                if (value !== undefined && value !== null && value !== '' && value !== 0) {
-                    body[param] = value;
-                }
-            } catch {
-                // Paramètre non disponible pour cette opération
-            }
         }
 
         // Ajouter le pays par défaut si pas spécifié
         if (!body.country) {
-            const country = context.getNodeParameter('country', itemIndex, 'FR') as string;
-            body.country = country;
+            body.country = 'FR';
         }
 
         return body;
