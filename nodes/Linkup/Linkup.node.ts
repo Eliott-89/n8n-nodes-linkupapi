@@ -1666,6 +1666,92 @@ export class Linkup implements INodeType {
                 // Pas de paramètres spécifiques, juste le login token
                 break;
 
+            case 'searchProfile':
+            case 'searchCompanies':
+            case 'searchPosts':
+            case 'searchCompaniesData':
+            case 'searchProfilesData':
+                const searchParams = context.getNodeParameter('searchParams', itemIndex, {}) as any;
+                if (searchParams.keyword) body.keyword = searchParams.keyword;
+                if (searchParams.country) body.country = searchParams.country;
+                
+                // Paramètres spécifiques par type de recherche
+                if (operation === 'searchProfile') {
+                    if (searchParams.location) body.location = searchParams.location;
+                    if (searchParams.company_url) body.company_url = searchParams.company_url;
+                    if (searchParams.school_url) body.school_url = searchParams.school_url;
+                    if (searchParams.network) body.network = searchParams.network;
+                    if (searchParams.first_name) body.first_name = searchParams.first_name;
+                    if (searchParams.last_name) body.last_name = searchParams.last_name;
+                    if (searchParams.title) body.title = searchParams.title;
+                    if (searchParams.fetch_invitation_state !== undefined) body.fetch_invitation_state = searchParams.fetch_invitation_state;
+                }
+                if (operation === 'searchCompanies') {
+                    if (searchParams.location) body.location = searchParams.location;
+                    if (searchParams.sector) body.sector = searchParams.sector;
+                    if (searchParams.company_size) body.company_size = searchParams.company_size;
+                }
+                if (operation === 'searchCompaniesData') {
+                    if (searchParams.industry) body.industry = searchParams.industry;
+                    if (searchParams.employee_range) body.employee_range = searchParams.employee_range;
+                    if (searchParams.founding_company !== undefined) body.founding_company = searchParams.founding_company;
+                }
+                if (operation === 'searchProfilesData') {
+                    if (searchParams.job_title) body.job_title = searchParams.job_title;
+                    if (searchParams.school) body.school = searchParams.school;
+                    if (searchParams.current_company) body.current_company = searchParams.current_company;
+                }
+                if (operation === 'searchPosts') {
+                    if (searchParams.post_type) body.post_type = searchParams.post_type;
+                    if (searchParams.sort_by) body.sort_by = searchParams.sort_by;
+                    if (searchParams.post_date) body.post_date = searchParams.post_date;
+                    if (searchParams.linkedin_url) body.linkedin_url = searchParams.linkedin_url;
+                }
+                
+                // Pagination commune
+                if (searchParams.total_results) body.total_results = searchParams.total_results;
+                if (searchParams.start_page) body.start_page = searchParams.start_page;
+                if (searchParams.end_page) body.end_page = searchParams.end_page;
+                break;
+
+            case 'getConnections':
+            case 'getReceivedInvitations':
+            case 'getSentInvitations':
+            case 'getNetworkRecommendations':
+            case 'getMessageInbox':
+            case 'getFeed':
+                const networkListParams = context.getNodeParameter('networkListParams', itemIndex, {}) as any;
+                if (networkListParams.country) body.country = networkListParams.country;
+                
+                if (operation === 'getReceivedInvitations' || operation === 'getSentInvitations') {
+                    if (networkListParams.invitation_type) body.invitation_type = networkListParams.invitation_type;
+                }
+                
+                // Pagination commune
+                if (networkListParams.total_results) body.total_results = networkListParams.total_results;
+                if (networkListParams.start_page) body.start_page = networkListParams.start_page;
+                if (networkListParams.end_page) body.end_page = networkListParams.end_page;
+                break;
+
+            case 'getCandidates':
+            case 'getJobPosts':
+                const recruiterParams = context.getNodeParameter('recruiterParams', itemIndex, {}) as any;
+                if (recruiterParams.country) body.country = recruiterParams.country;
+                
+                if (operation === 'getCandidates') {
+                    if (recruiterParams.yearsOfExperience) body.yearsOfExperience = recruiterParams.yearsOfExperience;
+                    if (recruiterParams.sortType) body.sortType = recruiterParams.sortType;
+                    if (recruiterParams.sortOrder) body.sortOrder = recruiterParams.sortOrder;
+                    if (recruiterParams.ratings) body.ratings = recruiterParams.ratings;
+                    if (recruiterParams.start) body.start = recruiterParams.start;
+                }
+                
+                // Pagination commune
+                if (recruiterParams.total_results) body.total_results = recruiterParams.total_results;
+                if (recruiterParams.start_page) body.start_page = recruiterParams.start_page;
+                if (recruiterParams.end_page) body.end_page = recruiterParams.end_page;
+                break;
+
             case 'createJob':
                 const createJobParams = context.getNodeParameter('createJobParams', itemIndex, {}) as any;
                 if (createJobParams.country) body.country = createJobParams.country;
