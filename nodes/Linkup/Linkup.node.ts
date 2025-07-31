@@ -1666,12 +1666,6 @@ export class Linkup implements INodeType {
                 // Pas de paramètres spécifiques, juste le login token
                 break;
 
-            case 'searchProfile':
-            case 'searchCompanies':
-            case 'searchPosts':
-            case 'searchCompaniesData':
-            case 'searchProfilesData':
-
             case 'createJob':
                 const createJobParams = context.getNodeParameter('createJobParams', itemIndex, {}) as any;
                 if (createJobParams.country) body.country = createJobParams.country;
