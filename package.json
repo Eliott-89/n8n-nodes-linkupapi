@@ -1,33 +1,40 @@
 {
-  "name": "n8n-nodes-linkup-clean",
-  "version": "1.1.24",
-  "description": "n8n community node for LINKUP API - LinkedIn automation and data extraction",
+  "name": "n8n-nodes-linkup",
+  "version": "1.2.0",
+  "description": "n8n node for LINKUP API - LinkedIn automation",
   "keywords": [
-    "n8n",
-    "linkup",
-    "linkup-api",
     "n8n-community-node-package",
+    "n8n",
     "linkedin",
+    "linkup",
     "automation",
     "scraping",
-    "data-extraction"
+    "api"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Eliott-89/n8n-nodes-linkup",
+  "homepage": "https://github.com/eliottcerpaud/n8n-nodes-linkup",
   "author": {
-    "name": "LINKUP API",
-    "email": "support@linkupapi.com"
+    "name": "Eliott Cerpaud",
+    "email": "eliott@example.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eliott-89/n8n-nodes-linkup.git"
+    "url": "git+https://github.com/eliottcerpaud/n8n-nodes-linkup.git"
   },
+  "engines": {
+    "node": ">=18.10",
+    "pnpm": ">=8.6"
+  },
+  "packageManager": "pnpm@8.6.2",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
-    "prepublishOnly": "npm run build"
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
   },
   "files": [
     "dist"
@@ -42,16 +49,15 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^18.15.0",
-    "gulp": "^5.0.1",
-    "micromatch": "^4.0.8",
-    "typescript": "^4.9.5"
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-n8n-nodes-base": "^1.11.0",
+    "gulp": "^4.0.2",
+    "n8n-workflow": "*",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "n8n-workflow": ">=1.0.0"
-  },
-  "dependencies": {
-    "n8n-nodes-linkup-clean": "^1.1.8",
-    "regex-not": "^1.0.2"
+    "n8n-workflow": "*"
   }
 }

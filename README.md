@@ -1,126 +1,141 @@
-# n8n-nodes-linkup-api
+# n8n-nodes-linkup
 
-[![NPM Version](https://img.shields.io/npm/v/n8n-nodes-linkup-api)](https://www.npmjs.com/package/n8n-nodes-linkup-api)
-[![License](https://img.shields.io/npm/l/n8n-nodes-linkup-api)](https://github.com/Eliott-89/n8n-nodes-linkup/blob/main/LICENSE)
+[![npm version](https://badge.fury.io/js/n8n-nodes-linkup.svg)](https://badge.fury.io/js/n8n-nodes-linkup)
 
-This is an n8n community node that integrates with the LINKUP API for LinkedIn automation and data extraction.
+Un nœud n8n pour l'API LINKUP permettant l'automatisation LinkedIn.
 
-## Installation
+## 🚀 Installation
 
-### Community Nodes (Recommended)
+### Installation via n8n Community Nodes
 
-1. Go to **Settings > Community Nodes** in your n8n instance
-2. Select **Install**
-3. Enter `n8n-nodes-linkup-api`
-4. Click **Install**
+1. Dans n8n, allez dans **Settings** > **Community Nodes**
+2. Cliquez sur **Install a community node**
+3. Entrez : `n8n-nodes-linkup`
+4. Cliquez sur **Install**
 
-### Manual Installation
-
-To install this node locally:
+### Installation manuelle
 
 ```bash
-npm install n8n-nodes-linkup-api
+npm install n8n-nodes-linkup
 ```
 
-## Prerequisites
+## 🔧 Configuration
 
-- n8n version 0.174.0 or higher
-- LINKUP API account and API key
-- LinkedIn account credentials
+1. **Créer un compte LINKUP** sur [linkupapi.com](https://linkupapi.com)
+2. **Obtenir votre clé API** depuis le dashboard
+3. **Configurer les credentials** dans n8n :
+   - Clé API LINKUP
+   - Email LinkedIn
+   - Mot de passe LinkedIn
+   - Pays (optionnel, FR par défaut)
 
-## Setup
+## 📋 Fonctionnalités
 
-1. **Get your LINKUP API key**
-   - Sign up at [LINKUP API](https://linkupapi.com/)
-   - Get your API key from the dashboard
+### 🔑 Authentification
+- **Login to LinkedIn** - Authentification LinkedIn
+- **Verify security code** - Validation code 2FA
 
-2. **Configure credentials in n8n**
-   - Go to **Credentials** in n8n
-   - Create new **LINKUP API** credentials
-   - Enter your API key and LinkedIn credentials
+### 👤 Profils
+- **Get my LinkedIn profile** - Récupérer votre profil
+- **Extract LinkedIn profile info** - Analyser un profil public
+- **Search LinkedIn profiles** - Recherche de profils
 
-## Supported Operations
+### 🏢 Entreprises
+- **Search LinkedIn companies** - Recherche d'entreprises
+- **Get LinkedIn company info** - Infos détaillées entreprise
 
-### Authentication
-- **Login**: Authenticate with LinkedIn credentials
-- **Verify Code**: Verify security code when required
+### 🤝 Réseau
+- **Send connection request** - Envoyer une invitation
+- **Get connections** - Liste de vos connexions
+- **Accept/Withdraw invitations** - Gérer les invitations
+- **Get network recommendations** - Suggestions de connexions
 
-## Usage
+### 💬 Messages
+- **Send LinkedIn message** - Envoyer un message
+- **Get message inbox** - Boîte de réception
+- **Get conversation messages** - Historique conversation
 
-### Basic Login
-1. Add the LINKUP node to your workflow
-2. Select **Login** operation
-3. Configure your credentials
-4. Execute the node
+### 📝 Posts
+- **Create/Comment/React** - Créer et interagir avec les posts
+- **Get post reactions** - Réactions d'un post
+- **Extract comments** - Commentaires d'un post
+- **Search posts** - Recherche de posts
+- **Get feed** - Récupérer le feed
 
-### Handle Verification
-If LinkedIn requires verification:
-1. Use the **Login** operation first
-2. Check the response for `requires_verification: true`
-3. Use the **Verify Code** operation with the code received by email
+### 🧑‍💼 Recruiter
+- **Get candidates** - Liste des candidats
+- **Get candidate CV** - Télécharger CV
+- **Manage job posts** - Gérer les offres d'emploi
 
-## 🚀 Roadmap
+### 📊 Data (Enrichissement)
+- **Search companies (Data)** - Recherche avancée entreprises
+- **Search profiles (Data)** - Recherche avancée profils
 
-### Current Features (v1.0.0)
-- ✅ LinkedIn Authentication
-- ✅ Security Code Verification
+## 💡 Utilisation
 
-### Coming Soon
-- 🔄 Profile Search
-- 🔄 Company Search  
-- 🔄 Job Search
-- 🔄 Connection Management
-- 🔄 Message Sending
-- 🔄 Post Management
+1. **Ajoutez le nœud LINKUP** à votre workflow
+2. **Sélectionnez une opération** (36 disponibles)
+3. **Configurez les paramètres** dans "Paramètres Linkup" (tous optionnels)
+4. **Exécutez** votre workflow
 
-## 🤝 Contributing
+### Exemple : Recherche de profils
 
-We welcome contributions! Here's how you can help:
+```typescript
+Opération: "Search LinkedIn profiles"
+Paramètres Linkup:
+  - Mot-clé: "développeur"
+  - Lieu: "Paris"
+  - Entreprise: "google;microsoft"
+  - Nombre de résultats: 50
+```
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-endpoint`
-3. Commit your changes: `git commit -m 'Add new endpoint'`
-4. Push to the branch: `git push origin feature/new-endpoint`
-5. Open a Pull Request
+## 🛠️ Développement
 
-## 📦 Development
+### Prérequis
+- Node.js >= 18.10
+- pnpm >= 8.6
 
+### Installation locale
 ```bash
-# Clone the repository
-git clone https://github.com/linkup-api/n8n-nodes-linkup.git
+git clone https://github.com/eliottcerpaud/n8n-nodes-linkup.git
 cd n8n-nodes-linkup
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Test locally
-npm link
+pnpm install
+pnpm build
 ```
 
-## API Reference
+### Structure du projet
+```
+├── credentials/LinkupApi.credentials.ts  # Configuration credentials
+├── nodes/Linkup/Linkup.node.ts          # Nœud principal
+└── nodes/Linkup/linkup.svg              # Icône
+```
 
-This node uses the LINKUP API v1. For detailed API documentation, visit [LINKUP API Docs](https://docs.linkupapi.com/).
+## 📚 Documentation API
 
-## Contributing
+Consultez la [documentation officielle LINKUP](https://docs.linkupapi.com/) pour plus de détails sur les paramètres et réponses API.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 🐛 Support
 
-## License
+- **Issues** : [GitHub Issues](https://github.com/eliottcerpaud/n8n-nodes-linkup/issues)
+- **Documentation LINKUP** : [docs.linkupapi.com](https://docs.linkupapi.com/)
 
-MIT License - see the [LICENSE](LICENSE) file for details.
+## 📄 Licence
 
-## Support
+MIT
 
-For issues and questions:
-- GitHub Issues: [Report a bug](https://github.com/linkup-api/n8n-nodes-linkup/issues)
-- LINKUP API Support: [API Documentation](https://docs.linkupapi.com/)
+## 🔄 Changelog
 
-## Changelog
+### v1.2.0
+- ✅ 36 opérations LinkedIn complètes
+- ✅ Interface simplifiée (paramètres optionnels)
+- ✅ Support complet API LINKUP
+- ✅ Gestion automatique credentials
+- ✅ Opérations DATA ajoutées
 
-### 1.0.0
-- Initial release
-- Login authentication support
-- Verification code support
+### v1.1.0
+- ✅ Première version stable
+- ✅ 34 opérations de base
+
+---
+
+**Créé avec ❤️ pour la communauté n8n**

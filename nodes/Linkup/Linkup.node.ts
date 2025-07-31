@@ -10,7 +10,20 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = 'https://api.linkupapi.com/v1';
-const NODE_VERSION = '1.1.0';
+const NODE_VERSION = '1.2.0';
+
+// Types pour une meilleure organisation
+interface LinkupCredentials {
+    apiKey: string;
+    email?: string;
+    password?: string;
+    country?: string;
+    loginToken?: string;
+}
+
+interface RequestBody {
+    [key: string]: any;
+}
 
 export class Linkup implements INodeType {
     description: INodeTypeDescription = {
@@ -29,497 +42,569 @@ export class Linkup implements INodeType {
         credentials: [
             {
                 name: 'linkupApi',
-                required: false,
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [false],
-                    },
-                },
+                required: true,
             },
         ],
         properties: [
+            // === OPERATION SELECTOR ===
             {
                 displayName: 'Operation',
                 name: 'operation',
                 type: 'options',
                 noDataExpression: true,
                 options: [
-                    // --- AUTHENTICATION ---
-                    { name: '🔑 AUTH | Login to LinkedIn', value: 'login', description: 'Authentifier votre compte LinkedIn via Linkup', action: 'Login to LinkedIn' },
-                    { name: '🔑 AUTH | Verify security code', value: 'verifyCode', description: 'Valider le code de sécurité reçu par email', action: 'Verify security code' },
+                    // AUTH
+                    { name: '🔑 AUTH | Login to LinkedIn', value: 'login', description: 'Authentifier votre compte LinkedIn via Linkup' },
+                    { name: '🔑 AUTH | Verify security code', value: 'verifyCode', description: 'Valider le code de sécurité reçu par email' },
 
-                    // --- PROFILE ---
-                    { name: '👤 PROFILE | Get my LinkedIn profile', value: 'getMyProfile', description: 'Récupérer les infos de votre profil LinkedIn', action: 'Get my LinkedIn profile' },
-                    { name: '👤 PROFILE | Extract LinkedIn profile info', value: 'extractProfileInfo', description: 'Extraire les infos d\'un profil LinkedIn public', action: 'Extract LinkedIn profile info' },
-                    { name: '👤 PROFILE | Search LinkedIn profiles', value: 'searchProfile', description: 'Rechercher des profils LinkedIn', action: 'Search LinkedIn profiles' },
+                    // PROFILE
+                    { name: '👤 PROFILE | Get my LinkedIn profile', value: 'getMyProfile', description: 'Récupérer les infos de votre profil LinkedIn' },
+                    { name: '👤 PROFILE | Extract LinkedIn profile info', value: 'extractProfileInfo', description: 'Extraire les infos d\'un profil LinkedIn public' },
+                    { name: '👤 PROFILE | Search LinkedIn profiles', value: 'searchProfile', description: 'Rechercher des profils LinkedIn' },
 
-                    // --- COMPANIES ---
-                    { name: '🏢 COMPANIES | Search LinkedIn companies', value: 'searchCompanies', description: 'Rechercher des entreprises LinkedIn', action: 'Search LinkedIn companies' },
-                    { name: '🏢 COMPANIES | Get LinkedIn company info', value: 'getCompanyInfo', description: 'Obtenir les infos d\'une entreprise LinkedIn', action: 'Get LinkedIn company info' },
+                    // COMPANIES
+                    { name: '🏢 COMPANIES | Search LinkedIn companies', value: 'searchCompanies', description: 'Rechercher des entreprises LinkedIn' },
+                    { name: '🏢 COMPANIES | Get LinkedIn company info', value: 'getCompanyInfo', description: 'Obtenir les infos d\'une entreprise LinkedIn' },
 
-                    // --- NETWORK ---
-                    { name: '🤝 NETWORK | Send LinkedIn connection request', value: 'sendConnectionRequest', description: 'Envoyer une invitation LinkedIn', action: 'Send LinkedIn connection request' },
-                    { name: '🤝 NETWORK | Get LinkedIn connections', value: 'getConnections', description: 'Récupérer la liste de vos connexions LinkedIn', action: 'Get LinkedIn connections' },
-                    { name: '🤝 NETWORK | Accept LinkedIn connection invitation', value: 'acceptConnectionInvitation', description: 'Accepter une invitation LinkedIn reçue', action: 'Accept LinkedIn connection invitation' },
-                    { name: '🤝 NETWORK | Get LinkedIn received invitations', value: 'getReceivedInvitations', description: 'Lister les invitations LinkedIn reçues', action: 'Get LinkedIn received invitations' },
-                    { name: '🤝 NETWORK | Get LinkedIn sent invitations', value: 'getSentInvitations', description: 'Lister les invitations LinkedIn envoyées', action: 'Get LinkedIn sent invitations' },
-                    { name: '🤝 NETWORK | Withdraw LinkedIn invitation', value: 'withdrawInvitation', description: 'Annuler une invitation LinkedIn envoyée', action: 'Withdraw LinkedIn invitation' },
-                    { name: '🤝 NETWORK | Get LinkedIn network recommendations', value: 'getNetworkRecommendations', description: 'Obtenir des recommandations de profils à ajouter', action: 'Get LinkedIn network recommendations' },
-                    { name: '🤝 NETWORK | Get LinkedIn invitation status', value: 'getInvitationStatus', description: 'Vérifier le statut d\'une invitation LinkedIn', action: 'Get LinkedIn invitation status' },
+                    // NETWORK
+                    { name: '🤝 NETWORK | Send LinkedIn connection request', value: 'sendConnectionRequest', description: 'Envoyer une invitation LinkedIn' },
+                    { name: '🤝 NETWORK | Get LinkedIn connections', value: 'getConnections', description: 'Récupérer la liste de vos connexions LinkedIn' },
+                    { name: '🤝 NETWORK | Accept LinkedIn connection invitation', value: 'acceptConnectionInvitation', description: 'Accepter une invitation LinkedIn reçue' },
+                    { name: '🤝 NETWORK | Get LinkedIn received invitations', value: 'getReceivedInvitations', description: 'Lister les invitations LinkedIn reçues' },
+                    { name: '🤝 NETWORK | Get LinkedIn sent invitations', value: 'getSentInvitations', description: 'Lister les invitations LinkedIn envoyées' },
+                    { name: '🤝 NETWORK | Withdraw LinkedIn invitation', value: 'withdrawInvitation', description: 'Annuler une invitation LinkedIn envoyée' },
+                    { name: '🤝 NETWORK | Get LinkedIn network recommendations', value: 'getNetworkRecommendations', description: 'Obtenir des recommandations de profils à ajouter' },
+                    { name: '🤝 NETWORK | Get LinkedIn invitation status', value: 'getInvitationStatus', description: 'Vérifier le statut d\'une invitation LinkedIn' },
 
-                    // --- MESSAGES ---
-                    { name: '💬 MESSAGES | Send LinkedIn message', value: 'sendMessage', description: 'Envoyer un message LinkedIn', action: 'Send LinkedIn message' },
-                    { name: '💬 MESSAGES | Get LinkedIn message inbox', value: 'getMessageInbox', description: 'Récupérer la liste des conversations LinkedIn', action: 'Get LinkedIn message inbox' },
-                    { name: '💬 MESSAGES | Get LinkedIn conversation messages', value: 'getConversationMessages', description: 'Récupérer l\'historique d\'une conversation LinkedIn', action: 'Get LinkedIn conversation messages' },
+                    // MESSAGES
+                    { name: '💬 MESSAGES | Send LinkedIn message', value: 'sendMessage', description: 'Envoyer un message LinkedIn' },
+                    { name: '💬 MESSAGES | Get LinkedIn message inbox', value: 'getMessageInbox', description: 'Récupérer la liste des conversations LinkedIn' },
+                    { name: '💬 MESSAGES | Get LinkedIn conversation messages', value: 'getConversationMessages', description: 'Récupérer l\'historique d\'une conversation LinkedIn' },
 
-                    // --- RECRUITER ---
-                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidates', value: 'getCandidates', description: 'Lister les candidats d\'une offre LinkedIn Recruiter', action: 'Get LinkedIn candidates' },
-                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidate CV', value: 'getCandidateCV', description: 'Télécharger le CV d\'un candidat LinkedIn Recruiter', action: 'Get LinkedIn candidate CV' },
-                    { name: '🧑‍💼 RECRUITER | Get LinkedIn job posts', value: 'getJobPosts', description: 'Lister les offres d\'emploi LinkedIn Recruiter', action: 'Get LinkedIn job posts' },
-                    { name: '🧑‍💼 RECRUITER | Publish LinkedIn job', value: 'publishJob', description: 'Publier une offre d\'emploi LinkedIn Recruiter', action: 'Publish LinkedIn job' },
-                    { name: '🧑‍💼 RECRUITER | Close LinkedIn job', value: 'closeJob', description: 'Fermer une offre d\'emploi LinkedIn Recruiter', action: 'Close LinkedIn job' },
-                    { name: '🧑‍💼 RECRUITER | Create LinkedIn job', value: 'createJob', description: 'Créer une nouvelle offre d\'emploi LinkedIn Recruiter', action: 'Create LinkedIn job' },
+                    // POSTS
+                    { name: '📝 POSTS | Get post reactions', value: 'getPostReactions', description: 'Récupérer les réactions d\'un post' },
+                    { name: '📝 POSTS | React to post', value: 'reactToPost', description: 'Réagir à un post' },
+                    { name: '📝 POSTS | Repost', value: 'repost', description: 'Reposter un post' },
+                    { name: '📝 POSTS | Comment post', value: 'commentPost', description: 'Commenter un post' },
+                    { name: '📝 POSTS | Extract comments', value: 'extractComments', description: 'Extraire les commentaires d\'un post' },
+                    { name: '📝 POSTS | Answer comment', value: 'answerComment', description: 'Répondre à un commentaire' },
+                    { name: '📝 POSTS | Search posts', value: 'searchPosts', description: 'Rechercher des posts' },
+                    { name: '📝 POSTS | Create post', value: 'createPost', description: 'Créer un post' },
+                    { name: '📝 POSTS | Get feed', value: 'getFeed', description: 'Récupérer le feed' },
+                    { name: '📝 POSTS | Time spent on post', value: 'timeSpent', description: 'Enregistrer le temps passé sur un post' },
 
-                    // --- DATA ---
-                    { name: '📊 DATA | Search companies (Data)', value: 'searchCompaniesData', description: 'Recherche avancée d\'entreprises (Data/Enrichment)', action: 'Search companies (Data)' },
-                    { name: '📊 DATA | Search profiles (Data)', value: 'searchProfilesData', description: 'Recherche avancée de profils (Data/Enrichment)', action: 'Search profiles (Data)' },
+                    // RECRUITER
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidates', value: 'getCandidates', description: 'Lister les candidats d\'une offre LinkedIn Recruiter' },
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn candidate CV', value: 'getCandidateCV', description: 'Télécharger le CV d\'un candidat LinkedIn Recruiter' },
+                    { name: '🧑‍💼 RECRUITER | Get LinkedIn job posts', value: 'getJobPosts', description: 'Lister les offres d\'emploi LinkedIn Recruiter' },
+                    { name: '🧑‍💼 RECRUITER | Publish LinkedIn job', value: 'publishJob', description: 'Publier une offre d\'emploi LinkedIn Recruiter' },
+                    { name: '🧑‍💼 RECRUITER | Close LinkedIn job', value: 'closeJob', description: 'Fermer une offre d\'emploi LinkedIn Recruiter' },
+                    { name: '🧑‍💼 RECRUITER | Create LinkedIn job', value: 'createJob', description: 'Créer une nouvelle offre d\'emploi LinkedIn Recruiter' },
 
-                    // --- POSTS ---
-                    { name: '📝 POSTS | Get post reactions', value: 'getPostReactions', description: 'Récupérer les réactions d\'un post', action: 'Get post reactions' },
-                    { name: '📝 POSTS | React to post', value: 'reactToPost', description: 'Réagir à un post', action: 'React to post' },
-                    { name: '📝 POSTS | Repost', value: 'repost', description: 'Reposter un post', action: 'Repost' },
-                    { name: '📝 POSTS | Comment post', value: 'commentPost', description: 'Commenter un post', action: 'Comment post' },
-                    { name: '📝 POSTS | Extract comments', value: 'extractComments', description: 'Extraire les commentaires d\'un post', action: 'Extract comments' },
-                    { name: '📝 POSTS | Answer comment', value: 'answerComment', description: 'Répondre à un commentaire', action: 'Answer comment' },
-                    { name: '📝 POSTS | Search posts', value: 'searchPosts', description: 'Rechercher des posts', action: 'Search posts' },
-                    { name: '📝 POSTS | Create post', value: 'createPost', description: 'Créer un post', action: 'Create post' },
-                    { name: '📝 POSTS | Get feed', value: 'getFeed', description: 'Récupérer le feed', action: 'Get feed' },
-                    { name: '📝 POSTS | Time spent on post', value: 'timeSpent', description: 'Enregistrer le temps passé sur un post', action: 'Time spent on post' },
+                    // DATA (NOUVEAUX)
+                    { name: '📊 DATA | Search companies (Data)', value: 'searchCompaniesData', description: 'Recherche avancée d\'entreprises (Data/Enrichment)' },
+                    { name: '📊 DATA | Search profiles (Data)', value: 'searchProfilesData', description: 'Recherche avancée de profils (Data/Enrichment)' },
                 ],
                 default: 'login',
             },
-            {
-                displayName: 'Utiliser des credentials personnalisées',
-                name: 'useCustomCredentials',
-                type: 'boolean',
-                default: false,
-                description: 'Utiliser des credentials personnalisées au lieu de celles sauvegardées (option de secours)',
-            },
-            // Credentials personnalisées (fallback)
-            {
-                displayName: 'LINKUP API Key',
-                name: 'customApiKey',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Clé API LINKUP',
-                description: 'Votre clé API LINKUP depuis le dashboard linkupapi.com',
-            },
-            {
-                displayName: 'Email LinkedIn',
-                name: 'customLinkedinEmail',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [true],
-                        operation: ['login'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'votre@email.com',
-                description: 'Adresse email de votre compte LinkedIn',
-            },
-            {
-                displayName: 'Mot de passe LinkedIn',
-                name: 'customLinkedinPassword',
-                type: 'string',
-                typeOptions: { password: true },
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [true],
-                        operation: ['login'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'Mot de passe LinkedIn',
-                description: 'Mot de passe de votre compte LinkedIn',
-            },
-            {
-                displayName: 'Pays',
-                name: 'customCountry',
-                type: 'options',
-                options: [
-                    {
-                        name: 'France',
-                        value: 'FR',
-                    },
-                    {
-                        name: 'États-Unis',
-                        value: 'US',
-                    },
-                    {
-                        name: 'Royaume-Uni',
-                        value: 'UK',
-                    },
-                ],
-                displayOptions: {
-                    show: {
-                        useCustomCredentials: [true],
-                        operation: ['login', 'verifyCode'],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            // Verify code operation fields
-            {
-                displayName: 'Email',
-                name: 'verifyEmail',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['verifyCode'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'votre@email.com',
-                description: 'Adresse email utilisée pour la connexion',
-            },
-            {
-                displayName: 'Code de vérification',
-                name: 'verificationCode',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['verifyCode'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: '123456',
-                description: 'Code de sécurité reçu par email',
-            },
-            // Champs pour Get My Profile
-            {
-                displayName: 'Pays',
-                name: 'getMyProfileCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['getMyProfile'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            // Champs pour Extract Profile Information
-            {
-                displayName: 'Pays',
-                name: 'extractProfileCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['extractProfileInfo'],
-                        useCustomCredentials: [true],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            // Champs pour Search Profile (nouvelle structure)
-            {
-                displayName: 'Pays',
-                name: 'searchProfileCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
-            },
+
+            // === PARAMÈTRES LINKUP (TOUS NON-OBLIGATOIRES) ===
             {
                 displayName: 'Paramètres Linkup',
-                name: 'searchProfileOptions',
+                name: 'linkupParams',
                 type: 'collection',
-                placeholder: 'Ajouter une option',
-                displayOptions: {
-                    show: {
-                        operation: ['searchProfile'],
-                    },
-                },
+                placeholder: 'Ajouter un paramètre',
                 default: {},
                 options: [
+                    // AUTH & VERIFICATION
                     {
-                        displayName: 'Company URL(s)',
-                        name: 'company_url',
+                        displayName: 'Code de vérification',
+                        name: 'verificationCode',
                         type: 'string',
-                        placeholder: 'google;microsoft;apple',
-                        description: 'URL(s) ou identifiant(s) d\'entreprise LinkedIn (séparés par ;)',
                         default: '',
+                        description: 'Code de sécurité reçu par email (verifyCode)',
+                    },
+
+                    // URLS
+                    {
+                        displayName: 'URL profil LinkedIn',
+                        name: 'profileUrl',
+                        type: 'string',
+                        default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn (extractProfileInfo, sendConnectionRequest, getInvitationStatus)',
                     },
                     {
-                        displayName: 'Location(s)',
-                        name: 'location',
+                        displayName: 'URL entreprise LinkedIn',
+                        name: 'companyUrl',
                         type: 'string',
-                        placeholder: 'Paris;London;New York',
-                        description: 'Lieu(x) géographique(s) (séparés par ;)',
                         default: '',
+                        placeholder: 'https://www.linkedin.com/company/stripe/',
+                        description: 'URL de l\'entreprise LinkedIn (getCompanyInfo)',
                     },
                     {
-                        displayName: 'School URL(s)',
-                        name: 'school_url',
+                        displayName: 'URL post LinkedIn',
+                        name: 'postUrl',
                         type: 'string',
-                        placeholder: 'harvard;stanford;mit',
-                        description: 'URL(s) ou identifiant(s) d\'école LinkedIn (séparés par ;)',
                         default: '',
+                        placeholder: 'https://www.linkedin.com/feed/update/xxx',
+                        description: 'URL du post LinkedIn (getPostReactions, reactToPost, repost, commentPost, extractComments, timeSpent)',
                     },
                     {
-                        displayName: 'Network',
-                        name: 'network',
+                        displayName: 'URL destinataire message',
+                        name: 'messageRecipientUrl',
                         type: 'string',
-                        placeholder: 'F;S;O',
-                        description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau, séparés par ;)',
                         default: '',
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL du profil LinkedIn du destinataire (sendMessage)',
+                    },
+
+                    // IDENTIFIANTS
+                    {
+                        displayName: 'Conversation ID',
+                        name: 'conversationId',
+                        type: 'string',
+                        default: '',
+                        description: 'Identifiant unique de la conversation LinkedIn (getConversationMessages)',
                     },
                     {
-                        displayName: 'Keyword',
+                        displayName: 'Invitation ID',
+                        name: 'invitationId',
+                        type: 'string',
+                        default: '',
+                        description: 'ID de l\'invitation à retirer (withdrawInvitation)',
+                    },
+                    {
+                        displayName: 'Shared Secret',
+                        name: 'sharedSecret',
+                        type: 'string',
+                        default: '',
+                        description: 'Shared secret de l\'invitation (acceptConnectionInvitation)',
+                    },
+                    {
+                        displayName: 'Entity URN',
+                        name: 'entityUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN de l\'invitation (acceptConnectionInvitation)',
+                    },
+
+                    // POSTS - Champs spécifiques
+                    {
+                        displayName: 'Type de réaction',
+                        name: 'reactionType',
+                        type: 'options',
+                        options: [
+                            { name: '👍 Like', value: 'LIKE' },
+                            { name: '🎉 Celebrate', value: 'CELEBRATE' },
+                            { name: '💪 Support', value: 'SUPPORT' },
+                            { name: '❤️ Love', value: 'LOVE' },
+                            { name: '💡 Insightful', value: 'INSIGHTFUL' },
+                            { name: '🤔 Curious', value: 'CURIOUS' },
+                        ],
+                        default: 'LIKE',
+                        description: 'Type de réaction à appliquer (reactToPost)',
+                    },
+                    {
+                        displayName: 'Message/Texte',
+                        name: 'messageText',
+                        type: 'string',
+                        default: '',
+                        description: 'Texte du message, commentaire ou post (sendMessage, commentPost, createPost)',
+                    },
+                    {
+                        displayName: 'Lien média',
+                        name: 'mediaLink',
+                        type: 'string',
+                        default: '',
+                        description: 'URL directe d\'un média à joindre (sendMessage)',
+                    },
+
+                    // ANSWER COMMENT - Champs spécifiques
+                    {
+                        displayName: 'Tracking ID',
+                        name: 'trackingId',
+                        type: 'string',
+                        default: '',
+                        description: 'Tracking ID du post (answerComment)',
+                    },
+                    {
+                        displayName: 'Profile URN',
+                        name: 'profileUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN du profil qui répond (answerComment)',
+                    },
+                    {
+                        displayName: 'Comment URN',
+                        name: 'commentUrn',
+                        type: 'string',
+                        default: '',
+                        description: 'URN du commentaire parent (answerComment)',
+                    },
+                    {
+                        displayName: 'Texte du commentaire',
+                        name: 'commentText',
+                        type: 'string',
+                        default: '',
+                        description: 'Texte de la réponse au commentaire (answerComment)',
+                    },
+                    {
+                        displayName: 'Mentionner l\'utilisateur',
+                        name: 'mentionUser',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Mentionner l\'utilisateur dans la réponse (answerComment)',
+                    },
+                    {
+                        displayName: 'Nom du commentateur',
+                        name: 'commenterName',
+                        type: 'string',
+                        default: '',
+                        description: 'Nom du commentateur original (answerComment)',
+                    },
+
+                    // TIME SPENT
+                    {
+                        displayName: 'Durée (secondes)',
+                        name: 'duration',
+                        type: 'number',
+                        default: 30,
+                        description: 'Durée passée sur le post en secondes (timeSpent)',
+                    },
+                    {
+                        displayName: 'Heure de début (timestamp)',
+                        name: 'durationStartTime',
+                        type: 'number',
+                        default: '',
+                        description: 'Timestamp Unix du début de visualisation en millisecondes (timeSpent)',
+                    },
+
+                    // RECHERCHE & FILTRES
+                    {
+                        displayName: 'Mot-clé',
                         name: 'keyword',
                         type: 'string',
+                        default: '',
                         description: 'Mot-clé de recherche',
-                        default: '',
                     },
                     {
-                        displayName: 'Nombre de résultats',
-                        name: 'total_results',
-                        type: 'number',
-                        default: 10,
-                        description: 'Nombre de profils à récupérer',
-                    },
-                    {
-                        displayName: 'Page de début',
-                        name: 'start_page',
-                        type: 'number',
-                        default: 1,
-                        description: 'Première page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Page de fin',
-                        name: 'end_page',
-                        type: 'number',
-                        default: 1,
-                        description: 'Dernière page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Prénom',
-                        name: 'first_name',
-                        type: 'string',
-                        description: 'Filtrer par prénom',
-                        default: '',
-                    },
-                    {
-                        displayName: 'Nom',
-                        name: 'last_name',
-                        type: 'string',
-                        description: 'Filtrer par nom',
-                        default: '',
-                    },
-                    {
-                        displayName: 'Titre',
-                        name: 'title',
-                        type: 'string',
-                        description: 'Filtrer par titre',
-                        default: '',
-                    },
-                    {
-                        displayName: 'Afficher l\'état d\'invitation',
-                        name: 'fetch_invitation_state',
-                        type: 'boolean',
-                        default: true,
-                        description: 'Inclure l\'état d\'invitation/connexion pour chaque profil',
-                    },
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            // Champs pour Search Companies (nouvelle structure)
-            {
-                displayName: 'Pays',
-                name: 'searchCompaniesCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'searchCompaniesOptions',
-                type: 'collection',
-                placeholder: 'Ajouter une option',
-                displayOptions: {
-                    show: {
-                        operation: ['searchCompanies'],
-                    },
-                },
-                default: {},
-                options: [
-                    {
-                        displayName: 'Location(s)',
+                        displayName: 'Lieu(x)',
                         name: 'location',
                         type: 'string',
-                        placeholder: 'Paris;France;Europe',
-                        description: 'Lieu(x) géographique(s) (séparés par ;)',
                         default: '',
+                        description: 'Lieu(x) géographique(s) (séparés par ;)',
+                    },
+                    {
+                        displayName: 'Entreprise(s)',
+                        name: 'company_url',
+                        type: 'string',
+                        default: '',
+                        description: 'URL(s) d\'entreprise LinkedIn (séparées par ;)',
+                    },
+                    {
+                        displayName: 'École(s)',
+                        name: 'school_url',
+                        type: 'string',
+                        default: '',
+                        description: 'URL(s) d\'école LinkedIn (séparées par ;)',
+                    },
+                    {
+                        displayName: 'Réseau',
+                        name: 'network',
+                        type: 'string',
+                        default: '',
+                        description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau)',
                     },
                     {
                         displayName: 'Secteur(s)',
                         name: 'sector',
                         type: 'string',
-                        placeholder: 'Software;Finance;Marketing',
+                        default: '',
                         description: 'Secteur(s) d\'activité (séparés par ;)',
-                        default: '',
                     },
                     {
-                        displayName: 'Mot-clé',
-                        name: 'keyword',
-                        type: 'string',
-                        description: 'Mot-clé de recherche',
-                        default: '',
-                    },
-                    {
-                        displayName: 'Taille de l\'entreprise',
+                        displayName: 'Taille entreprise',
                         name: 'company_size',
                         type: 'string',
-                        placeholder: '1-10;11-50;51-200',
-                        description: 'Plage de taille d\'entreprise (séparées par ;)',
                         default: '',
+                        description: 'Plage de taille d\'entreprise',
                     },
+                    {
+                        displayName: 'Prénom',
+                        name: 'first_name',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par prénom',
+                    },
+                    {
+                        displayName: 'Nom',
+                        name: 'last_name',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par nom',
+                    },
+                    {
+                        displayName: 'Titre/Poste',
+                        name: 'title',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par titre/poste',
+                    },
+                    {
+                        displayName: 'Type d\'invitation',
+                        name: 'invitation_type',
+                        type: 'string',
+                        default: '',
+                        description: 'Type d\'invitation (CONNECTION, ORGANIZATION, etc.)',
+                    },
+
+                    // PAGINATION
                     {
                         displayName: 'Nombre de résultats',
                         name: 'total_results',
                         type: 'number',
                         default: 10,
-                        description: 'Nombre d\'entreprises à récupérer',
+                        description: 'Nombre de résultats à récupérer',
                     },
                     {
                         displayName: 'Page de début',
                         name: 'start_page',
                         type: 'number',
                         default: 1,
-                        description: 'Première page à récupérer (pagination)',
+                        description: 'Première page à récupérer',
                     },
                     {
                         displayName: 'Page de fin',
                         name: 'end_page',
                         type: 'number',
                         default: 1,
-                        description: 'Dernière page à récupérer (pagination)',
+                        description: 'Dernière page à récupérer',
                     },
+
+                    // OPTIONS DIVERSES
+                    {
+                        displayName: 'Afficher état invitation',
+                        name: 'fetch_invitation_state',
+                        type: 'boolean',
+                        default: true,
+                        description: 'Inclure l\'état d\'invitation pour chaque profil',
+                    },
+                    {
+                        displayName: 'Message connexion',
+                        name: 'connectionMessage',
+                        type: 'string',
+                        default: '',
+                        description: 'Message personnalisé pour invitation (sendConnectionRequest)',
+                    },
+
+                    // CHAMPS DATA
+                    {
+                        displayName: 'Secteur d\'activité (Data)',
+                        name: 'industry',
+                        type: 'string',
+                        default: '',
+                        description: 'Secteur d\'activité pour recherche Data',
+                    },
+                    {
+                        displayName: 'Taille d\'équipe (Data)',
+                        name: 'employee_range',
+                        type: 'string',
+                        default: '',
+                        description: 'Plage d\'employés (ex: 1-10, 11-50, 51-200)',
+                    },
+                    {
+                        displayName: 'Entreprise fondatrice',
+                        name: 'founding_company',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Filtrer les entreprises fondatrices (Data)',
+                    },
+                    {
+                        displayName: 'Titre du poste (Data)',
+                        name: 'job_title',
+                        type: 'string',
+                        default: '',
+                        description: 'Titre du poste actuel pour recherche Data',
+                    },
+                    {
+                        displayName: 'École (Data)',
+                        name: 'school',
+                        type: 'string',
+                        default: '',
+                        description: 'École ou université pour recherche Data',
+                    },
+                    {
+                        displayName: 'Entreprise actuelle (Data)',
+                        name: 'current_company',
+                        type: 'string',
+                        default: '',
+                        description: 'Entreprise actuelle pour recherche Data',
+                    },
+
+                    // CHAMPS RECRUITER - Complets
+                    {
+                        displayName: 'Années d\'expérience',
+                        name: 'yearsOfExperience',
+                        type: 'string',
+                        default: '',
+                        description: 'Années d\'expérience requises (Recruiter)',
+                    },
+                    {
+                        displayName: 'Type de tri',
+                        name: 'sortType',
+                        type: 'string',
+                        default: '',
+                        description: 'Type de tri pour les candidats (Recruiter)',
+                    },
+                    {
+                        displayName: 'Ordre de tri',
+                        name: 'sortOrder',
+                        type: 'string',
+                        default: '',
+                        description: 'Ordre de tri (ASC/DESC) (Recruiter)',
+                    },
+                    {
+                        displayName: 'Notes',
+                        name: 'ratings',
+                        type: 'string',
+                        default: '',
+                        description: 'Filtrer par notes (Recruiter)',
+                    },
+                    {
+                        displayName: 'Début',
+                        name: 'start',
+                        type: 'string',
+                        default: '',
+                        description: 'Point de départ pour la pagination (Recruiter)',
+                    },
+
+                    // CHAMPS CREATE JOB - Complets
+                    {
+                        displayName: 'Titre du poste (Job)',
+                        name: 'jobTitle',
+                        type: 'string',
+                        default: '',
+                        description: 'Titre du poste à créer (createJob)',
+                    },
+                    {
+                        displayName: 'Lieu du poste (Job)',
+                        name: 'place',
+                        type: 'string',
+                        default: '',
+                        description: 'Lieu du poste (createJob)',
+                    },
+                    {
+                        displayName: 'Description HTML',
+                        name: 'html_description',
+                        type: 'string',
+                        default: '',
+                        description: 'Description du poste en HTML (createJob)',
+                    },
+                    {
+                        displayName: 'Statut d\'emploi',
+                        name: 'employment_status',
+                        type: 'string',
+                        default: '',
+                        description: 'Statut d\'emploi (CDD, CDI, etc.) (createJob)',
+                    },
+                    {
+                        displayName: 'Lieu de travail',
+                        name: 'workplace',
+                        type: 'string',
+                        default: '',
+                        description: 'Type de lieu de travail (Bureau, Remote, etc.) (createJob)',
+                    },
+                    {
+                        displayName: 'Compétences (JSON)',
+                        name: 'skills',
+                        type: 'string',
+                        default: '',
+                        description: 'Compétences requises au format JSON array (createJob)',
+                    },
+                    {
+                        displayName: 'Questions de présélection (JSON)',
+                        name: 'screening_questions',
+                        type: 'string',
+                        default: '',
+                        description: 'Questions de présélection au format JSON array (createJob)',
+                    },
+                    {
+                        displayName: 'Template de rejet automatique',
+                        name: 'auto_rejection_template',
+                        type: 'string',
+                        default: '',
+                        description: 'Template de rejet automatique (createJob)',
+                    },
+                    {
+                        displayName: 'Email de contact',
+                        name: 'contact_email',
+                        type: 'string',
+                        default: '',
+                        description: 'Email de contact pour le poste (createJob)',
+                    },
+
+                    // FICHIER
+                    {
+                        displayName: 'Fichier',
+                        name: 'file',
+                        type: 'string',
+                        default: '',
+                        description: 'Fichier à joindre (createPost, etc.)',
+                    },
+
+                    // POSTS RECHERCHE
+                    {
+                        displayName: 'Type de post',
+                        name: 'post_type',
+                        type: 'string',
+                        default: '',
+                        description: 'Type de post à rechercher',
+                    },
+                    {
+                        displayName: 'Trier par',
+                        name: 'sort_by',
+                        type: 'string',
+                        default: '',
+                        description: 'Critère de tri des posts',
+                    },
+                    {
+                        displayName: 'Date du post',
+                        name: 'post_date',
+                        type: 'string',
+                        default: '',
+                        description: 'Date du post pour filtrer',
+                    },
+                    {
+                        displayName: 'URL LinkedIn (recherche)',
+                        name: 'linkedin_url',
+                        type: 'string',
+                        default: '',
+                        description: 'URL LinkedIn pour recherche',
+                    },
+
+                    // PAYS
                     {
                         displayName: 'Pays',
                         name: 'country',
-                        type: 'string',
-                        default: '',
-                        description: 'Code pays',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
                     },
                 ],
             },
-            // Champs pour Get Company Information
-            {
-                displayName: 'URL de l\'entreprise',
-                name: 'getCompanyInfoUrl',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['getCompanyInfo'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'https://www.linkedin.com/company/stripe/',
-                description: 'URL de l\'entreprise LinkedIn',
-            },
-            {
-                displayName: 'Pays',
-                name: 'getCompanyInfoCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['getCompanyInfo'],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            // Champs pour Send Connection Request
-            {
-                displayName: 'URL du profil LinkedIn',
-                name: 'sendConnectionLinkedinUrl',
-                type: 'string',
-                displayOptions: {
-                    show: {
-                        operation: ['sendConnectionRequest'],
-                    },
-                },
-                default: '',
-                required: true,
-                placeholder: 'https://www.linkedin.com/in/username',
-                description: 'URL du profil LinkedIn à connecter',
-            },
-            {
-                displayName: 'Pays',
-                name: 'sendConnectionCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['sendConnectionRequest'],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            // Additional options
+
+            // === GLOBAL OPTIONS ===
             {
                 displayName: 'Options avancées',
                 name: 'additionalFields',
@@ -543,959 +628,10 @@ export class Linkup implements INodeType {
                     },
                 ],
             },
-            // 2. Ajout des champs pour l'opération acceptConnectionInvitation
-            {
-                displayName: 'Shared Secret',
-                name: 'acceptConnectionSharedSecret',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['acceptConnectionInvitation'],
-                    },
-                },
-                default: '',
-                placeholder: 'Shared secret de l\'invitation',
-                description: 'Shared secret de l\'invitation',
-            },
-            {
-                displayName: 'Entity URN',
-                name: 'acceptConnectionEntityUrn',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['acceptConnectionInvitation'],
-                    },
-                },
-                default: '',
-                placeholder: 'URN de l\'invitation',
-                description: 'URN de l\'invitation',
-            },
-            {
-                displayName: 'Pays',
-                name: 'acceptConnectionCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['acceptConnectionInvitation'],
-                    },
-                },
-            },
-            // 3. Ajout des champs pour l'opération getReceivedInvitations
-            {
-                displayName: 'Pays',
-                name: 'getReceivedInvitationsCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getReceivedInvitations'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getReceivedInvitationsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter une option',
-                displayOptions: {
-                    show: {
-                        operation: ['getReceivedInvitations'],
-                    },
-                },
-                default: {},
-                options: [
-                    {
-                        displayName: 'Page de début',
-                        name: 'start_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Première page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Page de fin',
-                        name: 'end_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Dernière page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Nombre de résultats',
-                        name: 'total_results',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Nombre d\'invitations à récupérer',
-                    },
-                    {
-                        displayName: 'Type d\'invitation',
-                        name: 'invitation_type',
-                        type: 'string',
-                        default: '',
-                        description: 'Filtrer par type d\'invitation (CONNECTION, ORGANIZATION, CONTENT_SERIES)',
-                    },
-                ],
-            },
-            // 2. Ajout des champs pour l'opération getSentInvitations
-            {
-                displayName: 'Pays',
-                name: 'getSentInvitationsCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getSentInvitations'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getSentInvitationsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter une option',
-                displayOptions: {
-                    show: {
-                        operation: ['getSentInvitations'],
-                    },
-                },
-                default: {},
-                options: [
-                    {
-                        displayName: 'Page de début',
-                        name: 'start_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Première page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Page de fin',
-                        name: 'end_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Dernière page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Nombre de résultats',
-                        name: 'total_results',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Nombre d\'invitations à récupérer',
-                    },
-                    {
-                        displayName: 'Type d\'invitation',
-                        name: 'invitation_type',
-                        type: 'string',
-                        default: '',
-                        description: 'Filtrer par type d\'invitation (CONNECTION, ORGANIZATION, CONTENT_SERIES)',
-                    },
-                ],
-            },
-            // 2. Ajout des champs pour l'opération withdrawInvitation
-            {
-                displayName: 'Invitation ID',
-                name: 'withdrawInvitationId',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['withdrawInvitation'],
-                    },
-                },
-                default: '',
-                placeholder: 'ID de l\'invitation',
-                description: 'ID de l\'invitation à retirer',
-            },
-            {
-                displayName: 'Pays',
-                name: 'withdrawInvitationCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['withdrawInvitation'],
-                    },
-                },
-            },
-            // 2. Ajout des champs pour l'opération getNetworkRecommendations
-            {
-                displayName: 'Pays',
-                name: 'getNetworkRecommendationsCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getNetworkRecommendations'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getNetworkRecommendationsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter une option',
-                displayOptions: {
-                    show: {
-                        operation: ['getNetworkRecommendations'],
-                    },
-                },
-                default: {},
-                options: [
-                    {
-                        displayName: 'Page de début',
-                        name: 'start_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Première page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Page de fin',
-                        name: 'end_page',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Dernière page à récupérer (pagination)',
-                    },
-                    {
-                        displayName: 'Nombre de résultats',
-                        name: 'total_results',
-                        type: 'number',
-                        default: undefined,
-                        description: 'Nombre de recommandations à récupérer',
-                    },
-                ],
-            },
-            // 2. Ajout des champs pour l'opération getInvitationStatus
-            {
-                displayName: 'Pays',
-                name: 'getInvitationStatusCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getInvitationStatus'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getConnectionsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getConnections'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer (pagination)' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer (pagination)' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de connexions à récupérer' },
-                ],
-            },
-            // Champs pour Send Message
-            {
-                displayName: 'URL du profil LinkedIn (destinataire)',
-                name: 'sendMessageLinkedinUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/in/username',
-                description: 'URL du profil LinkedIn du destinataire',
-            },
-            {
-                displayName: 'Texte du message',
-                name: 'sendMessageText',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
-                    },
-                },
-                default: '',
-                description: 'Contenu du message à envoyer',
-            },
-            {
-                displayName: 'Pays',
-                name: 'sendMessageCountry',
-                type: 'options',
-                options: [
-                    { name: 'France', value: 'FR' },
-                    { name: 'États-Unis', value: 'US' },
-                    { name: 'Royaume-Uni', value: 'UK' },
-                ],
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
-                    },
-                },
-                default: 'FR',
-                description: 'Code pays pour la sélection du proxy',
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'sendMessageOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['sendMessage'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: 'FR', description: 'Code pays (FR, US, UK, ...)' },
-                    { displayName: 'Lien média', name: 'media_link', type: 'string', default: '', description: 'URL directe d\'un média à joindre (png, mp4, jpeg, pdf...)' },
-                    { displayName: 'Fichier média', name: 'media_file', type: 'string', default: '', description: 'Fichier média à joindre (priorité sur le lien)' },
-                ],
-            },
-            // Champs pour Get Message Inbox
-            {
-                displayName: 'Pays',
-                name: 'getMessageInboxCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getMessageInbox'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getMessageInboxOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getMessageInbox'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer (pagination)' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer (pagination)' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de conversations à récupérer' },
-                ],
-            },
-            // Champs pour Get Conversation Messages
-            {
-                displayName: 'Conversation ID',
-                name: 'getConversationMessagesId',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getConversationMessages'],
-                    },
-                },
-                default: '',
-                placeholder: 'ID de la conversation',
-                description: 'Identifiant unique de la conversation LinkedIn',
-            },
-            {
-                displayName: 'Pays',
-                name: 'getConversationMessagesCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['getConversationMessages'],
-                    },
-                },
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getConversationMessagesOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getConversationMessages'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer (pagination)' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer (pagination)' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de messages à récupérer' },
-                ],
-            },
-            // Champs pour Get Post Reactions
-            {
-                displayName: 'URL du post',
-                name: 'getPostReactionsPostUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'getPostReactionsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats à récupérer' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Première page à récupérer' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Dernière page à récupérer' }
-                ]
-            },
-            {
-                displayName: 'Nombre de résultats',
-                name: 'getPostReactionsTotalResults',
-                type: 'number',
-                default: 10,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                description: 'Nombre de résultats à récupérer',
-            },
-            {
-                displayName: 'Page de début',
-                name: 'getPostReactionsStartPage',
-                type: 'number',
-                default: 1,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                description: 'Première page à récupérer (pagination)',
-            },
-            {
-                displayName: 'Page de fin',
-                name: 'getPostReactionsEndPage',
-                type: 'number',
-                default: 1,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['getPostReactions'],
-                    },
-                },
-                description: 'Dernière page à récupérer (pagination)',
-            },
-            // Champs pour React to Post
-            {
-                displayName: 'URL du post',
-                name: 'reactToPostPostUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['reactToPost'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Type de réaction',
-                name: 'reactToPostReactionType',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['reactToPost'],
-                    },
-                },
-                default: '',
-                placeholder: 'LIKE, CELEBRATE, SUPPORT, LOVE, INSIGHTFUL, CURIOUS',
-                description: 'Type de réaction à appliquer',
-            },
-            {
-                displayName: 'Pays',
-                name: 'reactToPostCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['reactToPost'],
-                    },
-                },
-            },
-            // Champs pour Repost
-            {
-                displayName: 'URL du post',
-                name: 'repostPostUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['repost'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Pays',
-                name: 'repostCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['repost'],
-                    },
-                },
-            },
-            // Champs pour Comment Post
-            {
-                displayName: 'URL du post',
-                name: 'commentPostPostUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['commentPost'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Message',
-                name: 'commentPostMessage',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['commentPost'],
-                    },
-                },
-                default: '',
-                description: 'Texte du commentaire',
-            },
-            {
-                displayName: 'Pays',
-                name: 'commentPostCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['commentPost'],
-                    },
-                },
-            },
-            // ... (répéter pour extractComments, answerComment, searchPosts, createPost, getFeed, timeSpent) ...
-            // Champs pour Extract Comments
-            {
-                displayName: 'URL du post',
-                name: 'extractCommentsPostUrl',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-                default: '',
-                placeholder: 'https://www.linkedin.com/feed/update/xxx',
-                description: 'URL du post LinkedIn',
-            },
-            {
-                displayName: 'Pays',
-                name: 'extractCommentsCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-            },
-            {
-                displayName: 'Nombre de résultats',
-                name: 'extractCommentsTotalResults',
-                type: 'number',
-                default: 10,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-                description: 'Nombre de résultats à récupérer',
-            },
-            {
-                displayName: 'Page de début',
-                name: 'extractCommentsStartPage',
-                type: 'number',
-                default: 1,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-                description: 'Première page à récupérer (pagination)',
-            },
-            {
-                displayName: 'Page de fin',
-                name: 'extractCommentsEndPage',
-                type: 'number',
-                default: 1,
-                required: false,
-                displayOptions: {
-                    show: {
-                        operation: ['extractComments'],
-                    },
-                },
-                description: 'Dernière page à récupérer (pagination)',
-            },
-            // Champs pour Answer Comment
-            {
-                displayName: 'Tracking ID',
-                name: 'answerCommentTrackingId',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
-                    },
-                },
-                default: '',
-                description: 'Tracking ID du post',
-            },
-            {
-                displayName: 'Profile URN',
-                name: 'answerCommentProfileUrn',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
-                    },
-                },
-                default: '',
-                description: 'URN du profil',
-            },
-            {
-                displayName: 'Comment URN',
-                name: 'answerCommentCommentUrn',
-                type: 'string',
-                required: true,
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
-                    },
-                },
-                default: '',
-                description: 'URN du commentaire',
-            },
-            {
-                displayName: 'Pays',
-                name: 'answerCommentCountry',
-                type: 'string',
-                default: '',
-                required: false,
-                placeholder: 'FR, US, UK, ...',
-                description: 'Code pays pour la sélection du proxy (optionnel, texte libre)',
-                displayOptions: {
-                    show: {
-                        operation: ['answerComment'],
-                    },
-                },
-            },
-            // Champs pour Search Posts
-            {
-                displayName: 'Paramètres de recherche',
-                name: 'searchPostsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['searchPosts'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Type de post', name: 'post_type', type: 'string', default: '', description: 'Type de post à rechercher' },
-                    { displayName: 'Trier par', name: 'sort_by', type: 'string', default: '', description: 'Critère de tri' },
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Mot-clé', name: 'keyword', type: 'string', default: '', description: 'Mot-clé de recherche' },
-                    { displayName: 'Date du post', name: 'post_date', type: 'string', default: '', description: 'Date du post' },
-                    { displayName: 'URL LinkedIn', name: 'linkedin_url', type: 'string', default: '', description: 'URL LinkedIn' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats' },
-                    { displayName: 'Page de début', name: 'start_page', type: 'number', default: 1, description: 'Pagination - début' },
-                    { displayName: 'Page de fin', name: 'end_page', type: 'number', default: 1, description: 'Pagination - fin' },
-                ],
-            },
-            // Champs pour Create Post
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'createPostOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['createPost'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Fichier', name: 'file', type: 'string', default: '', description: 'Fichier à joindre au post (optionnel)' }
-                ]
-            },
-            // Pour getFeed
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'getFeedOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getFeed'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'Nombre de résultats', name: 'total_results', type: 'number', default: 10, description: 'Nombre de résultats à récupérer' }
-                ]
-            },
-            // Pour timeSpent
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'timeSpentOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['timeSpent'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' }
-                ]
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getMyProfileOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getMyProfile'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'extractProfileInfoOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['extractProfileInfo'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                    { displayName: 'URL LinkedIn', name: 'linkedin_url', type: 'string', default: '', description: 'URL du profil LinkedIn à extraire' },
-                ],
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'getCompanyInfoOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['getCompanyInfo'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Paramètres Linkup',
-                name: 'sendConnectionRequestOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: {
-                    show: {
-                        operation: ['sendConnectionRequest'],
-                    },
-                },
-                default: {},
-                options: [
-                    { displayName: 'Message', name: 'message', type: 'string', default: '', description: 'Message personnalisé à envoyer avec l\'invitation' },
-                    { displayName: 'Pays', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            // Ajout des opérations recruiter dans properties :
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterCandidatesOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['getCandidates'] } },
-                default: {},
-                options: [
-                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
-                    { displayName: 'total_results', name: 'total_results', type: 'number', default: '', description: 'Nombre de résultats' },
-                    { displayName: 'start_page', name: 'start_page', type: 'number', default: '', description: 'Page de début' },
-                    { displayName: 'end_page', name: 'end_page', type: 'number', default: '', description: 'Page de fin' },
-                    { displayName: 'start', name: 'start', type: 'string', default: '', description: 'Début' },
-                    { displayName: 'sortType', name: 'sortType', type: 'string', default: '', description: 'Type de tri' },
-                    { displayName: 'sortOrder', name: 'sortOrder', type: 'string', default: '', description: 'Ordre de tri' },
-                    { displayName: 'ratings', name: 'ratings', type: 'string', default: '', description: 'Notes' },
-                    { displayName: 'location', name: 'location', type: 'string', default: '', description: 'Lieu' },
-                    { displayName: 'yearsOfExperience', name: 'yearsOfExperience', type: 'string', default: '', description: 'Années d'expérience' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterCVOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['getCandidateCV'] } },
-                default: {},
-                options: [
-                    { displayName: 'application_id', name: 'application_id', type: 'string', default: '', description: 'ID de la candidature' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterPostsOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['getJobPosts'] } },
-                default: {},
-                options: [
-                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
-                    { displayName: 'fetch_details', name: 'fetch_details', type: 'boolean', default: false, description: 'Récupérer les détails' },
-                    { displayName: 'total_results', name: 'total_results', type: 'number', default: '', description: 'Nombre de résultats' },
-                    { displayName: 'start_page', name: 'start_page', type: 'number', default: '', description: 'Page de début' },
-                    { displayName: 'end_page', name: 'end_page', type: 'number', default: '', description: 'Page de fin' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterPublishOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['publishJob'] } },
-                default: {},
-                options: [
-                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterCloseOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['closeJob'] } },
-                default: {},
-                options: [
-                    { displayName: 'job_id', name: 'job_id', type: 'string', default: '', description: 'ID de l'offre' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
-            {
-                displayName: 'Linkup Paramètres',
-                name: 'recruiterCreateOptions',
-                type: 'collection',
-                placeholder: 'Ajouter un paramètre',
-                displayOptions: { show: { operation: ['createJob'] } },
-                default: {},
-                options: [
-                    { displayName: 'company_url', name: 'company_url', type: 'string', default: '', description: 'URL de l'entreprise' },
-                    { displayName: 'title', name: 'title', type: 'string', default: '', description: 'Titre du poste' },
-                    { displayName: 'place', name: 'place', type: 'string', default: '', description: 'Lieu' },
-                    { displayName: 'html_description', name: 'html_description', type: 'string', default: '', description: 'Description HTML' },
-                    { displayName: 'employment_status', name: 'employment_status', type: 'string', default: '', description: 'Statut d'emploi' },
-                    { displayName: 'workplace', name: 'workplace', type: 'string', default: '', description: 'Lieu de travail' },
-                    { displayName: 'skills', name: 'skills', type: 'json', default: '', description: 'Compétences (array)' },
-                    { displayName: 'screening_questions', name: 'screening_questions', type: 'json', default: '', description: 'Questions de présélection (array)' },
-                    { displayName: 'auto_rejection_template', name: 'auto_rejection_template', type: 'string', default: '', description: 'Template de rejet auto' },
-                    { displayName: 'contact_email', name: 'contact_email', type: 'string', default: '', description: 'Email de contact' },
-                    { displayName: 'country', name: 'country', type: 'string', default: '', description: 'Code pays' },
-                ],
-            },
         ],
     };
 
-    // Fonction pour détecter et gérer les valeurs BLANK
+    // === UTILITY METHODS ===
     static sanitizeCredentialValue(value: string): string | null {
         if (!value || value.includes('__n8n_BLANK_VALUE_')) {
             return null;
@@ -1503,73 +639,40 @@ export class Linkup implements INodeType {
         return value;
     }
 
-    // Fonction pour obtenir les credentials avec fallback
     private async getCredentialsWithFallback(
         context: IExecuteFunctions,
-        itemIndex: number,
-        operation: string
-    ): Promise<{
-        apiKey: string;
-        email: string;
-        password: string;
-        country: string;
-        loginToken?: string;
-    }> {
-        const useCustomCredentials = context.getNodeParameter('useCustomCredentials', itemIndex) as boolean;
+        _itemIndex: number
+    ): Promise<LinkupCredentials> {
+        // Toujours utiliser les credentials sauvegardées (plus de custom credentials)
+        const credentials = await context.getCredentials('linkupApi');
+        
+        const apiKey = Linkup.sanitizeCredentialValue(credentials.apiKey as string);
+        const email = Linkup.sanitizeCredentialValue(credentials.linkedinEmail as string);
+        const password = Linkup.sanitizeCredentialValue(credentials.linkedinPassword as string);
+        const country = Linkup.sanitizeCredentialValue(credentials.country as string);
+        const loginToken = Linkup.sanitizeCredentialValue(credentials.loginToken as string);
 
-        if (useCustomCredentials) {
-            // Utiliser les credentials personnalisées
-            const apiKey = context.getNodeParameter('customApiKey', itemIndex) as string;
-            const email = operation === 'login' 
-                ? context.getNodeParameter('customLinkedinEmail', itemIndex) as string
-                : context.getNodeParameter('verifyEmail', itemIndex) as string;
-            const password = operation === 'login' 
-                ? context.getNodeParameter('customLinkedinPassword', itemIndex) as string
-                : '';
-            const country = context.getNodeParameter('customCountry', itemIndex) as string;
-            const loginToken = operation === 'login' 
-                ? context.getNodeParameter('customLoginToken', itemIndex) as string
-                : '';
-
-            return { apiKey, email, password, country, loginToken };
-        } else {
-            // Utiliser les credentials sauvegardées
-            const credentials = await context.getCredentials('linkupApi');
-            
-            const apiKey = Linkup.sanitizeCredentialValue(credentials.apiKey as string);
-            const email = operation === 'login' 
-                ? Linkup.sanitizeCredentialValue(credentials.linkedinEmail as string)
-                : context.getNodeParameter('verifyEmail', itemIndex) as string;
-            const password = operation === 'login' 
-                ? Linkup.sanitizeCredentialValue(credentials.linkedinPassword as string)
-                : '';
-            const country = Linkup.sanitizeCredentialValue(credentials.country as string);
-            const loginToken = Linkup.sanitizeCredentialValue(credentials.loginToken as string);
-
-            // Vérifier si les credentials sont corrompues
-            if (!apiKey || (operation === 'login' && (!email || !password))) {
-                throw new NodeOperationError(
-                    context.getNode(),
-                    'Credentials are corrupted or incomplete. Please use "Use Custom Credentials" option or recreate your saved credentials.'
-                );
-            }
-
-            return { 
-                apiKey: apiKey!, 
-                email: email!, 
-                password: password!, 
-                country: country || 'FR',
-                loginToken: loginToken || ''
-            };
+        if (!apiKey) {
+            throw new NodeOperationError(
+                context.getNode(),
+                'Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud.'
+            );
         }
+
+        return { 
+            apiKey: apiKey!, 
+            email: email || '', 
+            password: password || '', 
+            country: country || 'FR',
+            loginToken: loginToken || ''
+        };
     }
 
-    // Factorisation de la création des options de requête HTTP
     private buildRequestOptions(
         endpoint: string,
         method: 'POST' | 'GET',
         apiKey: string,
-        body: Record<string, any>,
+        body: RequestBody,
         timeout: number
     ): IHttpRequestOptions {
         return {
@@ -1578,1461 +681,311 @@ export class Linkup implements INodeType {
             headers: {
                 'x-api-key': apiKey,
                 'Content-Type': 'application/json',
-                'User-Agent': 'curl/7.68.0',
+                'User-Agent': 'n8n-linkup-node/1.2.0',
             },
             body,
             timeout,
         };
     }
 
+    private async buildRequestBody(
+        context: IExecuteFunctions,
+        itemIndex: number,
+        operation: string,
+        loginToken?: string
+    ): Promise<RequestBody> {
+        const body: RequestBody = {};
+        
+        // Récupérer tous les paramètres Linkup
+        const linkupParams = context.getNodeParameter('linkupParams', itemIndex, {}) as Record<string, any>;
+        
+        // Ajouter le login token si nécessaire (depuis les credentials)
+        if (loginToken && !['login', 'verifyCode', 'searchCompaniesData', 'searchProfilesData'].includes(operation)) {
+            body.login_token = loginToken;
+        }
+
+        // Champs spécifiques par opération avec fallback sur linkupParams
+        switch (operation) {
+            case 'login':
+                const creds = await context.getCredentials('linkupApi');
+                body.email = creds.linkedinEmail;
+                body.password = creds.linkedinPassword;
+                body.country = linkupParams.country || creds.country || 'FR';
+                break;
+
+            case 'verifyCode':
+                const credsVerify = await context.getCredentials('linkupApi');
+                body.email = credsVerify.linkedinEmail;
+                body.code = linkupParams.verificationCode;
+                body.country = linkupParams.country || credsVerify.country || 'FR';
+                break;
+
+            case 'extractProfileInfo':
+                body.linkedin_url = linkupParams.profileUrl;
+                break;
+
+            case 'getCompanyInfo':
+                body.company_url = linkupParams.companyUrl;
+                break;
+
+            case 'sendConnectionRequest':
+                body.linkedin_url = linkupParams.profileUrl;
+                if (linkupParams.connectionMessage) body.message = linkupParams.connectionMessage;
+                break;
+
+            case 'acceptConnectionInvitation':
+                body.shared_secret = linkupParams.sharedSecret;
+                body.entity_urn = linkupParams.entityUrn;
+                break;
+
+            case 'withdrawInvitation':
+                body.invitation_id = linkupParams.invitationId;
+                break;
+
+            case 'getInvitationStatus':
+                body.linkedin_url = linkupParams.profileUrl;
+                break;
+
+            case 'sendMessage':
+                body.linkedin_url = linkupParams.messageRecipientUrl;
+                body.message_text = linkupParams.messageText;
+                if (linkupParams.mediaLink) body.media_link = linkupParams.mediaLink;
+                break;
+
+            case 'getConversationMessages':
+                body.conversation_id = linkupParams.conversationId;
+                break;
+
+            case 'getPostReactions':
+            case 'repost':
+            case 'extractComments':
+                body.post_url = linkupParams.postUrl;
+                break;
+
+            case 'reactToPost':
+                body.post_url = linkupParams.postUrl;
+                body.reaction_type = linkupParams.reactionType || 'LIKE';
+                break;
+
+            case 'commentPost':
+                body.post_url = linkupParams.postUrl;
+                body.message = linkupParams.messageText;
+                break;
+
+            case 'answerComment':
+                body.tracking_id = linkupParams.trackingId;
+                body.profile_urn = linkupParams.profileUrn;
+                body.comment_urn = linkupParams.commentUrn;
+                body.comment_text = linkupParams.commentText;
+                body.mention_user = linkupParams.mentionUser || false;
+                if (linkupParams.commenterName) body.commenter_name = linkupParams.commenterName;
+                break;
+
+            case 'createPost':
+                body.message = linkupParams.messageText;
+                if (linkupParams.file) body.file = linkupParams.file;
+                break;
+
+            case 'timeSpent':
+                body.post_url = linkupParams.postUrl;
+                body.duration = linkupParams.duration || 30;
+                body.duration_start_time = linkupParams.durationStartTime || Date.now();
+                break;
+
+            // Opérations RECRUITER
+            case 'getCandidates':
+                if (linkupParams.yearsOfExperience) body.yearsOfExperience = linkupParams.yearsOfExperience;
+                if (linkupParams.sortType) body.sortType = linkupParams.sortType;
+                if (linkupParams.sortOrder) body.sortOrder = linkupParams.sortOrder;
+                if (linkupParams.ratings) body.ratings = linkupParams.ratings;
+                if (linkupParams.start) body.start = linkupParams.start;
+                break;
+
+            case 'createJob':
+                if (linkupParams.jobTitle) body.title = linkupParams.jobTitle;
+                if (linkupParams.place) body.place = linkupParams.place;
+                if (linkupParams.html_description) body.html_description = linkupParams.html_description;
+                if (linkupParams.employment_status) body.employment_status = linkupParams.employment_status;
+                if (linkupParams.workplace) body.workplace = linkupParams.workplace;
+                if (linkupParams.skills) {
+                    try {
+                        body.skills = JSON.parse(linkupParams.skills);
+                    } catch {
+                        body.skills = linkupParams.skills;
+                    }
+                }
+                if (linkupParams.screening_questions) {
+                    try {
+                        body.screening_questions = JSON.parse(linkupParams.screening_questions);
+                    } catch {
+                        body.screening_questions = linkupParams.screening_questions;
+                    }
+                }
+                if (linkupParams.auto_rejection_template) body.auto_rejection_template = linkupParams.auto_rejection_template;
+                if (linkupParams.contact_email) body.contact_email = linkupParams.contact_email;
+                break;
+        }
+
+        // Ajouter tous les autres paramètres de linkupParams (recherche, pagination, etc.)
+        for (const [key, value] of Object.entries(linkupParams)) {
+            if (value !== undefined && value !== null && value !== '' && !body.hasOwnProperty(key)) {
+                body[key] = value;
+            }
+        }
+
+        // Gestion spéciale pagination vs total_results
+        let hasPagination = false;
+        if (linkupParams.start_page && linkupParams.start_page !== 1) {
+            body.start_page = linkupParams.start_page;
+            hasPagination = true;
+        }
+        if (linkupParams.end_page && linkupParams.end_page !== 1) {
+            body.end_page = linkupParams.end_page;
+            hasPagination = true;
+        }
+
+        // Si pas de pagination explicite, utiliser total_results
+        if (!hasPagination && linkupParams.total_results) {
+            body.total_results = linkupParams.total_results;
+        } else if (!hasPagination && !linkupParams.total_results) {
+            // Valeur par défaut seulement pour les opérations qui en ont besoin
+            const needsResults = [
+                'searchProfile', 'searchCompanies', 'getConnections', 'getReceivedInvitations', 
+                'getSentInvitations', 'getNetworkRecommendations', 'getMessageInbox', 
+                'getConversationMessages', 'getPostReactions', 'extractComments', 'searchPosts', 
+                'getFeed', 'getCandidates', 'getJobPosts', 'searchCompaniesData', 'searchProfilesData'
+            ];
+            if (needsResults.includes(operation)) {
+                body.total_results = 10;
+            }
+        }
+
+        // Ajouter le pays par défaut si pas spécifié
+        if (!body.country) {
+            body.country = 'FR';
+        }
+
+        return body;
+    }
+
+    private getEndpointForOperation(operation: string): string {
+        const endpointMap: Record<string, string> = {
+            // AUTH
+            'login': '/auth/login',
+            'verifyCode': '/auth/verify',
+            
+            // PROFILE
+            'getMyProfile': '/profile/me',
+            'extractProfileInfo': '/profile/info',
+            'searchProfile': '/profile/search',
+            
+            // COMPANIES
+            'searchCompanies': '/companies/search',
+            'getCompanyInfo': '/companies/info',
+            
+            // NETWORK
+            'sendConnectionRequest': '/network/connect',
+            'getConnections': '/network/connections',
+            'acceptConnectionInvitation': '/network/accept-invitations',
+            'getReceivedInvitations': '/network/invitations',
+            'getSentInvitations': '/network/sent-invitations',
+            'withdrawInvitation': '/network/withdraw-invitation',
+            'getNetworkRecommendations': '/network/recommendations',
+            'getInvitationStatus': '/network/invitation-status',
+            
+            // MESSAGES
+            'sendMessage': '/messages/send',
+            'getMessageInbox': '/messages/inbox',
+            'getConversationMessages': '/messages/conversation-messages',
+            
+            // POSTS
+            'getPostReactions': '/posts/reactions',
+            'reactToPost': '/posts/react',
+            'repost': '/posts/repost',
+            'commentPost': '/posts/comment',
+            'extractComments': '/posts/extract-comments',
+            'answerComment': '/posts/answer-comment',
+            'searchPosts': '/posts/search',
+            'createPost': '/posts/create',
+            'getFeed': '/posts/feed',
+            'timeSpent': '/posts/time-spent',
+            
+            // RECRUITER
+            'getCandidates': '/recruiter/candidates',
+            'getCandidateCV': '/recruiter/cv',
+            'getJobPosts': '/recruiter/job-posts',
+            'publishJob': '/recruiter/publish-job',
+            'closeJob': '/recruiter/close-job',
+            'createJob': '/recruiter/create-job',
+            
+            // DATA (nouveaux)
+            'searchCompaniesData': '/data/search/companies',
+            'searchProfilesData': '/data/search/profiles',
+        };
+
+        return endpointMap[operation] || '/unknown';
+    }
+
+
+
+    private handleApiError(context: IExecuteFunctions, error: any, operation: string): NodeOperationError {
+        if (error.response?.status === 401) {
+            return new NodeOperationError(
+                context.getNode(),
+                'Clé API ou credentials invalides. Vérifiez votre clé API LINKUP et vos identifiants LinkedIn.'
+            );
+        } else if (error.response?.status === 429) {
+            return new NodeOperationError(
+                context.getNode(),
+                'Limite de requêtes atteinte. Veuillez réessayer plus tard.'
+            );
+        } else if (error.response?.status === 400) {
+            return new NodeOperationError(
+                context.getNode(),
+                `Requête invalide pour l'opération ${operation}: ${error.response?.data?.message || error.message}`
+            );
+        } else {
+            return new NodeOperationError(
+                context.getNode(), 
+                `Erreur lors de l'opération ${operation}: ${error.response?.data?.message || error.message || 'Erreur inconnue'}`
+            );
+        }
+    }
+
+    // === MAIN EXECUTION METHOD ===
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
         const items = this.getInputData();
         const returnData: INodeExecutionData[] = [];
 
         for (let i = 0; i < items.length; i++) {
             const operation = this.getNodeParameter('operation', i) as string;
-            const additionalFields = this.getNodeParameter('additionalFields', i) as any;
 
             try {
-                let response: any;
+                const additionalFields = this.getNodeParameter('additionalFields', i) as any;
                 const timeout = additionalFields.timeout || 30000;
 
-                if (operation === 'login') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const body = {
-                        email: creds.email,
-                        password: creds.password,
-                        country: creds.country,
-                        ...(creds.loginToken && { token: creds.loginToken }),
-                    };
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/auth/login',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'verifyCode') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'verifyCode');
-                    const verificationCode = this.getNodeParameter('verificationCode', i) as string;
-                    const body = {
-                        email: creds.email,
-                        code: verificationCode,
-                        country: creds.country,
-                    };
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/auth/verify',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'getMyProfile') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getMyProfileLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('getMyProfileOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/profile/me',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'extractProfileInfo') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('extractProfileLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('extractProfileInfoOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/profile/info',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'searchProfile') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('searchProfileLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('searchProfileOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/profile/search',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'searchCompanies') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('searchCompaniesLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('searchCompaniesOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/companies/search',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getCompanyInfo') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getCompanyInfoLoginToken', i) as string;
-                    }
-                    const companyUrl = this.getNodeParameter('getCompanyInfoUrl', i) as string;
-                    const options = this.getNodeParameter('getCompanyInfoOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken, company_url: companyUrl };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/companies/info',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'sendConnectionRequest') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('sendConnectionLoginToken', i) as string;
-                    }
-                    const linkedinUrl = this.getNodeParameter('sendConnectionLinkedinUrl', i) as string;
-                    const options = this.getNodeParameter('sendConnectionRequestOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken, linkedin_url: linkedinUrl };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/connect',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    response = await this.helpers.httpRequest(requestOptions);
-                } else if (operation === 'getConnections') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getConnectionsLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('getConnectionsOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/connections',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'acceptConnectionInvitation') {
-                    const body: any = {};
-                    const sharedSecret = this.getNodeParameter('acceptConnectionSharedSecret', i) as string;
-                    const entityUrn = this.getNodeParameter('acceptConnectionEntityUrn', i) as string;
-                    const loginToken = this.getNodeParameter('acceptConnectionLoginToken', i) as string;
-                    const country = this.getNodeParameter('acceptConnectionCountry', i, '');
-                    if (sharedSecret) body.shared_secret = sharedSecret;
-                    if (entityUrn) body.entity_urn = entityUrn;
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/accept-invitations',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getReceivedInvitations') {
-                    const body: any = {};
-                    const loginToken = this.getNodeParameter('getReceivedInvitationsLoginToken', i) as string;
-                    const country = this.getNodeParameter('getReceivedInvitationsCountry', i, '');
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const options = this.getNodeParameter('getReceivedInvitationsOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    if (options.invitation_type) {
-                        body.invitation_type = options.invitation_type;
-                    }
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/invitations',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getSentInvitations') {
-                    const body: any = {};
-                    const loginToken = this.getNodeParameter('getSentInvitationsLoginToken', i) as string;
-                    const country = this.getNodeParameter('getSentInvitationsCountry', i, '');
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const options = this.getNodeParameter('getSentInvitationsOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    if (options.invitation_type) {
-                        body.invitation_type = options.invitation_type;
-                    }
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/sent-invitations',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'withdrawInvitation') {
-                    const body: any = {};
-                    const invitationId = this.getNodeParameter('withdrawInvitationId', i) as string;
-                    const loginToken = this.getNodeParameter('withdrawInvitationLoginToken', i) as string;
-                    const country = this.getNodeParameter('withdrawInvitationCountry', i, '');
-                    if (invitationId) body.invitation_id = invitationId;
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/withdraw-invitation',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getNetworkRecommendations') {
-                    const body: any = {};
-                    const loginToken = this.getNodeParameter('getNetworkRecommendationsLoginToken', i) as string;
-                    const country = this.getNodeParameter('getNetworkRecommendationsCountry', i, '');
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const options = this.getNodeParameter('getNetworkRecommendationsOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/recommendations',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getInvitationStatus') {
-                    const body: any = {};
-                    const linkedinUrl = this.getNodeParameter('getInvitationStatusLinkedinUrl', i) as string;
-                    const loginToken = this.getNodeParameter('getInvitationStatusLoginToken', i) as string;
-                    const country = this.getNodeParameter('getInvitationStatusCountry', i, '');
-                    if (linkedinUrl) body.linkedin_url = linkedinUrl;
-                    if (loginToken) body.login_token = loginToken;
-                    if (country) body.country = country;
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/network/invitation-status',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'sendMessage') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('sendMessageLoginToken', i) as string;
-                    }
-                    const body: any = {
-                        linkedin_url: this.getNodeParameter('sendMessageLinkedinUrl', i) as string,
-                        message_text: this.getNodeParameter('sendMessageText', i) as string,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const sendMessageOptions = this.getNodeParameter('sendMessageOptions', i, {}) as Record<string, any>;
-                    const country = sendMessageOptions['country'] as string;
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Ajout dynamique de media_link si présent
-                    const mediaLink = sendMessageOptions['media_link'] as string;
-                    if (mediaLink) {
-                        body.media_link = mediaLink;
-                    }
-                    // Ajout dynamique de media_file si présent
-                    const mediaFile = sendMessageOptions['media_file'] as string;
-                    if (mediaFile) {
-                        body.media_file = mediaFile;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/messages/send',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getMessageInbox') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getMessageInboxLoginToken', i) as string;
-                    }
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getMessageInboxCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Gestion spéciale pagination/total_results
-                    const options = this.getNodeParameter('getMessageInboxOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/messages/inbox', // À adapter si l'endpoint diffère
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getConversationMessages') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getConversationMessagesLoginToken', i) as string;
-                    }
-                    const conversationId = this.getNodeParameter('getConversationMessagesId', i) as string;
-                    const body: any = {
-                        conversation_id: conversationId,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getConversationMessagesCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    // Gestion spéciale pagination/total_results
-                    const options = this.getNodeParameter('getConversationMessagesOptions', i, {}) as Record<string, any>;
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/messages/conversation-messages', // À adapter si l'endpoint diffère
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getPostReactions') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getPostReactionsLoginToken', i) as string;
-                    }
-                    const postUrl = this.getNodeParameter('getPostReactionsPostUrl', i) as string;
-                    const body: any = {
-                        post_url: postUrl,
-                        login_token: loginToken,
-                    };
-                    // Ajout dynamique de country si présent
-                    const country = this.getNodeParameter('getPostReactionsCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/reactions',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'reactToPost') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    const body: any = {
-                        post_url: this.getNodeParameter('reactToPostPostUrl', i) as string,
-                        reaction_type: this.getNodeParameter('reactToPostReactionType', i) as string,
-                        login_token: creds.loginToken,
-                    };
-                    const options = this.getNodeParameter('reactToPostOptions', i, {}) as Record<string, any>;
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/react',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'repost') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('repostLoginToken', i) as string;
-                    }
-                    const postUrl = this.getNodeParameter('repostPostUrl', i) as string;
-                    const body: any = {
-                        post_url: postUrl,
-                        login_token: loginToken,
-                    };
-                    const country = this.getNodeParameter('repostCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/repost',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'commentPost') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('commentPostLoginToken', i) as string;
-                    }
-                    const postUrl = this.getNodeParameter('commentPostPostUrl', i) as string;
-                    const message = this.getNodeParameter('commentPostMessage', i) as string;
-                    const body: any = {
-                        post_url: postUrl,
-                        message,
-                        login_token: loginToken,
-                    };
-                    const country = this.getNodeParameter('commentPostCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/comment',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'extractComments') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('extractCommentsLoginToken', i) as string;
-                    }
-                    const postUrl = this.getNodeParameter('extractCommentsPostUrl', i) as string;
-                    const body: any = {
-                        post_url: postUrl,
-                        login_token: loginToken,
-                    };
-                    const country = this.getNodeParameter('extractCommentsCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    const totalResults = this.getNodeParameter('extractCommentsTotalResults', i, 10);
-                    if (totalResults) {
-                        body.total_results = totalResults;
-                    }
-                    const startPage = this.getNodeParameter('extractCommentsStartPage', i, 1);
-                    if (startPage) {
-                        body.start_page = startPage;
-                    }
-                    const endPage = this.getNodeParameter('extractCommentsEndPage', i, 1);
-                    if (endPage) {
-                        body.end_page = endPage;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/extract-comments',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'answerComment') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('answerCommentLoginToken', i) as string;
-                    }
-                    const postUrl = this.getNodeParameter('answerCommentPostUrl', i) as string;
-                    const message = this.getNodeParameter('answerCommentMessage', i) as string;
-                    const body: any = {
-                        post_url: postUrl,
-                        message,
-                        login_token: loginToken,
-                    };
-                    const country = this.getNodeParameter('answerCommentCountry', i, '');
-                    if (country) {
-                        body.country = country;
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/answer-comment',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'searchPosts') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('searchPostsLoginToken', i) as string;
-                    }
-                    // Champs obligatoires
-                    const body: any = {
-                        login_token: loginToken,
-                    };
-                    // Champs optionnels (collection)
-                    const options = this.getNodeParameter('searchPostsOptions', i, {}) as Record<string, any>;
-                    // Gestion spéciale pagination/total_results (identique à searchCompanies)
-                    let hasPagination = false;
-                    if (options.start_page !== undefined && options.start_page !== null && options.start_page !== 1) {
-                        body.start_page = options.start_page;
-                        hasPagination = true;
-                    }
-                    if (options.end_page !== undefined && options.end_page !== null && options.end_page !== 1) {
-                        body.end_page = options.end_page;
-                        hasPagination = true;
-                    }
-                    // Toujours envoyer total_results (10 par défaut) si pas de pagination et pas explicitement renseigné
-                    if (!hasPagination) {
-                        if (options.total_results !== undefined && options.total_results !== null && options.total_results !== 10) {
-                            body.total_results = options.total_results;
-                        } else {
-                            body.total_results = 10;
-                        }
-                    }
-                    // Autres champs optionnels
-                    const skipFields = ['start_page', 'end_page', 'total_results'];
-                    for (const [key, value] of Object.entries(options)) {
-                        if (skipFields.includes(key)) continue;
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/search',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        // Ajout du body envoyé, des headers et de la réponse brute pour debug
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        // Affiche le message d'erreur complet de l'API
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'createPost') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('createPostLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('createPostOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/create',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getFeed') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getFeedLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('getFeedOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/feed',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'timeSpent') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('timeSpentLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('timeSpentOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/posts/time-spent',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getCandidates') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getCandidatesLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterCandidatesOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/candidates',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getCandidateCV') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getCandidateCVLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterCVOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/cv',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'getJobPosts') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('getJobPostsLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterPostsOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/job-posts',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'publishJob') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('publishJobLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterPublishOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/publish-job',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'closeJob') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('closeJobLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterCloseOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/close-job',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                } else if (operation === 'createJob') {
-                    const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i, 'login');
-                    let loginToken = creds.loginToken;
-                    if (this.getNodeParameter('useCustomCredentials', i)) {
-                        loginToken = this.getNodeParameter('createJobLoginToken', i) as string;
-                    }
-                    const options = this.getNodeParameter('recruiterCreateOptions', i, {}) as Record<string, any>;
-                    const body: any = { login_token: loginToken };
-                    for (const [key, value] of Object.entries(options)) {
-                        if (value !== undefined && value !== null && value !== '') {
-                            body[key] = value;
-                        }
-                    }
-                    const requestOptions = Linkup.prototype.buildRequestOptions.call(this,
-                        '/recruiter/create-job',
-                        'POST',
-                        creds.apiKey,
-                        body,
-                        timeout
-                    );
-                    try {
-                        response = await this.helpers.httpRequest(requestOptions);
-                        returnData.push({
-                            json: {
-                                _debug: {
-                                    requestBody: body,
-                                    requestHeaders: requestOptions.headers,
-                                    apiResponse: response,
-                                },
-                                ...response,
-                                _meta: {
-                                    operation,
-                                    timestamp: new Date().toISOString(),
-                                    nodeVersion: NODE_VERSION,
-                                },
-                            },
-                            pairedItem: { item: i },
-                        });
-                        continue;
-                    } catch (error: any) {
-                        throw new NodeOperationError(this.getNode(), error.response?.data?.message || error.message || 'Erreur inconnue', { description: JSON.stringify(error.response?.data) });
-                    }
-                }
+                // Obtenir les credentials
+                const creds = await Linkup.prototype.getCredentialsWithFallback.call(this, this, i);
+                
+                // Construire le body de la requête
+                const body = await Linkup.prototype.buildRequestBody.call(this, this, i, operation, creds.loginToken);
+                
+                // Obtenir l'endpoint
+                const endpoint = Linkup.prototype.getEndpointForOperation.call(this, operation);
+                
+                // Construire les options de requête
+                const requestOptions = Linkup.prototype.buildRequestOptions.call(this, endpoint, 'POST', creds.apiKey, body, timeout);
 
-                // Ajout de métadonnées utiles
-                const executionData: INodeExecutionData = {
+                const response = await this.helpers.httpRequest(requestOptions);
+                
+                const result = {
                     json: {
+                        _debug: {
+                            requestBody: body,
+                            requestHeaders: requestOptions.headers,
+                            endpoint: endpoint,
+                            apiResponse: response,
+                        },
                         ...response,
                         _meta: {
                             operation,
@@ -3042,9 +995,8 @@ export class Linkup implements INodeType {
                     },
                     pairedItem: { item: i },
                 };
-
-                returnData.push(executionData);
-
+                
+                returnData.push(result);
             } catch (error: any) {
                 if (this.continueOnFail()) {
                     returnData.push({
@@ -3057,26 +1009,7 @@ export class Linkup implements INodeType {
                     });
                     continue;
                 }
-
-                // Amélioration des messages d'erreur
-                if (error.response?.status === 401) {
-                    throw new NodeOperationError(
-                        this.getNode(),
-                        'Clé API ou credentials invalides. Vérifiez votre clé API LINKUP et vos identifiants LinkedIn.'
-                    );
-                } else if (error.response?.status === 429) {
-                    throw new NodeOperationError(
-                        this.getNode(),
-                        'Limite de requêtes atteinte. Veuillez réessayer plus tard.'
-                    );
-                } else if (error.response?.status === 400) {
-                    throw new NodeOperationError(
-                        this.getNode(),
-                        `Requête invalide : ${error.response?.data?.message || error.message || 'Erreur inconnue'}`
-                    );
-                } else {
-                    throw new NodeOperationError(this.getNode(), error.message || 'Erreur inconnue');
-                }
+                throw Linkup.prototype.handleApiError.call(this, this, error, operation);
             }
         }
 
