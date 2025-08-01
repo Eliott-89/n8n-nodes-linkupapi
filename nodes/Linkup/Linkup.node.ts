@@ -1092,6 +1092,46 @@ export class Linkup implements INodeType {
                 ],
             },
 
+            // PUBLISH/CLOSE JOB - Paramètres Linkup
+            {
+                displayName: 'Paramètres Linkup',
+                name: 'publishCloseJobParams',
+                type: 'collection',
+                placeholder: 'Ajouter un paramètre',
+                displayOptions: {
+                    show: {
+                        operation: ['publishJob', 'closeJob'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Job ID',
+                        name: 'jobId',
+                        type: 'string',
+                        default: '',
+                        description: 'Identifiant unique du job à publier/fermer',
+                    },
+                    {
+                        displayName: 'Pays',
+                        name: 'country',
+                        type: 'options',
+                        options: [
+                            { name: 'France', value: 'FR' },
+                            { name: 'États-Unis', value: 'US' },
+                            { name: 'Royaume-Uni', value: 'UK' },
+                            { name: 'Allemagne', value: 'DE' },
+                            { name: 'Espagne', value: 'ES' },
+                            { name: 'Italie', value: 'IT' },
+                            { name: 'Canada', value: 'CA' },
+                            { name: 'Australie', value: 'AU' },
+                        ],
+                        default: 'FR',
+                        description: 'Code pays pour la sélection du proxy',
+                    },
+                ],
+            },
+
             // CREATE JOB - Paramètres Linkup
             {
                 displayName: 'Paramètres Linkup',
@@ -1497,11 +1537,10 @@ export class Linkup implements INodeType {
                 break;
 
             case 'publishJob':
-                // Pas de paramètres spécifiques, juste le login token
-                break;
-
             case 'closeJob':
-                // Pas de paramètres spécifiques, juste le login token
+                const publishCloseJobParams = context.getNodeParameter('publishCloseJobParams', itemIndex, {}) as any;
+                if (publishCloseJobParams.jobId) body.job_id = publishCloseJobParams.jobId;
+                if (publishCloseJobParams.country) body.country = publishCloseJobParams.country;
                 break;
 
             case 'createJob':
