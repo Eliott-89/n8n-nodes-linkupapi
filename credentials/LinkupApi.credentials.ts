@@ -41,25 +41,12 @@ export class LinkupApi implements ICredentialType {
             description: 'LinkedIn authentication token if you have one',
         },
         {
-            displayName: 'Country',
+            displayName: 'Country Code',
             name: 'country',
-            type: 'options',
-            options: [
-                {
-                    name: 'France',
-                    value: 'FR',
-                },
-                {
-                    name: 'United States',
-                    value: 'US',
-                },
-                {
-                    name: 'United Kingdom',
-                    value: 'UK',
-                },
-            ],
+            type: 'string',
             default: 'FR',
-            description: 'Country code for proxy selection',
+            placeholder: 'FR, US, UK, DE, ES, IT, CA, AU, etc.',
+            description: 'Country code for proxy selection (e.g., FR for France, US for United States)',
         },
     ];
 }
