@@ -546,11 +546,6 @@ export class Linkup implements INodeType {
                         displayName: 'Type de réaction',
                         name: 'reactionType',
                         type: 'options',
-                        displayOptions: {
-                            show: {
-                                operation: ['reactToPost'],
-                            },
-                        },
                         options: [
                             { name: '👍 Like', value: 'LIKE' },
                             { name: '🎉 Celebrate', value: 'CELEBRATE' },
@@ -566,11 +561,6 @@ export class Linkup implements INodeType {
                         displayName: 'Message/Texte',
                         name: 'messageText',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['commentPost'],
-                            },
-                        },
                         default: '',
                         description: 'Texte du commentaire',
                     },
@@ -578,11 +568,6 @@ export class Linkup implements INodeType {
                         displayName: 'Durée (secondes)',
                         name: 'duration',
                         type: 'number',
-                        displayOptions: {
-                            show: {
-                                operation: ['timeSpent'],
-                            },
-                        },
                         default: 30,
                         description: 'Durée passée sur le post en secondes',
                     },
@@ -590,11 +575,6 @@ export class Linkup implements INodeType {
                         displayName: 'Heure de début (timestamp)',
                         name: 'durationStartTime',
                         type: 'number',
-                        displayOptions: {
-                            show: {
-                                operation: ['timeSpent'],
-                            },
-                        },
                         default: '',
                         description: 'Timestamp Unix du début de visualisation en millisecondes',
                     },
@@ -602,11 +582,6 @@ export class Linkup implements INodeType {
                         displayName: 'Nombre de résultats',
                         name: 'total_results',
                         type: 'number',
-                        displayOptions: {
-                            show: {
-                                operation: ['getPostReactions', 'extractComments'],
-                            },
-                        },
                         default: 10,
                         description: 'Nombre de résultats à récupérer',
                     },
@@ -614,11 +589,6 @@ export class Linkup implements INodeType {
                         displayName: 'Page de début',
                         name: 'start_page',
                         type: 'number',
-                        displayOptions: {
-                            show: {
-                                operation: ['getPostReactions', 'extractComments'],
-                            },
-                        },
                         default: 1,
                         description: 'Première page à récupérer',
                     },
@@ -626,11 +596,6 @@ export class Linkup implements INodeType {
                         displayName: 'Page de fin',
                         name: 'end_page',
                         type: 'number',
-                        displayOptions: {
-                            show: {
-                                operation: ['getPostReactions', 'extractComments'],
-                            },
-                        },
                         default: 1,
                         description: 'Dernière page à récupérer',
                     },
@@ -800,11 +765,6 @@ export class Linkup implements INodeType {
                         displayName: 'Lieu(x)',
                         name: 'location',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile', 'searchCompanies'],
-                            },
-                        },
                         default: '',
                         description: 'Lieu(x) géographique(s) (séparés par ;)',
                     },
@@ -812,11 +772,6 @@ export class Linkup implements INodeType {
                         displayName: 'Entreprise(s)',
                         name: 'company_url',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'URL(s) d\'entreprise LinkedIn (séparées par ;)',
                     },
@@ -824,11 +779,6 @@ export class Linkup implements INodeType {
                         displayName: 'École(s)',
                         name: 'school_url',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'URL(s) d\'école LinkedIn (séparées par ;)',
                     },
@@ -836,11 +786,6 @@ export class Linkup implements INodeType {
                         displayName: 'Réseau',
                         name: 'network',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'Niveau de connexion (F=1er, S=2e, O=hors réseau)',
                     },
@@ -848,11 +793,6 @@ export class Linkup implements INodeType {
                         displayName: 'Secteur(s)',
                         name: 'sector',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchCompanies'],
-                            },
-                        },
                         default: '',
                         description: 'Secteur(s) d\'activité (séparés par ;)',
                     },
@@ -860,11 +800,6 @@ export class Linkup implements INodeType {
                         displayName: 'Taille entreprise',
                         name: 'company_size',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchCompanies'],
-                            },
-                        },
                         default: '',
                         description: 'Plage de taille d\'entreprise',
                     },
@@ -872,11 +807,6 @@ export class Linkup implements INodeType {
                         displayName: 'Prénom',
                         name: 'first_name',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'Filtrer par prénom',
                     },
@@ -884,11 +814,6 @@ export class Linkup implements INodeType {
                         displayName: 'Nom',
                         name: 'last_name',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'Filtrer par nom',
                     },
@@ -896,11 +821,6 @@ export class Linkup implements INodeType {
                         displayName: 'Titre/Poste',
                         name: 'title',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: '',
                         description: 'Filtrer par titre/poste',
                     },
@@ -908,11 +828,6 @@ export class Linkup implements INodeType {
                         displayName: 'Afficher état invitation',
                         name: 'fetch_invitation_state',
                         type: 'boolean',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfile'],
-                            },
-                        },
                         default: true,
                         description: 'Inclure l\'état d\'invitation pour chaque profil',
                     },
@@ -920,11 +835,6 @@ export class Linkup implements INodeType {
                         displayName: 'Secteur d\'activité (Data)',
                         name: 'industry',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchCompaniesData'],
-                            },
-                        },
                         default: '',
                         description: 'Secteur d\'activité pour recherche Data',
                     },
@@ -932,11 +842,6 @@ export class Linkup implements INodeType {
                         displayName: 'Taille d\'équipe (Data)',
                         name: 'employee_range',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchCompaniesData'],
-                            },
-                        },
                         default: '',
                         description: 'Plage d\'employés (ex: 1-10, 11-50, 51-200)',
                     },
@@ -944,11 +849,6 @@ export class Linkup implements INodeType {
                         displayName: 'Entreprise fondatrice',
                         name: 'founding_company',
                         type: 'boolean',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchCompaniesData'],
-                            },
-                        },
                         default: false,
                         description: 'Filtrer les entreprises fondatrices (Data)',
                     },
@@ -956,11 +856,6 @@ export class Linkup implements INodeType {
                         displayName: 'Titre du poste (Data)',
                         name: 'job_title',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfilesData'],
-                            },
-                        },
                         default: '',
                         description: 'Titre du poste actuel pour recherche Data',
                     },
@@ -968,11 +863,6 @@ export class Linkup implements INodeType {
                         displayName: 'École (Data)',
                         name: 'school',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfilesData'],
-                            },
-                        },
                         default: '',
                         description: 'École ou université pour recherche Data',
                     },
@@ -980,11 +870,6 @@ export class Linkup implements INodeType {
                         displayName: 'Entreprise actuelle (Data)',
                         name: 'current_company',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchProfilesData'],
-                            },
-                        },
                         default: '',
                         description: 'Entreprise actuelle pour recherche Data',
                     },
@@ -992,11 +877,6 @@ export class Linkup implements INodeType {
                         displayName: 'Type de post',
                         name: 'post_type',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchPosts'],
-                            },
-                        },
                         default: '',
                         description: 'Type de post à rechercher',
                     },
@@ -1004,11 +884,6 @@ export class Linkup implements INodeType {
                         displayName: 'Trier par',
                         name: 'sort_by',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchPosts'],
-                            },
-                        },
                         default: '',
                         description: 'Critère de tri des posts',
                     },
@@ -1016,11 +891,6 @@ export class Linkup implements INodeType {
                         displayName: 'Date du post',
                         name: 'post_date',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchPosts'],
-                            },
-                        },
                         default: '',
                         description: 'Date du post pour filtrer',
                     },
@@ -1028,11 +898,6 @@ export class Linkup implements INodeType {
                         displayName: 'URL LinkedIn (recherche)',
                         name: 'linkedin_url',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['searchPosts'],
-                            },
-                        },
                         default: '',
                         description: 'URL LinkedIn pour recherche',
                     },
@@ -1094,11 +959,6 @@ export class Linkup implements INodeType {
                         displayName: 'Type d\'invitation',
                         name: 'invitation_type',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getReceivedInvitations', 'getSentInvitations'],
-                            },
-                        },
                         default: '',
                         description: 'Type d\'invitation (CONNECTION, ORGANIZATION, etc.)',
                     },
@@ -1160,11 +1020,6 @@ export class Linkup implements INodeType {
                         displayName: 'Années d\'expérience',
                         name: 'yearsOfExperience',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getCandidates'],
-                            },
-                        },
                         default: '',
                         description: 'Années d\'expérience requises (Recruiter)',
                     },
@@ -1172,11 +1027,6 @@ export class Linkup implements INodeType {
                         displayName: 'Type de tri',
                         name: 'sortType',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getCandidates'],
-                            },
-                        },
                         default: '',
                         description: 'Type de tri pour les candidats (Recruiter)',
                     },
@@ -1184,11 +1034,6 @@ export class Linkup implements INodeType {
                         displayName: 'Ordre de tri',
                         name: 'sortOrder',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getCandidates'],
-                            },
-                        },
                         default: '',
                         description: 'Ordre de tri (ASC/DESC) (Recruiter)',
                     },
@@ -1196,11 +1041,6 @@ export class Linkup implements INodeType {
                         displayName: 'Notes',
                         name: 'ratings',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getCandidates'],
-                            },
-                        },
                         default: '',
                         description: 'Filtrer par notes (Recruiter)',
                     },
@@ -1208,11 +1048,6 @@ export class Linkup implements INodeType {
                         displayName: 'Début',
                         name: 'start',
                         type: 'string',
-                        displayOptions: {
-                            show: {
-                                operation: ['getCandidates'],
-                            },
-                        },
                         default: '',
                         description: 'Point de départ pour la pagination (Recruiter)',
                     },
@@ -1529,6 +1364,7 @@ export class Linkup implements INodeType {
                 if (postsParams.postUrl) body.post_url = postsParams.postUrl;
                 if (postsParams.country) body.country = postsParams.country;
                 
+                // Paramètres spécifiques par opération
                 if (operation === 'reactToPost' && postsParams.reactionType) {
                     body.reaction_type = postsParams.reactionType;
                 }
@@ -1621,6 +1457,7 @@ export class Linkup implements INodeType {
                 const networkListParams = context.getNodeParameter('networkListParams', itemIndex, {}) as any;
                 if (networkListParams.country) body.country = networkListParams.country;
                 
+                // Paramètres spécifiques par opération
                 if (operation === 'getReceivedInvitations' || operation === 'getSentInvitations') {
                     if (networkListParams.invitation_type) body.invitation_type = networkListParams.invitation_type;
                 }
@@ -1636,6 +1473,7 @@ export class Linkup implements INodeType {
                 const recruiterParams = context.getNodeParameter('recruiterParams', itemIndex, {}) as any;
                 if (recruiterParams.country) body.country = recruiterParams.country;
                 
+                // Paramètres spécifiques par opération
                 if (operation === 'getCandidates') {
                     if (recruiterParams.yearsOfExperience) body.yearsOfExperience = recruiterParams.yearsOfExperience;
                     if (recruiterParams.sortType) body.sortType = recruiterParams.sortType;
