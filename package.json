@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "1.2.43",
+  "version": "1.2.49",
   "description": "n8n node for LINKUP API - LinkedIn automation",
   "keywords": [
     "n8n-community-node-package",
@@ -30,11 +30,11 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
+    "build:global": "npx tsc && npx gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build"
+    "lintfix": "eslint nodes credentials package.json --fix"
   },
   "files": [
     "dist"

@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = 'https://api.linkupapi.com/v1';
-const NODE_VERSION = '1.2.43';
+const NODE_VERSION = '1.2.49';
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -94,8 +94,16 @@ export class Linkup implements INodeType {
                         value: 'recruiter',
                     },
                     {
-                        name: 'Data',
-                        value: 'data',
+                        name: 'Signal API',
+                        value: 'signal',
+                    },
+                    {
+                        name: 'Company API',
+                        value: 'companyApi',
+                    },
+                    {
+                        name: 'Person API',
+                        value: 'personApi',
                     },
                 ],
                 default: 'authentication',
@@ -199,16 +207,16 @@ export class Linkup implements INodeType {
                     },
                 },
                 options: [
-                    { name: 'Get Post Reactions', value: 'getPostReactions', description: 'Get post reactions' },
-                    { name: 'React to Post', value: 'reactToPost', description: 'React to a post' },
-                    { name: 'Repost Content', value: 'repost', description: 'Repost a post' },
-                    { name: 'Add Comment to Post', value: 'commentPost', description: 'Comment on a post' },
-                    { name: 'Get Comments', value: 'extractComments', description: 'Extract post comments' },
-                    { name: 'Answer Comment', value: 'answerComment', description: 'Reply to a comment' },
-                    { name: 'Search Posts', value: 'searchPosts', description: 'Search posts' },
-                    { name: 'Create Post', value: 'createPost', description: 'Create a post' },
-                    { name: 'Get LinkedIn Feed', value: 'getFeed', description: 'Get feed' },
-                    { name: 'Send Post Time Spent Signal', value: 'timeSpent', description: 'Record time spent on a post' },
+                    { name: 'Get post reactions', value: 'getPostReactions', description: 'Get post reactions' },
+                    { name: 'React to post', value: 'reactToPost', description: 'React to a post' },
+                    { name: 'Repost content', value: 'repost', description: 'Repost a post' },
+                    { name: 'Add comment to post', value: 'commentPost', description: 'Comment on a post' },
+                    { name: 'Get comments', value: 'extractComments', description: 'Extract post comments' },
+                    { name: 'Answer comment', value: 'answerComment', description: 'Reply to a comment' },
+                    { name: 'Search posts', value: 'searchPosts', description: 'Search posts' },
+                    { name: 'Create a post', value: 'createPost', description: 'Create a post' },
+                    { name: 'Get LinkedIn feed', value: 'getFeed', description: 'Get feed' },
+                    { name: 'Send post time spent signal', value: 'timeSpent', description: 'Record time spent on a post' },
                 ],
                 default: 'getPostReactions',
             },
@@ -223,12 +231,12 @@ export class Linkup implements INodeType {
                     },
                 },
                 options: [
-                    { name: 'Get Candidates', value: 'getCandidates', description: 'List candidates from a LinkedIn Recruiter job posting' },
-                    { name: 'Get Candidate CV', value: 'getCandidateCV', description: 'Download a LinkedIn Recruiter candidate CV' },
-                    { name: 'Get Job Posts', value: 'getJobPosts', description: 'List LinkedIn Recruiter job postings' },
-                    { name: 'Publish Job', value: 'publishJob', description: 'Publish a LinkedIn Recruiter job posting' },
-                    { name: 'Close Job', value: 'closeJob', description: 'Close a LinkedIn Recruiter job posting' },
-                    { name: 'Create Job', value: 'createJob', description: 'Create a new LinkedIn Recruiter job posting' },
+                    { name: 'Get candidates', value: 'getCandidates', description: 'List candidates from a LinkedIn Recruiter job posting' },
+                    { name: 'Get candidate CV', value: 'getCandidateCV', description: 'Download a LinkedIn Recruiter candidate CV' },
+                    { name: 'Get job posts', value: 'getJobPosts', description: 'List LinkedIn Recruiter job postings' },
+                    { name: 'Publish job', value: 'publishJob', description: 'Publish a LinkedIn Recruiter job posting' },
+                    { name: 'Close job', value: 'closeJob', description: 'Close a LinkedIn Recruiter job posting' },
+                    { name: 'Create job', value: 'createJob', description: 'Create a new LinkedIn Recruiter job posting' },
                 ],
                 default: 'getCandidates',
             },
@@ -239,14 +247,52 @@ export class Linkup implements INodeType {
                 noDataExpression: true,
                 displayOptions: {
                     show: {
-                        resource: ['data'],
+                        resource: ['signal'],
                     },
                 },
                 options: [
-                    { name: 'Search Companies', value: 'searchCompaniesData', description: 'Advanced company search (Data/Enrichment)' },
-                    { name: 'Search Profiles', value: 'searchProfilesData', description: 'Advanced profile search (Data/Enrichment)' },
+                    { name: 'Extract post reactions', value: 'extractPostReactions', description: 'Extract reactions from a LinkedIn post' },
+                    { name: 'Extract post comments', value: 'extractPostComments', description: 'Extract comments from a LinkedIn post' },
+                    { name: 'Extract profile reactions', value: 'extractProfileReactions', description: 'Extract reactions from a LinkedIn profile' },
+                    { name: 'Extract profile comments', value: 'extractProfileComments', description: 'Extract comments from a LinkedIn profile' },
+                    { name: 'Extract profile posts', value: 'extractProfilePosts', description: 'Extract posts from a LinkedIn profile' },
+                    { name: 'Extract company posts', value: 'extractCompanyPosts', description: 'Extract posts from a LinkedIn company' },
                 ],
-                default: 'searchCompaniesData',
+                default: 'extractPostReactions',
+            },
+            {
+                displayName: 'Operation',
+                name: 'operation',
+                type: 'options',
+                noDataExpression: true,
+                displayOptions: {
+                    show: {
+                        resource: ['companyApi'],
+                    },
+                },
+                options: [
+                    { name: 'Search companies', value: 'searchCompaniesApi', description: 'Search companies using Company API' },
+                    { name: 'Get company information', value: 'getCompanyInfoApi', description: 'Get detailed company information' },
+                    { name: 'Get company information by domain', value: 'getCompanyInfoByDomain', description: 'Get company information using domain name' },
+                ],
+                default: 'searchCompaniesApi',
+            },
+            {
+                displayName: 'Operation',
+                name: 'operation',
+                type: 'options',
+                noDataExpression: true,
+                displayOptions: {
+                    show: {
+                        resource: ['personApi'],
+                    },
+                },
+                options: [
+                    { name: 'Search profiles', value: 'searchProfilesApi', description: 'Search profiles using Person API' },
+                    { name: 'Extract profile information', value: 'extractProfileInfoApi', description: 'Extract detailed profile information' },
+                    { name: 'Profile enrichment', value: 'profileEnrichment', description: 'Enrich profile with additional data' },
+                ],
+                default: 'searchProfilesApi',
             },
 
             // === PARAMÈTRES SPÉCIFIQUES PAR OPÉRATION ===
@@ -1611,127 +1657,784 @@ export class Linkup implements INodeType {
                 ],
             },
 
-            // === DATA NODES PARAMETERS ===
+
+
+            // === SIGNAL API PARAMETERS ===
             
-            // DATA COMPANIES - Paramètres Linkup
+            // SIGNAL POST REACTIONS - Paramètres Linkup
             {
-                displayName: 'Data Companies Parameters',
-                name: 'dataCompaniesParams',
+                displayName: 'Linkup Parameters',
+                name: 'signalPostReactionsParams',
                 type: 'collection',
                 placeholder: 'Add a parameter',
                 displayOptions: {
                     show: {
-                        operation: ['searchCompaniesData'],
+                        operation: ['extractPostReactions'],
                     },
                 },
                 default: {},
                 options: [
                     {
+                        displayName: 'Post URL *',
+                        name: 'post_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/feed/update/xxx',
+                        description: 'URL of the LinkedIn post to extract reactions from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of reactions to retrieve (used when not in pagination mode)',
+                    },
+                    {
+                        displayName: 'Use Pagination',
+                        name: 'use_pagination',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Use pagination mode instead of total results mode',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination mode (required if use_pagination is true)',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination mode (optional if use_pagination is true)',
+                    },
+                ],
+            },
+
+            // SIGNAL POST COMMENTS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'signalPostCommentsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractPostComments'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Post URL *',
+                        name: 'post_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/feed/update/xxx',
+                        description: 'URL of the LinkedIn post to extract comments from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of comments to retrieve (used when not in pagination mode)',
+                    },
+                    {
+                        displayName: 'Use Pagination',
+                        name: 'use_pagination',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Use pagination mode instead of total results mode',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination mode (required if use_pagination is true)',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination mode (optional if use_pagination is true)',
+                    },
+                ],
+            },
+
+            // SIGNAL PROFILE REACTIONS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'signalProfileReactionsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractProfileReactions'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Profile URL *',
+                        name: 'profile_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL of the LinkedIn profile to extract reactions from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of reactions to retrieve',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination',
+                    },
+                    {
+                        displayName: 'Cursor',
+                        name: 'cursor',
+                        type: 'string',
+                        default: '',
+                        description: 'Pagination cursor to continue a previous search',
+                    },
+                ],
+            },
+
+            // SIGNAL PROFILE COMMENTS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'signalProfileCommentsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractProfileComments'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Profile URL *',
+                        name: 'profile_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL of the LinkedIn profile to extract comments from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of comments to retrieve',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination',
+                    },
+                    {
+                        displayName: 'Cursor',
+                        name: 'cursor',
+                        type: 'string',
+                        default: '',
+                        description: 'Pagination cursor to continue a previous search',
+                    },
+                ],
+            },
+
+            // SIGNAL PROFILE POSTS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'signalProfilePostsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractProfilePosts'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Profile URL *',
+                        name: 'profile_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'URL of the LinkedIn profile to extract posts from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of posts to retrieve (used when not in pagination mode)',
+                    },
+                    {
+                        displayName: 'Post Type',
+                        name: 'post_type',
+                        type: 'options',
+                        options: [
+                            { name: 'All', value: 'ALL' },
+                            { name: 'Article', value: 'ARTICLE' },
+                            { name: 'Video', value: 'VIDEO' },
+                            { name: 'Photo', value: 'PHOTO' },
+                            { name: 'Document', value: 'DOCUMENT' },
+                        ],
+                        default: 'ALL',
+                        description: 'Type of posts to filter. Available: (ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT)',
+                    },
+                    {
+                        displayName: 'Sort By',
+                        name: 'sort_by',
+                        type: 'options',
+                        options: [
+                            { name: 'Relevance', value: 'RELEVANCE' },
+                            { name: 'Date Posted', value: 'DATE_POSTED' },
+                        ],
+                        default: 'DATE_POSTED',
+                        description: 'Sort order for posts. Available: (RELEVANCE, DATE_POSTED)',
+                    },
+                    {
                         displayName: 'Keyword',
                         name: 'keyword',
                         type: 'string',
                         default: '',
-                        description: 'Search keyword for companies',
+                        description: 'Keyword to filter posts by content',
+                    },
+                    {
+                        displayName: 'Post Date',
+                        name: 'post_date',
+                        type: 'options',
+                        options: [
+                            { name: 'Past 24 Hours', value: 'PAST_24_HOURS' },
+                            { name: 'Past Week', value: 'PAST_WEEK' },
+                            { name: 'Past Month', value: 'PAST_MONTH' },
+                        ],
+                        default: '',
+                        description: 'Date filter for posts. Available: (PAST_24_HOURS, PAST_WEEK, PAST_MONTH)',
+                    },
+                    {
+                        displayName: 'Use Pagination',
+                        name: 'use_pagination',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Use pagination mode instead of total results mode',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination mode (required if use_pagination is true)',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination mode (optional if use_pagination is true)',
+                    },
+                ],
+            },
+
+            // SIGNAL COMPANY POSTS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'signalCompanyPostsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractCompanyPosts'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Company URL *',
+                        name: 'company_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/company/company-name/',
+                        description: 'URL of the LinkedIn company page to extract posts from',
+                    },
+                    {
+                        displayName: 'Proxy Country',
+                        name: 'proxy_country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK',
+                        description: 'Country code for proxy selection. Available: (US, UK, FR)',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of posts to retrieve (used when not in pagination mode)',
+                    },
+                    {
+                        displayName: 'Post Type',
+                        name: 'post_type',
+                        type: 'options',
+                        options: [
+                            { name: 'All', value: 'ALL' },
+                            { name: 'Article', value: 'ARTICLE' },
+                            { name: 'Video', value: 'VIDEO' },
+                            { name: 'Photo', value: 'PHOTO' },
+                            { name: 'Document', value: 'DOCUMENT' },
+                        ],
+                        default: 'ALL',
+                        description: 'Type of posts to filter. Available: (ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT)',
+                    },
+                    {
+                        displayName: 'Sort By',
+                        name: 'sort_by',
+                        type: 'options',
+                        options: [
+                            { name: 'Relevance', value: 'RELEVANCE' },
+                            { name: 'Date Posted', value: 'DATE_POSTED' },
+                        ],
+                        default: 'DATE_POSTED',
+                        description: 'Sort order for posts. Available: (RELEVANCE, DATE_POSTED)',
+                    },
+                    {
+                        displayName: 'Keyword',
+                        name: 'keyword',
+                        type: 'string',
+                        default: '',
+                        description: 'Keyword to filter posts by content',
+                    },
+                    {
+                        displayName: 'Post Date',
+                        name: 'post_date',
+                        type: 'options',
+                        options: [
+                            { name: 'Past 24 Hours', value: 'PAST_24_HOURS' },
+                            { name: 'Past Week', value: 'PAST_WEEK' },
+                            { name: 'Past Month', value: 'PAST_MONTH' },
+                        ],
+                        default: '',
+                        description: 'Date filter for posts. Available: (PAST_24_HOURS, PAST_WEEK, PAST_MONTH)',
+                    },
+                    {
+                        displayName: 'Use Pagination',
+                        name: 'use_pagination',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Use pagination mode instead of total results mode',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Starting page number for pagination mode (required if use_pagination is true)',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Ending page number for pagination mode (optional if use_pagination is true)',
+                    },
+                ],
+            },
+
+            // === COMPANY API PARAMETERS ===
+            
+            // COMPANY API SEARCH - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'companyApiSearchParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['searchCompaniesApi'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Keyword *',
+                        name: 'keyword',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        description: 'Keyword to search for (company name, industry, etc.). Also supports company_name for backward compatibility.',
                     },
                     {
                         displayName: 'Industry',
                         name: 'industry',
                         type: 'string',
                         default: '',
-                        description: 'Company business sector',
+                        description: 'Industry sector (e.g., "technology", "finance", "healthcare")',
                     },
                     {
                         displayName: 'Location',
                         name: 'location',
                         type: 'string',
                         default: '',
-                        description: 'Company geographic location',
+                        description: 'Location (e.g., "Paris", "France", "New York")',
                     },
                     {
                         displayName: 'Employee Range',
                         name: 'employee_range',
-                        type: 'string',
+                        type: 'options',
+                        options: [
+                            { name: '1-50', value: '1-50' },
+                            { name: '51-200', value: '51-200' },
+                            { name: '201-1000', value: '201-1000' },
+                            { name: '1000+', value: '1000+' },
+                        ],
                         default: '',
-                        description: 'Employee range (e.g., 1-10, 11-50, 51-200, 201-500, 501-1000, 1001+)',
+                        description: 'Employee count range',
                     },
                     {
                         displayName: 'Founding Company',
                         name: 'founding_company',
                         type: 'boolean',
                         default: false,
-                        description: 'Filter only founding companies',
+                        description: 'Filter for founding companies. True: Search only founding companies, False: Exclude founding companies',
                     },
                     {
                         displayName: 'Total Results',
                         name: 'total_results',
                         type: 'number',
-                        default: 100,
-                        description: 'Maximum number of results to return',
+                        default: 10,
+                        description: 'Number of results to return (minimum: 1)',
                     },
                 ],
             },
 
-            // DATA PROFILES - Paramètres Linkup
+            // COMPANY API INFO - Paramètres Linkup
             {
-                displayName: 'Data Profiles Parameters',
-                name: 'dataProfilesParams',
+                displayName: 'Linkup Parameters',
+                name: 'companyApiInfoParams',
                 type: 'collection',
                 placeholder: 'Add a parameter',
                 displayOptions: {
                     show: {
-                        operation: ['searchProfilesData'],
+                        operation: ['getCompanyInfoApi'],
                     },
                 },
                 default: {},
                 options: [
                     {
-                        displayName: 'Keyword',
+                        displayName: 'Company URL *',
+                        name: 'company_url',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/company/stripe/',
+                        description: 'LinkedIn company URL (e.g., https://www.linkedin.com/company/stripe/)',
+                    },
+                ],
+            },
+
+            // COMPANY API INFO BY DOMAIN - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'companyApiInfoByDomainParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['getCompanyInfoByDomain'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Domain *',
+                        name: 'domain',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'stripe.com',
+                        description: 'Company domain name (e.g., "equans.com", "stripe.com")',
+                    },
+                ],
+            },
+
+            // === PERSON API PARAMETERS ===
+            
+            // PERSON API SEARCH - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'personApiSearchParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfilesApi'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Keyword *',
                         name: 'keyword',
                         type: 'string',
                         default: '',
-                        description: 'Search keyword for profiles',
+                        required: true,
+                        description: 'Main search keyword (name, position, skills, etc.)',
                     },
                     {
                         displayName: 'Job Title',
                         name: 'job_title',
                         type: 'string',
                         default: '',
-                        description: 'Current or desired job title',
+                        description: 'Job title to search for',
                     },
                     {
                         displayName: 'Industry',
                         name: 'industry',
                         type: 'string',
                         default: '',
-                        description: 'Profile business sector',
+                        description: 'Industry sector (e.g., "technology", "finance", "healthcare")',
                     },
                     {
-                        displayName: 'School/University',
+                        displayName: 'School',
                         name: 'school',
                         type: 'string',
                         default: '',
-                        description: 'School or university attended',
+                        description: 'School or university',
                     },
                     {
                         displayName: 'Location',
                         name: 'location',
                         type: 'string',
                         default: '',
-                        description: 'Profile geographic location',
+                        description: 'Location (city, region, country)',
                     },
                     {
                         displayName: 'Current Company',
                         name: 'current_company',
                         type: 'string',
                         default: '',
-                        description: 'Company where profile currently works',
+                        description: 'Current company',
                     },
                     {
                         displayName: 'Total Results',
                         name: 'total_results',
                         type: 'number',
-                        default: 100,
-                        description: 'Maximum number of results to return',
+                        default: 10,
+                        description: 'Total number of results to return (default: 10)',
+                    },
+                ],
+            },
+
+            // PERSON API EXTRACT INFO - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'personApiExtractInfoParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['extractProfileInfoApi'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'LinkedIn Profile URL *',
+                        name: 'profileUrl',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        placeholder: 'https://www.linkedin.com/in/username',
+                        description: 'LinkedIn profile URL to extract information from',
+                    },
+                    {
+                        displayName: 'Country Code',
+                        name: 'country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK, DE, ES, IT, CA, AU, etc.',
+                        description: 'Country code for proxy selection (e.g., FR for France, US for United States)',
+                    },
+                ],
+            },
+
+            // PERSON API ENRICHMENT - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'personApiEnrichmentParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['profileEnrichment'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'First Name *',
+                        name: 'first_name',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        description: 'Person\'s first name',
+                    },
+                    {
+                        displayName: 'Last Name *',
+                        name: 'last_name',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        description: 'Person\'s last name',
+                    },
+                    {
+                        displayName: 'Company Name *',
+                        name: 'company_name',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        description: 'Current company name where the person works',
+                    },
+                ],
+            },
+
+            // PERSON API SEARCH PROFILES - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'personApiSearchParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['searchProfilesApi'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Keyword *',
+                        name: 'keyword',
+                        type: 'string',
+                        default: '',
+                        required: true,
+                        description: 'Main search keyword (name, position, skills, etc.)',
+                    },
+                    {
+                        displayName: 'Job Title',
+                        name: 'job_title',
+                        type: 'string',
+                        default: '',
+                        description: 'Job title to search for',
+                    },
+                    {
+                        displayName: 'Industry',
+                        name: 'industry',
+                        type: 'string',
+                        default: '',
+                        description: 'Industry sector (e.g., "technology", "finance", "healthcare")',
+                    },
+                    {
+                        displayName: 'School',
+                        name: 'school',
+                        type: 'string',
+                        default: '',
+                        description: 'School or university',
+                    },
+                    {
+                        displayName: 'Location',
+                        name: 'location',
+                        type: 'string',
+                        default: '',
+                        description: 'Location (city, region, country)',
+                    },
+                    {
+                        displayName: 'Current Company',
+                        name: 'current_company',
+                        type: 'string',
+                        default: '',
+                        description: 'Current company',
+                    },
+                    {
+                        displayName: 'Total Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Total number of results to return (default: 10)',
                     },
                 ],
             },
@@ -1830,7 +2533,7 @@ export class Linkup implements INodeType {
         const body: RequestBody = {};
 
         // Ajouter le login token si nécessaire (depuis les credentials)
-        if (loginToken && !['login', 'verifyCode', 'searchCompaniesData', 'searchProfilesData'].includes(operation)) {
+        if (loginToken && !['login', 'verifyCode', 'extractPostReactions', 'extractPostComments', 'extractProfileReactions', 'extractProfileComments', 'extractProfilePosts', 'extractCompanyPosts', 'searchCompaniesApi', 'getCompanyInfoApi', 'getCompanyInfoByDomain', 'searchProfilesApi', 'extractProfileInfoApi', 'profileEnrichment'].includes(operation)) {
             body.login_token = loginToken;
         }
 
@@ -1994,26 +2697,7 @@ export class Linkup implements INodeType {
                 if (searchPostsParams.country) body.country = searchPostsParams.country;
                 break;
 
-            case 'searchCompaniesData':
-                const dataCompaniesParams = context.getNodeParameter('dataCompaniesParams', itemIndex, {}) as any;
-                if (dataCompaniesParams.keyword) body.keyword = dataCompaniesParams.keyword;
-                if (dataCompaniesParams.industry) body.industry = dataCompaniesParams.industry;
-                if (dataCompaniesParams.location) body.location = dataCompaniesParams.location;
-                if (dataCompaniesParams.employee_range) body.employee_range = dataCompaniesParams.employee_range;
-                if (dataCompaniesParams.founding_company !== undefined) body.founding_company = dataCompaniesParams.founding_company;
-                if (dataCompaniesParams.total_results) body.total_results = dataCompaniesParams.total_results;
-                break;
 
-            case 'searchProfilesData':
-                const dataProfilesParams = context.getNodeParameter('dataProfilesParams', itemIndex, {}) as any;
-                if (dataProfilesParams.keyword) body.keyword = dataProfilesParams.keyword;
-                if (dataProfilesParams.job_title) body.job_title = dataProfilesParams.job_title;
-                if (dataProfilesParams.industry) body.industry = dataProfilesParams.industry;
-                if (dataProfilesParams.school) body.school = dataProfilesParams.school;
-                if (dataProfilesParams.location) body.location = dataProfilesParams.location;
-                if (dataProfilesParams.current_company) body.current_company = dataProfilesParams.current_company;
-                if (dataProfilesParams.total_results) body.total_results = dataProfilesParams.total_results;
-                break;
 
             case 'getConnections':
                 const getConnectionsParams = context.getNodeParameter('getConnectionsParams', itemIndex, {}) as any;
@@ -2124,6 +2808,121 @@ export class Linkup implements INodeType {
                 if (createJobParams.auto_rejection_template) body.auto_rejection_template = createJobParams.auto_rejection_template;
                 if (createJobParams.contact_email) body.contact_email = createJobParams.contact_email;
                 break;
+
+            // === SIGNAL API CASES ===
+            case 'extractPostReactions':
+                const signalPostReactionsParams = context.getNodeParameter('signalPostReactionsParams', itemIndex, {}) as any;
+                if (signalPostReactionsParams.post_url) body.post_url = signalPostReactionsParams.post_url;
+                if (signalPostReactionsParams.proxy_country) body.proxy_country = signalPostReactionsParams.proxy_country;
+                if (signalPostReactionsParams.total_results) body.total_results = signalPostReactionsParams.total_results;
+                if (signalPostReactionsParams.use_pagination !== undefined) body.use_pagination = signalPostReactionsParams.use_pagination;
+                if (signalPostReactionsParams.start_page) body.start_page = signalPostReactionsParams.start_page;
+                if (signalPostReactionsParams.end_page) body.end_page = signalPostReactionsParams.end_page;
+                break;
+
+            case 'extractPostComments':
+                const signalPostCommentsParams = context.getNodeParameter('signalPostCommentsParams', itemIndex, {}) as any;
+                if (signalPostCommentsParams.post_url) body.post_url = signalPostCommentsParams.post_url;
+                if (signalPostCommentsParams.proxy_country) body.proxy_country = signalPostCommentsParams.proxy_country;
+                if (signalPostCommentsParams.total_results) body.total_results = signalPostCommentsParams.total_results;
+                if (signalPostCommentsParams.use_pagination !== undefined) body.use_pagination = signalPostCommentsParams.use_pagination;
+                if (signalPostCommentsParams.start_page) body.start_page = signalPostCommentsParams.start_page;
+                if (signalPostCommentsParams.end_page) body.end_page = signalPostCommentsParams.end_page;
+                break;
+
+            case 'extractProfileReactions':
+                const signalProfileReactionsParams = context.getNodeParameter('signalProfileReactionsParams', itemIndex, {}) as any;
+                if (signalProfileReactionsParams.profile_url) body.profile_url = signalProfileReactionsParams.profile_url;
+                if (signalProfileReactionsParams.proxy_country) body.proxy_country = signalProfileReactionsParams.proxy_country;
+                if (signalProfileReactionsParams.total_results) body.total_results = signalProfileReactionsParams.total_results;
+                if (signalProfileReactionsParams.start_page) body.start_page = signalProfileReactionsParams.start_page;
+                if (signalProfileReactionsParams.end_page) body.end_page = signalProfileReactionsParams.end_page;
+                if (signalProfileReactionsParams.cursor) body.cursor = signalProfileReactionsParams.cursor;
+                break;
+
+            case 'extractProfileComments':
+                const signalProfileCommentsParams = context.getNodeParameter('signalProfileCommentsParams', itemIndex, {}) as any;
+                if (signalProfileCommentsParams.profile_url) body.profile_url = signalProfileCommentsParams.profile_url;
+                if (signalProfileCommentsParams.proxy_country) body.proxy_country = signalProfileCommentsParams.proxy_country;
+                if (signalProfileCommentsParams.total_results) body.total_results = signalProfileCommentsParams.total_results;
+                if (signalProfileCommentsParams.start_page) body.start_page = signalProfileCommentsParams.start_page;
+                if (signalProfileCommentsParams.end_page) body.end_page = signalProfileCommentsParams.end_page;
+                if (signalProfileCommentsParams.cursor) body.cursor = signalProfileCommentsParams.cursor;
+                break;
+
+            case 'extractProfilePosts':
+                const signalProfilePostsParams = context.getNodeParameter('signalProfilePostsParams', itemIndex, {}) as any;
+                if (signalProfilePostsParams.profile_url) body.profile_url = signalProfilePostsParams.profile_url;
+                if (signalProfilePostsParams.proxy_country) body.proxy_country = signalProfilePostsParams.proxy_country;
+                if (signalProfilePostsParams.total_results) body.total_results = signalProfilePostsParams.total_results;
+                if (signalProfilePostsParams.post_type) body.post_type = signalProfilePostsParams.post_type;
+                if (signalProfilePostsParams.sort_by) body.sort_by = signalProfilePostsParams.sort_by;
+                if (signalProfilePostsParams.keyword) body.keyword = signalProfilePostsParams.keyword;
+                if (signalProfilePostsParams.post_date) body.post_date = signalProfilePostsParams.post_date;
+                if (signalProfilePostsParams.use_pagination !== undefined) body.use_pagination = signalProfilePostsParams.use_pagination;
+                if (signalProfilePostsParams.start_page) body.start_page = signalProfilePostsParams.start_page;
+                if (signalProfilePostsParams.end_page) body.end_page = signalProfilePostsParams.end_page;
+                break;
+
+            case 'extractCompanyPosts':
+                const signalCompanyPostsParams = context.getNodeParameter('signalCompanyPostsParams', itemIndex, {}) as any;
+                if (signalCompanyPostsParams.company_url) body.company_url = signalCompanyPostsParams.company_url;
+                if (signalCompanyPostsParams.proxy_country) body.proxy_country = signalCompanyPostsParams.proxy_country;
+                if (signalCompanyPostsParams.total_results) body.total_results = signalCompanyPostsParams.total_results;
+                if (signalCompanyPostsParams.post_type) body.post_type = signalCompanyPostsParams.post_type;
+                if (signalCompanyPostsParams.sort_by) body.sort_by = signalCompanyPostsParams.sort_by;
+                if (signalCompanyPostsParams.keyword) body.keyword = signalCompanyPostsParams.keyword;
+                if (signalCompanyPostsParams.post_date) body.post_date = signalCompanyPostsParams.post_date;
+                if (signalCompanyPostsParams.use_pagination !== undefined) body.use_pagination = signalCompanyPostsParams.use_pagination;
+                if (signalCompanyPostsParams.start_page) body.start_page = signalCompanyPostsParams.start_page;
+                if (signalCompanyPostsParams.end_page) body.end_page = signalCompanyPostsParams.end_page;
+                break;
+
+            // === COMPANY API CASES ===
+            case 'searchCompaniesApi':
+                const companyApiSearchParams = context.getNodeParameter('companyApiSearchParams', itemIndex, {}) as any;
+                if (companyApiSearchParams.keyword) body.keyword = companyApiSearchParams.keyword;
+                if (companyApiSearchParams.industry) body.industry = companyApiSearchParams.industry;
+                if (companyApiSearchParams.location) body.location = companyApiSearchParams.location;
+                if (companyApiSearchParams.employee_range) body.employee_range = companyApiSearchParams.employee_range;
+                if (companyApiSearchParams.founding_company !== undefined) body.founding_company = companyApiSearchParams.founding_company;
+                if (companyApiSearchParams.total_results) body.total_results = companyApiSearchParams.total_results;
+                break;
+
+            case 'getCompanyInfoApi':
+                const companyApiInfoParams = context.getNodeParameter('companyApiInfoParams', itemIndex, {}) as any;
+                if (companyApiInfoParams.company_url) body.company_url = companyApiInfoParams.company_url;
+                break;
+
+            case 'getCompanyInfoByDomain':
+                const companyApiInfoByDomainParams = context.getNodeParameter('companyApiInfoByDomainParams', itemIndex, {}) as any;
+                if (companyApiInfoByDomainParams.domain) body.domain = companyApiInfoByDomainParams.domain;
+                break;
+
+            // === PERSON API CASES ===
+            case 'searchProfilesApi':
+                const personApiSearchParams = context.getNodeParameter('personApiSearchParams', itemIndex, {}) as any;
+                if (personApiSearchParams.keyword) body.keyword = personApiSearchParams.keyword;
+                if (personApiSearchParams.job_title) body.job_title = personApiSearchParams.job_title;
+                if (personApiSearchParams.industry) body.industry = personApiSearchParams.industry;
+                if (personApiSearchParams.school) body.school = personApiSearchParams.school;
+                if (personApiSearchParams.location) body.location = personApiSearchParams.location;
+                if (personApiSearchParams.current_company) body.current_company = personApiSearchParams.current_company;
+                if (personApiSearchParams.total_results) body.total_results = personApiSearchParams.total_results;
+                break;
+
+            case 'extractProfileInfoApi':
+                const personApiExtractInfoParams = context.getNodeParameter('personApiExtractInfoParams', itemIndex, {}) as any;
+                if (personApiExtractInfoParams.profileUrl) body.linkedin_url = personApiExtractInfoParams.profileUrl;
+                if (personApiExtractInfoParams.country) body.country = personApiExtractInfoParams.country;
+                break;
+
+            case 'profileEnrichment':
+                const personApiEnrichmentParams = context.getNodeParameter('personApiEnrichmentParams', itemIndex, {}) as any;
+                if (personApiEnrichmentParams.first_name) body.first_name = personApiEnrichmentParams.first_name;
+                if (personApiEnrichmentParams.last_name) body.last_name = personApiEnrichmentParams.last_name;
+                if (personApiEnrichmentParams.company_name) body.company_name = personApiEnrichmentParams.company_name;
+                break;
         }
 
         // Ajouter le pays par défaut si pas spécifié
@@ -2184,9 +2983,25 @@ export class Linkup implements INodeType {
             'closeJob': '/recruiter/close-job',
             'createJob': '/recruiter/create-job',
             
-            // DATA (nouveaux)
-            'searchCompaniesData': '/data/search/companies',
-            'searchProfilesData': '/data/search/profiles',
+
+            
+            // SIGNAL API (nouveaux)
+            'extractPostReactions': '/data/signals/posts/reactions',
+            'extractPostComments': '/data/signals/posts/comments',
+            'extractProfileReactions': '/data/signals/profile/reactions',
+            'extractProfileComments': '/data/signals/profile/comments',
+            'extractProfilePosts': '/data/signals/profile/posts',
+            'extractCompanyPosts': '/data/signals/company/posts',
+            
+            // COMPANY API (nouveaux)
+            'searchCompaniesApi': '/data/search/companies',
+            'getCompanyInfoApi': '/data/company/info',
+            'getCompanyInfoByDomain': '/data/company/info-by-domain',
+            
+            // PERSON API (nouveaux)
+            'searchProfilesApi': '/data/search/profiles',
+            'extractProfileInfoApi': '/person/extract-info',
+            'profileEnrichment': '/data/profil/enrich',
         };
 
 
