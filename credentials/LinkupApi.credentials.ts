@@ -15,7 +15,7 @@ export class LinkupApi implements ICredentialType {
             type: 'string',
             default: '',
             required: true,
-            description: 'Your LINKUP API key from linkupapi.com dashboard',
+            description: 'Your LINKUP API key from [linkupapi.com](https://linkupapi.com) dashboard',
         },
         {
             displayName: 'LinkedIn Email',
