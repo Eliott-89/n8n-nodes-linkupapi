@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = 'https://api.linkupapi.com/v1';
-const NODE_VERSION = '1.2.49';
+const NODE_VERSION = '1.2.50';
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -94,15 +94,15 @@ export class Linkup implements INodeType {
                         value: 'recruiter',
                     },
                     {
-                        name: 'Signal API',
+                        name: 'Signal',
                         value: 'signal',
                     },
                     {
-                        name: 'Company API',
+                        name: 'Company',
                         value: 'companyApi',
                     },
                     {
-                        name: 'Person API',
+                        name: 'Person',
                         value: 'personApi',
                     },
                 ],
