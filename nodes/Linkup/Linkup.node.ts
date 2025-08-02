@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = 'https://api.linkupapi.com/v1';
-const NODE_VERSION = '1.2.41';
+const NODE_VERSION = '1.2.42';
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -1297,15 +1297,15 @@ export class Linkup implements INodeType {
                 ],
             },
 
-            // RECRUITER - Paramètres Linkup
+            // GET CANDIDATES - Paramètres Linkup
             {
                 displayName: 'Linkup Parameters',
-                name: 'recruiterParams',
+                name: 'getCandidatesParams',
                 type: 'collection',
                 placeholder: 'Add a parameter',
                 displayOptions: {
                     show: {
-                        operation: ['getCandidates', 'getJobPosts'],
+                        operation: ['getCandidates'],
                     },
                 },
                 default: {},
@@ -1324,13 +1324,6 @@ export class Linkup implements INodeType {
                         type: 'string',
                         default: '',
                         description: 'Job location filter',
-                    },
-                    {
-                        displayName: 'Fetch Details',
-                        name: 'fetchDetails',
-                        type: 'boolean',
-                        default: true,
-                        description: 'Fetch detailed information for job posts',
                     },
                     {
                         displayName: 'Years of Experience',
@@ -1366,6 +1359,65 @@ export class Linkup implements INodeType {
                         type: 'string',
                         default: '',
                         description: 'Starting point for pagination (Recruiter)',
+                    },
+                    {
+                        displayName: 'Number of Results',
+                        name: 'total_results',
+                        type: 'number',
+                        default: 10,
+                        description: 'Number of results to retrieve',
+                    },
+                    {
+                        displayName: 'Start Page',
+                        name: 'start_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'First page to retrieve',
+                    },
+                    {
+                        displayName: 'End Page',
+                        name: 'end_page',
+                        type: 'number',
+                        default: 1,
+                        description: 'Last page to retrieve',
+                    },
+                    {
+                        displayName: 'Country Code',
+                        name: 'country',
+                        type: 'string',
+                        default: 'FR',
+                        placeholder: 'FR, US, UK, DE, ES, IT, CA, AU, etc.',
+                        description: 'Country code for proxy selection (e.g., FR for France, US for United States)',
+                    },
+                ],
+            },
+
+            // GET JOB POSTS - Paramètres Linkup
+            {
+                displayName: 'Linkup Parameters',
+                name: 'getJobPostsParams',
+                type: 'collection',
+                placeholder: 'Add a parameter',
+                displayOptions: {
+                    show: {
+                        operation: ['getJobPosts'],
+                    },
+                },
+                default: {},
+                options: [
+                    {
+                        displayName: 'Job ID',
+                        name: 'jobId',
+                        type: 'string',
+                        default: '',
+                        description: 'Unique job identifier (optional filter)',
+                    },
+                    {
+                        displayName: 'Fetch Details',
+                        name: 'fetchDetails',
+                        type: 'boolean',
+                        default: true,
+                        description: 'Fetch detailed information for job posts',
                     },
                     {
                         displayName: 'Number of Results',
@@ -2004,30 +2056,28 @@ export class Linkup implements INodeType {
                 break;
 
             case 'getCandidates':
+                const getCandidatesParams = context.getNodeParameter('getCandidatesParams', itemIndex, {}) as any;
+                if (getCandidatesParams.country) body.country = getCandidatesParams.country;
+                if (getCandidatesParams.jobId) body.job_id = getCandidatesParams.jobId;
+                if (getCandidatesParams.location) body.location = getCandidatesParams.location;
+                if (getCandidatesParams.yearsOfExperience) body.yearsOfExperience = getCandidatesParams.yearsOfExperience;
+                if (getCandidatesParams.sortType) body.sortType = getCandidatesParams.sortType;
+                if (getCandidatesParams.sortOrder) body.sortOrder = getCandidatesParams.sortOrder;
+                if (getCandidatesParams.ratings) body.ratings = getCandidatesParams.ratings;
+                if (getCandidatesParams.start) body.start = getCandidatesParams.start;
+                if (getCandidatesParams.total_results) body.total_results = getCandidatesParams.total_results;
+                if (getCandidatesParams.start_page) body.start_page = getCandidatesParams.start_page;
+                if (getCandidatesParams.end_page) body.end_page = getCandidatesParams.end_page;
+                break;
+
             case 'getJobPosts':
-                const recruiterParams = context.getNodeParameter('recruiterParams', itemIndex, {}) as any;
-                if (recruiterParams.country) body.country = recruiterParams.country;
-                
-                // Paramètres spécifiques par opération
-                if (operation === 'getCandidates') {
-                    if (recruiterParams.jobId) body.job_id = recruiterParams.jobId;
-                    if (recruiterParams.location) body.location = recruiterParams.location;
-                    if (recruiterParams.yearsOfExperience) body.yearsOfExperience = recruiterParams.yearsOfExperience;
-                    if (recruiterParams.sortType) body.sortType = recruiterParams.sortType;
-                    if (recruiterParams.sortOrder) body.sortOrder = recruiterParams.sortOrder;
-                    if (recruiterParams.ratings) body.ratings = recruiterParams.ratings;
-                    if (recruiterParams.start) body.start = recruiterParams.start;
-                }
-                
-                if (operation === 'getJobPosts') {
-                    if (recruiterParams.jobId) body.job_id = recruiterParams.jobId;
-                    if (recruiterParams.fetchDetails !== undefined) body.fetch_details = recruiterParams.fetchDetails;
-                }
-                
-                // Pagination commune
-                if (recruiterParams.total_results) body.total_results = recruiterParams.total_results;
-                if (recruiterParams.start_page) body.start_page = recruiterParams.start_page;
-                if (recruiterParams.end_page) body.end_page = recruiterParams.end_page;
+                const getJobPostsParams = context.getNodeParameter('getJobPostsParams', itemIndex, {}) as any;
+                if (getJobPostsParams.country) body.country = getJobPostsParams.country;
+                if (getJobPostsParams.jobId) body.job_id = getJobPostsParams.jobId;
+                if (getJobPostsParams.fetchDetails !== undefined) body.fetch_details = getJobPostsParams.fetchDetails;
+                if (getJobPostsParams.total_results) body.total_results = getJobPostsParams.total_results;
+                if (getJobPostsParams.start_page) body.start_page = getJobPostsParams.start_page;
+                if (getJobPostsParams.end_page) body.end_page = getJobPostsParams.end_page;
                 break;
 
             case 'getMyProfile':
