@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = 'https://api.linkupapi.com/v1';
-const NODE_VERSION = '1.2.42';
+const NODE_VERSION = '1.2.43';
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -1542,18 +1542,18 @@ export class Linkup implements INodeType {
                         description: 'Workplace type (Office, Remote, etc.) (createJob)',
                     },
                     {
-                        displayName: 'Skills (JSON)',
+                        displayName: 'Skills',
                         name: 'skills',
                         type: 'string',
                         default: '',
-                        description: 'Required skills in JSON array format (createJob)',
+                        description: 'Required skills in array format (createJob)',
                     },
                     {
-                        displayName: 'Screening Questions (JSON)',
+                        displayName: 'Screening Questions',
                         name: 'screening_questions',
                         type: 'string',
                         default: '',
-                        description: 'Screening questions in JSON array format (createJob)',
+                        description: 'Screening questions in array format (createJob)',
                     },
                     {
                         displayName: 'Auto Rejection Template',
