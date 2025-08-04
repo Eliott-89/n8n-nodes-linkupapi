@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.5";
+const NODE_VERSION = "1.3.6";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -500,7 +500,6 @@ export class Linkup implements INodeType {
             name: "verificationCode",
             type: "string",
             default: "",
-            required: true,
             description: "Security code received by email",
           },
           {
@@ -517,8 +516,8 @@ export class Linkup implements INodeType {
 
       // PROFILE - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "profileRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "profileParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -530,27 +529,12 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
-            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "profileOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["extractProfileInfo", "getInvitationStatus"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Country Code",
             name: "country",
@@ -565,8 +549,8 @@ export class Linkup implements INodeType {
 
       // COMPANIES - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "companiesRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "companiesParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -578,27 +562,12 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Company URL *",
-            required: true,
             name: "companyUrl",
             type: "string",
             default: "",
             placeholder: "https://www.linkedin.com/company/stripe/",
             description: "LinkedIn company URL",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "companiesOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["getCompanyInfo"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Country Code",
             name: "country",
@@ -626,7 +595,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
-            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -681,7 +649,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Entity URN *",
-            required: true,
             name: "entityUrn",
             type: "string",
             default: "",
@@ -735,7 +702,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Invitation ID *",
-            required: true,
             name: "invitationId",
             type: "string",
             default: "",
@@ -782,7 +748,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
-            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -817,8 +782,8 @@ export class Linkup implements INodeType {
 
       // MESSAGES - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "messagesRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "messagesParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -830,7 +795,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn URL *",
-            required: true,
             name: "messageRecipientUrl",
             type: "string",
             default: "",
@@ -839,26 +803,11 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Message Text *",
-            required: true,
             name: "messageText",
             type: "string",
             default: "",
             description: "Message content to send",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "messagesOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["sendMessage"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Media Link",
             name: "mediaLink",
@@ -893,7 +842,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn URL *",
-            required: true,
             name: "linkedinUrl",
             type: "string",
             default: "",
@@ -902,7 +850,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Conversation ID *",
-            required: true,
             name: "conversationId",
             type: "string",
             default: "",
@@ -957,8 +904,8 @@ export class Linkup implements INodeType {
 
       // POSTS - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "postsRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "postsParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -977,7 +924,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Post URL *",
-            required: true,
             name: "postUrl",
             type: "string",
             default: "",
@@ -987,7 +933,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Reaction Type *",
-            required: true,
             name: "reactionType",
             type: "options",
             displayOptions: {
@@ -1021,7 +966,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Duration (milliseconds) *",
-            required: true,
             name: "duration",
             type: "number",
             default: 30000,
@@ -1036,27 +980,6 @@ export class Linkup implements INodeType {
               minValue: 1,
             },
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "postsOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: [
-              "getPostReactions",
-              "reactToPost",
-              "repost",
-              "commentPost",
-              "extractComments",
-              "timeSpent",
-            ],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Start Time (milliseconds)",
             name: "durationStartTime",
@@ -1118,7 +1041,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Tracking ID *",
-            required: true,
             name: "trackingId",
             type: "string",
             default: "",
@@ -1126,7 +1048,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Profile URN *",
-            required: true,
             name: "profileUrn",
             type: "string",
             default: "",
@@ -1134,7 +1055,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Comment URN *",
-            required: true,
             name: "commentUrn",
             type: "string",
             default: "",
@@ -1142,7 +1062,6 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Comment Text *",
-            required: true,
             name: "commentText",
             type: "string",
             default: "",
@@ -2715,7 +2634,6 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
-            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -2992,19 +2910,14 @@ export class Linkup implements INodeType {
 
       case "extractProfileInfo":
       case "getInvitationStatus":
-        const profileRequiredParams = context.getNodeParameter(
-          "profileRequiredParams",
+        const profileParams = context.getNodeParameter(
+          "profileParams",
           itemIndex,
           {}
         ) as any;
-        const profileOptionalParams = context.getNodeParameter(
-          "profileOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (profileRequiredParams.profileUrl)
-          body.linkedin_url = profileRequiredParams.profileUrl;
-        if (profileOptionalParams.country) body.country = profileOptionalParams.country;
+        if (profileParams.profileUrl)
+          body.linkedin_url = profileParams.profileUrl;
+        if (profileParams.country) body.country = profileParams.country;
         break;
 
       case "sendConnectionRequest":
@@ -3026,19 +2939,14 @@ export class Linkup implements INodeType {
         break;
 
       case "getCompanyInfo":
-        const companiesRequiredParams = context.getNodeParameter(
-          "companiesRequiredParams",
+        const companiesParams = context.getNodeParameter(
+          "companiesParams",
           itemIndex,
           {}
         ) as any;
-        const companiesOptionalParams = context.getNodeParameter(
-          "companiesOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (companiesRequiredParams.companyUrl)
-          body.company_url = companiesRequiredParams.companyUrl;
-        if (companiesOptionalParams.country) body.country = companiesOptionalParams.country;
+        if (companiesParams.companyUrl)
+          body.company_url = companiesParams.companyUrl;
+        if (companiesParams.country) body.country = companiesParams.country;
         break;
 
       case "acceptConnectionInvitation":
@@ -3078,23 +2986,18 @@ export class Linkup implements INodeType {
         break;
 
       case "sendMessage":
-        const messagesRequiredParams = context.getNodeParameter(
-          "messagesRequiredParams",
+        const messagesParams = context.getNodeParameter(
+          "messagesParams",
           itemIndex,
           {}
         ) as any;
-        const messagesOptionalParams = context.getNodeParameter(
-          "messagesOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (messagesRequiredParams.messageRecipientUrl)
-          body.linkedin_url = messagesRequiredParams.messageRecipientUrl;
-        if (messagesRequiredParams.messageText)
-          body.message_text = messagesRequiredParams.messageText;
-        if (messagesOptionalParams.mediaLink)
-          body.media_link = messagesOptionalParams.mediaLink;
-        if (messagesOptionalParams.country) body.country = messagesOptionalParams.country;
+        if (messagesParams.messageRecipientUrl)
+          body.linkedin_url = messagesParams.messageRecipientUrl;
+        if (messagesParams.messageText)
+          body.message_text = messagesParams.messageText;
+        if (messagesParams.mediaLink)
+          body.media_link = messagesParams.mediaLink;
+        if (messagesParams.country) body.country = messagesParams.country;
         break;
 
       case "getConversationMessages":
@@ -3128,40 +3031,35 @@ export class Linkup implements INodeType {
       case "commentPost":
       case "extractComments":
       case "timeSpent":
-        const postsRequiredParams = context.getNodeParameter(
-          "postsRequiredParams",
+        const postsParams = context.getNodeParameter(
+          "postsParams",
           itemIndex,
           {}
         ) as any;
-        const postsOptionalParams = context.getNodeParameter(
-          "postsOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (postsRequiredParams.postUrl) body.post_url = postsRequiredParams.postUrl;
-        if (postsOptionalParams.country) body.country = postsOptionalParams.country;
-        if (operation === "reactToPost" && postsRequiredParams.reactionType) {
-          body.reaction_type = postsRequiredParams.reactionType;
+        if (postsParams.postUrl) body.post_url = postsParams.postUrl;
+        if (postsParams.country) body.country = postsParams.country;
+        if (operation === "reactToPost" && postsParams.reactionType) {
+          body.reaction_type = postsParams.reactionType;
         }
-        if (operation === "commentPost" && postsRequiredParams.messageText) {
-          body.message = postsRequiredParams.messageText;
+        if (operation === "commentPost" && postsParams.messageText) {
+          body.message = postsParams.messageText;
         }
         if (operation === "timeSpent") {
-          if (postsRequiredParams.duration)
-            body.duration = Math.floor(postsRequiredParams.duration);
-          if (postsOptionalParams.durationStartTime)
+          if (postsParams.duration)
+            body.duration = Math.floor(postsParams.duration);
+          if (postsParams.durationStartTime)
             body.duration_start_time = Math.floor(
-              postsOptionalParams.durationStartTime
+              postsParams.durationStartTime
             );
         }
         if (
           operation === "getPostReactions" ||
           operation === "extractComments"
         ) {
-          if (postsOptionalParams.total_results)
-            body.total_results = postsOptionalParams.total_results;
-          if (postsOptionalParams.start_page) body.start_page = postsOptionalParams.start_page;
-          if (postsOptionalParams.end_page) body.end_page = postsOptionalParams.end_page;
+          if (postsParams.total_results)
+            body.total_results = postsParams.total_results;
+          if (postsParams.start_page) body.start_page = postsParams.start_page;
+          if (postsParams.end_page) body.end_page = postsParams.end_page;
         }
         break;
 
