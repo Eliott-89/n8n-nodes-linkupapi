@@ -1,141 +1,113 @@
 # n8n-nodes-linkupapi
 
-[![npm version](https://badge.fury.io/js/n8n-nodes-linkupapi.svg)](https://badge.fury.io/js/n8n-nodes-linkupapi)
+## Description
 
-An n8n node for the LINKUP API enabling complete LinkedIn automation.
+Ce package n8n permet d'automatiser LinkedIn via l'API Linkup. Il offre des fonctionnalités complètes pour la gestion de profils, réseaux, messages, posts et recrutement.
 
-## 🚀 Installation
-
-### Via n8n Community Nodes
-
-1. In n8n, go to **Settings** > **Community Nodes**
-2. Click on **Install a community node**
-3. Enter: `n8n-nodes-linkupapi`
-4. Click **Install**
-
-### Manual Installation
+## Installation
 
 ```bash
 npm install n8n-nodes-linkupapi
 ```
 
-## ⚙️ Configuration
+## Configuration
 
-1. **Create a LINKUP account** on [linkupapi.com](https://linkupapi.com)
-2. **Get your API key** from the dashboard
-3. **Configure credentials** in n8n:
-   - LINKUP API Key
-   - LinkedIn Email
-   - LinkedIn Password
-   - Country (optional, FR by default)
+1. Créez un compte sur [LinkupAPI.com](https://linkupapi.com)
+2. Obtenez votre clé API
+3. Configurez les credentials dans n8n
 
-## 🔧 Features
+## Structure du projet
 
-### 🔐 Authentication Actions
-- **Login to LinkedIn** - LinkedIn authentication
-- **Verify security code** - 2FA code validation
-
-### 👤 Profile Actions
-- **Get my LinkedIn profile** - Get your profile
-- **Extract LinkedIn profile info** - Analyze a public profile
-- **Search LinkedIn profiles** - Profile search
-
-### 🏢 Company Actions
-- **Search LinkedIn companies** - Company search
-- **Get LinkedIn company info** - Detailed company information
-
-### 🤝 Network Actions
-- **Send connection request** - Send an invitation
-- **Get connections** - Your connections list
-- **Accept/Withdraw invitations** - Manage invitations
-- **Get network recommendations** - Connection suggestions
-
-### 💬 Message Actions
-- **Send LinkedIn message** - Send a message
-- **Get message inbox** - Inbox
-- **Get conversation messages** - Conversation history
-
-### 📝 Post Actions
-- **Create/Comment/React** - Create and interact with posts
-- **Get post reactions** - Post reactions
-- **Extract comments** - Post comments
-- **Search posts** - Post search
-- **Get feed** - Get feed
-
-### 🧑‍💼 Recruiter Actions
-- **Get candidates** - Candidate list
-- **Get candidate CV** - Download CV
-- **Manage job posts** - Manage job postings
-
-### 📊 Data Actions
-- **Search companies (Data)** - Advanced company search
-- **Search profiles (Data)** - Advanced profile search
-
-## 💡 Usage
-
-1. **Add the LINKUP node** to your workflow
-2. **Select an operation** (36 available)
-3. **Configure parameters** in "Linkup Parameters" (all optional)
-4. **Execute** your workflow
-
-### Example: Profile Search
-
-```typescript
-Operation: "Search LinkedIn profiles"
-Linkup Parameters:
-  - Keyword: "developer"
-  - Location: "Paris"
-  - Company: "google;microsoft"
-  - Number of Results: 50
+```
+n8n-nodes-linkupapi/
+├── credentials/             # Credentials pour l'API Linkup
+│   └── LinkupApi.credentials.ts
+├── nodes/                   # Code source des nodes
+│   └── Linkup/
+│       ├── Linkup.node.ts   # Node principal
+│       └── linkup.svg       # Icône du node
+├── package.json             # Configuration du projet
+├── tsconfig.json           # Configuration TypeScript
+├── gulpfile.js             # Configuration Gulp
+├── .eslintrc.js            # Configuration ESLint
+├── .gitignore              # Fichiers ignorés par Git
+├── .npmignore              # Fichiers ignorés par npm
+└── README.md               # Documentation
 ```
 
-## 🛠️ Development
+## Fonctionnalités
 
-### Prerequisites
-- Node.js >= 18.10
-- pnpm >= 8.6
+### Authentication
+- Login LinkedIn
+- Vérification de code
 
-### Local Installation
+### Profile
+- Récupération de profil
+- Extraction d'informations
+- Recherche de profils
+
+### Network
+- Envoi d'invitations
+- Gestion des connexions
+- Acceptation d'invitations
+- Retrait d'invitations
+
+### Messages
+- Envoi de messages
+- Récupération de conversations
+- Gestion de la boîte de réception
+
+### Posts
+- Réactions aux posts
+- Commentaires
+- Création de posts
+- Recherche de posts
+
+### Recruiter
+- Gestion des candidats
+- Gestion des offres d'emploi
+- Téléchargement de CV
+
+### Signal API
+- Extraction de réactions
+- Extraction de commentaires
+- Extraction de posts
+
+### Company API
+- Recherche d'entreprises
+- Informations d'entreprises
+
+### Person API
+- Recherche de profils
+- Enrichissement de profils
+
+## Développement
+
 ```bash
-git clone https://github.com/eliottcerpaud/n8n-nodes-linkupapi.git
-cd n8n-nodes-linkupapi
+# Installer les dépendances
 pnpm install
+
+# Construire le projet
 pnpm build
+
+# Mode développement
+pnpm dev
+
+# Linter le code
+pnpm lint
+
+# Formater le code
+pnpm format
 ```
 
-### Project Structure
-```
-├── credentials/LinkupApi.credentials.ts  # Credentials configuration
-├── nodes/Linkup/Linkup.node.ts          # Main node
-└── nodes/Linkup/linkup.svg              # Icon
-```
+## Version
 
-## 📚 Documentation
+Version actuelle : 1.3.01
 
-See the [official LINKUP documentation](https://docs.linkupapi.com/) for more details on parameters and API responses.
-
-## 🐛 Support
-
-- **Issues** : [GitHub Issues](https://github.com/eliottcerpaud/n8n-nodes-linkupapi/issues)
-- **LINKUP Documentation** : [docs.linkupapi.com](https://docs.linkupapi.com/)
-
-## 📄 License
+## Licence
 
 MIT
 
-## 🔄 Changelog
+## Auteur
 
-### v1.2.15
-- ✅ 36 complete LinkedIn operations
-- ✅ Simplified interface (optional parameters)
-- ✅ Complete LINKUP API support
-- ✅ Automatic credentials management
-- ✅ DATA operations added
-
-### v1.1.0
-- ✅ First stable version
-- ✅ 34 basic operations
-
----
-
-**Created with ❤️ for the n8n community**
+Eliott Cerpaud
