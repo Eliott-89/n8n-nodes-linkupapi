@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.6";
+const NODE_VERSION = "1.3.7";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -484,67 +484,61 @@ export class Linkup implements INodeType {
 
       // AUTH - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "authParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Verification Code *",
+        name: "verificationCode",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["verifyCode"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Verification Code *",
-            name: "verificationCode",
-            type: "string",
-            default: "",
-            description: "Security code received by email",
+        description: "Security code received by email",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: ["verifyCode"],
           },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
-          },
-        ],
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // PROFILE - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "profileParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "LinkedIn Profile URL *",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/in/username",
         displayOptions: {
           show: {
             operation: ["extractProfileInfo", "getInvitationStatus"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "LinkedIn Profile URL *",
-            name: "profileUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL",
+        description: "LinkedIn profile URL",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: ["extractProfileInfo", "getInvitationStatus"],
           },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
-          },
-        ],
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // COMPANIES - Paramètres Linkup
@@ -782,49 +776,57 @@ export class Linkup implements INodeType {
 
       // MESSAGES - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "messagesParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "LinkedIn URL *",
+        name: "messageRecipientUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/in/username",
         displayOptions: {
           show: {
             operation: ["sendMessage"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "LinkedIn URL *",
-            name: "messageRecipientUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL of the recipient",
+        description: "LinkedIn profile URL of the recipient",
+      },
+      {
+        displayName: "Message Text *",
+        name: "messageText",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["sendMessage"],
           },
-          {
-            displayName: "Message Text *",
-            name: "messageText",
-            type: "string",
-            default: "",
-            description: "Message content to send",
+        },
+        description: "Message content to send",
+      },
+      {
+        displayName: "Media Link",
+        name: "mediaLink",
+        type: "string",
+        default: "",
+        displayOptions: {
+          show: {
+            operation: ["sendMessage"],
           },
-          {
-            displayName: "Media Link",
-            name: "mediaLink",
-            type: "string",
-            default: "",
-            description: "Direct URL of media to attach",
+        },
+        description: "Direct URL of media to attach",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: ["sendMessage"],
           },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
-          },
-        ],
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // CONVERSATION MESSAGES - Paramètres Linkup
@@ -2897,27 +2899,35 @@ export class Linkup implements INodeType {
         const credsVerify = await context.getCredentials("linkupApi");
         if (credsVerify) {
           body.email = credsVerify.linkedinEmail;
-          const authParams = context.getNodeParameter(
-            "authParams",
+          const verificationCode = context.getNodeParameter(
+            "verificationCode",
             itemIndex,
-            {}
-          ) as any;
-          if (authParams.verificationCode)
-            body.code = authParams.verificationCode;
-          if (authParams.country) body.country = authParams.country;
+            ""
+          ) as string;
+                  const authCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        if (verificationCode) body.code = verificationCode;
+        if (authCountry) body.country = authCountry;
         }
         break;
 
       case "extractProfileInfo":
       case "getInvitationStatus":
-        const profileParams = context.getNodeParameter(
-          "profileParams",
+        const profileUrl = context.getNodeParameter(
+          "profileUrl",
           itemIndex,
-          {}
-        ) as any;
-        if (profileParams.profileUrl)
-          body.linkedin_url = profileParams.profileUrl;
-        if (profileParams.country) body.country = profileParams.country;
+          ""
+        ) as string;
+        const profileCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        if (profileUrl) body.linkedin_url = profileUrl;
+        if (profileCountry) body.country = profileCountry;
         break;
 
       case "sendConnectionRequest":
@@ -2986,18 +2996,30 @@ export class Linkup implements INodeType {
         break;
 
       case "sendMessage":
-        const messagesParams = context.getNodeParameter(
-          "messagesParams",
+        const messageRecipientUrl = context.getNodeParameter(
+          "messageRecipientUrl",
           itemIndex,
-          {}
-        ) as any;
-        if (messagesParams.messageRecipientUrl)
-          body.linkedin_url = messagesParams.messageRecipientUrl;
-        if (messagesParams.messageText)
-          body.message_text = messagesParams.messageText;
-        if (messagesParams.mediaLink)
-          body.media_link = messagesParams.mediaLink;
-        if (messagesParams.country) body.country = messagesParams.country;
+          ""
+        ) as string;
+        const messageText = context.getNodeParameter(
+          "messageText",
+          itemIndex,
+          ""
+        ) as string;
+        const mediaLink = context.getNodeParameter(
+          "mediaLink",
+          itemIndex,
+          ""
+        ) as string;
+        const messageCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        if (messageRecipientUrl) body.linkedin_url = messageRecipientUrl;
+        if (messageText) body.message_text = messageText;
+        if (mediaLink) body.media_link = mediaLink;
+        if (messageCountry) body.country = messageCountry;
         break;
 
       case "getConversationMessages":
