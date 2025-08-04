@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.7";
+const NODE_VERSION = "1.3.8";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -906,10 +906,12 @@ export class Linkup implements INodeType {
 
       // POSTS - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "postsParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "LinkedIn Post URL *",
+        name: "postUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/feed/update/xxx",
         displayOptions: {
           show: {
             operation: [
@@ -922,192 +924,232 @@ export class Linkup implements INodeType {
             ],
           },
         },
-        default: {},
+        description:
+          "URL of the LinkedIn post to send time spent signal for",
+      },
+      {
+        displayName: "Reaction Type *",
+        name: "reactionType",
+        type: "options",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["reactToPost"],
+          },
+        },
         options: [
-          {
-            displayName: "LinkedIn Post URL *",
-            name: "postUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/feed/update/xxx",
-            description:
-              "URL of the LinkedIn post to send time spent signal for",
-          },
-          {
-            displayName: "Reaction Type *",
-            name: "reactionType",
-            type: "options",
-            displayOptions: {
-              show: {
-                operation: ["reactToPost"],
-              },
-            },
-            options: [
-              { name: "👍 Like", value: "LIKE" },
-              { name: "👏 Praise", value: "PRAISE" },
-              { name: "🙏 Appreciation", value: "APPRECIATION" },
-              { name: "🤗 Empathy", value: "EMPATHY" },
-              { name: "🎯 Interest", value: "INTEREST" },
-              { name: "🎭 Entertainment", value: "ENTERTAINMENT" },
-            ],
-            default: "LIKE",
-            description:
-              "Type of reaction to add. Available options: LIKE, PRAISE, APPRECIATION, EMPATHY, INTEREST, ENTERTAINMENT",
-          },
-          {
-            displayName: "Message/Text *",
-            name: "messageText",
-            type: "string",
-            default: "",
-            displayOptions: {
-              show: {
-                operation: ["commentPost"],
-              },
-            },
-            description: "Text content of the comment to post",
-          },
-          {
-            displayName: "Duration (milliseconds) *",
-            name: "duration",
-            type: "number",
-            default: 30000,
-            displayOptions: {
-              show: {
-                operation: ["timeSpent"],
-              },
-            },
-            description:
-              "Duration in milliseconds that the user spent viewing the post. Must be a positive integer.",
-            typeOptions: {
-              minValue: 1,
-            },
-          },
-          {
-            displayName: "Start Time (milliseconds)",
-            name: "durationStartTime",
-            type: "number",
-            default: "",
-            displayOptions: {
-              show: {
-                operation: ["timeSpent"],
-              },
-            },
-            description:
-              "Optional start time in milliseconds when the user began viewing the post",
-          },
-          {
-            displayName: "Number of Results",
-            name: "total_results",
-            type: "number",
-            default: 10,
-            description: "Number of results to retrieve",
-          },
-          {
-            displayName: "Start Page",
-            name: "start_page",
-            type: "number",
-            default: 1,
-            description: "First page to retrieve",
-          },
-          {
-            displayName: "End Page",
-            name: "end_page",
-            type: "number",
-            default: 1,
-            description: "Last page to retrieve",
-          },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
-          },
+          { name: "👍 Like", value: "LIKE" },
+          { name: "👏 Praise", value: "PRAISE" },
+          { name: "🙏 Appreciation", value: "APPRECIATION" },
+          { name: "🤗 Empathy", value: "EMPATHY" },
+          { name: "🎯 Interest", value: "INTEREST" },
+          { name: "🎭 Entertainment", value: "ENTERTAINMENT" },
         ],
+        default: "LIKE",
+        description:
+          "Type of reaction to add. Available options: LIKE, PRAISE, APPRECIATION, EMPATHY, INTEREST, ENTERTAINMENT",
+      },
+      {
+        displayName: "Message/Text *",
+        name: "messageText",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["commentPost"],
+          },
+        },
+        description: "Text content of the comment to post",
+      },
+      {
+        displayName: "Duration (milliseconds) *",
+        name: "duration",
+        type: "number",
+        default: 30000,
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["timeSpent"],
+          },
+        },
+        description:
+          "Duration in milliseconds that the user spent viewing the post. Must be a positive integer.",
+        typeOptions: {
+          minValue: 1,
+        },
+      },
+      {
+        displayName: "Start Time (milliseconds)",
+        name: "durationStartTime",
+        type: "number",
+        default: "",
+        displayOptions: {
+          show: {
+            operation: ["timeSpent"],
+          },
+        },
+        description:
+          "Optional start time in milliseconds when the user began viewing the post",
+      },
+      {
+        displayName: "Number of Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        displayOptions: {
+          show: {
+            operation: [
+              "getPostReactions",
+              "extractComments",
+            ],
+          },
+        },
+        description: "Number of results to retrieve",
+      },
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        displayOptions: {
+          show: {
+            operation: [
+              "getPostReactions",
+              "extractComments",
+            ],
+          },
+        },
+        description: "First page to retrieve",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        displayOptions: {
+          show: {
+            operation: [
+              "getPostReactions",
+              "extractComments",
+            ],
+          },
+        },
+        description: "Last page to retrieve",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: [
+              "getPostReactions",
+              "reactToPost",
+              "repost",
+              "commentPost",
+              "extractComments",
+              "timeSpent",
+            ],
+          },
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // ANSWER COMMENT - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "answerCommentRequiredParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Tracking ID *",
+        name: "trackingId",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["answerComment"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Tracking ID *",
-            name: "trackingId",
-            type: "string",
-            default: "",
-            description: "Unique identifier for tracking the request",
-          },
-          {
-            displayName: "Profile URN *",
-            name: "profileUrn",
-            type: "string",
-            default: "",
-            description: "LinkedIn profile URN of the user posting the comment",
-          },
-          {
-            displayName: "Comment URN *",
-            name: "commentUrn",
-            type: "string",
-            default: "",
-            description: "LinkedIn comment URN to reply to",
-          },
-          {
-            displayName: "Comment Text *",
-            name: "commentText",
-            type: "string",
-            default: "",
-            description: "Text content of the reply to post",
-          },
-        ],
+        description: "Unique identifier for tracking the request",
       },
       {
-        displayName: "Optional Parameters",
-        name: "answerCommentOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Profile URN *",
+        name: "profileUrn",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["answerComment"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Mention User",
-            name: "mentionUser",
-            type: "boolean",
-            default: false,
-            description:
-              "Whether to mention the original commenter in the reply",
+        description: "LinkedIn profile URN of the user posting the comment",
+      },
+      {
+        displayName: "Comment URN *",
+        name: "commentUrn",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["answerComment"],
           },
-          {
-            displayName: "Commenter Name",
-            name: "commenterName",
-            type: "string",
-            default: "",
-            description: "Original commenter name",
+        },
+        description: "LinkedIn comment URN to reply to",
+      },
+      {
+        displayName: "Comment Text *",
+        name: "commentText",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["answerComment"],
           },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
+        },
+        description: "Text content of the reply to post",
+      },
+      {
+        displayName: "Mention User",
+        name: "mentionUser",
+        type: "boolean",
+        default: false,
+        displayOptions: {
+          show: {
+            operation: ["answerComment"],
           },
-        ],
+        },
+        description:
+          "Whether to mention the original commenter in the reply",
+      },
+      {
+        displayName: "Commenter Name",
+        name: "commenterName",
+        type: "string",
+        default: "",
+        displayOptions: {
+          show: {
+            operation: ["answerComment"],
+          },
+        },
+        description: "Original commenter name",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: ["answerComment"],
+          },
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // CREATE POST - Paramètres Linkup
@@ -3053,63 +3095,118 @@ export class Linkup implements INodeType {
       case "commentPost":
       case "extractComments":
       case "timeSpent":
-        const postsParams = context.getNodeParameter(
-          "postsParams",
+        const postUrl = context.getNodeParameter(
+          "postUrl",
           itemIndex,
-          {}
-        ) as any;
-        if (postsParams.postUrl) body.post_url = postsParams.postUrl;
-        if (postsParams.country) body.country = postsParams.country;
-        if (operation === "reactToPost" && postsParams.reactionType) {
-          body.reaction_type = postsParams.reactionType;
+          ""
+        ) as string;
+        const reactionType = context.getNodeParameter(
+          "reactionType",
+          itemIndex,
+          "LIKE"
+        ) as string;
+        const postMessageText = context.getNodeParameter(
+          "messageText",
+          itemIndex,
+          ""
+        ) as string;
+        const duration = context.getNodeParameter(
+          "duration",
+          itemIndex,
+          30000
+        ) as number;
+        const durationStartTime = context.getNodeParameter(
+          "durationStartTime",
+          itemIndex,
+          ""
+        ) as string;
+        const totalResults = context.getNodeParameter(
+          "total_results",
+          itemIndex,
+          10
+        ) as number;
+        const startPage = context.getNodeParameter(
+          "start_page",
+          itemIndex,
+          1
+        ) as number;
+        const endPage = context.getNodeParameter(
+          "end_page",
+          itemIndex,
+          1
+        ) as number;
+        const postCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        
+        if (postUrl) body.post_url = postUrl;
+        if (postCountry) body.country = postCountry;
+        if (operation === "reactToPost" && reactionType) {
+          body.reaction_type = reactionType;
         }
-        if (operation === "commentPost" && postsParams.messageText) {
-          body.message = postsParams.messageText;
+        if (operation === "commentPost" && postMessageText) {
+          body.message = postMessageText;
         }
         if (operation === "timeSpent") {
-          if (postsParams.duration)
-            body.duration = Math.floor(postsParams.duration);
-          if (postsParams.durationStartTime)
-            body.duration_start_time = Math.floor(
-              postsParams.durationStartTime
-            );
+          if (duration) body.duration = Math.floor(duration);
+          if (durationStartTime) body.duration_start_time = Math.floor(parseInt(durationStartTime));
         }
         if (
           operation === "getPostReactions" ||
           operation === "extractComments"
         ) {
-          if (postsParams.total_results)
-            body.total_results = postsParams.total_results;
-          if (postsParams.start_page) body.start_page = postsParams.start_page;
-          if (postsParams.end_page) body.end_page = postsParams.end_page;
+          if (totalResults) body.total_results = totalResults;
+          if (startPage) body.start_page = startPage;
+          if (endPage) body.end_page = endPage;
         }
         break;
 
       case "answerComment":
-        const answerCommentRequiredParams = context.getNodeParameter(
-          "answerCommentRequiredParams",
+        const trackingId = context.getNodeParameter(
+          "trackingId",
           itemIndex,
-          {}
-        ) as any;
-        const answerCommentOptionalParams = context.getNodeParameter(
-          "answerCommentOptionalParams",
+          ""
+        ) as string;
+        const profileUrn = context.getNodeParameter(
+          "profileUrn",
           itemIndex,
-          {}
-        ) as any;
-        if (answerCommentRequiredParams.trackingId)
-          body.tracking_id = answerCommentRequiredParams.trackingId;
-        if (answerCommentRequiredParams.profileUrn)
-          body.profile_urn = answerCommentRequiredParams.profileUrn;
-        if (answerCommentRequiredParams.commentUrn)
-          body.comment_urn = answerCommentRequiredParams.commentUrn;
-        if (answerCommentRequiredParams.commentText)
-          body.comment_text = answerCommentRequiredParams.commentText;
-        if (answerCommentOptionalParams.mentionUser !== undefined)
-          body.mention_user = answerCommentOptionalParams.mentionUser;
-        if (answerCommentOptionalParams.commenterName)
-          body.commenter_name = answerCommentOptionalParams.commenterName;
-        if (answerCommentOptionalParams.country)
-          body.country = answerCommentOptionalParams.country;
+          ""
+        ) as string;
+        const commentUrn = context.getNodeParameter(
+          "commentUrn",
+          itemIndex,
+          ""
+        ) as string;
+        const commentText = context.getNodeParameter(
+          "commentText",
+          itemIndex,
+          ""
+        ) as string;
+        const mentionUser = context.getNodeParameter(
+          "mentionUser",
+          itemIndex,
+          false
+        ) as boolean;
+        const commenterName = context.getNodeParameter(
+          "commenterName",
+          itemIndex,
+          ""
+        ) as string;
+        const answerCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        
+        if (trackingId) body.tracking_id = trackingId;
+        if (profileUrn) body.profile_urn = profileUrn;
+        if (commentUrn) body.comment_urn = commentUrn;
+        if (commentText) body.comment_text = commentText;
+        if (mentionUser !== undefined) body.mention_user = mentionUser;
+        if (commenterName) body.commenter_name = commenterName;
+        if (answerCountry) body.country = answerCountry;
         break;
 
       case "createPost":
