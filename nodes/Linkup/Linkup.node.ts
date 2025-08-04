@@ -39,7 +39,6 @@ export class Linkup implements INodeType {
     credentials: [
       {
         name: "linkupApi",
-        required: true,
       },
     ],
     properties: [
@@ -534,7 +533,6 @@ export class Linkup implements INodeType {
             name: "profileUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
@@ -582,7 +580,6 @@ export class Linkup implements INodeType {
             name: "companyUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/company/stripe/",
             description: "LinkedIn company URL",
           },
@@ -630,7 +627,6 @@ export class Linkup implements INodeType {
             name: "profileUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
@@ -685,7 +681,6 @@ export class Linkup implements INodeType {
             name: "entityUrn",
             type: "string",
             default: "",
-            required: true,
             description: "Invitation URN",
           },
         ],
@@ -739,7 +734,6 @@ export class Linkup implements INodeType {
             name: "invitationId",
             type: "string",
             default: "",
-            required: true,
             description: "Invitation ID to withdraw",
           },
         ],
@@ -786,7 +780,6 @@ export class Linkup implements INodeType {
             name: "profileUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
@@ -834,7 +827,6 @@ export class Linkup implements INodeType {
             name: "messageRecipientUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL of the recipient",
           },
@@ -843,7 +835,6 @@ export class Linkup implements INodeType {
             name: "messageText",
             type: "string",
             default: "",
-            required: true,
             description: "Message content to send",
           },
         ],
@@ -897,7 +888,6 @@ export class Linkup implements INodeType {
             name: "linkedinUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
@@ -906,7 +896,6 @@ export class Linkup implements INodeType {
             name: "conversationId",
             type: "string",
             default: "",
-            required: true,
             description: "Unique LinkedIn conversation identifier",
           },
         ],
@@ -981,7 +970,6 @@ export class Linkup implements INodeType {
             name: "postUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/feed/update/xxx",
             description:
               "URL of the LinkedIn post to send time spent signal for",
@@ -1004,7 +992,6 @@ export class Linkup implements INodeType {
               { name: "🎭 Entertainment", value: "ENTERTAINMENT" },
             ],
             default: "LIKE",
-            required: true,
             description:
               "Type of reaction to add. Available options: LIKE, PRAISE, APPRECIATION, EMPATHY, INTEREST, ENTERTAINMENT",
           },
@@ -1013,7 +1000,6 @@ export class Linkup implements INodeType {
             name: "messageText",
             type: "string",
             default: "",
-            required: true,
             displayOptions: {
               show: {
                 operation: ["commentPost"],
@@ -1026,7 +1012,6 @@ export class Linkup implements INodeType {
             name: "duration",
             type: "number",
             default: 30000,
-            required: true,
             displayOptions: {
               show: {
                 operation: ["timeSpent"],
@@ -1123,7 +1108,6 @@ export class Linkup implements INodeType {
             name: "trackingId",
             type: "string",
             default: "",
-            required: true,
             description: "Unique identifier for tracking the request",
           },
           {
@@ -1131,7 +1115,6 @@ export class Linkup implements INodeType {
             name: "profileUrn",
             type: "string",
             default: "",
-            required: true,
             description: "LinkedIn profile URN of the user posting the comment",
           },
           {
@@ -1139,7 +1122,6 @@ export class Linkup implements INodeType {
             name: "commentUrn",
             type: "string",
             default: "",
-            required: true,
             description: "LinkedIn comment URN to reply to",
           },
           {
@@ -1147,7 +1129,6 @@ export class Linkup implements INodeType {
             name: "commentText",
             type: "string",
             default: "",
-            required: true,
             description: "Text content of the reply to post",
           },
         ],
@@ -1209,7 +1190,6 @@ export class Linkup implements INodeType {
             name: "messageText",
             type: "string",
             default: "",
-            required: true,
             description: "Text content of the post",
           },
           {
@@ -1234,7 +1214,7 @@ export class Linkup implements INodeType {
 
       // SEARCH PROFILE - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
+        displayName: "Search Parameters",
         name: "searchProfileParams",
         type: "collection",
         placeholder: "Add a parameter",
@@ -1741,7 +1721,6 @@ export class Linkup implements INodeType {
             name: "jobId",
             type: "string",
             default: "",
-            required: true,
             description: "Unique job identifier for candidates",
           },
           {
@@ -1897,7 +1876,6 @@ export class Linkup implements INodeType {
             name: "jobId",
             type: "string",
             default: "",
-            required: true,
             description: "Unique job identifier to publish/close",
           },
           {
@@ -1930,7 +1908,6 @@ export class Linkup implements INodeType {
             name: "companyUrl",
             type: "string",
             default: "",
-            required: true,
             description:
               'URL of the LinkedIn company page (e.g., "https://www.linkedin.com/company/company-name/")',
           },
@@ -1939,7 +1916,6 @@ export class Linkup implements INodeType {
             name: "jobTitle",
             type: "string",
             default: "",
-            required: true,
             description: 'Job title (e.g., "Senior Software Engineer")',
           },
           {
@@ -1947,7 +1923,6 @@ export class Linkup implements INodeType {
             name: "place",
             type: "string",
             default: "",
-            required: true,
             description: 'Job location (e.g., "Paris, France")',
           },
           {
@@ -1955,7 +1930,6 @@ export class Linkup implements INodeType {
             name: "html_description",
             type: "string",
             default: "",
-            required: true,
             description:
               "Job description in HTML format. Supports basic HTML formatting (bold, lists, paragraphs)",
           },
@@ -2031,7 +2005,6 @@ export class Linkup implements INodeType {
             name: "applicationId",
             type: "string",
             default: "",
-            required: true,
             description:
               "LinkedIn application ID of the candidate (you can get it with the /recruiter/candidates endpoint)",
           },
@@ -2067,7 +2040,6 @@ export class Linkup implements INodeType {
             name: "post_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/feed/update/xxx",
             description: "URL of the LinkedIn post to extract reactions from",
           },
@@ -2132,7 +2104,6 @@ export class Linkup implements INodeType {
             name: "post_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/feed/update/xxx",
             description: "URL of the LinkedIn post to extract comments from",
           },
@@ -2197,7 +2168,6 @@ export class Linkup implements INodeType {
             name: "profile_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description:
               "URL of the LinkedIn profile to extract reactions from",
@@ -2260,7 +2230,6 @@ export class Linkup implements INodeType {
             name: "profile_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "URL of the LinkedIn profile to extract comments from",
           },
@@ -2322,7 +2291,6 @@ export class Linkup implements INodeType {
             name: "profile_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "URL of the LinkedIn profile to extract posts from",
           },
@@ -2434,7 +2402,6 @@ export class Linkup implements INodeType {
             name: "company_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/company/company-name/",
             description:
               "URL of the LinkedIn company page to extract posts from",
@@ -2549,7 +2516,6 @@ export class Linkup implements INodeType {
             name: "keyword",
             type: "string",
             default: "",
-            required: true,
             description:
               "Keyword to search for (company name, industry, etc.). Also supports company_name for backward compatibility.",
           },
@@ -2617,7 +2583,6 @@ export class Linkup implements INodeType {
             name: "company_url",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/company/stripe/",
             description:
               "LinkedIn company URL (e.g., https://www.linkedin.com/company/stripe/)",
@@ -2643,7 +2608,6 @@ export class Linkup implements INodeType {
             name: "domain",
             type: "string",
             default: "",
-            required: true,
             placeholder: "stripe.com",
             description:
               'Company domain name (e.g., "equans.com", "stripe.com")',
@@ -2671,7 +2635,6 @@ export class Linkup implements INodeType {
             name: "keyword",
             type: "string",
             default: "",
-            required: true,
             description: "Main search keyword (name, position, skills, etc.)",
           },
           {
@@ -2738,7 +2701,6 @@ export class Linkup implements INodeType {
             name: "profileUrl",
             type: "string",
             default: "",
-            required: true,
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL to extract information from",
           },
@@ -2772,7 +2734,6 @@ export class Linkup implements INodeType {
             name: "first_name",
             type: "string",
             default: "",
-            required: true,
             description: "Person's first name",
           },
           {
@@ -2780,7 +2741,6 @@ export class Linkup implements INodeType {
             name: "last_name",
             type: "string",
             default: "",
-            required: true,
             description: "Person's last name",
           },
           {
@@ -2788,7 +2748,6 @@ export class Linkup implements INodeType {
             name: "company_name",
             type: "string",
             default: "",
-            required: true,
             description: "Current company name where the person works",
           },
         ],
@@ -2812,7 +2771,6 @@ export class Linkup implements INodeType {
             name: "keyword",
             type: "string",
             default: "",
-            required: true,
             description: "Main search keyword (name, position, skills, etc.)",
           },
           {
