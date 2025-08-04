@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.4";
+const NODE_VERSION = "1.3.5";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
