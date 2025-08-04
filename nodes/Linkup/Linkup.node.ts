@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.3";
+const NODE_VERSION = "1.3.4";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -530,6 +530,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
+            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -577,6 +578,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Company URL *",
+            required: true,
             name: "companyUrl",
             type: "string",
             default: "",
@@ -624,6 +626,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
+            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -678,6 +681,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Entity URN *",
+            required: true,
             name: "entityUrn",
             type: "string",
             default: "",
@@ -731,6 +735,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Invitation ID *",
+            required: true,
             name: "invitationId",
             type: "string",
             default: "",
@@ -777,6 +782,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
+            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
@@ -824,6 +830,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn URL *",
+            required: true,
             name: "messageRecipientUrl",
             type: "string",
             default: "",
@@ -832,6 +839,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Message Text *",
+            required: true,
             name: "messageText",
             type: "string",
             default: "",
@@ -885,6 +893,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn URL *",
+            required: true,
             name: "linkedinUrl",
             type: "string",
             default: "",
@@ -893,6 +902,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Conversation ID *",
+            required: true,
             name: "conversationId",
             type: "string",
             default: "",
@@ -967,6 +977,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Post URL *",
+            required: true,
             name: "postUrl",
             type: "string",
             default: "",
@@ -976,6 +987,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Reaction Type *",
+            required: true,
             name: "reactionType",
             type: "options",
             displayOptions: {
@@ -1009,6 +1021,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Duration (milliseconds) *",
+            required: true,
             name: "duration",
             type: "number",
             default: 30000,
@@ -1105,6 +1118,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "Tracking ID *",
+            required: true,
             name: "trackingId",
             type: "string",
             default: "",
@@ -1112,6 +1126,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Profile URN *",
+            required: true,
             name: "profileUrn",
             type: "string",
             default: "",
@@ -1119,6 +1134,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Comment URN *",
+            required: true,
             name: "commentUrn",
             type: "string",
             default: "",
@@ -1126,6 +1142,7 @@ export class Linkup implements INodeType {
           },
           {
             displayName: "Comment Text *",
+            required: true,
             name: "commentText",
             type: "string",
             default: "",
@@ -2698,6 +2715,7 @@ export class Linkup implements INodeType {
         options: [
           {
             displayName: "LinkedIn Profile URL *",
+            required: true,
             name: "profileUrl",
             type: "string",
             default: "",
