@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.9";
+const NODE_VERSION = "1.3.10";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -576,6 +576,20 @@ export class Linkup implements INodeType {
 
       // NETWORK - Paramètres Linkup
       {
+        displayName: "LinkedIn Profile URL *",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["sendConnectionRequest"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "networkParams",
         type: "collection",
@@ -587,14 +601,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "LinkedIn Profile URL *",
-            name: "profileUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL",
-          },
           {
             displayName: "Connection Message",
             name: "connectionMessage",
@@ -616,6 +622,19 @@ export class Linkup implements INodeType {
 
       // ACCEPT CONNECTION - Paramètres Linkup
       {
+        displayName: "Entity URN *",
+        name: "entityUrn",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["acceptConnectionInvitation"],
+          },
+        },
+        description: "Invitation URN",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "acceptConnectionParams",
         type: "collection",
@@ -627,13 +646,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Entity URN *",
-            name: "entityUrn",
-            type: "string",
-            default: "",
-            description: "Invitation URN",
-          },
           {
             displayName: "Shared Secret",
             name: "sharedSecret",
@@ -655,6 +667,19 @@ export class Linkup implements INodeType {
 
       // WITHDRAW INVITATION - Paramètres Linkup
       {
+        displayName: "Invitation ID *",
+        name: "invitationId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["withdrawInvitation"],
+          },
+        },
+        description: "Invitation ID to withdraw",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "withdrawInvitationParams",
         type: "collection",
@@ -666,13 +691,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Invitation ID *",
-            name: "invitationId",
-            type: "string",
-            default: "",
-            description: "Invitation ID to withdraw",
-          },
           {
             displayName: "Country Code",
             name: "country",
@@ -687,6 +705,20 @@ export class Linkup implements INodeType {
 
       // GET INVITATION STATUS - Paramètres Linkup
       {
+        displayName: "LinkedIn Profile URL *",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["getInvitationStatus"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "getInvitationStatusParams",
         type: "collection",
@@ -698,14 +730,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "LinkedIn Profile URL *",
-            name: "profileUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL",
-          },
           {
             displayName: "Country Code",
             name: "country",
@@ -775,6 +799,33 @@ export class Linkup implements INodeType {
 
       // CONVERSATION MESSAGES - Paramètres Linkup
       {
+        displayName: "LinkedIn URL *",
+        name: "linkedinUrl",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["getConversationMessages"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL",
+      },
+      {
+        displayName: "Conversation ID *",
+        name: "conversationId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["getConversationMessages"],
+          },
+        },
+        description: "Unique LinkedIn conversation identifier",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "conversationMessagesParams",
         type: "collection",
@@ -786,21 +837,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "LinkedIn URL *",
-            name: "linkedinUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL",
-          },
-          {
-            displayName: "Conversation ID *",
-            name: "conversationId",
-            type: "string",
-            default: "",
-            description: "Unique LinkedIn conversation identifier",
-          },
           {
             displayName: "Number of Results",
             name: "total_results",
@@ -855,7 +891,7 @@ export class Linkup implements INodeType {
           },
         },
         description:
-          "URL of the LinkedIn post to send time spent signal for",
+          "URL of the LinkedIn post",
       },
       {
         displayName: "Reaction Type *",
@@ -2988,25 +3024,35 @@ export class Linkup implements INodeType {
         break;
 
       case "getInvitationStatus":
+        const getInvitationStatusUrl = context.getNodeParameter(
+          "profileUrl",
+          itemIndex,
+          ""
+        ) as string;
         const getInvitationStatusParams = context.getNodeParameter(
           "getInvitationStatusParams",
           itemIndex,
           {}
         ) as any;
-        if (getInvitationStatusParams.profileUrl)
-          body.linkedin_url = getInvitationStatusParams.profileUrl;
+        if (getInvitationStatusUrl)
+          body.linkedin_url = getInvitationStatusUrl;
         if (getInvitationStatusParams.country)
           body.country = getInvitationStatusParams.country;
         break;
 
       case "sendConnectionRequest":
+        const sendConnectionRequestUrl = context.getNodeParameter(
+          "profileUrl",
+          itemIndex,
+          ""
+        ) as string;
         const networkParams = context.getNodeParameter(
           "networkParams",
           itemIndex,
           {}
         ) as any;
-        if (networkParams.profileUrl)
-          body.linkedin_url = networkParams.profileUrl;
+        if (sendConnectionRequestUrl)
+          body.linkedin_url = sendConnectionRequestUrl;
         if (networkParams.connectionMessage)
           body.message = networkParams.connectionMessage;
         if (networkParams.country) body.country = networkParams.country;
@@ -3024,27 +3070,37 @@ export class Linkup implements INodeType {
         break;
 
       case "acceptConnectionInvitation":
+        const acceptConnectionEntityUrn = context.getNodeParameter(
+          "entityUrn",
+          itemIndex,
+          ""
+        ) as string;
         const acceptConnectionParams = context.getNodeParameter(
           "acceptConnectionParams",
           itemIndex,
           {}
         ) as any;
+        if (acceptConnectionEntityUrn)
+          body.entity_urn = acceptConnectionEntityUrn;
         if (acceptConnectionParams.sharedSecret)
           body.shared_secret = acceptConnectionParams.sharedSecret;
-        if (acceptConnectionParams.entityUrn)
-          body.entity_urn = acceptConnectionParams.entityUrn;
         if (acceptConnectionParams.country)
           body.country = acceptConnectionParams.country;
         break;
 
       case "withdrawInvitation":
+        const withdrawInvitationId = context.getNodeParameter(
+          "invitationId",
+          itemIndex,
+          ""
+        ) as string;
         const withdrawInvitationParams = context.getNodeParameter(
           "withdrawInvitationParams",
           itemIndex,
           {}
         ) as any;
-        if (withdrawInvitationParams.invitationId)
-          body.invitation_id = withdrawInvitationParams.invitationId;
+        if (withdrawInvitationId)
+          body.invitation_id = withdrawInvitationId;
         if (withdrawInvitationParams.country)
           body.country = withdrawInvitationParams.country;
         break;
@@ -3077,15 +3133,25 @@ export class Linkup implements INodeType {
         break;
 
       case "getConversationMessages":
+        const getConversationMessagesUrl = context.getNodeParameter(
+          "linkedinUrl",
+          itemIndex,
+          ""
+        ) as string;
+        const getConversationMessagesId = context.getNodeParameter(
+          "conversationId",
+          itemIndex,
+          ""
+        ) as string;
         const conversationMessagesParams = context.getNodeParameter(
           "conversationMessagesParams",
           itemIndex,
           {}
         ) as any;
-        if (conversationMessagesParams.linkedinUrl)
-          body.linkedin_url = conversationMessagesParams.linkedinUrl;
-        if (conversationMessagesParams.conversationId)
-          body.conversation_id = conversationMessagesParams.conversationId;
+        if (getConversationMessagesUrl)
+          body.linkedin_url = getConversationMessagesUrl;
+        if (getConversationMessagesId)
+          body.conversation_id = getConversationMessagesId;
         if (conversationMessagesParams.total_results)
           body.total_results = conversationMessagesParams.total_results;
         if (conversationMessagesParams.start_page)
