@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.10";
+const NODE_VERSION = "1.3.11";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -576,20 +576,6 @@ export class Linkup implements INodeType {
 
       // NETWORK - Paramètres Linkup
       {
-        displayName: "LinkedIn Profile URL *",
-        name: "profileUrl",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["sendConnectionRequest"],
-          },
-        },
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL",
-      },
-      {
         displayName: "Linkup Parameters",
         name: "networkParams",
         type: "collection",
@@ -601,6 +587,14 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
+          {
+            displayName: "LinkedIn Profile URL *",
+            name: "profileUrl",
+            type: "string",
+            default: "",
+            placeholder: "https://www.linkedin.com/in/username",
+            description: "LinkedIn profile URL",
+          },
           {
             displayName: "Connection Message",
             name: "connectionMessage",
@@ -622,19 +616,6 @@ export class Linkup implements INodeType {
 
       // ACCEPT CONNECTION - Paramètres Linkup
       {
-        displayName: "Entity URN *",
-        name: "entityUrn",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["acceptConnectionInvitation"],
-          },
-        },
-        description: "Invitation URN",
-      },
-      {
         displayName: "Linkup Parameters",
         name: "acceptConnectionParams",
         type: "collection",
@@ -646,6 +627,13 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
+          {
+            displayName: "Entity URN *",
+            name: "entityUrn",
+            type: "string",
+            default: "",
+            description: "Invitation URN",
+          },
           {
             displayName: "Shared Secret",
             name: "sharedSecret",
@@ -667,19 +655,6 @@ export class Linkup implements INodeType {
 
       // WITHDRAW INVITATION - Paramètres Linkup
       {
-        displayName: "Invitation ID *",
-        name: "invitationId",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["withdrawInvitation"],
-          },
-        },
-        description: "Invitation ID to withdraw",
-      },
-      {
         displayName: "Linkup Parameters",
         name: "withdrawInvitationParams",
         type: "collection",
@@ -691,6 +666,13 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
+          {
+            displayName: "Invitation ID *",
+            name: "invitationId",
+            type: "string",
+            default: "",
+            description: "Invitation ID to withdraw",
+          },
           {
             displayName: "Country Code",
             name: "country",
@@ -705,20 +687,6 @@ export class Linkup implements INodeType {
 
       // GET INVITATION STATUS - Paramètres Linkup
       {
-        displayName: "LinkedIn Profile URL *",
-        name: "profileUrl",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["getInvitationStatus"],
-          },
-        },
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL",
-      },
-      {
         displayName: "Linkup Parameters",
         name: "getInvitationStatusParams",
         type: "collection",
@@ -730,6 +698,14 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
+          {
+            displayName: "LinkedIn Profile URL *",
+            name: "profileUrl",
+            type: "string",
+            default: "",
+            placeholder: "https://www.linkedin.com/in/username",
+            description: "LinkedIn profile URL",
+          },
           {
             displayName: "Country Code",
             name: "country",
@@ -744,87 +720,52 @@ export class Linkup implements INodeType {
 
       // MESSAGES - Paramètres Linkup
       {
-        displayName: "LinkedIn URL *",
-        name: "messageRecipientUrl",
-        type: "string",
-        default: "",
-        required: true,
-        placeholder: "https://www.linkedin.com/in/username",
+        displayName: "Linkup Parameters",
+        name: "messagesParams",
+        type: "collection",
+        placeholder: "Add a parameter",
         displayOptions: {
           show: {
             operation: ["sendMessage"],
           },
         },
-        description: "LinkedIn profile URL of the recipient",
-      },
-      {
-        displayName: "Message Text *",
-        name: "messageText",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["sendMessage"],
+        default: {},
+        options: [
+          {
+            displayName: "LinkedIn URL *",
+            name: "messageRecipientUrl",
+            type: "string",
+            default: "",
+            placeholder: "https://www.linkedin.com/in/username",
+            description: "LinkedIn profile URL of the recipient",
           },
-        },
-        description: "Message content to send",
-      },
-      {
-        displayName: "Media Link",
-        name: "mediaLink",
-        type: "string",
-        default: "",
-        displayOptions: {
-          show: {
-            operation: ["sendMessage"],
+          {
+            displayName: "Message Text *",
+            name: "messageText",
+            type: "string",
+            default: "",
+            description: "Message content to send",
           },
-        },
-        description: "Direct URL of media to attach",
-      },
-      {
-        displayName: "Country Code",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        displayOptions: {
-          show: {
-            operation: ["sendMessage"],
+          {
+            displayName: "Media Link",
+            name: "mediaLink",
+            type: "string",
+            default: "",
+            description: "Direct URL of media to attach",
           },
-        },
-        description:
-          "Country code for proxy selection (e.g., FR for France, US for United States)",
+          {
+            displayName: "Country Code",
+            name: "country",
+            type: "string",
+            default: "FR",
+            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+            description:
+              "Country code for proxy selection (e.g., FR for France, US for United States)",
+          },
+        ],
       },
 
       // CONVERSATION MESSAGES - Paramètres Linkup
-      {
-        displayName: "LinkedIn URL *",
-        name: "linkedinUrl",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["getConversationMessages"],
-          },
-        },
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL",
-      },
-      {
-        displayName: "Conversation ID *",
-        name: "conversationId",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["getConversationMessages"],
-          },
-        },
-        description: "Unique LinkedIn conversation identifier",
-      },
       {
         displayName: "Linkup Parameters",
         name: "conversationMessagesParams",
@@ -837,6 +778,21 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
+          {
+            displayName: "LinkedIn URL *",
+            name: "linkedinUrl",
+            type: "string",
+            default: "",
+            placeholder: "https://www.linkedin.com/in/username",
+            description: "LinkedIn profile URL",
+          },
+          {
+            displayName: "Conversation ID *",
+            name: "conversationId",
+            type: "string",
+            default: "",
+            description: "Unique LinkedIn conversation identifier",
+          },
           {
             displayName: "Number of Results",
             name: "total_results",
@@ -872,12 +828,10 @@ export class Linkup implements INodeType {
 
       // POSTS - Paramètres Linkup
       {
-        displayName: "LinkedIn Post URL *",
-        name: "postUrl",
-        type: "string",
-        default: "",
-        required: true,
-        placeholder: "https://www.linkedin.com/feed/update/xxx",
+        displayName: "Linkup Parameters",
+        name: "postsParams",
+        type: "collection",
+        placeholder: "Add a parameter",
         displayOptions: {
           show: {
             operation: [
@@ -890,139 +844,145 @@ export class Linkup implements INodeType {
             ],
           },
         },
-        description:
-          "URL of the LinkedIn post",
-      },
-      {
-        displayName: "Reaction Type *",
-        name: "reactionType",
-        type: "options",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["reactToPost"],
-          },
-        },
+        default: {},
         options: [
-          { name: "👍 Like", value: "LIKE" },
-          { name: "👏 Praise", value: "PRAISE" },
-          { name: "🙏 Appreciation", value: "APPRECIATION" },
-          { name: "🤗 Empathy", value: "EMPATHY" },
-          { name: "🎯 Interest", value: "INTEREST" },
-          { name: "🎭 Entertainment", value: "ENTERTAINMENT" },
+          {
+            displayName: "LinkedIn Post URL *",
+            name: "postUrl",
+            type: "string",
+            default: "",
+            placeholder: "https://www.linkedin.com/feed/update/xxx",
+            description: "URL of the LinkedIn post",
+          },
+          {
+            displayName: "Reaction Type",
+            name: "reactionType",
+            type: "options",
+            displayOptions: {
+              show: {
+                operation: ["reactToPost"],
+              },
+            },
+            options: [
+              { name: "👍 Like", value: "LIKE" },
+              { name: "👏 Praise", value: "PRAISE" },
+              { name: "🙏 Appreciation", value: "APPRECIATION" },
+              { name: "🤗 Empathy", value: "EMPATHY" },
+              { name: "🎯 Interest", value: "INTEREST" },
+              { name: "🎭 Entertainment", value: "ENTERTAINMENT" },
+            ],
+            default: "LIKE",
+            description:
+              "Type of reaction to add. Available options: LIKE, PRAISE, APPRECIATION, EMPATHY, INTEREST, ENTERTAINMENT",
+          },
+          {
+            displayName: "Message/Text",
+            name: "messageText",
+            type: "string",
+            default: "",
+            displayOptions: {
+              show: {
+                operation: ["commentPost"],
+              },
+            },
+            description: "Text content of the comment to post",
+          },
+          {
+            displayName: "Duration (milliseconds)",
+            name: "duration",
+            type: "number",
+            default: 30000,
+            displayOptions: {
+              show: {
+                operation: ["timeSpent"],
+              },
+            },
+            description:
+              "Duration in milliseconds that the user spent viewing the post. Must be a positive integer.",
+            typeOptions: {
+              minValue: 1,
+            },
+          },
+          {
+            displayName: "Start Time (milliseconds)",
+            name: "durationStartTime",
+            type: "number",
+            default: "",
+            displayOptions: {
+              show: {
+                operation: ["timeSpent"],
+              },
+            },
+            description:
+              "Optional start time in milliseconds when the user began viewing the post",
+          },
+          {
+            displayName: "Number of Results",
+            name: "total_results",
+            type: "number",
+            default: 10,
+            displayOptions: {
+              show: {
+                operation: [
+                  "getPostReactions",
+                  "extractComments",
+                ],
+              },
+            },
+            description: "Number of results to retrieve",
+          },
+          {
+            displayName: "Start Page",
+            name: "start_page",
+            type: "number",
+            default: 1,
+            displayOptions: {
+              show: {
+                operation: [
+                  "getPostReactions",
+                  "extractComments",
+                ],
+              },
+            },
+            description: "First page to retrieve",
+          },
+          {
+            displayName: "End Page",
+            name: "end_page",
+            type: "number",
+            default: 1,
+            displayOptions: {
+              show: {
+                operation: [
+                  "getPostReactions",
+                  "extractComments",
+                ],
+              },
+            },
+            description: "Last page to retrieve",
+          },
+          {
+            displayName: "Country Code",
+            name: "country",
+            type: "string",
+            default: "FR",
+            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+            displayOptions: {
+              show: {
+                operation: [
+                  "getPostReactions",
+                  "reactToPost",
+                  "repost",
+                  "commentPost",
+                  "extractComments",
+                  "timeSpent",
+                ],
+              },
+            },
+            description:
+              "Country code for proxy selection (e.g., FR for France, US for United States)",
+          },
         ],
-        default: "LIKE",
-        description:
-          "Type of reaction to add. Available options: LIKE, PRAISE, APPRECIATION, EMPATHY, INTEREST, ENTERTAINMENT",
-      },
-      {
-        displayName: "Message/Text *",
-        name: "messageText",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["commentPost"],
-          },
-        },
-        description: "Text content of the comment to post",
-      },
-      {
-        displayName: "Duration (milliseconds) *",
-        name: "duration",
-        type: "number",
-        default: 30000,
-        required: true,
-        displayOptions: {
-          show: {
-            operation: ["timeSpent"],
-          },
-        },
-        description:
-          "Duration in milliseconds that the user spent viewing the post. Must be a positive integer.",
-        typeOptions: {
-          minValue: 1,
-        },
-      },
-      {
-        displayName: "Start Time (milliseconds)",
-        name: "durationStartTime",
-        type: "number",
-        default: "",
-        displayOptions: {
-          show: {
-            operation: ["timeSpent"],
-          },
-        },
-        description:
-          "Optional start time in milliseconds when the user began viewing the post",
-      },
-      {
-        displayName: "Number of Results",
-        name: "total_results",
-        type: "number",
-        default: 10,
-        displayOptions: {
-          show: {
-            operation: [
-              "getPostReactions",
-              "extractComments",
-            ],
-          },
-        },
-        description: "Number of results to retrieve",
-      },
-      {
-        displayName: "Start Page",
-        name: "start_page",
-        type: "number",
-        default: 1,
-        displayOptions: {
-          show: {
-            operation: [
-              "getPostReactions",
-              "extractComments",
-            ],
-          },
-        },
-        description: "First page to retrieve",
-      },
-      {
-        displayName: "End Page",
-        name: "end_page",
-        type: "number",
-        default: 1,
-        displayOptions: {
-          show: {
-            operation: [
-              "getPostReactions",
-              "extractComments",
-            ],
-          },
-        },
-        description: "Last page to retrieve",
-      },
-      {
-        displayName: "Country Code",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        displayOptions: {
-          show: {
-            operation: [
-              "getPostReactions",
-              "reactToPost",
-              "repost",
-              "commentPost",
-              "extractComments",
-              "timeSpent",
-            ],
-          },
-        },
-        description:
-          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // ANSWER COMMENT - Paramètres Linkup
@@ -3024,35 +2984,25 @@ export class Linkup implements INodeType {
         break;
 
       case "getInvitationStatus":
-        const getInvitationStatusUrl = context.getNodeParameter(
-          "profileUrl",
-          itemIndex,
-          ""
-        ) as string;
         const getInvitationStatusParams = context.getNodeParameter(
           "getInvitationStatusParams",
           itemIndex,
           {}
         ) as any;
-        if (getInvitationStatusUrl)
-          body.linkedin_url = getInvitationStatusUrl;
+        if (getInvitationStatusParams.profileUrl)
+          body.linkedin_url = getInvitationStatusParams.profileUrl;
         if (getInvitationStatusParams.country)
           body.country = getInvitationStatusParams.country;
         break;
 
       case "sendConnectionRequest":
-        const sendConnectionRequestUrl = context.getNodeParameter(
-          "profileUrl",
-          itemIndex,
-          ""
-        ) as string;
         const networkParams = context.getNodeParameter(
           "networkParams",
           itemIndex,
           {}
         ) as any;
-        if (sendConnectionRequestUrl)
-          body.linkedin_url = sendConnectionRequestUrl;
+        if (networkParams.profileUrl)
+          body.linkedin_url = networkParams.profileUrl;
         if (networkParams.connectionMessage)
           body.message = networkParams.connectionMessage;
         if (networkParams.country) body.country = networkParams.country;
@@ -3070,18 +3020,13 @@ export class Linkup implements INodeType {
         break;
 
       case "acceptConnectionInvitation":
-        const acceptConnectionEntityUrn = context.getNodeParameter(
-          "entityUrn",
-          itemIndex,
-          ""
-        ) as string;
         const acceptConnectionParams = context.getNodeParameter(
           "acceptConnectionParams",
           itemIndex,
           {}
         ) as any;
-        if (acceptConnectionEntityUrn)
-          body.entity_urn = acceptConnectionEntityUrn;
+        if (acceptConnectionParams.entityUrn)
+          body.entity_urn = acceptConnectionParams.entityUrn;
         if (acceptConnectionParams.sharedSecret)
           body.shared_secret = acceptConnectionParams.sharedSecret;
         if (acceptConnectionParams.country)
@@ -3089,69 +3034,39 @@ export class Linkup implements INodeType {
         break;
 
       case "withdrawInvitation":
-        const withdrawInvitationId = context.getNodeParameter(
-          "invitationId",
-          itemIndex,
-          ""
-        ) as string;
         const withdrawInvitationParams = context.getNodeParameter(
           "withdrawInvitationParams",
           itemIndex,
           {}
         ) as any;
-        if (withdrawInvitationId)
-          body.invitation_id = withdrawInvitationId;
+        if (withdrawInvitationParams.invitationId)
+          body.invitation_id = withdrawInvitationParams.invitationId;
         if (withdrawInvitationParams.country)
           body.country = withdrawInvitationParams.country;
         break;
 
       case "sendMessage":
-        const messageRecipientUrl = context.getNodeParameter(
-          "messageRecipientUrl",
+        const messagesParams = context.getNodeParameter(
+          "messagesParams",
           itemIndex,
-          ""
-        ) as string;
-        const messageText = context.getNodeParameter(
-          "messageText",
-          itemIndex,
-          ""
-        ) as string;
-        const mediaLink = context.getNodeParameter(
-          "mediaLink",
-          itemIndex,
-          ""
-        ) as string;
-        const messageCountry = context.getNodeParameter(
-          "country",
-          itemIndex,
-          "FR"
-        ) as string;
-        if (messageRecipientUrl) body.linkedin_url = messageRecipientUrl;
-        if (messageText) body.message_text = messageText;
-        if (mediaLink) body.media_link = mediaLink;
-        if (messageCountry) body.country = messageCountry;
+          {}
+        ) as any;
+        if (messagesParams.messageRecipientUrl) body.linkedin_url = messagesParams.messageRecipientUrl;
+        if (messagesParams.messageText) body.message_text = messagesParams.messageText;
+        if (messagesParams.mediaLink) body.media_link = messagesParams.mediaLink;
+        if (messagesParams.country) body.country = messagesParams.country;
         break;
 
       case "getConversationMessages":
-        const getConversationMessagesUrl = context.getNodeParameter(
-          "linkedinUrl",
-          itemIndex,
-          ""
-        ) as string;
-        const getConversationMessagesId = context.getNodeParameter(
-          "conversationId",
-          itemIndex,
-          ""
-        ) as string;
         const conversationMessagesParams = context.getNodeParameter(
           "conversationMessagesParams",
           itemIndex,
           {}
         ) as any;
-        if (getConversationMessagesUrl)
-          body.linkedin_url = getConversationMessagesUrl;
-        if (getConversationMessagesId)
-          body.conversation_id = getConversationMessagesId;
+        if (conversationMessagesParams.linkedinUrl)
+          body.linkedin_url = conversationMessagesParams.linkedinUrl;
+        if (conversationMessagesParams.conversationId)
+          body.conversation_id = conversationMessagesParams.conversationId;
         if (conversationMessagesParams.total_results)
           body.total_results = conversationMessagesParams.total_results;
         if (conversationMessagesParams.start_page)
@@ -3168,71 +3083,31 @@ export class Linkup implements INodeType {
       case "commentPost":
       case "extractComments":
       case "timeSpent":
-        const postUrl = context.getNodeParameter(
-          "postUrl",
+        const postsParams = context.getNodeParameter(
+          "postsParams",
           itemIndex,
-          ""
-        ) as string;
-        const reactionType = context.getNodeParameter(
-          "reactionType",
-          itemIndex,
-          "LIKE"
-        ) as string;
-        const postMessageText = context.getNodeParameter(
-          "messageText",
-          itemIndex,
-          ""
-        ) as string;
-        const duration = context.getNodeParameter(
-          "duration",
-          itemIndex,
-          30000
-        ) as number;
-        const durationStartTime = context.getNodeParameter(
-          "durationStartTime",
-          itemIndex,
-          ""
-        ) as string;
-        const totalResults = context.getNodeParameter(
-          "total_results",
-          itemIndex,
-          10
-        ) as number;
-        const startPage = context.getNodeParameter(
-          "start_page",
-          itemIndex,
-          1
-        ) as number;
-        const endPage = context.getNodeParameter(
-          "end_page",
-          itemIndex,
-          1
-        ) as number;
-        const postCountry = context.getNodeParameter(
-          "country",
-          itemIndex,
-          "FR"
-        ) as string;
+          {}
+        ) as any;
         
-        if (postUrl) body.post_url = postUrl;
-        if (postCountry) body.country = postCountry;
-        if (operation === "reactToPost" && reactionType) {
-          body.reaction_type = reactionType;
+        if (postsParams.postUrl) body.post_url = postsParams.postUrl;
+        if (postsParams.country) body.country = postsParams.country;
+        if (operation === "reactToPost" && postsParams.reactionType) {
+          body.reaction_type = postsParams.reactionType;
         }
-        if (operation === "commentPost" && postMessageText) {
-          body.message = postMessageText;
+        if (operation === "commentPost" && postsParams.messageText) {
+          body.message = postsParams.messageText;
         }
         if (operation === "timeSpent") {
-          if (duration) body.duration = Math.floor(duration);
-          if (durationStartTime) body.duration_start_time = Math.floor(parseInt(durationStartTime));
+          if (postsParams.duration) body.duration = Math.floor(postsParams.duration);
+          if (postsParams.durationStartTime) body.duration_start_time = Math.floor(parseInt(postsParams.durationStartTime));
         }
         if (
           operation === "getPostReactions" ||
           operation === "extractComments"
         ) {
-          if (totalResults) body.total_results = totalResults;
-          if (startPage) body.start_page = startPage;
-          if (endPage) body.end_page = endPage;
+          if (postsParams.total_results) body.total_results = postsParams.total_results;
+          if (postsParams.start_page) body.start_page = postsParams.start_page;
+          if (postsParams.end_page) body.end_page = postsParams.end_page;
         }
         break;
 
