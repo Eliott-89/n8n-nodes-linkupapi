@@ -7,7 +7,7 @@ import {
 
 // Centralisation des constantes
 const LINKUP_API_BASE_URL = "https://api.linkupapi.com/v1";
-const NODE_VERSION = "1.3.8";
+const NODE_VERSION = "1.3.9";
 
 // Types pour une meilleure organisation
 interface LinkupCredentials {
@@ -576,8 +576,8 @@ export class Linkup implements INodeType {
 
       // NETWORK - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "networkRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "networkParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -595,20 +595,6 @@ export class Linkup implements INodeType {
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "networkOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["sendConnectionRequest"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Connection Message",
             name: "connectionMessage",
@@ -630,8 +616,8 @@ export class Linkup implements INodeType {
 
       // ACCEPT CONNECTION - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "acceptConnectionRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "acceptConnectionParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -648,20 +634,6 @@ export class Linkup implements INodeType {
             default: "",
             description: "Invitation URN",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "acceptConnectionOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["acceptConnectionInvitation"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Shared Secret",
             name: "sharedSecret",
@@ -683,8 +655,8 @@ export class Linkup implements INodeType {
 
       // WITHDRAW INVITATION - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "withdrawInvitationRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "withdrawInvitationParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -701,20 +673,6 @@ export class Linkup implements INodeType {
             default: "",
             description: "Invitation ID to withdraw",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "withdrawInvitationOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["withdrawInvitation"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Country Code",
             name: "country",
@@ -729,8 +687,8 @@ export class Linkup implements INodeType {
 
       // GET INVITATION STATUS - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "getInvitationStatusRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "getInvitationStatusParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -748,20 +706,6 @@ export class Linkup implements INodeType {
             placeholder: "https://www.linkedin.com/in/username",
             description: "LinkedIn profile URL",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "getInvitationStatusOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["getInvitationStatus"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Country Code",
             name: "country",
@@ -831,8 +775,8 @@ export class Linkup implements INodeType {
 
       // CONVERSATION MESSAGES - Paramètres Linkup
       {
-        displayName: "Required Parameters",
-        name: "conversationMessagesRequiredParams",
+        displayName: "Linkup Parameters",
+        name: "conversationMessagesParams",
         type: "collection",
         placeholder: "Add a parameter",
         displayOptions: {
@@ -857,20 +801,6 @@ export class Linkup implements INodeType {
             default: "",
             description: "Unique LinkedIn conversation identifier",
           },
-        ],
-      },
-      {
-        displayName: "Optional Parameters",
-        name: "conversationMessagesOptionalParams",
-        type: "collection",
-        placeholder: "Add a parameter",
-        displayOptions: {
-          show: {
-            operation: ["getConversationMessages"],
-          },
-        },
-        default: {},
-        options: [
           {
             displayName: "Number of Results",
             name: "total_results",
@@ -1154,42 +1084,44 @@ export class Linkup implements INodeType {
 
       // CREATE POST - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "createPostParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Message/Text *",
+        name: "messageText",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["createPost"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Message/Text *",
-            name: "messageText",
-            type: "string",
-            default: "",
-            description: "Text content of the post",
+        description: "Text content of the post",
+      },
+      {
+        displayName: "File",
+        name: "file",
+        type: "string",
+        default: "",
+        displayOptions: {
+          show: {
+            operation: ["createPost"],
           },
-          {
-            displayName: "File",
-            name: "file",
-            type: "string",
-            default: "",
-            description:
-              "Optional image file URL. Direct link to the image file you want to attach to the post",
+        },
+        description:
+          "Optional image file URL. Direct link to the image file you want to attach to the post",
+      },
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        displayOptions: {
+          show: {
+            operation: ["createPost"],
           },
-          {
-            displayName: "Country Code",
-            name: "country",
-            type: "string",
-            default: "FR",
-            placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-            description:
-              "Country code for proxy selection (e.g., FR for France, US for United States)",
-          },
-        ],
+        },
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
       },
 
       // SEARCH PROFILE - Paramètres Linkup
@@ -1685,6 +1617,19 @@ export class Linkup implements INodeType {
 
       // GET CANDIDATES - Paramètres Linkup
       {
+        displayName: "Job ID *",
+        name: "jobId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["getCandidates"],
+          },
+        },
+        description: "Unique job identifier for candidates",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "getCandidatesParams",
         type: "collection",
@@ -1696,13 +1641,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Job ID *",
-            name: "jobId",
-            type: "string",
-            default: "",
-            description: "Unique job identifier for candidates",
-          },
           {
             displayName: "Location",
             name: "location",
@@ -1840,6 +1778,19 @@ export class Linkup implements INodeType {
 
       // PUBLISH/CLOSE JOB - Paramètres Linkup
       {
+        displayName: "Job ID *",
+        name: "jobId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["publishJob", "closeJob"],
+          },
+        },
+        description: "Unique job identifier to publish/close",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "publishCloseJobParams",
         type: "collection",
@@ -1851,13 +1802,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Job ID *",
-            name: "jobId",
-            type: "string",
-            default: "",
-            description: "Unique job identifier to publish/close",
-          },
           {
             displayName: "Country Code",
             name: "country",
@@ -1872,6 +1816,60 @@ export class Linkup implements INodeType {
 
       // CREATE JOB - Paramètres Linkup
       {
+        displayName: "Company URL *",
+        name: "companyUrl",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["createJob"],
+          },
+        },
+        description:
+          'URL of the LinkedIn company page (e.g., "https://www.linkedin.com/company/company-name/")',
+      },
+      {
+        displayName: "Job Title *",
+        name: "jobTitle",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["createJob"],
+          },
+        },
+        description: 'Job title (e.g., "Senior Software Engineer")',
+      },
+      {
+        displayName: "Job Location *",
+        name: "place",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["createJob"],
+          },
+        },
+        description: 'Job location (e.g., "Paris, France")',
+      },
+      {
+        displayName: "HTML Description *",
+        name: "html_description",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["createJob"],
+          },
+        },
+        description:
+          "Job description in HTML format. Supports basic HTML formatting (bold, lists, paragraphs)",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "createJobParams",
         type: "collection",
@@ -1883,36 +1881,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Company URL *",
-            name: "companyUrl",
-            type: "string",
-            default: "",
-            description:
-              'URL of the LinkedIn company page (e.g., "https://www.linkedin.com/company/company-name/")',
-          },
-          {
-            displayName: "Job Title *",
-            name: "jobTitle",
-            type: "string",
-            default: "",
-            description: 'Job title (e.g., "Senior Software Engineer")',
-          },
-          {
-            displayName: "Job Location *",
-            name: "place",
-            type: "string",
-            default: "",
-            description: 'Job location (e.g., "Paris, France")',
-          },
-          {
-            displayName: "HTML Description *",
-            name: "html_description",
-            type: "string",
-            default: "",
-            description:
-              "Job description in HTML format. Supports basic HTML formatting (bold, lists, paragraphs)",
-          },
           {
             displayName: "Employment Status",
             name: "employment_status",
@@ -1969,6 +1937,20 @@ export class Linkup implements INodeType {
 
       // GET CANDIDATE CV - Paramètres Linkup
       {
+        displayName: "Application ID *",
+        name: "applicationId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["getCandidateCV"],
+          },
+        },
+        description:
+          "LinkedIn application ID of the candidate (you can get it with the /recruiter/candidates endpoint)",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "getCandidateCVParams",
         type: "collection",
@@ -1980,14 +1962,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Application ID *",
-            name: "applicationId",
-            type: "string",
-            default: "",
-            description:
-              "LinkedIn application ID of the candidate (you can get it with the /recruiter/candidates endpoint)",
-          },
           {
             displayName: "Country Code",
             name: "country",
@@ -2004,6 +1978,20 @@ export class Linkup implements INodeType {
 
       // SIGNAL POST REACTIONS - Paramètres Linkup
       {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractPostReactions"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/feed/update/xxx",
+        description: "URL of the LinkedIn post to extract reactions from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalPostReactionsParams",
         type: "collection",
@@ -2015,14 +2003,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Post URL *",
-            name: "post_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/feed/update/xxx",
-            description: "URL of the LinkedIn post to extract reactions from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2068,6 +2048,20 @@ export class Linkup implements INodeType {
 
       // SIGNAL POST COMMENTS - Paramètres Linkup
       {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractPostComments"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/feed/update/xxx",
+        description: "URL of the LinkedIn post to extract comments from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalPostCommentsParams",
         type: "collection",
@@ -2079,14 +2073,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Post URL *",
-            name: "post_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/feed/update/xxx",
-            description: "URL of the LinkedIn post to extract comments from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2132,6 +2118,21 @@ export class Linkup implements INodeType {
 
       // SIGNAL PROFILE REACTIONS - Paramètres Linkup
       {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractProfileReactions"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description:
+          "URL of the LinkedIn profile to extract reactions from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalProfileReactionsParams",
         type: "collection",
@@ -2143,15 +2144,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Profile URL *",
-            name: "profile_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description:
-              "URL of the LinkedIn profile to extract reactions from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2194,6 +2186,20 @@ export class Linkup implements INodeType {
 
       // SIGNAL PROFILE COMMENTS - Paramètres Linkup
       {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractProfileComments"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "URL of the LinkedIn profile to extract comments from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalProfileCommentsParams",
         type: "collection",
@@ -2205,14 +2211,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Profile URL *",
-            name: "profile_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "URL of the LinkedIn profile to extract comments from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2255,6 +2253,20 @@ export class Linkup implements INodeType {
 
       // SIGNAL PROFILE POSTS - Paramètres Linkup
       {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractProfilePosts"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "URL of the LinkedIn profile to extract posts from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalProfilePostsParams",
         type: "collection",
@@ -2266,14 +2278,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Profile URL *",
-            name: "profile_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "URL of the LinkedIn profile to extract posts from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2366,6 +2370,21 @@ export class Linkup implements INodeType {
 
       // SIGNAL COMPANY POSTS - Paramètres Linkup
       {
+        displayName: "Company URL *",
+        name: "company_url",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractCompanyPosts"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/company/company-name/",
+        description:
+          "URL of the LinkedIn company page to extract posts from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "signalCompanyPostsParams",
         type: "collection",
@@ -2377,15 +2396,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Company URL *",
-            name: "company_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/company/company-name/",
-            description:
-              "URL of the LinkedIn company page to extract posts from",
-          },
           {
             displayName: "Proxy Country",
             name: "proxy_country",
@@ -2480,6 +2490,20 @@ export class Linkup implements INodeType {
 
       // COMPANY API SEARCH - Paramètres Linkup
       {
+        displayName: "Keyword *",
+        name: "keyword",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["searchCompaniesApi"],
+          },
+        },
+        description:
+          "Keyword to search for (company name, industry, etc.). Also supports company_name for backward compatibility.",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "companyApiSearchParams",
         type: "collection",
@@ -2491,14 +2515,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Keyword *",
-            name: "keyword",
-            type: "string",
-            default: "",
-            description:
-              "Keyword to search for (company name, industry, etc.). Also supports company_name for backward compatibility.",
-          },
           {
             displayName: "Industry",
             name: "industry",
@@ -2547,57 +2563,54 @@ export class Linkup implements INodeType {
 
       // COMPANY API INFO - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "companyApiInfoParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Company URL *",
+        name: "company_url",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["getCompanyInfoApi"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Company URL *",
-            name: "company_url",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/company/stripe/",
-            description:
-              "LinkedIn company URL (e.g., https://www.linkedin.com/company/stripe/)",
-          },
-        ],
+        placeholder: "https://www.linkedin.com/company/stripe/",
+        description:
+          "LinkedIn company URL (e.g., https://www.linkedin.com/company/stripe/)",
       },
 
       // COMPANY API INFO BY DOMAIN - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "companyApiInfoByDomainParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "Domain *",
+        name: "domain",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["getCompanyInfoByDomain"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "Domain *",
-            name: "domain",
-            type: "string",
-            default: "",
-            placeholder: "stripe.com",
-            description:
-              'Company domain name (e.g., "equans.com", "stripe.com")',
-          },
-        ],
+        placeholder: "stripe.com",
+        description:
+          'Company domain name (e.g., "equans.com", "stripe.com")',
       },
 
       // === PERSON API PARAMETERS ===
 
       // PERSON API SEARCH - Paramètres Linkup
+      {
+        displayName: "Keyword *",
+        name: "keyword",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["searchProfilesApi"],
+          },
+        },
+        description: "Main search keyword (name, position, skills, etc.)",
+      },
       {
         displayName: "Linkup Parameters",
         name: "personApiSearchParams",
@@ -2610,13 +2623,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "Keyword *",
-            name: "keyword",
-            type: "string",
-            default: "",
-            description: "Main search keyword (name, position, skills, etc.)",
-          },
           {
             displayName: "Job Title",
             name: "job_title",
@@ -2665,6 +2671,20 @@ export class Linkup implements INodeType {
 
       // PERSON API EXTRACT INFO - Paramètres Linkup
       {
+        displayName: "LinkedIn Profile URL *",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["extractProfileInfoApi"],
+          },
+        },
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract information from",
+      },
+      {
         displayName: "Linkup Parameters",
         name: "personApiExtractInfoParams",
         type: "collection",
@@ -2676,14 +2696,6 @@ export class Linkup implements INodeType {
         },
         default: {},
         options: [
-          {
-            displayName: "LinkedIn Profile URL *",
-            name: "profileUrl",
-            type: "string",
-            default: "",
-            placeholder: "https://www.linkedin.com/in/username",
-            description: "LinkedIn profile URL to extract information from",
-          },
           {
             displayName: "Country Code",
             name: "country",
@@ -2698,39 +2710,43 @@ export class Linkup implements INodeType {
 
       // PERSON API ENRICHMENT - Paramètres Linkup
       {
-        displayName: "Linkup Parameters",
-        name: "personApiEnrichmentParams",
-        type: "collection",
-        placeholder: "Add a parameter",
+        displayName: "First Name *",
+        name: "first_name",
+        type: "string",
+        default: "",
+        required: true,
         displayOptions: {
           show: {
             operation: ["profileEnrichment"],
           },
         },
-        default: {},
-        options: [
-          {
-            displayName: "First Name *",
-            name: "first_name",
-            type: "string",
-            default: "",
-            description: "Person's first name",
+        description: "Person's first name",
+      },
+      {
+        displayName: "Last Name *",
+        name: "last_name",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["profileEnrichment"],
           },
-          {
-            displayName: "Last Name *",
-            name: "last_name",
-            type: "string",
-            default: "",
-            description: "Person's last name",
+        },
+        description: "Person's last name",
+      },
+      {
+        displayName: "Company Name *",
+        name: "company_name",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            operation: ["profileEnrichment"],
           },
-          {
-            displayName: "Company Name *",
-            name: "company_name",
-            type: "string",
-            default: "",
-            description: "Current company name where the person works",
-          },
-        ],
+        },
+        description: "Current company name where the person works",
       },
 
       // PERSON API SEARCH PROFILES - Paramètres Linkup
@@ -2957,7 +2973,6 @@ export class Linkup implements INodeType {
         break;
 
       case "extractProfileInfo":
-      case "getInvitationStatus":
         const profileUrl = context.getNodeParameter(
           "profileUrl",
           itemIndex,
@@ -2972,22 +2987,29 @@ export class Linkup implements INodeType {
         if (profileCountry) body.country = profileCountry;
         break;
 
+      case "getInvitationStatus":
+        const getInvitationStatusParams = context.getNodeParameter(
+          "getInvitationStatusParams",
+          itemIndex,
+          {}
+        ) as any;
+        if (getInvitationStatusParams.profileUrl)
+          body.linkedin_url = getInvitationStatusParams.profileUrl;
+        if (getInvitationStatusParams.country)
+          body.country = getInvitationStatusParams.country;
+        break;
+
       case "sendConnectionRequest":
-        const networkRequiredParams = context.getNodeParameter(
-          "networkRequiredParams",
+        const networkParams = context.getNodeParameter(
+          "networkParams",
           itemIndex,
           {}
         ) as any;
-        const networkOptionalParams = context.getNodeParameter(
-          "networkOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (networkRequiredParams.profileUrl)
-          body.linkedin_url = networkRequiredParams.profileUrl;
-        if (networkOptionalParams.connectionMessage)
-          body.message = networkOptionalParams.connectionMessage;
-        if (networkOptionalParams.country) body.country = networkOptionalParams.country;
+        if (networkParams.profileUrl)
+          body.linkedin_url = networkParams.profileUrl;
+        if (networkParams.connectionMessage)
+          body.message = networkParams.connectionMessage;
+        if (networkParams.country) body.country = networkParams.country;
         break;
 
       case "getCompanyInfo":
@@ -3002,39 +3024,29 @@ export class Linkup implements INodeType {
         break;
 
       case "acceptConnectionInvitation":
-        const acceptConnectionRequiredParams = context.getNodeParameter(
-          "acceptConnectionRequiredParams",
+        const acceptConnectionParams = context.getNodeParameter(
+          "acceptConnectionParams",
           itemIndex,
           {}
         ) as any;
-        const acceptConnectionOptionalParams = context.getNodeParameter(
-          "acceptConnectionOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (acceptConnectionOptionalParams.sharedSecret)
-          body.shared_secret = acceptConnectionOptionalParams.sharedSecret;
-        if (acceptConnectionRequiredParams.entityUrn)
-          body.entity_urn = acceptConnectionRequiredParams.entityUrn;
-        if (acceptConnectionOptionalParams.country)
-          body.country = acceptConnectionOptionalParams.country;
+        if (acceptConnectionParams.sharedSecret)
+          body.shared_secret = acceptConnectionParams.sharedSecret;
+        if (acceptConnectionParams.entityUrn)
+          body.entity_urn = acceptConnectionParams.entityUrn;
+        if (acceptConnectionParams.country)
+          body.country = acceptConnectionParams.country;
         break;
 
       case "withdrawInvitation":
-        const withdrawInvitationRequiredParams = context.getNodeParameter(
-          "withdrawInvitationRequiredParams",
+        const withdrawInvitationParams = context.getNodeParameter(
+          "withdrawInvitationParams",
           itemIndex,
           {}
         ) as any;
-        const withdrawInvitationOptionalParams = context.getNodeParameter(
-          "withdrawInvitationOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (withdrawInvitationRequiredParams.invitationId)
-          body.invitation_id = withdrawInvitationRequiredParams.invitationId;
-        if (withdrawInvitationOptionalParams.country)
-          body.country = withdrawInvitationOptionalParams.country;
+        if (withdrawInvitationParams.invitationId)
+          body.invitation_id = withdrawInvitationParams.invitationId;
+        if (withdrawInvitationParams.country)
+          body.country = withdrawInvitationParams.country;
         break;
 
       case "sendMessage":
@@ -3065,28 +3077,23 @@ export class Linkup implements INodeType {
         break;
 
       case "getConversationMessages":
-        const conversationMessagesRequiredParams = context.getNodeParameter(
-          "conversationMessagesRequiredParams",
+        const conversationMessagesParams = context.getNodeParameter(
+          "conversationMessagesParams",
           itemIndex,
           {}
         ) as any;
-        const conversationMessagesOptionalParams = context.getNodeParameter(
-          "conversationMessagesOptionalParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (conversationMessagesRequiredParams.linkedinUrl)
-          body.linkedin_url = conversationMessagesRequiredParams.linkedinUrl;
-        if (conversationMessagesRequiredParams.conversationId)
-          body.conversation_id = conversationMessagesRequiredParams.conversationId;
-        if (conversationMessagesOptionalParams.total_results)
-          body.total_results = conversationMessagesOptionalParams.total_results;
-        if (conversationMessagesOptionalParams.start_page)
-          body.start_page = conversationMessagesOptionalParams.start_page;
-        if (conversationMessagesOptionalParams.end_page)
-          body.end_page = conversationMessagesOptionalParams.end_page;
-        if (conversationMessagesOptionalParams.country)
-          body.country = conversationMessagesOptionalParams.country;
+        if (conversationMessagesParams.linkedinUrl)
+          body.linkedin_url = conversationMessagesParams.linkedinUrl;
+        if (conversationMessagesParams.conversationId)
+          body.conversation_id = conversationMessagesParams.conversationId;
+        if (conversationMessagesParams.total_results)
+          body.total_results = conversationMessagesParams.total_results;
+        if (conversationMessagesParams.start_page)
+          body.start_page = conversationMessagesParams.start_page;
+        if (conversationMessagesParams.end_page)
+          body.end_page = conversationMessagesParams.end_page;
+        if (conversationMessagesParams.country)
+          body.country = conversationMessagesParams.country;
         break;
 
       case "getPostReactions":
@@ -3210,15 +3217,24 @@ export class Linkup implements INodeType {
         break;
 
       case "createPost":
-        const createPostParams = context.getNodeParameter(
-          "createPostParams",
+        const createMessageText = context.getNodeParameter(
+          "messageText",
           itemIndex,
-          {}
-        ) as any;
-        if (createPostParams.messageText)
-          body.message = createPostParams.messageText;
-        if (createPostParams.file) body.file = createPostParams.file;
-        if (createPostParams.country) body.country = createPostParams.country;
+          ""
+        ) as string;
+        const createFile = context.getNodeParameter(
+          "file",
+          itemIndex,
+          ""
+        ) as string;
+        const createCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        if (createMessageText) body.message = createMessageText;
+        if (createFile) body.file = createFile;
+        if (createCountry) body.country = createCountry;
         break;
 
       case "searchProfile":
@@ -3381,14 +3397,19 @@ export class Linkup implements INodeType {
         break;
 
       case "getCandidates":
+        const getCandidatesJobId = context.getNodeParameter(
+          "jobId",
+          itemIndex,
+          ""
+        ) as string;
         const getCandidatesParams = context.getNodeParameter(
           "getCandidatesParams",
           itemIndex,
           {}
         ) as any;
+        if (getCandidatesJobId) body.job_id = getCandidatesJobId;
         if (getCandidatesParams.country)
           body.country = getCandidatesParams.country;
-        if (getCandidatesParams.jobId) body.job_id = getCandidatesParams.jobId;
         if (getCandidatesParams.location)
           body.location = getCandidatesParams.location;
         if (getCandidatesParams.yearsOfExperience)
@@ -3431,44 +3452,72 @@ export class Linkup implements INodeType {
         break;
 
       case "getCandidateCV":
+        const getCandidateCVApplicationId = context.getNodeParameter(
+          "applicationId",
+          itemIndex,
+          ""
+        ) as string;
         const getCandidateCVParams = context.getNodeParameter(
           "getCandidateCVParams",
           itemIndex,
           {}
         ) as any;
-        if (getCandidateCVParams.applicationId)
-          body.application_id = getCandidateCVParams.applicationId;
+        if (getCandidateCVApplicationId)
+          body.application_id = getCandidateCVApplicationId;
         if (getCandidateCVParams.country)
           body.country = getCandidateCVParams.country;
         break;
 
       case "publishJob":
       case "closeJob":
+        const publishCloseJobId = context.getNodeParameter(
+          "jobId",
+          itemIndex,
+          ""
+        ) as string;
         const publishCloseJobParams = context.getNodeParameter(
           "publishCloseJobParams",
           itemIndex,
           {}
         ) as any;
-        if (publishCloseJobParams.jobId)
-          body.job_id = publishCloseJobParams.jobId;
+        if (publishCloseJobId) body.job_id = publishCloseJobId;
         if (publishCloseJobParams.country)
           body.country = publishCloseJobParams.country;
         break;
 
       case "createJob":
+        const createJobCompanyUrl = context.getNodeParameter(
+          "companyUrl",
+          itemIndex,
+          ""
+        ) as string;
+        const createJobTitle = context.getNodeParameter(
+          "jobTitle",
+          itemIndex,
+          ""
+        ) as string;
+        const createJobPlace = context.getNodeParameter(
+          "place",
+          itemIndex,
+          ""
+        ) as string;
+        const createJobHtmlDescription = context.getNodeParameter(
+          "html_description",
+          itemIndex,
+          ""
+        ) as string;
         const createJobParams = context.getNodeParameter(
           "createJobParams",
           itemIndex,
           {}
         ) as any;
+        
+        if (createJobCompanyUrl) body.company_url = createJobCompanyUrl;
+        if (createJobTitle) body.title = createJobTitle;
+        if (createJobPlace) body.place = createJobPlace;
+        if (createJobHtmlDescription) body.html_description = createJobHtmlDescription;
+        
         if (createJobParams.country) body.country = createJobParams.country;
-
-        if (createJobParams.companyUrl)
-          body.company_url = createJobParams.companyUrl;
-        if (createJobParams.jobTitle) body.title = createJobParams.jobTitle;
-        if (createJobParams.place) body.place = createJobParams.place;
-        if (createJobParams.html_description)
-          body.html_description = createJobParams.html_description;
         if (createJobParams.employment_status)
           body.employment_status = createJobParams.employment_status;
         if (createJobParams.workplace)
@@ -3498,13 +3547,17 @@ export class Linkup implements INodeType {
 
       // === SIGNAL API CASES ===
       case "extractPostReactions":
+        const extractPostReactionsUrl = context.getNodeParameter(
+          "post_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalPostReactionsParams = context.getNodeParameter(
           "signalPostReactionsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalPostReactionsParams.post_url)
-          body.post_url = signalPostReactionsParams.post_url;
+        if (extractPostReactionsUrl) body.post_url = extractPostReactionsUrl;
         if (signalPostReactionsParams.proxy_country)
           body.proxy_country = signalPostReactionsParams.proxy_country;
         if (signalPostReactionsParams.total_results)
@@ -3518,13 +3571,17 @@ export class Linkup implements INodeType {
         break;
 
       case "extractPostComments":
+        const extractPostCommentsUrl = context.getNodeParameter(
+          "post_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalPostCommentsParams = context.getNodeParameter(
           "signalPostCommentsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalPostCommentsParams.post_url)
-          body.post_url = signalPostCommentsParams.post_url;
+        if (extractPostCommentsUrl) body.post_url = extractPostCommentsUrl;
         if (signalPostCommentsParams.proxy_country)
           body.proxy_country = signalPostCommentsParams.proxy_country;
         if (signalPostCommentsParams.total_results)
@@ -3538,13 +3595,17 @@ export class Linkup implements INodeType {
         break;
 
       case "extractProfileReactions":
+        const extractProfileReactionsUrl = context.getNodeParameter(
+          "profile_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalProfileReactionsParams = context.getNodeParameter(
           "signalProfileReactionsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalProfileReactionsParams.profile_url)
-          body.profile_url = signalProfileReactionsParams.profile_url;
+        if (extractProfileReactionsUrl) body.profile_url = extractProfileReactionsUrl;
         if (signalProfileReactionsParams.proxy_country)
           body.proxy_country = signalProfileReactionsParams.proxy_country;
         if (signalProfileReactionsParams.total_results)
@@ -3558,13 +3619,17 @@ export class Linkup implements INodeType {
         break;
 
       case "extractProfileComments":
+        const extractProfileCommentsUrl = context.getNodeParameter(
+          "profile_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalProfileCommentsParams = context.getNodeParameter(
           "signalProfileCommentsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalProfileCommentsParams.profile_url)
-          body.profile_url = signalProfileCommentsParams.profile_url;
+        if (extractProfileCommentsUrl) body.profile_url = extractProfileCommentsUrl;
         if (signalProfileCommentsParams.proxy_country)
           body.proxy_country = signalProfileCommentsParams.proxy_country;
         if (signalProfileCommentsParams.total_results)
@@ -3578,13 +3643,17 @@ export class Linkup implements INodeType {
         break;
 
       case "extractProfilePosts":
+        const extractProfilePostsUrl = context.getNodeParameter(
+          "profile_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalProfilePostsParams = context.getNodeParameter(
           "signalProfilePostsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalProfilePostsParams.profile_url)
-          body.profile_url = signalProfilePostsParams.profile_url;
+        if (extractProfilePostsUrl) body.profile_url = extractProfilePostsUrl;
         if (signalProfilePostsParams.proxy_country)
           body.proxy_country = signalProfilePostsParams.proxy_country;
         if (signalProfilePostsParams.total_results)
@@ -3606,13 +3675,17 @@ export class Linkup implements INodeType {
         break;
 
       case "extractCompanyPosts":
+        const extractCompanyPostsUrl = context.getNodeParameter(
+          "company_url",
+          itemIndex,
+          ""
+        ) as string;
         const signalCompanyPostsParams = context.getNodeParameter(
           "signalCompanyPostsParams",
           itemIndex,
           {}
         ) as any;
-        if (signalCompanyPostsParams.company_url)
-          body.company_url = signalCompanyPostsParams.company_url;
+        if (extractCompanyPostsUrl) body.company_url = extractCompanyPostsUrl;
         if (signalCompanyPostsParams.proxy_country)
           body.proxy_country = signalCompanyPostsParams.proxy_country;
         if (signalCompanyPostsParams.total_results)
@@ -3635,13 +3708,17 @@ export class Linkup implements INodeType {
 
       // === COMPANY API CASES ===
       case "searchCompaniesApi":
+        const searchCompaniesApiKeyword = context.getNodeParameter(
+          "keyword",
+          itemIndex,
+          ""
+        ) as string;
         const companyApiSearchParams = context.getNodeParameter(
           "companyApiSearchParams",
           itemIndex,
           {}
         ) as any;
-        if (companyApiSearchParams.keyword)
-          body.keyword = companyApiSearchParams.keyword;
+        if (searchCompaniesApiKeyword) body.keyword = searchCompaniesApiKeyword;
         if (companyApiSearchParams.industry)
           body.industry = companyApiSearchParams.industry;
         if (companyApiSearchParams.location)
@@ -3655,34 +3732,36 @@ export class Linkup implements INodeType {
         break;
 
       case "getCompanyInfoApi":
-        const companyApiInfoParams = context.getNodeParameter(
-          "companyApiInfoParams",
+        const getCompanyInfoApiUrl = context.getNodeParameter(
+          "company_url",
           itemIndex,
-          {}
-        ) as any;
-        if (companyApiInfoParams.company_url)
-          body.company_url = companyApiInfoParams.company_url;
+          ""
+        ) as string;
+        if (getCompanyInfoApiUrl) body.company_url = getCompanyInfoApiUrl;
         break;
 
       case "getCompanyInfoByDomain":
-        const companyApiInfoByDomainParams = context.getNodeParameter(
-          "companyApiInfoByDomainParams",
+        const getCompanyInfoByDomainDomain = context.getNodeParameter(
+          "domain",
           itemIndex,
-          {}
-        ) as any;
-        if (companyApiInfoByDomainParams.domain)
-          body.domain = companyApiInfoByDomainParams.domain;
+          ""
+        ) as string;
+        if (getCompanyInfoByDomainDomain) body.domain = getCompanyInfoByDomainDomain;
         break;
 
       // === PERSON API CASES ===
       case "searchProfilesApi":
+        const searchProfilesApiKeyword = context.getNodeParameter(
+          "keyword",
+          itemIndex,
+          ""
+        ) as string;
         const personApiSearchParams = context.getNodeParameter(
           "personApiSearchParams",
           itemIndex,
           {}
         ) as any;
-        if (personApiSearchParams.keyword)
-          body.keyword = personApiSearchParams.keyword;
+        if (searchProfilesApiKeyword) body.keyword = searchProfilesApiKeyword;
         if (personApiSearchParams.job_title)
           body.job_title = personApiSearchParams.job_title;
         if (personApiSearchParams.industry)
@@ -3698,29 +3777,40 @@ export class Linkup implements INodeType {
         break;
 
       case "extractProfileInfoApi":
+        const extractProfileInfoApiUrl = context.getNodeParameter(
+          "profileUrl",
+          itemIndex,
+          ""
+        ) as string;
         const personApiExtractInfoParams = context.getNodeParameter(
           "personApiExtractInfoParams",
           itemIndex,
           {}
         ) as any;
-        if (personApiExtractInfoParams.profileUrl)
-          body.linkedin_url = personApiExtractInfoParams.profileUrl;
+        if (extractProfileInfoApiUrl) body.linkedin_url = extractProfileInfoApiUrl;
         if (personApiExtractInfoParams.country)
           body.country = personApiExtractInfoParams.country;
         break;
 
       case "profileEnrichment":
-        const personApiEnrichmentParams = context.getNodeParameter(
-          "personApiEnrichmentParams",
+        const profileEnrichmentFirstName = context.getNodeParameter(
+          "first_name",
           itemIndex,
-          {}
-        ) as any;
-        if (personApiEnrichmentParams.first_name)
-          body.first_name = personApiEnrichmentParams.first_name;
-        if (personApiEnrichmentParams.last_name)
-          body.last_name = personApiEnrichmentParams.last_name;
-        if (personApiEnrichmentParams.company_name)
-          body.company_name = personApiEnrichmentParams.company_name;
+          ""
+        ) as string;
+        const profileEnrichmentLastName = context.getNodeParameter(
+          "last_name",
+          itemIndex,
+          ""
+        ) as string;
+        const profileEnrichmentCompanyName = context.getNodeParameter(
+          "company_name",
+          itemIndex,
+          ""
+        ) as string;
+        if (profileEnrichmentFirstName) body.first_name = profileEnrichmentFirstName;
+        if (profileEnrichmentLastName) body.last_name = profileEnrichmentLastName;
+        if (profileEnrichmentCompanyName) body.company_name = profileEnrichmentCompanyName;
         break;
     }
 
