@@ -14,33 +14,33 @@ export const recruiterProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Get candidates",
+        name: "Get Candidates",
         value: "getCandidates",
         description:
           "List candidates from a LinkedIn Recruiter job posting",
       },
       {
-        name: "Get candidate CV",
+        name: "Get Candidate CV",
         value: "getCandidateCV",
         description: "Download a LinkedIn Recruiter candidate CV",
       },
       {
-        name: "Get job posts",
+        name: "Get Job Posts",
         value: "getJobPosts",
         description: "List LinkedIn Recruiter job postings",
       },
       {
-        name: "Publish job",
+        name: "Publish Job",
         value: "publishJob",
         description: "Publish a LinkedIn Recruiter job posting",
       },
       {
-        name: "Close job",
+        name: "Close Job",
         value: "closeJob",
         description: "Close a LinkedIn Recruiter job posting",
       },
       {
-        name: "Create job",
+        name: "Create Job",
         value: "createJob",
         description: "Create a new LinkedIn Recruiter job posting",
       },
@@ -50,94 +50,103 @@ export const recruiterProperties: INodeProperties[] = [
 
   // RECRUITER - Paramètres
   {
-    displayName: "Job ID *",
-    name: "jobId",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "job_id_here",
+    displayName: "Job Parameters",
+    name: "jobParams",
+    type: "collection",
+    placeholder: "Add job parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["recruiter"],
         operation: ["getCandidates", "publishJob", "closeJob"],
       },
     },
-    description: "LinkedIn Recruiter job ID",
+    options: [
+      {
+        displayName: "Job ID *",
+        name: "jobId",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "job_id_here",
+        description: "LinkedIn Recruiter job ID",
+      },
+    ],
   },
   {
-    displayName: "Application ID *",
-    name: "applicationId",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "application_id_here",
+    displayName: "Application Parameters",
+    name: "applicationParams",
+    type: "collection",
+    placeholder: "Add application parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["recruiter"],
         operation: ["getCandidateCV"],
       },
     },
-    description: "LinkedIn Recruiter application ID",
+    options: [
+      {
+        displayName: "Application ID *",
+        name: "applicationId",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "application_id_here",
+        description: "LinkedIn Recruiter application ID",
+      },
+    ],
   },
   {
-    displayName: "Company URL *",
-    name: "companyUrl",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/company/microsoft",
+    displayName: "Create Job Parameters",
+    name: "createJobParams",
+    type: "collection",
+    placeholder: "Add create job parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["recruiter"],
         operation: ["createJob"],
       },
     },
-    description: "Company URL for job posting",
-  },
-  {
-    displayName: "Job Title *",
-    name: "jobTitle",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "Software Engineer",
-    displayOptions: {
-      show: {
-        resource: ["recruiter"],
-        operation: ["createJob"],
+    options: [
+      {
+        displayName: "Company URL *",
+        name: "companyUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/company/microsoft",
+        description: "Company URL for job posting",
       },
-    },
-    description: "Job title for the posting",
-  },
-  {
-    displayName: "Place *",
-    name: "place",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "San Francisco, CA",
-    displayOptions: {
-      show: {
-        resource: ["recruiter"],
-        operation: ["createJob"],
+      {
+        displayName: "Job Title *",
+        name: "jobTitle",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "Software Engineer",
+        description: "Job title for the posting",
       },
-    },
-    description: "Job location",
-  },
-  {
-    displayName: "HTML Description *",
-    name: "html_description",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "<p>We are looking for a talented software engineer...</p>",
-    displayOptions: {
-      show: {
-        resource: ["recruiter"],
-        operation: ["createJob"],
+      {
+        displayName: "Place *",
+        name: "place",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "San Francisco, CA",
+        description: "Job location",
       },
-    },
-    description: "Job description in HTML format",
+      {
+        displayName: "HTML Description *",
+        name: "html_description",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "<p>We are looking for a talented software engineer...</p>",
+        description: "Job description in HTML format",
+      },
+    ],
   },
   {
     displayName: "Get Candidates Parameters",
@@ -335,10 +344,10 @@ export const recruiterProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Create Job Parameters",
-    name: "createJobParams",
+    displayName: "Create Job Additional Parameters",
+    name: "createJobAdditionalParams",
     type: "collection",
-    placeholder: "Add create job parameter",
+    placeholder: "Add create job additional parameter",
     default: {},
     displayOptions: {
       show: {

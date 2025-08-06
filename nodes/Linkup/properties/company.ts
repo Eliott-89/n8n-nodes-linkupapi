@@ -29,19 +29,28 @@ export const companyProperties: INodeProperties[] = [
 
   // COMPANY - Paramètres
   {
-    displayName: "Company URL *",
-    name: "companyUrl",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/company/microsoft",
+    displayName: "Get Company Parameters",
+    name: "getCompanyParams",
+    type: "collection",
+    placeholder: "Add company parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["company"],
         operation: ["getCompanyInfo"],
       },
     },
-    description: "LinkedIn company URL",
+    options: [
+      {
+        displayName: "Company URL *",
+        name: "companyUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/company/microsoft",
+        description: "LinkedIn company URL",
+      },
+    ],
   },
   {
     displayName: "Search Companies Parameters",

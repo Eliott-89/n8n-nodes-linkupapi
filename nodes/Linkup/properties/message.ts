@@ -34,34 +34,37 @@ export const messageProperties: INodeProperties[] = [
 
   // MESSAGE - Paramètres
   {
-    displayName: "Message Recipient URL *",
-    name: "messageRecipientUrl",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/in/username",
+    displayName: "Send Message Parameters",
+    name: "sendMessageParams",
+    type: "collection",
+    placeholder: "Add message parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["message"],
         operation: ["sendMessage"],
       },
     },
-    description: "LinkedIn profile URL to send message to",
-  },
-  {
-    displayName: "Message Text *",
-    name: "messageText",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "Hello! How are you?",
-    displayOptions: {
-      show: {
-        resource: ["message"],
-        operation: ["sendMessage"],
+    options: [
+      {
+        displayName: "Message Recipient URL *",
+        name: "messageRecipientUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to send message to",
       },
-    },
-    description: "Message content to send",
+      {
+        displayName: "Message Text *",
+        name: "messageText",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "Hello! How are you?",
+        description: "Message content to send",
+      },
+    ],
   },
   {
     displayName: "Conversation Messages Parameters",

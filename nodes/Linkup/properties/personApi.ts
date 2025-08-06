@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const personApiProperties: INodeProperties[] = [
-  // Person API operations
+  // Person operations
   {
     displayName: "Operation",
     name: "operation",
@@ -14,17 +14,17 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Search profiles",
+        name: "Search Profiles",
         value: "searchProfilesApi",
         description: "Search profiles using Person API",
       },
       {
-        name: "Extract profile information",
+        name: "Extract Profile Information",
         value: "extractProfileInfoApi",
         description: "Extract detailed profile information",
       },
       {
-        name: "Profile enrichment",
+        name: "Profile Enrichment",
         value: "profileEnrichment",
         description: "Enrich profile with additional data",
       },
@@ -32,84 +32,10 @@ export const personApiProperties: INodeProperties[] = [
     default: "searchProfilesApi",
   },
 
-  // PERSON API - Paramètres
+  // PERSON - Paramètres
   {
-    displayName: "Person Keyword *",
-    name: "personKeyword",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "John Doe",
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["searchProfilesApi"],
-      },
-    },
-    description: "Search keyword for profiles",
-  },
-  {
-    displayName: "Profile URL",
-    name: "profileUrl",
-    type: "string",
-    default: "",
-    placeholder: "https://www.linkedin.com/in/username",
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["extractProfileInfoApi"],
-      },
-    },
-    description: "LinkedIn profile URL to extract information",
-  },
-  {
-    displayName: "First Name *",
-    name: "first_name",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "John",
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["profileEnrichment"],
-      },
-    },
-    description: "First name for profile enrichment",
-  },
-  {
-    displayName: "Last Name *",
-    name: "last_name",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "Doe",
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["profileEnrichment"],
-      },
-    },
-    description: "Last name for profile enrichment",
-  },
-  {
-    displayName: "Company Name *",
-    name: "company_name",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "Microsoft",
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["profileEnrichment"],
-      },
-    },
-    description: "Company name for profile enrichment",
-  },
-  {
-    displayName: "Person API Search Parameters",
-    name: "personApiSearchParams",
+    displayName: "Search Profiles Parameters",
+    name: "searchProfilesParams",
     type: "collection",
     placeholder: "Add search parameter",
     default: {},
@@ -120,6 +46,15 @@ export const personApiProperties: INodeProperties[] = [
       },
     },
     options: [
+      {
+        displayName: "Person Keyword *",
+        name: "personKeyword",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "John Doe",
+        description: "Search keyword for profiles",
+      },
       {
         displayName: "Job Title",
         name: "job_title",
@@ -170,8 +105,8 @@ export const personApiProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Person API Extract Info Parameters",
-    name: "personApiExtractInfoParams",
+    displayName: "Extract Profile Info Parameters",
+    name: "extractProfileInfoParams",
     type: "collection",
     placeholder: "Add extract parameter",
     default: {},
@@ -183,6 +118,14 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
+        displayName: "Profile URL",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract information",
+      },
+      {
         displayName: "Country",
         name: "country",
         type: "string",
@@ -193,8 +136,8 @@ export const personApiProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Person API Profile Enrichment Parameters",
-    name: "personApiProfileEnrichmentParams",
+    displayName: "Profile Enrichment Parameters",
+    name: "profileEnrichmentParams",
     type: "collection",
     placeholder: "Add enrichment parameter",
     default: {},
@@ -205,6 +148,33 @@ export const personApiProperties: INodeProperties[] = [
       },
     },
     options: [
+      {
+        displayName: "First Name *",
+        name: "first_name",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "John",
+        description: "First name for profile enrichment",
+      },
+      {
+        displayName: "Last Name *",
+        name: "last_name",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "Doe",
+        description: "Last name for profile enrichment",
+      },
+      {
+        displayName: "Company Name *",
+        name: "company_name",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "Microsoft",
+        description: "Company name for profile enrichment",
+      },
       {
         displayName: "Country",
         name: "country",

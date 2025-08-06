@@ -34,34 +34,37 @@ export const profileProperties: INodeProperties[] = [
 
   // PROFILE - Paramètres Linkup
   {
-    displayName: "LinkedIn Profile URL *",
-    name: "profileUrl",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/in/username",
+    displayName: "Extract Profile Parameters",
+    name: "extractProfileParams",
+    type: "collection",
+    placeholder: "Add profile parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["profile"],
         operation: ["extractProfileInfo"],
       },
     },
-    description: "LinkedIn profile URL",
-  },
-  {
-    displayName: "Country Code",
-    name: "country",
-    type: "string",
-    default: "FR",
-    placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-    displayOptions: {
-      show: {
-        resource: ["profile"],
-        operation: ["extractProfileInfo"],
+    options: [
+      {
+        displayName: "LinkedIn Profile URL *",
+        name: "profileUrl",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL",
       },
-    },
-    description:
-      "Country code for proxy selection (e.g., FR for France, US for United States)",
+      {
+        displayName: "Country Code",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description:
+          "Country code for proxy selection (e.g., FR for France, US for United States)",
+      },
+    ],
   },
   {
     displayName: "Search Profile Parameters",

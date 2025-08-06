@@ -14,32 +14,32 @@ export const signalProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Extract post reactions",
+        name: "Extract Post Reactions",
         value: "extractPostReactions",
         description: "Extract reactions from a LinkedIn post",
       },
       {
-        name: "Extract post comments",
+        name: "Extract Post Comments",
         value: "extractPostComments",
         description: "Extract comments from a LinkedIn post",
       },
       {
-        name: "Extract profile reactions",
+        name: "Extract Profile Reactions",
         value: "extractProfileReactions",
         description: "Extract reactions from a LinkedIn profile",
       },
       {
-        name: "Extract profile comments",
+        name: "Extract Profile Comments",
         value: "extractProfileComments",
         description: "Extract comments from a LinkedIn profile",
       },
       {
-        name: "Extract profile posts",
+        name: "Extract Profile Posts",
         value: "extractProfilePosts",
         description: "Extract posts from a LinkedIn profile",
       },
       {
-        name: "Extract company posts",
+        name: "Extract Company Posts",
         value: "extractCompanyPosts",
         description: "Extract posts from a LinkedIn company",
       },
@@ -49,49 +49,76 @@ export const signalProperties: INodeProperties[] = [
 
   // SIGNAL - Paramètres
   {
-    displayName: "Post URL *",
-    name: "post_url",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/posts/activity-123456789",
+    displayName: "Post URL Parameters",
+    name: "postUrlParams",
+    type: "collection",
+    placeholder: "Add post parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["signal"],
         operation: ["extractPostReactions", "extractPostComments"],
       },
     },
-    description: "LinkedIn post URL to extract data from",
+    options: [
+      {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        description: "LinkedIn post URL to extract data from",
+      },
+    ],
   },
   {
-    displayName: "Profile URL *",
-    name: "profile_url",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/in/username",
+    displayName: "Profile URL Parameters",
+    name: "profileUrlParams",
+    type: "collection",
+    placeholder: "Add profile parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["signal"],
         operation: ["extractProfileReactions", "extractProfileComments", "extractProfilePosts"],
       },
     },
-    description: "LinkedIn profile URL to extract data from",
+    options: [
+      {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract data from",
+      },
+    ],
   },
   {
-    displayName: "Company URL *",
-    name: "company_url",
-    type: "string",
-    default: "",
-    required: true,
-    placeholder: "https://www.linkedin.com/company/microsoft",
+    displayName: "Company URL Parameters",
+    name: "companyUrlParams",
+    type: "collection",
+    placeholder: "Add company parameter",
+    default: {},
     displayOptions: {
       show: {
         resource: ["signal"],
         operation: ["extractCompanyPosts"],
       },
     },
-    description: "LinkedIn company URL to extract posts from",
+    options: [
+      {
+        displayName: "Company URL *",
+        name: "company_url",
+        type: "string",
+        default: "",
+        required: true,
+        placeholder: "https://www.linkedin.com/company/microsoft",
+        description: "LinkedIn company URL to extract posts from",
+      },
+    ],
   },
   {
     displayName: "Signal Post Reactions Parameters",
