@@ -1,0 +1,75 @@
+import { IExecuteFunctions } from "n8n-workflow";
+import { RequestBody } from "../types";
+
+export class ProfileOperations {
+  static async buildRequestBody(
+    context: IExecuteFunctions,
+    itemIndex: number,
+    operation: string
+  ): Promise<RequestBody> {
+    const body: RequestBody = {};
+
+    switch (operation) {
+      case "extractProfileInfo":
+        const profileUrl = context.getNodeParameter(
+          "profileUrl",
+          itemIndex,
+          ""
+        ) as string;
+        const profileCountry = context.getNodeParameter(
+          "country",
+          itemIndex,
+          "FR"
+        ) as string;
+        if (profileUrl) body.linkedin_url = profileUrl;
+        if (profileCountry) body.country = profileCountry;
+        break;
+
+      case "searchProfile":
+        const searchProfileParams = context.getNodeParameter(
+          "searchProfileParams",
+          itemIndex,
+          {}
+        ) as any;
+        if (searchProfileParams.keyword)
+          body.keyword = searchProfileParams.keyword;
+        if (searchProfileParams.location)
+          body.location = searchProfileParams.location;
+        if (searchProfileParams.company_url)
+          body.company_url = searchProfileParams.company_url;
+        if (searchProfileParams.school_url)
+          body.school_url = searchProfileParams.school_url;
+        if (searchProfileParams.network)
+          body.network = searchProfileParams.network;
+        if (searchProfileParams.first_name)
+          body.first_name = searchProfileParams.first_name;
+        if (searchProfileParams.last_name)
+          body.last_name = searchProfileParams.last_name;
+        if (searchProfileParams.title) body.title = searchProfileParams.title;
+        if (searchProfileParams.fetch_invitation_state !== undefined)
+          body.fetch_invitation_state =
+            searchProfileParams.fetch_invitation_state;
+        if (searchProfileParams.total_results)
+          body.total_results = searchProfileParams.total_results;
+        if (searchProfileParams.start_page)
+          body.start_page = searchProfileParams.start_page;
+        if (searchProfileParams.end_page)
+          body.end_page = searchProfileParams.end_page;
+        if (searchProfileParams.country)
+          body.country = searchProfileParams.country;
+        break;
+
+      case "getMyProfile":
+        const getMyProfileParams = context.getNodeParameter(
+          "getMyProfileParams",
+          itemIndex,
+          {}
+        ) as any;
+        if (getMyProfileParams.country)
+          body.country = getMyProfileParams.country;
+        break;
+    }
+
+    return body;
+  }
+} 

@@ -1,0 +1,408 @@
+import { INodeProperties } from "n8n-workflow";
+
+export const recruiterProperties: INodeProperties[] = [
+  // Recruiter operations
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+      },
+    },
+    options: [
+      {
+        name: "Get candidates",
+        value: "getCandidates",
+        description:
+          "List candidates from a LinkedIn Recruiter job posting",
+      },
+      {
+        name: "Get candidate CV",
+        value: "getCandidateCV",
+        description: "Download a LinkedIn Recruiter candidate CV",
+      },
+      {
+        name: "Get job posts",
+        value: "getJobPosts",
+        description: "List LinkedIn Recruiter job postings",
+      },
+      {
+        name: "Publish job",
+        value: "publishJob",
+        description: "Publish a LinkedIn Recruiter job posting",
+      },
+      {
+        name: "Close job",
+        value: "closeJob",
+        description: "Close a LinkedIn Recruiter job posting",
+      },
+      {
+        name: "Create job",
+        value: "createJob",
+        description: "Create a new LinkedIn Recruiter job posting",
+      },
+    ],
+    default: "getCandidates",
+  },
+
+  // RECRUITER - Paramètres
+  {
+    displayName: "Job ID *",
+    name: "jobId",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "job_id_here",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["getCandidates", "publishJob", "closeJob"],
+      },
+    },
+    description: "LinkedIn Recruiter job ID",
+  },
+  {
+    displayName: "Application ID *",
+    name: "applicationId",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "application_id_here",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["getCandidateCV"],
+      },
+    },
+    description: "LinkedIn Recruiter application ID",
+  },
+  {
+    displayName: "Company URL *",
+    name: "companyUrl",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "https://www.linkedin.com/company/microsoft",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["createJob"],
+      },
+    },
+    description: "Company URL for job posting",
+  },
+  {
+    displayName: "Job Title *",
+    name: "jobTitle",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "Software Engineer",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["createJob"],
+      },
+    },
+    description: "Job title for the posting",
+  },
+  {
+    displayName: "Place *",
+    name: "place",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "San Francisco, CA",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["createJob"],
+      },
+    },
+    description: "Job location",
+  },
+  {
+    displayName: "HTML Description *",
+    name: "html_description",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "<p>We are looking for a talented software engineer...</p>",
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["createJob"],
+      },
+    },
+    description: "Job description in HTML format",
+  },
+  {
+    displayName: "Get Candidates Parameters",
+    name: "getCandidatesParams",
+    type: "collection",
+    placeholder: "Add candidate parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["getCandidates"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Location",
+        name: "location",
+        type: "string",
+        default: "",
+        placeholder: "San Francisco",
+        description: "Location filter for candidates",
+      },
+      {
+        displayName: "Years of Experience",
+        name: "yearsOfExperience",
+        type: "number",
+        default: 0,
+        description: "Minimum years of experience",
+      },
+      {
+        displayName: "Sort Type",
+        name: "sortType",
+        type: "string",
+        default: "",
+        placeholder: "relevance, date",
+        description: "Sort type for candidates",
+      },
+      {
+        displayName: "Sort Order",
+        name: "sortOrder",
+        type: "string",
+        default: "",
+        placeholder: "asc, desc",
+        description: "Sort order for candidates",
+      },
+      {
+        displayName: "Ratings",
+        name: "ratings",
+        type: "string",
+        default: "",
+        placeholder: "1,2,3,4,5",
+        description: "Rating filter for candidates",
+      },
+      {
+        displayName: "Start",
+        name: "start",
+        type: "number",
+        default: 0,
+        description: "Starting index for results",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+  {
+    displayName: "Get Job Posts Parameters",
+    name: "getJobPostsParams",
+    type: "collection",
+    placeholder: "Add job post parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["getJobPosts"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Job ID",
+        name: "jobId",
+        type: "string",
+        default: "",
+        placeholder: "job_id_here",
+        description: "Specific job ID to get",
+      },
+      {
+        displayName: "Fetch Details",
+        name: "fetchDetails",
+        type: "boolean",
+        default: false,
+        description: "Whether to fetch detailed information",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+  {
+    displayName: "Get Candidate CV Parameters",
+    name: "getCandidateCVParams",
+    type: "collection",
+    placeholder: "Add CV parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["getCandidateCV"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+    ],
+  },
+  {
+    displayName: "Publish/Close Job Parameters",
+    name: "publishCloseJobParams",
+    type: "collection",
+    placeholder: "Add publish/close parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["publishJob", "closeJob"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+    ],
+  },
+  {
+    displayName: "Create Job Parameters",
+    name: "createJobParams",
+    type: "collection",
+    placeholder: "Add create job parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["createJob"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Employment Status",
+        name: "employment_status",
+        type: "string",
+        default: "",
+        placeholder: "full-time, part-time, contract",
+        description: "Employment status for the job",
+      },
+      {
+        displayName: "Workplace",
+        name: "workplace",
+        type: "string",
+        default: "",
+        placeholder: "remote, on-site, hybrid",
+        description: "Workplace type for the job",
+      },
+      {
+        displayName: "Skills",
+        name: "skills",
+        type: "string",
+        default: "",
+        placeholder: '["JavaScript", "React", "Node.js"]',
+        description: "Required skills in JSON format",
+      },
+      {
+        displayName: "Screening Questions",
+        name: "screening_questions",
+        type: "string",
+        default: "",
+        placeholder: '[{"question": "What is your experience with React?"}]',
+        description: "Screening questions in JSON format",
+      },
+      {
+        displayName: "Auto Rejection Template",
+        name: "auto_rejection_template",
+        type: "string",
+        default: "",
+        placeholder: "Thank you for your application...",
+        description: "Auto rejection email template",
+      },
+      {
+        displayName: "Contact Email",
+        name: "contact_email",
+        type: "string",
+        default: "",
+        placeholder: "hr@company.com",
+        description: "Contact email for the job posting",
+      },
+    ],
+  },
+]; 

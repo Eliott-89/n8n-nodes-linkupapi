@@ -8,9 +8,6 @@ dependencies:
   '@n8n/scan-community-package':
     specifier: ^0.1.1
     version: 0.1.1
-  n8n-nodes-linkupapi:
-    specifier: ^1.2.28
-    version: 1.2.28(n8n-workflow@0.1.0)
 
 devDependencies:
   '@typescript-eslint/eslint-plugin':
@@ -1243,6 +1240,7 @@ packages:
 
   /eslint-config-riot@1.0.0:
     resolution: {integrity: sha512-NB/L/1Y30qyJcG5xZxCJKW/+bqyj+llbcCwo9DEz8bESIP0SLTOQ8T1DWCCFc+wJ61AMEstj4511PSScqMMfCw==}
+    dev: true
 
   /eslint-plugin-n8n-nodes-base@1.11.0(eslint@8.57.1)(typescript@4.8.4):
     resolution: {integrity: sha512-1V0H+adPap9plU+nRyq7LFsetncXAWvCnH/LQwfoJJIzYpPuOlDKkz/WkcDUeI0orJDMWLrr3uTVCAKZT7IPJA==}
@@ -2450,6 +2448,7 @@ packages:
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
+    dev: true
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -2590,21 +2589,12 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /n8n-nodes-linkupapi@1.2.28(n8n-workflow@0.1.0):
-    resolution: {integrity: sha512-xx8kGIEGAgh0FjKJY5kWIy6/FpaAHYacBGSy57HjHC/JeRCBhJV3Q9Kjv/j1gAUmK5MRohcB78eZZtypTwVWPw==}
-    engines: {node: '>=18.10', pnpm: '>=8.6'}
-    requiresBuild: true
-    peerDependencies:
-      n8n-workflow: '*'
-    dependencies:
-      n8n-workflow: 0.1.0
-    dev: false
-
   /n8n-workflow@0.1.0:
     resolution: {integrity: sha512-I8N/0qUzuz0AGSY/jcHMOfsbjBePeMqCNZBQQdoRIQzFNJInWLyJT4IKHXYfOQgPMl05CM3Xk1zHw57CH6eAzw==}
     dependencies:
       lodash.get: 4.4.2
       riot-tmpl: 3.0.8
+    dev: true
 
   /nan@2.23.0:
     resolution: {integrity: sha512-1UxuyYGdoQHcGg87Lkqm3FzefucTa0NAiOcuRsDmysep3c1LVCRK2krrUDafMWtjSG04htvAmvg96+SDknOmgQ==}
@@ -3179,6 +3169,7 @@ packages:
     resolution: {integrity: sha512-ngv48VQ58LMtuNrXnELxODsRUJ3NxcGQkL2yJPj5cy8WAgGgK+rarEFwfLoRdAfh76ipWiPrYL4nZ2nfW87lJw==}
     dependencies:
       eslint-config-riot: 1.0.0
+    dev: true
 
   /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
