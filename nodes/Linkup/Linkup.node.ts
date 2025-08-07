@@ -31,8 +31,8 @@ export class Linkup implements INodeType {
       name: "LINKUP",
       color: "#0077b5",
     },
-    inputs: ["main" as any],
-    outputs: ["main" as any],
+    inputs: ["main"],
+    outputs: ["main"],
     credentials: [
       {
         name: "linkupApi",

@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const personApiProperties: INodeProperties[] = [
-  // Person operations
+  // Person API operations
   {
     displayName: "Operation",
     name: "operation",
@@ -14,17 +14,17 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Search Profiles",
+        name: "Search profiles",
         value: "searchProfilesApi",
         description: "Search profiles using Person API",
       },
       {
-        name: "Extract Profile Information",
+        name: "Extract profile information",
         value: "extractProfileInfoApi",
         description: "Extract detailed profile information",
       },
       {
-        name: "Profile Enrichment",
+        name: "Profile enrichment",
         value: "profileEnrichment",
         description: "Enrich profile with additional data",
       },
@@ -32,7 +32,7 @@ export const personApiProperties: INodeProperties[] = [
     default: "searchProfilesApi",
   },
 
-  // PERSON - Paramètres
+  // PERSON API - Paramètres
   {
     displayName: "Search Profiles Parameters",
     name: "searchProfilesParams",

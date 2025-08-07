@@ -14,52 +14,52 @@ export const postProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Get Post Reactions",
+        name: "Get post reactions",
         value: "getPostReactions",
         description: "Get post reactions",
       },
       {
-        name: "React to Post",
+        name: "React to post",
         value: "reactToPost",
         description: "React to a post",
       },
       {
-        name: "Repost Content",
+        name: "Repost content",
         value: "repost",
         description: "Repost a post",
       },
       {
-        name: "Add Comment to Post",
+        name: "Add comment to post",
         value: "commentPost",
         description: "Comment on a post",
       },
       {
-        name: "Get Comments",
+        name: "Get comments",
         value: "extractComments",
         description: "Extract post comments",
       },
       {
-        name: "Answer Comment",
+        name: "Answer comment",
         value: "answerComment",
         description: "Reply to a comment",
       },
       {
-        name: "Search Posts",
+        name: "Search posts",
         value: "searchPosts",
         description: "Search posts",
       },
       {
-        name: "Create Post",
+        name: "Create a post",
         value: "createPost",
         description: "Create a post",
       },
       {
-        name: "Get LinkedIn Feed",
+        name: "Get LinkedIn feed",
         value: "getFeed",
         description: "Get feed",
       },
       {
-        name: "Send Post Time Spent Signal",
+        name: "Send post time spent signal",
         value: "timeSpent",
         description: "Record time spent on a post",
       },

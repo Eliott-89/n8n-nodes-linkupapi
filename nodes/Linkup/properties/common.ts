@@ -33,7 +33,7 @@ export const commonProperties: INodeProperties[] = [
         value: "profile",
       },
       {
-        name: "Company Search",
+        name: "Company",
         value: "company",
       },
       {
@@ -57,11 +57,11 @@ export const commonProperties: INodeProperties[] = [
         value: "signal",
       },
       {
-        name: "Company",
+        name: "Company API",
         value: "companyApi",
       },
       {
-        name: "Person",
+        name: "Person API",
         value: "personApi",
       },
     ],

@@ -14,32 +14,32 @@ export const signalProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Extract Post Reactions",
+        name: "Extract post reactions",
         value: "extractPostReactions",
         description: "Extract reactions from a LinkedIn post",
       },
       {
-        name: "Extract Post Comments",
+        name: "Extract post comments",
         value: "extractPostComments",
         description: "Extract comments from a LinkedIn post",
       },
       {
-        name: "Extract Profile Reactions",
+        name: "Extract profile reactions",
         value: "extractProfileReactions",
         description: "Extract reactions from a LinkedIn profile",
       },
       {
-        name: "Extract Profile Comments",
+        name: "Extract profile comments",
         value: "extractProfileComments",
         description: "Extract comments from a LinkedIn profile",
       },
       {
-        name: "Extract Profile Posts",
+        name: "Extract profile posts",
         value: "extractProfilePosts",
         description: "Extract posts from a LinkedIn profile",
       },
       {
-        name: "Extract Company Posts",
+        name: "Extract company posts",
         value: "extractCompanyPosts",
         description: "Extract posts from a LinkedIn company",
       },

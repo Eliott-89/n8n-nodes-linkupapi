@@ -14,33 +14,33 @@ export const recruiterProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Get Candidates",
+        name: "Get candidates",
         value: "getCandidates",
         description:
           "List candidates from a LinkedIn Recruiter job posting",
       },
       {
-        name: "Get Candidate CV",
+        name: "Get candidate CV",
         value: "getCandidateCV",
         description: "Download a LinkedIn Recruiter candidate CV",
       },
       {
-        name: "Get Job Posts",
+        name: "Get job posts",
         value: "getJobPosts",
         description: "List LinkedIn Recruiter job postings",
       },
       {
-        name: "Publish Job",
+        name: "Publish job",
         value: "publishJob",
         description: "Publish a LinkedIn Recruiter job posting",
       },
       {
-        name: "Close Job",
+        name: "Close job",
         value: "closeJob",
         description: "Close a LinkedIn Recruiter job posting",
       },
       {
-        name: "Create Job",
+        name: "Create job",
         value: "createJob",
         description: "Create a new LinkedIn Recruiter job posting",
       },

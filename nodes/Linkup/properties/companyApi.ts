@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const companyApiProperties: INodeProperties[] = [
-  // Company operations
+  // Company API operations
   {
     displayName: "Operation",
     name: "operation",
@@ -14,17 +14,17 @@ export const companyApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Search Companies",
+        name: "Search companies",
         value: "searchCompaniesApi",
         description: "Search companies using Company API",
       },
       {
-        name: "Get Company Information",
+        name: "Get company information",
         value: "getCompanyInfoApi",
         description: "Get detailed company information",
       },
       {
-        name: "Get Company Information by Domain",
+        name: "Get company information by domain",
         value: "getCompanyInfoByDomain",
         description: "Get company information using domain name",
       },
@@ -32,7 +32,7 @@ export const companyApiProperties: INodeProperties[] = [
     default: "searchCompaniesApi",
   },
 
-  // COMPANY - Paramètres
+  // COMPANY API - Paramètres
   {
     displayName: "Search Companies Parameters",
     name: "searchCompaniesParams",
