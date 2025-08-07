@@ -14,17 +14,17 @@ export const companyApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Search",
+        name: "Search Companies",
         value: "searchCompaniesApi",
         description: "Search companies using Company API",
       },
       {
-        name: "Get Information",
+        name: "Get Company Information",
         value: "getCompanyInfoApi",
         description: "Get detailed company information",
       },
       {
-        name: "Get by Domain",
+        name: "Get Company Information by Domain",
         value: "getCompanyInfoByDomain",
         description: "Get company information using domain name",
       },
