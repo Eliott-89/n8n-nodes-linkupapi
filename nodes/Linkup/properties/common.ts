@@ -25,7 +25,7 @@ export const commonProperties: INodeProperties[] = [
     noDataExpression: true,
     options: [
       {
-        name: "Authentication",
+        name: "Auth",
         value: "authentication",
       },
       {
@@ -33,7 +33,7 @@ export const commonProperties: INodeProperties[] = [
         value: "profile",
       },
       {
-        name: "Company Search",
+        name: "Company",
         value: "company",
       },
       {
@@ -57,11 +57,11 @@ export const commonProperties: INodeProperties[] = [
         value: "signal",
       },
       {
-        name: "Company",
+        name: "API",
         value: "companyApi",
       },
       {
-        name: "Person",
+        name: "Data",
         value: "personApi",
       },
     ],
