@@ -14,17 +14,17 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        name: "Search Profiles",
+        name: "Search",
         value: "searchProfilesApi",
         description: "Search profiles using Person API",
       },
       {
-        name: "Extract Profile Information",
+        name: "Extract Information",
         value: "extractProfileInfoApi",
         description: "Extract detailed profile information",
       },
       {
-        name: "Profile Enrichment",
+        name: "Enrichment",
         value: "profileEnrichment",
         description: "Enrich profile with additional data",
       },
