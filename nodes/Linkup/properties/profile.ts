@@ -3,6 +3,29 @@ import { INodeProperties } from "n8n-workflow";
 export const profileProperties: INodeProperties[] = [
   // PROFILE - Paramètres Linkup
   {
+    displayName: "Get My Profile Parameters",
+    name: "getMyProfileParams",
+    type: "collection",
+    placeholder: "Add profile parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["profile"],
+        operation: ["getMyProfile"],
+      },
+    },
+    options: [
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+    ],
+  },
+  {
     displayName: "Extract Profile Parameters",
     name: "extractProfileParams",
     type: "collection",
@@ -19,8 +42,8 @@ export const profileProperties: INodeProperties[] = [
         displayName: "LinkedIn Profile URL *",
         name: "profileUrl",
         type: "string",
-        required: true,
         default: "",
+        required: true,
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL",
       },
@@ -32,29 +55,6 @@ export const profileProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description:
           "Country code for proxy selection (e.g., FR for France, US for United States)",
-      },
-    ],
-  },
-  {
-    displayName: "Get My Profile Parameters",
-    name: "getMyProfileParams",
-    type: "collection",
-    placeholder: "Add parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["profile"],
-        operation: ["getMyProfile"],
-      },
-    },
-    options: [
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
     ],
   },
@@ -100,7 +100,7 @@ export const profileProperties: INodeProperties[] = [
         name: "school_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/school/...",
+        placeholder: "https://www.linkedin.com/school/school-name",
         description: "School LinkedIn URL to filter by",
       },
       {
@@ -109,33 +109,38 @@ export const profileProperties: INodeProperties[] = [
         type: "string",
         default: "",
         placeholder: "1st, 2nd, 3rd",
-        description: "Connection degree filter",
+        description: "Connection degree to filter by (e.g., 1st, 2nd, 3rd)",
       },
       {
         displayName: "First Name",
         name: "first_name",
         type: "string",
         default: "",
+        placeholder: "John",
+        description: "Filter by first name",
       },
       {
         displayName: "Last Name",
         name: "last_name",
         type: "string",
         default: "",
+        placeholder: "Doe",
+        description: "Filter by last name",
       },
       {
         displayName: "Title",
         name: "title",
         type: "string",
         default: "",
-        placeholder: "Job title",
+        placeholder: "Software Engineer",
+        description: "Filter by job title",
       },
       {
         displayName: "Fetch Invitation State",
         name: "fetch_invitation_state",
         type: "boolean",
         default: false,
-        description: "Whether to fetch invitation state",
+        description: "Include invitation state in results",
       },
       {
         displayName: "Total Results",

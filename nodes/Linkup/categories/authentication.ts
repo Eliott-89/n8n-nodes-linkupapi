@@ -23,21 +23,24 @@ export class AuthenticationOperations {
         const credsVerify = await context.getCredentials("linkupApi");
         if (credsVerify) {
           body.email = credsVerify.linkedinEmail;
-          const verifyCodeParams = context.getNodeParameter(
-            "verifyCodeParams",
+          const verificationCode = context.getNodeParameter(
+            "verificationCode",
             itemIndex,
-            {}
-          ) as any;
-
+            ""
+          ) as string;
+          const authCountry = context.getNodeParameter(
+            "country",
+            itemIndex,
+            "FR"
+          ) as string;
+          
           // Validation des paramètres requis
-          if (!verifyCodeParams.verificationCode) {
+          if (!verificationCode) {
             throw new Error("Le code de vérification est requis pour cette opération");
           }
-
-          if (verifyCodeParams.verificationCode)
-            body.code = verifyCodeParams.verificationCode;
-          if (verifyCodeParams.country)
-            body.country = verifyCodeParams.country;
+          
+          if (verificationCode) body.code = verificationCode;
+          if (authCountry) body.country = authCountry;
         }
         break;
     }

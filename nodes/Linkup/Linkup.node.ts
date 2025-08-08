@@ -71,11 +71,11 @@ export class Linkup implements INodeType {
             "extractProfileComments",
             "extractProfilePosts",
             "extractCompanyPosts",
-            "searchCompanies",
-            "getCompanyInfo",
+            "searchCompaniesApi",
+            "getCompanyInfoApi",
             "getCompanyInfoByDomain",
-            "searchProfiles",
-            "extractProfileInfo",
+            "searchProfilesApi",
+            "extractProfileInfoApi",
             "profileEnrichment",
           ].includes(operation)
         ) {

@@ -138,27 +138,18 @@ export class PostOperations {
         break;
 
       case "getComments":
-        const getCommentsUrlParams = context.getNodeParameter(
+        const getCommentsParams = context.getNodeParameter(
           "postUrlParams",
           itemIndex,
           {}
         ) as any;
-        const getCommentsExtraParams = context.getNodeParameter(
-          "extractCommentsParams",
-          itemIndex,
-          {}
-        ) as any;
-
+        
         // Validation des paramètres requis
-        if (!getCommentsUrlParams.postUrl) {
+        if (!getCommentsParams.postUrl) {
           throw new Error("L'URL du post est requise pour cette opération");
         }
         
-        if (getCommentsUrlParams.postUrl) body.post_url = getCommentsUrlParams.postUrl;
-        if (getCommentsExtraParams.country) body.country = getCommentsExtraParams.country;
-        if (getCommentsExtraParams.total_results) body.total_results = getCommentsExtraParams.total_results;
-        if (getCommentsExtraParams.start_page) body.start_page = getCommentsExtraParams.start_page;
-        if (getCommentsExtraParams.end_page) body.end_page = getCommentsExtraParams.end_page;
+        if (getCommentsParams.postUrl) body.post_url = getCommentsParams.postUrl;
         break;
 
       case "repostContent":

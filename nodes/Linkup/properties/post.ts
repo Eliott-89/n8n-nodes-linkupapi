@@ -11,7 +11,14 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["getPostReactions", "reactToPost", "repostContent", "addCommentToPost", "getComments", "sendPostTimeSpent"],
+        operation: [
+          "getPostReactions",
+          "reactToPost",
+          "repostContent",
+          "addCommentToPost",
+          "getComments",
+          "sendPostTimeSpent",
+        ],
       },
     },
     options: [
@@ -162,8 +169,8 @@ export const postProperties: INodeProperties[] = [
         name: "post_type",
         type: "string",
         default: "",
-        placeholder: "article, video, image, ...",
-        description: "Filter by post type",
+        placeholder: "article, video, image, text",
+        description: "Type of posts to filter",
       },
       {
         displayName: "Sort By",
@@ -178,16 +185,16 @@ export const postProperties: INodeProperties[] = [
         name: "post_date",
         type: "string",
         default: "",
-        placeholder: "YYYY-MM-DD or range",
-        description: "Filter by post date",
+        placeholder: "2024-01-01",
+        description: "Filter posts by date",
       },
       {
-        displayName: "Profile URL",
+        displayName: "LinkedIn URL",
         name: "linkedin_url",
         type: "string",
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
-        description: "Filter posts by profile URL",
+        description: "Filter posts by LinkedIn URL",
       },
       {
         displayName: "Country",
@@ -289,24 +296,10 @@ export const postProperties: INodeProperties[] = [
         default: 10,
         description: "Number of results to return",
       },
-      {
-        displayName: "Start Page",
-        name: "start_page",
-        type: "number",
-        default: 1,
-        description: "Starting page number",
-      },
-      {
-        displayName: "End Page",
-        name: "end_page",
-        type: "number",
-        default: 1,
-        description: "Ending page number",
-      },
     ],
   },
   {
-    displayName: "Extract Comments Parameters",
+    displayName: "Get Comments Parameters",
     name: "extractCommentsParams",
     type: "collection",
     placeholder: "Add comment parameter",

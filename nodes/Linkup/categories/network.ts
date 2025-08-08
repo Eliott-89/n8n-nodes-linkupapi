@@ -100,34 +100,22 @@ export class NetworkOperations {
         break;
 
       case "getReceivedInvitations":
-        const getReceivedInvitationsParams = context.getNodeParameter(
-          "getReceivedInvitationsParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (getReceivedInvitationsParams.country)
-          body.country = getReceivedInvitationsParams.country;
-        if (getReceivedInvitationsParams.total_results)
-          body.total_results = getReceivedInvitationsParams.total_results;
-        if (getReceivedInvitationsParams.start_page)
-          body.start_page = getReceivedInvitationsParams.start_page;
-        if (getReceivedInvitationsParams.end_page)
-          body.end_page = getReceivedInvitationsParams.end_page;
-        break;
       case "getSentInvitations":
-        const getSentInvitationsParams = context.getNodeParameter(
-          "getSentInvitationsParams",
+        const getInvitationsParams = context.getNodeParameter(
+          "getInvitationsParams",
           itemIndex,
           {}
         ) as any;
-        if (getSentInvitationsParams.country)
-          body.country = getSentInvitationsParams.country;
-        if (getSentInvitationsParams.total_results)
-          body.total_results = getSentInvitationsParams.total_results;
-        if (getSentInvitationsParams.start_page)
-          body.start_page = getSentInvitationsParams.start_page;
-        if (getSentInvitationsParams.end_page)
-          body.end_page = getSentInvitationsParams.end_page;
+        if (getInvitationsParams.country)
+          body.country = getInvitationsParams.country;
+        if (getInvitationsParams.invitation_type)
+          body.invitation_type = getInvitationsParams.invitation_type;
+        if (getInvitationsParams.total_results)
+          body.total_results = getInvitationsParams.total_results;
+        if (getInvitationsParams.start_page)
+          body.start_page = getInvitationsParams.start_page;
+        if (getInvitationsParams.end_page)
+          body.end_page = getInvitationsParams.end_page;
         break;
 
       case "getNetworkRecommendations":
