@@ -10,77 +10,59 @@ export class PersonApiOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "searchProfilesApi":
-        const searchProfilesApiKeyword = context.getNodeParameter(
-          "personKeyword",
-          itemIndex,
-          ""
-        ) as string;
-        const personApiSearchParams = context.getNodeParameter(
-          "personApiSearchParams",
+      case "searchProfiles":
+        const searchProfilesParams = context.getNodeParameter(
+          "searchProfilesParams",
           itemIndex,
           {}
         ) as any;
-        if (searchProfilesApiKeyword) body.keyword = searchProfilesApiKeyword;
-        if (personApiSearchParams.job_title)
-          body.job_title = personApiSearchParams.job_title;
-        if (personApiSearchParams.industry)
-          body.industry = personApiSearchParams.industry;
-        if (personApiSearchParams.school)
-          body.school = personApiSearchParams.school;
-        if (personApiSearchParams.location)
-          body.location = personApiSearchParams.location;
-        if (personApiSearchParams.current_company)
-          body.current_company = personApiSearchParams.current_company;
-        if (personApiSearchParams.total_results)
-          body.total_results = personApiSearchParams.total_results;
+        
+        // Validation des paramètres requis
+        if (!searchProfilesParams.personKeyword) {
+          throw new Error("Le mot-clé de recherche de profil est requis pour cette opération");
+        }
+        
+        if (searchProfilesParams.personKeyword) body.keyword = searchProfilesParams.personKeyword;
+        if (searchProfilesParams.job_title) body.job_title = searchProfilesParams.job_title;
+        if (searchProfilesParams.industry) body.industry = searchProfilesParams.industry;
+        if (searchProfilesParams.school) body.school = searchProfilesParams.school;
+        if (searchProfilesParams.location) body.location = searchProfilesParams.location;
+        if (searchProfilesParams.current_company) body.current_company = searchProfilesParams.current_company;
+        if (searchProfilesParams.total_results) body.total_results = searchProfilesParams.total_results;
         break;
 
-      case "extractProfileInfoApi":
-        const extractProfileInfoApiUrl = context.getNodeParameter(
-          "profileUrl",
-          itemIndex,
-          ""
-        ) as string;
-        const personApiExtractInfoParams = context.getNodeParameter(
-          "personApiExtractInfoParams",
+      case "extractProfileInfo":
+        const extractProfileInfoParams = context.getNodeParameter(
+          "extractProfileInfoParams",
           itemIndex,
           {}
         ) as any;
-        if (extractProfileInfoApiUrl) body.linkedin_url = extractProfileInfoApiUrl;
-        if (personApiExtractInfoParams.country)
-          body.country = personApiExtractInfoParams.country;
+        
+        // Validation des paramètres requis
+        if (!extractProfileInfoParams.profileUrl) {
+          throw new Error("L'URL du profil est requise pour cette opération");
+        }
+        
+        if (extractProfileInfoParams.profileUrl) body.profile_url = extractProfileInfoParams.profileUrl;
         break;
 
       case "profileEnrichment":
-        const profileEnrichmentFirstName = context.getNodeParameter(
-          "first_name",
-          itemIndex,
-          ""
-        ) as string;
-        const profileEnrichmentLastName = context.getNodeParameter(
-          "last_name",
-          itemIndex,
-          ""
-        ) as string;
-        const profileEnrichmentCompanyName = context.getNodeParameter(
-          "company_name",
-          itemIndex,
-          ""
-        ) as string;
-        const personApiProfileEnrichmentParams = context.getNodeParameter(
-          "personApiProfileEnrichmentParams",
+        const profileEnrichmentParams = context.getNodeParameter(
+          "profileEnrichmentParams",
           itemIndex,
           {}
         ) as any;
-        if (profileEnrichmentFirstName) body.first_name = profileEnrichmentFirstName;
-        if (profileEnrichmentLastName) body.last_name = profileEnrichmentLastName;
-        if (profileEnrichmentCompanyName) body.company_name = profileEnrichmentCompanyName;
-        if (personApiProfileEnrichmentParams.country)
-          body.country = personApiProfileEnrichmentParams.country;
+        
+        // Validation des paramètres requis
+        if (!profileEnrichmentParams.profileUrl) {
+          throw new Error("L'URL du profil est requise pour cette opération");
+        }
+        
+        if (profileEnrichmentParams.profileUrl) body.profile_url = profileEnrichmentParams.profileUrl;
+        if (profileEnrichmentParams.enrichmentType) body.enrichment_type = profileEnrichmentParams.enrichmentType;
         break;
     }
 
     return body;
   }
-} 
+}

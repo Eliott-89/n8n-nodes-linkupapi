@@ -11,18 +11,19 @@ export class ProfileOperations {
 
     switch (operation) {
       case "extractProfileInfo":
-        const profileUrl = context.getNodeParameter(
-          "profileUrl",
+        const extractProfileParams = context.getNodeParameter(
+          "extractProfileParams",
           itemIndex,
-          ""
-        ) as string;
-        const profileCountry = context.getNodeParameter(
-          "country",
-          itemIndex,
-          "FR"
-        ) as string;
-        if (profileUrl) body.linkedin_url = profileUrl;
-        if (profileCountry) body.country = profileCountry;
+          {}
+        ) as any;
+
+        // Validation des paramètres requis
+        if (!extractProfileParams.profileUrl) {
+          throw new Error("L'URL du profil LinkedIn est requise pour cette opération");
+        }
+
+        if (extractProfileParams.profileUrl) body.linkedin_url = extractProfileParams.profileUrl;
+        if (extractProfileParams.country) body.country = extractProfileParams.country;
         break;
 
       case "searchProfile":

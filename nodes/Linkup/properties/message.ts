@@ -1,37 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const messageProperties: INodeProperties[] = [
-  // Message operations
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["message"],
-      },
-    },
-    options: [
-      {
-        name: "Send Message",
-        value: "sendMessage",
-        description: "Send a LinkedIn message",
-      },
-      {
-        name: "Get Message Inbox",
-        value: "getMessageInbox",
-        description: "Get LinkedIn conversations list",
-      },
-      {
-        name: "Get Conversation Messages",
-        value: "getConversationMessages",
-        description: "Get LinkedIn conversation history",
-      },
-    ],
-    default: "sendMessage",
-  },
-
   // MESSAGE - Paramètres
   {
     displayName: "Send Message Parameters",
@@ -50,8 +19,8 @@ export const messageProperties: INodeProperties[] = [
         displayName: "Message Recipient URL *",
         name: "messageRecipientUrl",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL to send message to",
       },
@@ -59,10 +28,18 @@ export const messageProperties: INodeProperties[] = [
         displayName: "Message Text *",
         name: "messageText",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "Hello! How are you?",
         description: "Message content to send",
+      },
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
       },
     ],
   },
@@ -116,14 +93,6 @@ export const messageProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
     ],
   },
   {
@@ -159,16 +128,29 @@ export const messageProperties: INodeProperties[] = [
         name: "category",
         type: "string",
         default: "",
-        placeholder: "all, unread, archived",
-        description: "Message category to filter by",
+        placeholder: "ALL, UNREAD, ARCHIVED...",
+        description: "Message inbox category",
       },
       {
         displayName: "Next Cursor",
         name: "next_cursor",
         type: "string",
         default: "",
-        placeholder: "cursor_value",
         description: "Cursor for pagination",
+      },
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
       },
     ],
   },

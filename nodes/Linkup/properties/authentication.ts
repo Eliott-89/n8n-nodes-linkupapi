@@ -1,33 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const authenticationProperties: INodeProperties[] = [
-  // Authentication operations
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["authentication"],
-      },
-    },
-    options: [
-      {
-        name: "Login",
-        value: "login",
-        description:
-          "Authenticate your LinkedIn account via Linkup - [Get API key at LinkupAPI.com](https://linkupapi.com)",
-      },
-      {
-        name: "Verify Code",
-        value: "verifyCode",
-        description: "Validate the security code received by email",
-      },
-    ],
-    default: "login",
-  },
-
   // AUTH - Paramètres Linkup
   {
     displayName: "Verify Code Parameters",
@@ -46,8 +19,8 @@ export const authenticationProperties: INodeProperties[] = [
         displayName: "Verification Code *",
         name: "verificationCode",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "123456",
         description: "Verification code received via email/SMS",
       },

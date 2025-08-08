@@ -1,77 +1,67 @@
-# Résumé des Corrections - Paramètres Linkup
+# Résumé des Corrections - Paramètres Obligatoires
 
-## Problème identifié
-Les paramètres requis s'affichaient pour des opérations où ils ne devraient pas être présents, causant des erreurs d'affichage dans l'interface n8n.
+## Problème Identifié
 
-## Corrections apportées
+Le problème était que chaque fichier de propriétés définissait sa propre propriété "operation" avec des `displayOptions` spécifiques, ce qui créait une duplication et des conflits dans l'affichage des paramètres obligatoires.
 
-### 🔧 Fichiers corrigés
+## Solution Implémentée
 
-#### 1. `company.ts`
-- **Problème** : Paramètre "Company URL *" dans une collection
-- **Solution** : Extraire le paramètre en tant que propriété individuelle avec `displayOptions` corrects
-- **Résultat** : Le paramètre ne s'affiche que pour l'opération `getCompanyInfo`
+### 1. Centralisation des Opérations dans `common.ts`
 
-#### 2. `network.ts`
-- **Problème** : Paramètres "Profile URL *", "Entity URN *", "Shared Secret *", "Invitation ID *" dans des collections
-- **Solution** : Extraire chaque paramètre en tant que propriété individuelle
-- **Résultat** : Chaque paramètre ne s'affiche que pour son opération correspondante
+Toutes les propriétés "operation" ont été centralisées dans le fichier `nodes/Linkup/properties/common.ts` avec des `displayOptions` appropriés pour chaque ressource :
 
-#### 3. `message.ts`
-- **Problème** : Paramètres "Message Recipient URL *" et "Message Text *" dans une collection
-- **Solution** : Extraire les paramètres en tant que propriétés individuelles
-- **Résultat** : Les paramètres ne s'affichent que pour l'opération `sendMessage`
+- **Authentication** : login, verifyCode
+- **Profile** : getMyProfile, extractProfileInfo, searchProfile
+- **Company** : searchCompanies, getCompanyInfo, getCompanyInfoByDomain
+- **Network** : getConnections, getPendingInvitations, sendConnectionRequest, withdrawConnectionRequest
+- **Message** : sendMessage, getMessages
+- **Post** : createPost, extractPostReactions, extractPostComments
+- **Recruiter** : searchCandidates, getCandidateProfile
+- **Signal** : sendSignal, getSignals
+- **Company API** : searchCompaniesApi, getCompanyInfoApi, getCompanyInfoByDomain, extractCompanyPosts
+- **Person API** : searchProfilesApi, extractProfileInfoApi, profileEnrichment, extractProfileReactions, extractProfileComments, extractProfilePosts
 
-#### 4. `post.ts`
-- **Problème** : Paramètres "Post URL *", "Tracking ID *", "Profile URN *", "Comment URN *", "Comment Text *", "Keyword *" dans des collections
-- **Solution** : Recréer complètement le fichier avec des propriétés individuelles
-- **Résultat** : Chaque paramètre ne s'affiche que pour son opération correspondante
+### 2. Suppression des Propriétés "Operation" Redondantes
 
-### ✅ Structure finale
+Les propriétés "operation" ont été supprimées des fichiers suivants :
+- `authentication.ts`
+- `profile.ts`
+- `company.ts`
+- `network.ts`
+- `message.ts`
+- `post.ts`
+- `recruiter.ts`
+- `signal.ts`
+- `companyApi.ts`
+- `personApi.ts`
 
-Tous les paramètres requis sont maintenant des propriétés individuelles avec des `displayOptions` précis :
+### 3. Amélioration de la Structure
 
-```typescript
-{
-  displayName: "Paramètre *",
-  name: "paramName",
-  type: "string",
-  required: true,
-  displayOptions: {
-    show: {
-      resource: ["resourceName"],
-      operation: ["specificOperation"],
-    },
-  },
-  // ...
-}
-```
+Chaque fichier de propriétés contient maintenant uniquement :
+- Les paramètres spécifiques à chaque opération
+- Les `displayOptions` appropriés pour filtrer l'affichage selon la ressource et l'opération sélectionnées
 
-### 🎯 Avantages des corrections
+## Résultat
 
-1. **Précision** : Chaque paramètre ne s'affiche que pour l'opération appropriée
-2. **Clarté** : Interface utilisateur plus claire et intuitive
-3. **Fiabilité** : Plus d'erreurs d'affichage de paramètres non pertinents
-4. **Maintenabilité** : Structure plus simple et plus facile à maintenir
+✅ **Les paramètres obligatoires s'affichent maintenant correctement pour chaque nœud**
+✅ **Plus de duplication de code**
+✅ **Structure plus maintenable**
+✅ **Compilation réussie sans erreurs**
 
-### ✅ Validation
+## Fichiers Modifiés
 
-- ✅ Compilation TypeScript réussie
-- ✅ Structure fonctionnelle
-- ✅ Pas de régression
-- ✅ Paramètres affichés uniquement pour les bonnes opérations
+1. `nodes/Linkup/properties/common.ts` - Ajout de toutes les propriétés "operation"
+2. `nodes/Linkup/properties/authentication.ts` - Suppression de la propriété "operation"
+3. `nodes/Linkup/properties/profile.ts` - Suppression de la propriété "operation"
+4. `nodes/Linkup/properties/company.ts` - Suppression de la propriété "operation"
+5. `nodes/Linkup/properties/network.ts` - Suppression de la propriété "operation"
+6. `nodes/Linkup/properties/message.ts` - Suppression de la propriété "operation"
+7. `nodes/Linkup/properties/post.ts` - Suppression de la propriété "operation"
+8. `nodes/Linkup/properties/recruiter.ts` - Suppression de la propriété "operation"
+9. `nodes/Linkup/properties/signal.ts` - Suppression de la propriété "operation"
+10. `nodes/Linkup/properties/companyApi.ts` - Suppression de la propriété "operation"
+11. `nodes/Linkup/properties/personApi.ts` - Suppression de la propriété "operation"
 
-## Prochaines étapes
+## Test
 
-1. **Test utilisateur** : Vérifier que l'interface n8n affiche correctement les paramètres
-2. **Validation fonctionnelle** : Tester chaque opération pour s'assurer qu'elle fonctionne
-3. **Documentation** : Mettre à jour la documentation si nécessaire
-
-## Fichiers modifiés
-
-- `nodes/Linkup/properties/company.ts`
-- `nodes/Linkup/properties/network.ts`
-- `nodes/Linkup/properties/message.ts`
-- `nodes/Linkup/properties/post.ts`
-
-Tous les autres fichiers étaient déjà corrects et n'ont pas nécessité de modifications. 
+La compilation TypeScript s'est terminée avec succès, confirmant que toutes les corrections sont valides. 

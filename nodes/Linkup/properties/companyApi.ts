@@ -1,37 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const companyApiProperties: INodeProperties[] = [
-  // Company API operations
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["companyApi"],
-      },
-    },
-    options: [
-      {
-        name: "Search companies",
-        value: "searchCompaniesApi",
-        description: "Search companies using Company API",
-      },
-      {
-        name: "Get company information",
-        value: "getCompanyInfoApi",
-        description: "Get detailed company information",
-      },
-      {
-        name: "Get company information by domain",
-        value: "getCompanyInfoByDomain",
-        description: "Get company information using domain name",
-      },
-    ],
-    default: "searchCompaniesApi",
-  },
-
   // COMPANY API - Paramètres
   {
     displayName: "Search Companies Parameters",
@@ -42,7 +11,7 @@ export const companyApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["companyApi"],
-        operation: ["searchCompaniesApi"],
+        operation: ["searchCompanies"],
       },
     },
     options: [
@@ -50,8 +19,8 @@ export const companyApiProperties: INodeProperties[] = [
         displayName: "Company Keyword *",
         name: "companyKeyword",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "Microsoft",
         description: "Company name or keyword to search",
       },
@@ -104,14 +73,15 @@ export const companyApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["companyApi"],
-        operation: ["getCompanyInfoApi"],
+        operation: ["getCompanyInfo"],
       },
     },
     options: [
       {
-        displayName: "Company URL",
-        name: "company_url",
+        displayName: "Company URL *",
+        name: "companyUrl",
         type: "string",
+        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/company/microsoft",
         description: "LinkedIn company URL",
@@ -132,9 +102,10 @@ export const companyApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Domain",
+        displayName: "Domain *",
         name: "domain",
         type: "string",
+        required: true,
         default: "",
         placeholder: "microsoft.com",
         description: "Company domain name",

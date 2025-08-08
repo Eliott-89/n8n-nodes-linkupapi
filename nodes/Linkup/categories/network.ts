@@ -11,30 +11,40 @@ export class NetworkOperations {
 
     switch (operation) {
       case "sendConnectionRequest":
-        const networkParams = context.getNodeParameter(
-          "networkParams",
+        const sendConnectionParams = context.getNodeParameter(
+          "sendConnectionParams",
           itemIndex,
           {}
         ) as any;
-        if (networkParams.profileUrl)
-          body.linkedin_url = networkParams.profileUrl;
-        if (networkParams.connectionMessage)
-          body.message = networkParams.connectionMessage;
-        if (networkParams.country) body.country = networkParams.country;
+        
+        // Validation des paramètres requis
+        if (!sendConnectionParams.profileUrl) {
+          throw new Error("L'URL du profil LinkedIn est requise pour cette opération");
+        }
+        
+        if (sendConnectionParams.profileUrl)
+          body.linkedin_url = sendConnectionParams.profileUrl;
+        if (sendConnectionParams.connectionMessage)
+          body.message = sendConnectionParams.connectionMessage;
+        if (sendConnectionParams.country) body.country = sendConnectionParams.country;
         break;
 
       case "acceptConnectionInvitation":
-        const acceptConnectionParams = context.getNodeParameter(
-          "acceptConnectionParams",
+        const acceptInvitationParams = context.getNodeParameter(
+          "acceptInvitationParams",
           itemIndex,
           {}
         ) as any;
-        if (acceptConnectionParams.entityUrn)
-          body.entity_urn = acceptConnectionParams.entityUrn;
-        if (acceptConnectionParams.sharedSecret)
-          body.shared_secret = acceptConnectionParams.sharedSecret;
-        if (acceptConnectionParams.country)
-          body.country = acceptConnectionParams.country;
+        
+        // Validation des paramètres requis
+        if (!acceptInvitationParams.invitationId) {
+          throw new Error("L'ID d'invitation est requis pour cette opération");
+        }
+        
+        if (acceptInvitationParams.invitationId)
+          body.invitation_id = acceptInvitationParams.invitationId;
+        if (acceptInvitationParams.country)
+          body.country = acceptInvitationParams.country;
         break;
 
       case "withdrawInvitation":
@@ -43,6 +53,12 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
+        
+        // Validation des paramètres requis
+        if (!withdrawInvitationParams.invitationId) {
+          throw new Error("L'ID d'invitation est requis pour cette opération");
+        }
+        
         if (withdrawInvitationParams.invitationId)
           body.invitation_id = withdrawInvitationParams.invitationId;
         if (withdrawInvitationParams.country)
@@ -55,6 +71,12 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
+        
+        // Validation des paramètres requis
+        if (!getInvitationStatusParams.profileUrl) {
+          throw new Error("L'URL du profil LinkedIn est requise pour cette opération");
+        }
+        
         if (getInvitationStatusParams.profileUrl)
           body.linkedin_url = getInvitationStatusParams.profileUrl;
         if (getInvitationStatusParams.country)
@@ -78,22 +100,34 @@ export class NetworkOperations {
         break;
 
       case "getReceivedInvitations":
-      case "getSentInvitations":
-        const getInvitationsParams = context.getNodeParameter(
-          "getInvitationsParams",
+        const getReceivedInvitationsParams = context.getNodeParameter(
+          "getReceivedInvitationsParams",
           itemIndex,
           {}
         ) as any;
-        if (getInvitationsParams.country)
-          body.country = getInvitationsParams.country;
-        if (getInvitationsParams.invitation_type)
-          body.invitation_type = getInvitationsParams.invitation_type;
-        if (getInvitationsParams.total_results)
-          body.total_results = getInvitationsParams.total_results;
-        if (getInvitationsParams.start_page)
-          body.start_page = getInvitationsParams.start_page;
-        if (getInvitationsParams.end_page)
-          body.end_page = getInvitationsParams.end_page;
+        if (getReceivedInvitationsParams.country)
+          body.country = getReceivedInvitationsParams.country;
+        if (getReceivedInvitationsParams.total_results)
+          body.total_results = getReceivedInvitationsParams.total_results;
+        if (getReceivedInvitationsParams.start_page)
+          body.start_page = getReceivedInvitationsParams.start_page;
+        if (getReceivedInvitationsParams.end_page)
+          body.end_page = getReceivedInvitationsParams.end_page;
+        break;
+      case "getSentInvitations":
+        const getSentInvitationsParams = context.getNodeParameter(
+          "getSentInvitationsParams",
+          itemIndex,
+          {}
+        ) as any;
+        if (getSentInvitationsParams.country)
+          body.country = getSentInvitationsParams.country;
+        if (getSentInvitationsParams.total_results)
+          body.total_results = getSentInvitationsParams.total_results;
+        if (getSentInvitationsParams.start_page)
+          body.start_page = getSentInvitationsParams.start_page;
+        if (getSentInvitationsParams.end_page)
+          body.end_page = getSentInvitationsParams.end_page;
         break;
 
       case "getNetworkRecommendations":

@@ -11,37 +11,66 @@ export class PostOperations {
 
     switch (operation) {
       case "getPostReactions":
-      case "reactToPost":
-      case "repost":
-      case "commentPost":
-      case "extractComments":
-      case "timeSpent":
-        const postsParams = context.getNodeParameter(
-          "postsParams",
+        const getPostReactionsParams = context.getNodeParameter(
+          "postUrlParams",
           itemIndex,
           {}
         ) as any;
         
-        if (postsParams.postUrl) body.post_url = postsParams.postUrl;
-        if (postsParams.country) body.country = postsParams.country;
-        if (operation === "reactToPost" && postsParams.reactionType) {
-          body.reaction_type = postsParams.reactionType;
+        // Validation des paramètres requis
+        if (!getPostReactionsParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
         }
-        if (operation === "commentPost" && postsParams.messageText) {
-          body.message = postsParams.messageText;
+        
+        if (getPostReactionsParams.postUrl) body.post_url = getPostReactionsParams.postUrl;
+        break;
+
+      case "reactToPost":
+        const reactToPostUrlParams = context.getNodeParameter(
+          "postUrlParams",
+          itemIndex,
+          {}
+        ) as any;
+        const reactToPostParams = context.getNodeParameter(
+          "reactToPostParams",
+          itemIndex,
+          {}
+        ) as any;
+        
+        // Validation des paramètres requis
+        if (!reactToPostUrlParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
         }
-        if (operation === "timeSpent") {
-          if (postsParams.duration) body.duration = Math.floor(postsParams.duration);
-          if (postsParams.durationStartTime) body.duration_start_time = Math.floor(parseInt(postsParams.durationStartTime));
+        if (!reactToPostParams.reactionType) {
+          throw new Error("Le type de réaction est requis pour cette opération");
         }
-        if (
-          operation === "getPostReactions" ||
-          operation === "extractComments"
-        ) {
-          if (postsParams.total_results) body.total_results = postsParams.total_results;
-          if (postsParams.start_page) body.start_page = postsParams.start_page;
-          if (postsParams.end_page) body.end_page = postsParams.end_page;
+        
+        if (reactToPostUrlParams.postUrl) body.post_url = reactToPostUrlParams.postUrl;
+        if (reactToPostParams.reactionType) body.reaction_type = reactToPostParams.reactionType;
+        break;
+
+      case "addCommentToPost":
+        const commentPostUrlParams = context.getNodeParameter(
+          "postUrlParams",
+          itemIndex,
+          {}
+        ) as any;
+        const commentPostParams = context.getNodeParameter(
+          "commentPostParams",
+          itemIndex,
+          {}
+        ) as any;
+        
+        // Validation des paramètres requis
+        if (!commentPostUrlParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
         }
+        if (!commentPostParams.commentText) {
+          throw new Error("Le texte du commentaire est requis pour cette opération");
+        }
+        
+        if (commentPostUrlParams.postUrl) body.post_url = commentPostUrlParams.postUrl;
+        if (commentPostParams.commentText) body.message = commentPostParams.commentText;
         break;
 
       case "answerComment":
@@ -50,12 +79,17 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        if (answerCommentParams.trackingId) body.tracking_id = answerCommentParams.trackingId;
-        if (answerCommentParams.profileUrn) body.profile_urn = answerCommentParams.profileUrn;
-        if (answerCommentParams.commentUrn) body.comment_urn = answerCommentParams.commentUrn;
-        if (answerCommentParams.commentText) body.comment_text = answerCommentParams.commentText;
-        if (answerCommentParams.mentionUser !== undefined) body.mention_user = answerCommentParams.mentionUser;
-        if (answerCommentParams.commenterName) body.commenter_name = answerCommentParams.commenterName;
+        
+        // Validation des paramètres requis
+        if (!answerCommentParams.commentId) {
+          throw new Error("L'ID du commentaire est requis pour cette opération");
+        }
+        if (!answerCommentParams.answerText) {
+          throw new Error("Le texte de la réponse est requis pour cette opération");
+        }
+        
+        if (answerCommentParams.commentId) body.comment_id = answerCommentParams.commentId;
+        if (answerCommentParams.answerText) body.comment_text = answerCommentParams.answerText;
         if (answerCommentParams.country) body.country = answerCommentParams.country;
         break;
 
@@ -65,8 +99,14 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        if (createPostParams.messageText) body.message = createPostParams.messageText;
-        if (createPostParams.file) body.file = createPostParams.file;
+        
+        // Validation des paramètres requis
+        if (!createPostParams.postText) {
+          throw new Error("Le texte du post est requis pour cette opération");
+        }
+        
+        if (createPostParams.postText) body.message = createPostParams.postText;
+        if (createPostParams.postVisibility) body.visibility = createPostParams.postVisibility;
         if (createPostParams.country) body.country = createPostParams.country;
         break;
 
@@ -77,34 +117,81 @@ export class PostOperations {
           {}
         ) as any;
         if (searchPostsParams.keyword) body.keyword = searchPostsParams.keyword;
-        if (searchPostsParams.post_type)
-          body.post_type = searchPostsParams.post_type;
+        if (searchPostsParams.post_type) body.post_type = searchPostsParams.post_type;
         if (searchPostsParams.sort_by) body.sort_by = searchPostsParams.sort_by;
-        if (searchPostsParams.post_date)
-          body.post_date = searchPostsParams.post_date;
-        if (searchPostsParams.linkedin_url)
-          body.linkedin_url = searchPostsParams.linkedin_url;
-        if (searchPostsParams.total_results)
-          body.total_results = searchPostsParams.total_results;
-        if (searchPostsParams.start_page)
-          body.start_page = searchPostsParams.start_page;
-        if (searchPostsParams.end_page)
-          body.end_page = searchPostsParams.end_page;
+        if (searchPostsParams.post_date) body.post_date = searchPostsParams.post_date;
+        if (searchPostsParams.linkedin_url) body.linkedin_url = searchPostsParams.linkedin_url;
+        if (searchPostsParams.total_results) body.total_results = searchPostsParams.total_results;
+        if (searchPostsParams.start_page) body.start_page = searchPostsParams.start_page;
+        if (searchPostsParams.end_page) body.end_page = searchPostsParams.end_page;
         if (searchPostsParams.country) body.country = searchPostsParams.country;
         break;
 
-      case "getFeed":
+      case "getLinkedInFeed":
         const getFeedParams = context.getNodeParameter(
           "getFeedParams",
           itemIndex,
           {}
         ) as any;
         if (getFeedParams.country) body.country = getFeedParams.country;
-        if (getFeedParams.total_results)
-          body.total_results = getFeedParams.total_results;
+        if (getFeedParams.total_results) body.total_results = getFeedParams.total_results;
+        break;
+
+      case "getComments":
+        const getCommentsUrlParams = context.getNodeParameter(
+          "postUrlParams",
+          itemIndex,
+          {}
+        ) as any;
+        const getCommentsExtraParams = context.getNodeParameter(
+          "extractCommentsParams",
+          itemIndex,
+          {}
+        ) as any;
+
+        // Validation des paramètres requis
+        if (!getCommentsUrlParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
+        }
+        
+        if (getCommentsUrlParams.postUrl) body.post_url = getCommentsUrlParams.postUrl;
+        if (getCommentsExtraParams.country) body.country = getCommentsExtraParams.country;
+        if (getCommentsExtraParams.total_results) body.total_results = getCommentsExtraParams.total_results;
+        if (getCommentsExtraParams.start_page) body.start_page = getCommentsExtraParams.start_page;
+        if (getCommentsExtraParams.end_page) body.end_page = getCommentsExtraParams.end_page;
+        break;
+
+      case "repostContent":
+        const repostParams = context.getNodeParameter(
+          "postUrlParams",
+          itemIndex,
+          {}
+        ) as any;
+        
+        // Validation des paramètres requis
+        if (!repostParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
+        }
+        
+        if (repostParams.postUrl) body.post_url = repostParams.postUrl;
+        break;
+
+      case "sendPostTimeSpent":
+        const timeSpentParams = context.getNodeParameter(
+          "postUrlParams",
+          itemIndex,
+          {}
+        ) as any;
+        
+        // Validation des paramètres requis
+        if (!timeSpentParams.postUrl) {
+          throw new Error("L'URL du post est requise pour cette opération");
+        }
+        
+        if (timeSpentParams.postUrl) body.post_url = timeSpentParams.postUrl;
         break;
     }
 
     return body;
   }
-} 
+}

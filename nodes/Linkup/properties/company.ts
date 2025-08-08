@@ -1,32 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const companyProperties: INodeProperties[] = [
-  // Company operations
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["company"],
-      },
-    },
-    options: [
-      {
-        name: "Search Companies",
-        value: "searchCompanies",
-        description: "Search LinkedIn companies",
-      },
-      {
-        name: "Get Company Information",
-        value: "getCompanyInfo",
-        description: "Get LinkedIn company information",
-      },
-    ],
-    default: "searchCompanies",
-  },
-
   // COMPANY - Paramètres
   {
     displayName: "Get Company Parameters",
@@ -45,8 +19,8 @@ export const companyProperties: INodeProperties[] = [
         displayName: "Company URL *",
         name: "companyUrl",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "https://www.linkedin.com/company/microsoft",
         description: "LinkedIn company URL",
       },
@@ -98,6 +72,14 @@ export const companyProperties: INodeProperties[] = [
         description: "Company size range",
       },
       {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
         displayName: "Total Results",
         name: "total_results",
         type: "number",
@@ -117,14 +99,6 @@ export const companyProperties: INodeProperties[] = [
         type: "number",
         default: 1,
         description: "Ending page number",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
     ],
   },

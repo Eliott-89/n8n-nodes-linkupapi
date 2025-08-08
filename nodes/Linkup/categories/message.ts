@@ -11,15 +11,23 @@ export class MessageOperations {
 
     switch (operation) {
       case "sendMessage":
-        const messagesParams = context.getNodeParameter(
-          "messagesParams",
+        const sendMessageParams = context.getNodeParameter(
+          "sendMessageParams",
           itemIndex,
           {}
         ) as any;
-        if (messagesParams.messageRecipientUrl) body.linkedin_url = messagesParams.messageRecipientUrl;
-        if (messagesParams.messageText) body.message_text = messagesParams.messageText;
-        if (messagesParams.mediaLink) body.media_link = messagesParams.mediaLink;
-        if (messagesParams.country) body.country = messagesParams.country;
+        
+        // Validation des paramètres requis
+        if (!sendMessageParams.messageRecipientUrl) {
+          throw new Error("L'URL du destinataire du message est requise pour cette opération");
+        }
+        if (!sendMessageParams.messageText) {
+          throw new Error("Le texte du message est requis pour cette opération");
+        }
+        
+        if (sendMessageParams.messageRecipientUrl) body.linkedin_url = sendMessageParams.messageRecipientUrl;
+        if (sendMessageParams.messageText) body.message_text = sendMessageParams.messageText;
+        if (sendMessageParams.country) body.country = sendMessageParams.country;
         break;
 
       case "getConversationMessages":

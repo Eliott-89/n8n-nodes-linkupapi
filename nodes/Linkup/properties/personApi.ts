@@ -1,37 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const personApiProperties: INodeProperties[] = [
-  // Person API operations
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-      },
-    },
-    options: [
-      {
-        name: "Search profiles",
-        value: "searchProfilesApi",
-        description: "Search profiles using Person API",
-      },
-      {
-        name: "Extract profile information",
-        value: "extractProfileInfoApi",
-        description: "Extract detailed profile information",
-      },
-      {
-        name: "Profile enrichment",
-        value: "profileEnrichment",
-        description: "Enrich profile with additional data",
-      },
-    ],
-    default: "searchProfilesApi",
-  },
-
   // PERSON API - Paramètres
   {
     displayName: "Search Profiles Parameters",
@@ -42,7 +11,7 @@ export const personApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["personApi"],
-        operation: ["searchProfilesApi"],
+        operation: ["searchProfiles"],
       },
     },
     options: [
@@ -50,8 +19,8 @@ export const personApiProperties: INodeProperties[] = [
         displayName: "Person Keyword *",
         name: "personKeyword",
         type: "string",
-        default: "",
         required: true,
+        default: "",
         placeholder: "John Doe",
         description: "Search keyword for profiles",
       },
@@ -108,30 +77,23 @@ export const personApiProperties: INodeProperties[] = [
     displayName: "Extract Profile Info Parameters",
     name: "extractProfileInfoParams",
     type: "collection",
-    placeholder: "Add extract parameter",
+    placeholder: "Add profile parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["personApi"],
-        operation: ["extractProfileInfoApi"],
+        operation: ["extractProfileInfo"],
       },
     },
     options: [
       {
-        displayName: "Profile URL",
+        displayName: "Profile URL *",
         name: "profileUrl",
         type: "string",
+        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL to extract information",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
+        description: "LinkedIn profile URL",
       },
     ],
   },
@@ -149,39 +111,30 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "First Name *",
-        name: "first_name",
+        displayName: "Profile URL *",
+        name: "profileUrl",
         type: "string",
-        default: "",
         required: true,
-        placeholder: "John",
-        description: "First name for profile enrichment",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to enrich",
       },
       {
-        displayName: "Last Name *",
-        name: "last_name",
-        type: "string",
-        default: "",
-        required: true,
-        placeholder: "Doe",
-        description: "Last name for profile enrichment",
-      },
-      {
-        displayName: "Company Name *",
-        name: "company_name",
-        type: "string",
-        default: "",
-        required: true,
-        placeholder: "Microsoft",
-        description: "Company name for profile enrichment",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
+        displayName: "Enrichment Type",
+        name: "enrichmentType",
+        type: "options",
+        options: [
+          {
+            name: "Full",
+            value: "full",
+          },
+          {
+            name: "Basic",
+            value: "basic",
+          },
+        ],
+        default: "full",
+        description: "Type of enrichment to perform",
       },
     ],
   },

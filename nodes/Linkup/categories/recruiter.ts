@@ -11,17 +11,18 @@ export class RecruiterOperations {
 
     switch (operation) {
       case "getCandidates":
-        const getCandidatesJobId = context.getNodeParameter(
-          "jobId",
-          itemIndex,
-          ""
-        ) as string;
         const getCandidatesParams = context.getNodeParameter(
           "getCandidatesParams",
           itemIndex,
           {}
         ) as any;
-        if (getCandidatesJobId) body.job_id = getCandidatesJobId;
+        
+        // Validation des paramètres requis
+        if (!getCandidatesParams.jobId) {
+          throw new Error("L'ID du poste est requis pour cette opération");
+        }
+        
+        if (getCandidatesParams.jobId) body.job_id = getCandidatesParams.jobId;
         if (getCandidatesParams.country)
           body.country = getCandidatesParams.country;
         if (getCandidatesParams.location)
@@ -62,20 +63,21 @@ export class RecruiterOperations {
         break;
 
       case "getCandidateCV":
-        const getCandidateCVApplicationId = context.getNodeParameter(
-          "applicationId",
-          itemIndex,
-          ""
-        ) as string;
-        const getCandidateCVParams = context.getNodeParameter(
-          "getCandidateCVParams",
+        const applicationParams = context.getNodeParameter(
+          "applicationParams",
           itemIndex,
           {}
         ) as any;
-        if (getCandidateCVApplicationId)
-          body.application_id = getCandidateCVApplicationId;
-        if (getCandidateCVParams.country)
-          body.country = getCandidateCVParams.country;
+        
+        // Validation des paramètres requis
+        if (!applicationParams.applicationId) {
+          throw new Error("L'ID de candidature est requis pour cette opération");
+        }
+        
+        if (applicationParams.applicationId)
+          body.application_id = applicationParams.applicationId;
+        if (applicationParams.country)
+          body.country = applicationParams.country;
         break;
 
       case "publishJob":
@@ -96,36 +98,30 @@ export class RecruiterOperations {
         break;
 
       case "createJob":
-        const createJobCompanyUrl = context.getNodeParameter(
-          "companyUrl",
-          itemIndex,
-          ""
-        ) as string;
-        const createJobTitle = context.getNodeParameter(
-          "jobTitle",
-          itemIndex,
-          ""
-        ) as string;
-        const createJobPlace = context.getNodeParameter(
-          "place",
-          itemIndex,
-          ""
-        ) as string;
-        const createJobHtmlDescription = context.getNodeParameter(
-          "html_description",
-          itemIndex,
-          ""
-        ) as string;
         const createJobParams = context.getNodeParameter(
           "createJobParams",
           itemIndex,
           {}
         ) as any;
         
-        if (createJobCompanyUrl) body.company_url = createJobCompanyUrl;
-        if (createJobTitle) body.title = createJobTitle;
-        if (createJobPlace) body.place = createJobPlace;
-        if (createJobHtmlDescription) body.html_description = createJobHtmlDescription;
+        // Validation des paramètres requis
+        if (!createJobParams.jobTitle) {
+          throw new Error("Le titre du poste est requis pour cette opération");
+        }
+        if (!createJobParams.jobDescription) {
+          throw new Error("La description du poste est requise pour cette opération");
+        }
+        if (!createJobParams.companyName) {
+          throw new Error("Le nom de l'entreprise est requis pour cette opération");
+        }
+        if (!createJobParams.location) {
+          throw new Error("La localisation est requise pour cette opération");
+        }
+        
+        if (createJobParams.jobTitle) body.title = createJobParams.jobTitle;
+        if (createJobParams.jobDescription) body.html_description = createJobParams.jobDescription;
+        if (createJobParams.companyName) body.company_name = createJobParams.companyName;
+        if (createJobParams.location) body.place = createJobParams.location;
         
         if (createJobParams.country) body.country = createJobParams.country;
         if (createJobParams.employment_status)

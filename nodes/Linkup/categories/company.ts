@@ -11,13 +11,19 @@ export class CompanyOperations {
 
     switch (operation) {
       case "getCompanyInfo":
-        const companiesParams = context.getNodeParameter(
-          "companiesParams",
+        const getCompanyParams = context.getNodeParameter(
+          "getCompanyParams",
           itemIndex,
           {}
         ) as any;
-        if (companiesParams.companyUrl)
-          body.company_url = companiesParams.companyUrl;
+        
+        // Validation des paramètres requis
+        if (!getCompanyParams.companyUrl) {
+          throw new Error("L'URL de l'entreprise est requise pour cette opération");
+        }
+        
+        if (getCompanyParams.companyUrl)
+          body.company_url = getCompanyParams.companyUrl;
         break;
 
       case "searchCompanies":
