@@ -136,18 +136,39 @@ export class Linkup implements INodeType {
             ? '?' + Object.entries(body.queryParams).map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`).join('&')
             : '';
           
+          // Construire les headers de base
+          const baseHeaders: any = {
+            "x-api-key": creds.apiKey,
+            "User-Agent": "n8n-linkup-node/1.2.0",
+          };
+          
+          // Ajouter Content-Type seulement pour les méthodes qui envoient un body
+          const method = body.method || 'POST';
+          if (['POST', 'PUT', 'PATCH'].includes(method.toUpperCase())) {
+            baseHeaders["Content-Type"] = "application/json";
+          }
+          
+          // Fusionner avec les headers personnalisés (ne pas écraser x-api-key)
+          const finalHeaders = { ...baseHeaders };
+          if (body.headers) {
+            Object.keys(body.headers).forEach(key => {
+              if (key.toLowerCase() !== 'x-api-key') {
+                finalHeaders[key] = body.headers[key];
+              }
+            });
+          }
+          
           requestOptions = {
-            method: body.method || 'POST',
+            method: method,
             url: body.url + queryString,
-            headers: {
-              "x-api-key": creds.apiKey,
-              "Content-Type": "application/json",
-              "User-Agent": "n8n-linkup-node/1.2.0",
-              ...body.headers // Fusionner les headers personnalisés
-            },
-            body: body.requestBody || {},
+            headers: finalHeaders,
             timeout: body.timeout || timeout,
           };
+          
+          // Ajouter le body seulement pour les méthodes qui le supportent
+          if (['POST', 'PUT', 'PATCH'].includes(method.toUpperCase()) && body.requestBody) {
+            requestOptions.body = body.requestBody;
+          }
         } else {
           // Pour les autres ressources, utiliser l'endpoint normal
           requestOptions = LinkupUtils.buildRequestOptions(

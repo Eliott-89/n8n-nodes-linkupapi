@@ -1,6 +1,5 @@
 import { IExecuteFunctions } from "n8n-workflow";
 import { RequestBody } from "../types";
-import { LinkupUtils } from "../utils";
 
 export class MultiRequestsOperations {
   static async buildRequestBody(
@@ -25,22 +24,20 @@ export class MultiRequestsOperations {
           throw new Error("URL is required for this operation");
         }
         
+        // Validation de l'URL
+        try {
+          new URL(url);
+        } catch (error) {
+          throw new Error(`Invalid URL format: ${url}. Please provide a complete URL including protocol (https://)`);
+        }
+        
         // Add base parameters
         body.method = method;
         body.url = url;
         
-        // Ajouter automatiquement les credentials Linkup API
-        const creds = await LinkupUtils.getCredentialsWithFallback(context);
-        
-        // Add default headers (les credentials seront ajoutées dans le nœud principal)
-        body.headers = {
-          "Content-Type": "application/json",
-        };
-        
-        // Stocker les credentials pour usage ultérieur si nécessaire
-        if (creds.loginToken) {
-          body.login_token = creds.loginToken;
-        }
+        // Les credentials seront gérées dans le nœud principal
+        // Initialiser les headers par défaut (seront fusionnés plus tard)
+        body.headers = {};
         
         // Add query parameters if enabled
         if (sendQueryParams) {
