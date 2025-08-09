@@ -141,7 +141,7 @@ export class Linkup implements INodeType {
           // Construire les headers de base
           const baseHeaders: any = {
             "x-api-key": creds.apiKey,
-            "User-Agent": "n8n-linkup-node/2.4.26",
+            "User-Agent": "n8n-linkup-node/2.4.27",
           };
           
           // Ajouter Content-Type seulement pour les méthodes qui envoient un body

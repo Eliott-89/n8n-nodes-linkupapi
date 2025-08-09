@@ -79,7 +79,7 @@ export class LinkupUtils {
       headers: {
         "x-api-key": apiKey,
         "Content-Type": "application/json",
-        "User-Agent": "n8n-linkup-node/2.4.26",
+        "User-Agent": "n8n-linkup-node/2.4.27",
       },
       body,
       timeout,
@@ -94,12 +94,12 @@ export class LinkupUtils {
 
       // PROFILE
       getMyProfile: "/profile/me",
-      extractProfileInfo: "/profile/info",
-      searchProfile: "/profile/search",
+      extractProfileInfo: "/data/profile/info",
+      searchProfile: "/data/profile/search",
 
       // COMPANIES
-      searchCompanies: "/companies/search",
-      getCompanyInfo: "/companies/info",
+      searchCompanies: "/data/companies/search",
+      getCompanyInfo: "/data/companies/info",
 
       // NETWORK
       sendConnectionRequest: "/network/connect",
@@ -142,24 +142,24 @@ export class LinkupUtils {
       createJob: "/recruiter/create-job",
 
       // SIGNAL API (corrigés)
-      extractPostReactions: "/posts/reactions",
-      extractPostComments: "/posts/comments",
-      extractProfileReactions: "/profile/reactions",
-      extractProfileComments: "/profile/comments",
-      extractProfilePosts: "/profile/posts",
-      extractCompanyPosts: "/companies/posts",
+      extractPostReactions: "/data/posts/reactions",
+      extractPostComments: "/data/posts/comments",
+      extractProfileReactions: "/data/profile/reactions",
+      extractProfileComments: "/data/profile/comments",
+      extractProfilePosts: "/data/profile/posts",
+      extractCompanyPosts: "/data/companies/posts",
 
       // COMPANY API (corrigés)
-      searchCompaniesApi: "/companies/search",
-      getCompanyInfoApi: "/companies/info",
-      getCompanyInfoByDomain: "/companies/info-by-domain",
+      searchCompaniesApi: "/data/search/companies",
+      getCompanyInfoApi: "/data/companies/info",
+      getCompanyInfoByDomain: "/data/companies/info-by-domain",
 
       // PERSON API (corrigés)
-      searchProfilesApi: "/profile/search",
-      searchProfiles: "/profile/search", // alias pour searchProfiles
-      extractProfileInfoApi: "/profile/info",
-      profileEnrichment: "/profile/enrich",
-      extractCompanyEmployees: "/companies/employees",
+      searchProfilesApi: "/data/search/profiles",
+      searchProfiles: "/data/search/profiles", // alias pour searchProfiles
+      extractProfileInfoApi: "/data/profile/info",
+      profileEnrichment: "/data/profile/enrich",
+      extractCompanyEmployees: "/data/companies/employees",
 
       // MULTI-REQUESTS
       customRequest: "/request", // Endpoint générique corrigé
