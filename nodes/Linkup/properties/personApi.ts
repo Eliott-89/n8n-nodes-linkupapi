@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const personApiProperties: INodeProperties[] = [
-  // PERSON API - Paramètres
+  // PERSON API - Parameters
   {
     displayName: "Search Profiles Parameters",
     name: "searchProfilesParams",
@@ -16,10 +16,9 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Person Keyword *",
-        name: "personKeyword",
+        displayName: "Keyword",
+        name: "keyword",
         type: "string",
-        required: true,
         default: "",
         placeholder: "John Doe",
         description: "Search keyword for profiles",
@@ -90,7 +89,6 @@ export const personApiProperties: INodeProperties[] = [
         displayName: "Profile URL *",
         name: "profileUrl",
         type: "string",
-        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL",
@@ -111,30 +109,65 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Profile URL *",
-        name: "profileUrl",
+        displayName: "First Name *",
+        name: "first_name",
         type: "string",
-        required: true,
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL to enrich",
+        placeholder: "John",
+        description: "First name of the person",
       },
       {
-        displayName: "Enrichment Type",
-        name: "enrichmentType",
-        type: "options",
-        options: [
-          {
-            name: "Full",
-            value: "full",
-          },
-          {
-            name: "Basic",
-            value: "basic",
-          },
-        ],
-        default: "full",
-        description: "Type of enrichment to perform",
+        displayName: "Last Name *",
+        name: "last_name",
+        type: "string",
+        default: "",
+        placeholder: "Doe",
+        description: "Last name of the person",
+      },
+      {
+        displayName: "Company Name *",
+        name: "company_name",
+        type: "string",
+        default: "",
+        placeholder: "Microsoft",
+        description: "Company name where the person works",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Company Employees Parameters",
+    name: "extractCompanyEmployeesParams",
+    type: "collection",
+    placeholder: "Add employee extraction parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["personApi"],
+        operation: ["extractCompanyEmployees"],
+      },
+    },
+    options: [
+      {
+        displayName: "Company Name *",
+        name: "company_name",
+        type: "string",
+        default: "",
+        placeholder: "Microsoft",
+        description: "Name of the company to extract employees from",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of employees to extract (1-50,000)",
+      },
+      {
+        displayName: "Decision Makers Only",
+        name: "decision_makers_only",
+        type: "boolean",
+        default: false,
+        description: "Extract only decision makers (CEO, CTO, CMO, Co-Founder, etc.)",
       },
     ],
   },

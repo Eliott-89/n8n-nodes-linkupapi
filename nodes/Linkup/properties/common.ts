@@ -1,6 +1,6 @@
 import { INodeProperties } from "n8n-workflow";
 
-// Propriétés communes utilisées dans tout le nœud
+// Common properties used throughout the node
 export const commonProperties: INodeProperties[] = [
   // === INFORMATION PANEL ===
   {
@@ -57,12 +57,16 @@ export const commonProperties: INodeProperties[] = [
         value: "signal",
       },
       {
-        name: "Company API",
+        name: "Company",
         value: "companyApi",
       },
       {
-        name: "Person API",
+        name: "Person",
         value: "personApi",
+      },
+      {
+        name: "Multi-Requests",
+        value: "multiRequests",
       },
     ],
     default: "authentication",
@@ -344,6 +348,25 @@ export const commonProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
+        resource: ["multiRequests"],
+      },
+    },
+    options: [
+      {
+        name: "Custom Request",
+        value: "customRequest",
+        description: "Make a custom HTTP request to Linkup API",
+      },
+    ],
+    default: "customRequest",
+  },
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
         resource: ["signal"],
       },
     },
@@ -436,12 +459,17 @@ export const commonProperties: INodeProperties[] = [
         value: "profileEnrichment",
         description: "Enrich profile information",
       },
+      {
+        name: "Extract Company Employees",
+        value: "extractCompanyEmployees",
+        description: "Extract employees from a company",
+      },
     ],
     default: "searchProfiles",
   },
 ];
 
-// Propriétés communes pour la pagination
+// Common properties for pagination
 export const paginationProperties: INodeProperties[] = [
   {
     displayName: "Pagination",
@@ -473,7 +501,7 @@ export const paginationProperties: INodeProperties[] = [
   },
 ];
 
-// Propriété pour le pays (utilisée dans plusieurs opérations)
+// Country property (used in multiple operations)
 export const countryProperty: INodeProperties = {
   displayName: "Country",
   name: "country",

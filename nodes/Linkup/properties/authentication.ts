@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const authenticationProperties: INodeProperties[] = [
-  // AUTH - Paramètres Linkup
+  // AUTH - Parameters Linkup
   {
     displayName: "Verify Code Parameters",
     name: "verifyCodeParams",
@@ -20,7 +20,6 @@ export const authenticationProperties: INodeProperties[] = [
         name: "verificationCode",
         type: "string",
         default: "",
-        required: true,
         placeholder: "123456",
         description: "Verification code received via email/SMS",
       },

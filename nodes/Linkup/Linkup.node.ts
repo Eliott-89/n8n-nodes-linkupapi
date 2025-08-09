@@ -18,6 +18,7 @@ import { RecruiterOperations } from "./categories/recruiter";
 import { SignalOperations } from "./categories/signal";
 import { CompanyApiOperations } from "./categories/companyApi";
 import { PersonApiOperations } from "./categories/personApi";
+import { MultiRequestsOperations } from "./categories/multiRequests";
 
 export class Linkup implements INodeType {
   description: INodeTypeDescription = {
@@ -56,10 +57,10 @@ export class Linkup implements INodeType {
         // Get credentials
         const creds = await LinkupUtils.getCredentialsWithFallback(this);
 
-        // Construire le body de la requête selon la catégorie
+        // Build the request body according to the category
         let body: any = {};
 
-        // Ajouter le login token si nécessaire
+        // Add login token if necessary
         if (
           creds.loginToken &&
           ![
@@ -77,12 +78,13 @@ export class Linkup implements INodeType {
             "searchProfilesApi",
             "extractProfileInfoApi",
             "profileEnrichment",
+            "extractCompanyEmployees",
           ].includes(operation)
         ) {
           body.login_token = creds.loginToken;
         }
 
-        // Construire le body selon la catégorie
+        // Build the body according to the category
         switch (resource) {
           case "authentication":
             body = await AuthenticationOperations.buildRequestBody(this, i, operation);
@@ -114,24 +116,39 @@ export class Linkup implements INodeType {
           case "personApi":
             body = await PersonApiOperations.buildRequestBody(this, i, operation);
             break;
+          case "multiRequests":
+            body = await MultiRequestsOperations.buildRequestBody(this, i, operation);
+            break;
         }
 
-        // Ajouter le pays par défaut si pas spécifié
+        // Add default country if not specified
         if (!body.country) {
           body.country = "FR";
         }
 
         // Get endpoint
-        const endpoint = LinkupUtils.getEndpointForOperation(operation);
+        let endpoint = LinkupUtils.getEndpointForOperation(operation);
+        let requestOptions: any;
 
-        // Construire les options de requête
-        const requestOptions = LinkupUtils.buildRequestOptions(
-          endpoint,
-          "POST",
-          creds.apiKey,
-          body,
-          timeout
-        );
+        // Pour Multi-Requests, utiliser directement l'URL fournie
+        if (resource === "multiRequests") {
+          requestOptions = {
+            method: body.method,
+            url: body.url,
+            headers: body.headers || {},
+            body: body.requestBody || {},
+            timeout: timeout,
+          };
+        } else {
+          // Pour les autres ressources, utiliser l'endpoint normal
+          requestOptions = LinkupUtils.buildRequestOptions(
+            endpoint,
+            "POST",
+            creds.apiKey,
+            body,
+            timeout
+          );
+        }
 
         const response = await this.helpers.httpRequest(requestOptions);
 

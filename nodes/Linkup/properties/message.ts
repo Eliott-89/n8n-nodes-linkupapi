@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const messageProperties: INodeProperties[] = [
-  // MESSAGE - Paramètres
+  // MESSAGE - Parameters
   {
     displayName: "Send Message Parameters",
     name: "sendMessageParams",
@@ -16,19 +16,17 @@ export const messageProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Message Recipient URL *",
-        name: "messageRecipientUrl",
+        displayName: "LinkedIn URL *",
+        name: "linkedin_url",
         type: "string",
-        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL to send message to",
       },
       {
         displayName: "Message Text *",
-        name: "messageText",
+        name: "message_text",
         type: "string",
-        required: true,
         default: "",
         placeholder: "Hello! How are you?",
         description: "Message content to send",
@@ -40,6 +38,22 @@ export const messageProperties: INodeProperties[] = [
         default: "FR",
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Media Link",
+        name: "media_link",
+        type: "string",
+        default: "",
+        placeholder: "https://example.com/media.jpg",
+        description: "Media link to include in message",
+      },
+      {
+        displayName: "Login Token",
+        name: "login_token",
+        type: "string",
+        default: "",
+        placeholder: "LinkedIn login token",
+        description: "LinkedIn authentication token",
       },
     ],
   },
@@ -57,7 +71,7 @@ export const messageProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "LinkedIn URL",
+        displayName: "LinkedIn URL *",
         name: "linkedinUrl",
         type: "string",
         default: "",
@@ -109,6 +123,14 @@ export const messageProperties: INodeProperties[] = [
     },
     options: [
       {
+        displayName: "Login Token",
+        name: "login_token",
+        type: "string",
+        default: "",
+        placeholder: "LinkedIn login token",
+        description: "LinkedIn authentication token",
+      },
+      {
         displayName: "Country",
         name: "country",
         type: "string",
@@ -128,15 +150,15 @@ export const messageProperties: INodeProperties[] = [
         name: "category",
         type: "string",
         default: "",
-        placeholder: "focused, other, all",
-        description: "Inbox category to filter by",
+        placeholder: "INBOX, INMAIL, JOB, UNREAD",
+        description: "Category to filter messages",
       },
       {
         displayName: "Next Cursor",
         name: "next_cursor",
         type: "string",
         default: "",
-        placeholder: "pagination cursor",
+        placeholder: "Pagination cursor",
         description: "Cursor for pagination",
       },
     ],

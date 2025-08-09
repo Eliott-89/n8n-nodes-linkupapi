@@ -17,17 +17,19 @@ export class MessageOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
-        if (!sendMessageParams.messageRecipientUrl) {
-          throw new Error("L'URL du destinataire du message est requise pour cette opération");
+        // Required parameters validation
+        if (!sendMessageParams.linkedin_url) {
+          throw new Error("LinkedIn URL is required for this operation");
         }
-        if (!sendMessageParams.messageText) {
-          throw new Error("Le texte du message est requis pour cette opération");
+        if (!sendMessageParams.message_text) {
+          throw new Error("Message text is required for this operation");
         }
         
-        if (sendMessageParams.messageRecipientUrl) body.linkedin_url = sendMessageParams.messageRecipientUrl;
-        if (sendMessageParams.messageText) body.message_text = sendMessageParams.messageText;
+        if (sendMessageParams.linkedin_url) body.linkedin_url = sendMessageParams.linkedin_url;
+        if (sendMessageParams.message_text) body.message_text = sendMessageParams.message_text;
         if (sendMessageParams.country) body.country = sendMessageParams.country;
+        if (sendMessageParams.media_link) body.media_link = sendMessageParams.media_link;
+        if (sendMessageParams.login_token) body.login_token = sendMessageParams.login_token;
         break;
 
       case "getConversationMessages":
@@ -36,6 +38,12 @@ export class MessageOperations {
           itemIndex,
           {}
         ) as any;
+        
+        // Required parameters validation
+        if (!conversationMessagesParams.linkedinUrl) {
+          throw new Error("LinkedIn URL is required for this operation");
+        }
+        
         if (conversationMessagesParams.linkedinUrl)
           body.linkedin_url = conversationMessagesParams.linkedinUrl;
         if (conversationMessagesParams.conversationId)
@@ -56,6 +64,8 @@ export class MessageOperations {
           itemIndex,
           {}
         ) as any;
+        if (getMessageInboxParams.login_token)
+          body.login_token = getMessageInboxParams.login_token;
         if (getMessageInboxParams.country)
           body.country = getMessageInboxParams.country;
         if (getMessageInboxParams.total_results)

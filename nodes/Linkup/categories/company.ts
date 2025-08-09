@@ -17,9 +17,9 @@ export class CompanyOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
+        // Required parameters validation
         if (!getCompanyParams.companyUrl) {
-          throw new Error("L'URL de l'entreprise est requise pour cette opération");
+          throw new Error("Company URL is required for this operation");
         }
         
         if (getCompanyParams.companyUrl)

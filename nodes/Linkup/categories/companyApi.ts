@@ -17,9 +17,9 @@ export class CompanyApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
+        // Required parameters validation
         if (!searchCompaniesParams.companyKeyword) {
-          throw new Error("Le mot-clé de l'entreprise est requis pour cette opération");
+          throw new Error("Company keyword is required for this operation");
         }
         
         if (searchCompaniesParams.companyKeyword) body.keyword = searchCompaniesParams.companyKeyword;
@@ -37,9 +37,9 @@ export class CompanyApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
+        // Required parameters validation
         if (!getCompanyInfoParams.companyUrl) {
-          throw new Error("L'URL de l'entreprise est requise pour cette opération");
+          throw new Error("Company URL is required for this operation");
         }
         
         if (getCompanyInfoParams.companyUrl) body.company_url = getCompanyInfoParams.companyUrl;
@@ -52,9 +52,9 @@ export class CompanyApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
+        // Required parameters validation
         if (!getCompanyInfoByDomainParams.domain) {
-          throw new Error("Le domaine de l'entreprise est requis pour cette opération");
+          throw new Error("Company domain is required for this operation");
         }
         
         if (getCompanyInfoByDomainParams.domain) body.domain = getCompanyInfoByDomainParams.domain;

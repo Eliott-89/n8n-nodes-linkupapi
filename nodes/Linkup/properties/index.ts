@@ -10,7 +10,8 @@ import { recruiterProperties } from "./recruiter";
 import { signalProperties } from "./signal";
 import { companyApiProperties } from "./companyApi";
 import { personApiProperties } from "./personApi";
-import { advancedProperties } from "./advanced";
+import { multiRequestsProperties } from "./multiRequests";
+
 
 // Combine all properties into a single array
 // Order: Credentials -> Resource -> Operation -> Parameters -> Advanced Options
@@ -26,5 +27,5 @@ export const nodeProperties: INodeProperties[] = [
   ...signalProperties,
   ...companyApiProperties,
   ...personApiProperties,
-  ...advancedProperties, // Advanced Options en dernier
+  ...multiRequestsProperties,
 ]; 

@@ -1,4 +1,4 @@
-// Ce fichier contient toutes les propriétés du nœud Linkup
-// Il importe depuis la structure modulaire pour éviter la duplication
+// This file contains all properties of the Linkup node
+// It imports from the modular structure to avoid duplication
 
 export { nodeProperties } from "./properties/index";

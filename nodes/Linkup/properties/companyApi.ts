@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const companyApiProperties: INodeProperties[] = [
-  // COMPANY API - Paramètres
+  // COMPANY API - Parameters
   {
     displayName: "Search Companies Parameters",
     name: "searchCompaniesParams",
@@ -19,7 +19,6 @@ export const companyApiProperties: INodeProperties[] = [
         displayName: "Company Keyword *",
         name: "companyKeyword",
         type: "string",
-        required: true,
         default: "",
         placeholder: "Microsoft",
         description: "Company name or keyword to search",
@@ -81,7 +80,6 @@ export const companyApiProperties: INodeProperties[] = [
         displayName: "Company URL *",
         name: "companyUrl",
         type: "string",
-        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/company/microsoft",
         description: "LinkedIn company URL",
@@ -105,7 +103,6 @@ export const companyApiProperties: INodeProperties[] = [
         displayName: "Domain *",
         name: "domain",
         type: "string",
-        required: true,
         default: "",
         placeholder: "microsoft.com",
         description: "Company domain name",

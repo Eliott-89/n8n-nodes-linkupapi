@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "1.3.4",
-  "description": "n8n node for LINKUP API - LinkedIn automation",
+  "version": "2.4.20",
+  "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
     "n8n",
@@ -12,14 +12,14 @@
     "api"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/eliottcerpaud/n8n-nodes-linkupapi",
+  "homepage": "https://github.com/Eliott-89/n8n-nodes-linkup",
   "author": {
     "name": "Eliott Cerpaud",
     "email": "eliott@example.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eliottcerpaud/n8n-nodes-linkupapi.git"
+    "url": "git+https://github.com/Eliott-89/n8n-nodes-linkup.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -35,8 +35,7 @@
     "format": "prettier nodes credentials --write",
     "lint": "eslint \"nodes/**/*.ts\" \"credentials/**/*.ts\"",
     "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build",
-    "publish": "npm publish --access public"
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist"
@@ -58,12 +57,11 @@
     "gulp": "^4.0.2",
     "n8n-workflow": "*",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "@n8n/scan-community-package": "^0.1.1"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
-  },
-  "dependencies": {
-    "@n8n/scan-community-package": "^0.1.1"
   }
+
 }

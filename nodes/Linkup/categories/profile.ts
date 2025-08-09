@@ -11,24 +11,19 @@ export class ProfileOperations {
 
     switch (operation) {
       case "extractProfileInfo":
-        const profileUrl = context.getNodeParameter(
-          "profileUrl",
+        const extractProfileParams = context.getNodeParameter(
+          "extractProfileParams",
           itemIndex,
-          ""
-        ) as string;
-        const profileCountry = context.getNodeParameter(
-          "country",
-          itemIndex,
-          "FR"
-        ) as string;
+          {}
+        ) as any;
         
-        // Validation des paramètres requis
-        if (!profileUrl) {
-          throw new Error("L'URL du profil LinkedIn est requise pour cette opération");
+        // Required parameters validation
+        if (!extractProfileParams.profileUrl) {
+          throw new Error("LinkedIn profile URL is required for this operation");
         }
         
-        if (profileUrl) body.linkedin_url = profileUrl;
-        if (profileCountry) body.country = profileCountry;
+        if (extractProfileParams.profileUrl) body.linkedin_url = extractProfileParams.profileUrl;
+        if (extractProfileParams.country) body.country = extractProfileParams.country;
         break;
 
       case "searchProfile":
@@ -37,24 +32,16 @@ export class ProfileOperations {
           itemIndex,
           {}
         ) as any;
-        if (searchProfileParams.keyword)
-          body.keyword = searchProfileParams.keyword;
-        if (searchProfileParams.location)
-          body.location = searchProfileParams.location;
         if (searchProfileParams.company_url)
           body.company_url = searchProfileParams.company_url;
+        if (searchProfileParams.location)
+          body.location = searchProfileParams.location;
         if (searchProfileParams.school_url)
           body.school_url = searchProfileParams.school_url;
         if (searchProfileParams.network)
           body.network = searchProfileParams.network;
-        if (searchProfileParams.first_name)
-          body.first_name = searchProfileParams.first_name;
-        if (searchProfileParams.last_name)
-          body.last_name = searchProfileParams.last_name;
-        if (searchProfileParams.title) body.title = searchProfileParams.title;
-        if (searchProfileParams.fetch_invitation_state !== undefined)
-          body.fetch_invitation_state =
-            searchProfileParams.fetch_invitation_state;
+        if (searchProfileParams.keyword)
+          body.keyword = searchProfileParams.keyword;
         if (searchProfileParams.total_results)
           body.total_results = searchProfileParams.total_results;
         if (searchProfileParams.start_page)
@@ -63,6 +50,16 @@ export class ProfileOperations {
           body.end_page = searchProfileParams.end_page;
         if (searchProfileParams.country)
           body.country = searchProfileParams.country;
+        if (searchProfileParams.first_name)
+          body.first_name = searchProfileParams.first_name;
+        if (searchProfileParams.last_name)
+          body.last_name = searchProfileParams.last_name;
+        if (searchProfileParams.title) 
+          body.title = searchProfileParams.title;
+        if (searchProfileParams.login_token)
+          body.login_token = searchProfileParams.login_token;
+        if (searchProfileParams.fetch_invitation_state !== undefined)
+          body.fetch_invitation_state = searchProfileParams.fetch_invitation_state;
         break;
 
       case "getMyProfile":

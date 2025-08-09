@@ -12,12 +12,12 @@ export class LinkupUtils {
   static async getCredentialsWithFallback(
     context: IExecuteFunctions
   ): Promise<LinkupCredentials> {
-    // Toujours utiliser les credentials sauvegardées (plus de custom credentials)
+    // Always use saved credentials (no more custom credentials)
     const credentials = await context.getCredentials("linkupApi");
 
     if (!credentials) {
       throw new Error(
-        "Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud."
+        "Missing API key. Please configure your LINKUP credentials in the node settings."
       );
     }
 
@@ -37,7 +37,7 @@ export class LinkupUtils {
 
     if (!apiKey) {
       throw new Error(
-        "Clé API manquante. Veuillez configurer vos credentials LINKUP dans les paramètres du nœud."
+        "Missing API key. Please configure your LINKUP credentials in the node settings."
       );
     }
 
@@ -137,6 +137,10 @@ export class LinkupUtils {
       searchProfilesApi: "/data/search/profiles",
       extractProfileInfoApi: "/person/extract-info",
       profileEnrichment: "/data/profil/enrich",
+      extractCompanyEmployees: "/data/employees/extract",
+
+      // MULTI-REQUESTS
+      customRequest: "/custom", // Generic endpoint for custom requests
     };
 
     return endpointMap[operation] || "/unknown";

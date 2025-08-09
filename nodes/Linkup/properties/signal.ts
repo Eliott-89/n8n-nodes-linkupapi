@@ -1,17 +1,17 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const signalProperties: INodeProperties[] = [
-  // SIGNAL - Paramètres
+  // SIGNAL - Parameters
   {
-    displayName: "Post URL Parameters",
-    name: "postUrlParams",
+    displayName: "Extract Post Reactions Parameters",
+    name: "extractPostReactionsParams",
     type: "collection",
-    placeholder: "Add post parameter",
+    placeholder: "Add parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractPostReactions", "extractPostComments"],
+        operation: ["extractPostReactions"],
       },
     },
     options: [
@@ -19,77 +19,13 @@ export const signalProperties: INodeProperties[] = [
         displayName: "Post URL *",
         name: "post_url",
         type: "string",
-        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL to extract data from",
       },
-    ],
-  },
-  {
-    displayName: "Profile URL Parameters",
-    name: "profileUrlParams",
-    type: "collection",
-    placeholder: "Add profile parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["signal"],
-        operation: ["extractProfileReactions", "extractProfileComments", "extractProfilePosts"],
-      },
-    },
-    options: [
       {
-        displayName: "Profile URL *",
-        name: "profile_url",
-        type: "string",
-        required: true,
-        default: "",
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL to extract data from",
-      },
-    ],
-  },
-  {
-    displayName: "Company URL Parameters",
-    name: "companyUrlParams",
-    type: "collection",
-    placeholder: "Add company parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["signal"],
-        operation: ["extractCompanyPosts"],
-      },
-    },
-    options: [
-      {
-        displayName: "Company URL *",
-        name: "company_url",
-        type: "string",
-        required: true,
-        default: "",
-        placeholder: "https://www.linkedin.com/company/microsoft",
-        description: "LinkedIn company URL to extract data from",
-      },
-    ],
-  },
-  {
-    displayName: "Common Signal Parameters",
-    name: "commonSignalParams",
-    type: "collection",
-    placeholder: "Add common parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["signal"],
-        operation: ["extractPostReactions", "extractPostComments", "extractProfileReactions", "extractProfileComments", "extractProfilePosts", "extractCompanyPosts"],
-      },
-    },
-    options: [
-      {
-        displayName: "Country",
-        name: "country",
+        displayName: "Proxy Country",
+        name: "proxy_country",
         type: "string",
         default: "FR",
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
@@ -102,6 +38,7 @@ export const signalProperties: INodeProperties[] = [
         default: 10,
         description: "Number of results to return",
       },
+
       {
         displayName: "Start Page",
         name: "start_page",
@@ -118,4 +55,349 @@ export const signalProperties: INodeProperties[] = [
       },
     ],
   },
-]; 
+  {
+    displayName: "Extract Post Comments Parameters",
+    name: "extractPostCommentsParams",
+    type: "collection",
+    placeholder: "Add parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["signal"],
+        operation: ["extractPostComments"],
+      },
+    },
+    options: [
+      {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        description: "LinkedIn post URL to extract data from",
+      },
+      {
+        displayName: "Proxy Country",
+        name: "proxy_country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Profile Reactions Parameters",
+    name: "extractProfileReactionsParams",
+    type: "collection",
+    placeholder: "Add parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["signal"],
+        operation: ["extractProfileReactions"],
+      },
+    },
+    options: [
+      {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract data from",
+      },
+      {
+        displayName: "Proxy Country",
+        name: "proxy_country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+      {
+        displayName: "Cursor",
+        name: "cursor",
+        type: "string",
+        default: "",
+        placeholder: "Pagination cursor",
+        description: "Cursor for pagination",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Profile Comments Parameters",
+    name: "extractProfileCommentsParams",
+    type: "collection",
+    placeholder: "Add parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["signal"],
+        operation: ["extractProfileComments"],
+      },
+    },
+    options: [
+      {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract data from",
+      },
+      {
+        displayName: "Proxy Country",
+        name: "proxy_country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+      {
+        displayName: "Cursor",
+        name: "cursor",
+        type: "string",
+        default: "",
+        placeholder: "Pagination cursor",
+        description: "Cursor for pagination",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Profile Posts Parameters",
+    name: "extractProfilePostsParams",
+    type: "collection",
+    placeholder: "Add parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["signal"],
+        operation: ["extractProfilePosts"],
+      },
+    },
+    options: [
+      {
+        displayName: "Profile URL *",
+        name: "profile_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL to extract data from",
+      },
+      {
+        displayName: "Proxy Country",
+        name: "proxy_country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+      {
+        displayName: "Post Type",
+        name: "post_type",
+        type: "string",
+        default: "ALL",
+        placeholder: "ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT",
+        description: "Type of posts to extract",
+      },
+      {
+        displayName: "Sort By",
+        name: "sort_by",
+        type: "string",
+        default: "DATE_POSTED",
+        placeholder: "RELEVANCE, DATE_POSTED",
+        description: "Sort order for posts",
+      },
+      {
+        displayName: "Keyword",
+        name: "keyword",
+        type: "string",
+        default: "",
+        placeholder: "Filter posts by keyword",
+        description: "Keyword to filter posts",
+      },
+      {
+        displayName: "Post Date",
+        name: "post_date",
+        type: "string",
+        default: "",
+        placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
+        description: "Date filter for posts",
+      },
+
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Company Posts Parameters",
+    name: "extractCompanyPostsParams",
+    type: "collection",
+    placeholder: "Add parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["signal"],
+        operation: ["extractCompanyPosts"],
+      },
+    },
+    options: [
+      {
+        displayName: "Company URL *",
+        name: "company_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/company/microsoft",
+        description: "LinkedIn company URL to extract data from",
+      },
+      {
+        displayName: "Proxy Country",
+        name: "proxy_country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+      {
+        displayName: "Post Type",
+        name: "post_type",
+        type: "string",
+        default: "ALL",
+        placeholder: "ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT",
+        description: "Type of posts to extract",
+      },
+      {
+        displayName: "Sort By",
+        name: "sort_by",
+        type: "string",
+        default: "DATE_POSTED",
+        placeholder: "RELEVANCE, DATE_POSTED",
+        description: "Sort order for posts",
+      },
+      {
+        displayName: "Keyword",
+        name: "keyword",
+        type: "string",
+        default: "",
+        placeholder: "Filter posts by keyword",
+        description: "Keyword to filter posts",
+      },
+      {
+        displayName: "Post Date",
+        name: "post_date",
+        type: "string",
+        default: "",
+        placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
+        description: "Date filter for posts",
+      },
+
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+];

@@ -1,30 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const profileProperties: INodeProperties[] = [
-  // PROFILE - Paramètres Linkup
-  {
-    displayName: "Get My Profile Parameters",
-    name: "getMyProfileParams",
-    type: "collection",
-    placeholder: "Add profile parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["profile"],
-        operation: ["getMyProfile"],
-      },
-    },
-    options: [
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-    ],
-  },
+  // PROFILE - Parameters Linkup
   {
     displayName: "Extract Profile Parameters",
     name: "extractProfileParams",
@@ -43,7 +20,6 @@ export const profileProperties: INodeProperties[] = [
         name: "profileUrl",
         type: "string",
         default: "",
-        required: true,
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL",
       },
@@ -72,12 +48,12 @@ export const profileProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Keyword",
-        name: "keyword",
+        displayName: "Company URL",
+        name: "company_url",
         type: "string",
         default: "",
-        placeholder: "software engineer",
-        description: "Search keyword",
+        placeholder: "https://www.linkedin.com/company/company-name",
+        description: "Company LinkedIn URL to filter by",
       },
       {
         displayName: "Location",
@@ -86,14 +62,6 @@ export const profileProperties: INodeProperties[] = [
         default: "",
         placeholder: "San Francisco",
         description: "Location to search in",
-      },
-      {
-        displayName: "Company URL",
-        name: "company_url",
-        type: "string",
-        default: "",
-        placeholder: "https://www.linkedin.com/company/company-name",
-        description: "Company LinkedIn URL to filter by",
       },
       {
         displayName: "School URL",
@@ -109,38 +77,15 @@ export const profileProperties: INodeProperties[] = [
         type: "string",
         default: "",
         placeholder: "1st, 2nd, 3rd",
-        description: "Connection degree to filter by (e.g., 1st, 2nd, 3rd)",
+        description: "Network connection degree",
       },
       {
-        displayName: "First Name",
-        name: "first_name",
+        displayName: "Keyword",
+        name: "keyword",
         type: "string",
         default: "",
-        placeholder: "John",
-        description: "Filter by first name",
-      },
-      {
-        displayName: "Last Name",
-        name: "last_name",
-        type: "string",
-        default: "",
-        placeholder: "Doe",
-        description: "Filter by last name",
-      },
-      {
-        displayName: "Title",
-        name: "title",
-        type: "string",
-        default: "",
-        placeholder: "Software Engineer",
-        description: "Filter by job title",
-      },
-      {
-        displayName: "Fetch Invitation State",
-        name: "fetch_invitation_state",
-        type: "boolean",
-        default: false,
-        description: "Include invitation state in results",
+        placeholder: "software engineer",
+        description: "Search keyword",
       },
       {
         displayName: "Total Results",
@@ -170,6 +115,45 @@ export const profileProperties: INodeProperties[] = [
         default: "FR",
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
+      },
+      {
+        displayName: "First Name",
+        name: "first_name",
+        type: "string",
+        default: "",
+        placeholder: "John",
+        description: "First name to filter by",
+      },
+      {
+        displayName: "Last Name",
+        name: "last_name",
+        type: "string",
+        default: "",
+        placeholder: "Doe",
+        description: "Last name to filter by",
+      },
+      {
+        displayName: "Title",
+        name: "title",
+        type: "string",
+        default: "",
+        placeholder: "Software Engineer",
+        description: "Job title to filter by",
+      },
+      {
+        displayName: "Login Token",
+        name: "login_token",
+        type: "string",
+        default: "",
+        placeholder: "LinkedIn login token",
+        description: "LinkedIn authentication token",
+      },
+      {
+        displayName: "Fetch Invitation State",
+        name: "fetch_invitation_state",
+        type: "boolean",
+        default: false,
+        description: "Fetch invitation state for results",
       },
     ],
   },

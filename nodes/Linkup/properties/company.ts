@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const companyProperties: INodeProperties[] = [
-  // COMPANY - Paramètres
+  // COMPANY - Parameters
   {
     displayName: "Get Company Parameters",
     name: "getCompanyParams",
@@ -19,7 +19,6 @@ export const companyProperties: INodeProperties[] = [
         displayName: "Company URL *",
         name: "companyUrl",
         type: "string",
-        required: true,
         default: "",
         placeholder: "https://www.linkedin.com/company/microsoft",
         description: "LinkedIn company URL",
@@ -70,14 +69,6 @@ export const companyProperties: INodeProperties[] = [
         default: "",
         placeholder: "1000-5000",
         description: "Company size range",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
       {
         displayName: "Total Results",

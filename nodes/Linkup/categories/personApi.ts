@@ -17,12 +17,7 @@ export class PersonApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
-        if (!searchProfilesParams.personKeyword) {
-          throw new Error("Le mot-clé de recherche de profil est requis pour cette opération");
-        }
-        
-        if (searchProfilesParams.personKeyword) body.keyword = searchProfilesParams.personKeyword;
+        if (searchProfilesParams.keyword) body.keyword = searchProfilesParams.keyword;
         if (searchProfilesParams.job_title) body.job_title = searchProfilesParams.job_title;
         if (searchProfilesParams.industry) body.industry = searchProfilesParams.industry;
         if (searchProfilesParams.school) body.school = searchProfilesParams.school;
@@ -38,9 +33,9 @@ export class PersonApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
+        // Required parameters validation
         if (!extractProfileInfoParams.profileUrl) {
-          throw new Error("L'URL du profil est requise pour cette opération");
+          throw new Error("Profile URL is required for this operation");
         }
         
         if (extractProfileInfoParams.profileUrl) body.profile_url = extractProfileInfoParams.profileUrl;
@@ -53,13 +48,37 @@ export class PersonApiOperations {
           {}
         ) as any;
         
-        // Validation des paramètres requis
-        if (!profileEnrichmentParams.profileUrl) {
-          throw new Error("L'URL du profil est requise pour cette opération");
+        // Required parameters validation
+        if (!profileEnrichmentParams.first_name) {
+          throw new Error("First name is required for this operation");
+        }
+        if (!profileEnrichmentParams.last_name) {
+          throw new Error("Last name is required for this operation");
+        }
+        if (!profileEnrichmentParams.company_name) {
+          throw new Error("Company name is required for this operation");
         }
         
-        if (profileEnrichmentParams.profileUrl) body.profile_url = profileEnrichmentParams.profileUrl;
-        if (profileEnrichmentParams.enrichmentType) body.enrichment_type = profileEnrichmentParams.enrichmentType;
+        if (profileEnrichmentParams.first_name) body.first_name = profileEnrichmentParams.first_name;
+        if (profileEnrichmentParams.last_name) body.last_name = profileEnrichmentParams.last_name;
+        if (profileEnrichmentParams.company_name) body.company_name = profileEnrichmentParams.company_name;
+        break;
+
+      case "extractCompanyEmployees":
+        const extractCompanyEmployeesParams = context.getNodeParameter(
+          "extractCompanyEmployeesParams",
+          itemIndex,
+          {}
+        ) as any;
+        
+        // Required parameters validation
+        if (!extractCompanyEmployeesParams.company_name) {
+          throw new Error("Company name is required for this operation");
+        }
+        
+        if (extractCompanyEmployeesParams.company_name) body.company_name = extractCompanyEmployeesParams.company_name;
+        if (extractCompanyEmployeesParams.total_results) body.total_results = extractCompanyEmployeesParams.total_results;
+        if (extractCompanyEmployeesParams.decision_makers_only !== undefined) body.decision_makers_only = extractCompanyEmployeesParams.decision_makers_only;
         break;
     }
 
