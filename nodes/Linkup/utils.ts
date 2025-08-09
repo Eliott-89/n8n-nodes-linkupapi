@@ -79,7 +79,7 @@ export class LinkupUtils {
       headers: {
         "x-api-key": apiKey,
         "Content-Type": "application/json",
-        "User-Agent": "n8n-linkup-node/2.4.25",
+        "User-Agent": "n8n-linkup-node/2.4.26",
       },
       body,
       timeout,
@@ -142,24 +142,24 @@ export class LinkupUtils {
       createJob: "/recruiter/create-job",
 
       // SIGNAL API (corrigés)
-      extractPostReactions: "/signals/posts/reactions",
-      extractPostComments: "/signals/posts/comments",
-      extractProfileReactions: "/signals/profile/reactions",
-      extractProfileComments: "/signals/profile/comments",
-      extractProfilePosts: "/signals/profile/posts",
-      extractCompanyPosts: "/signals/company/posts",
+      extractPostReactions: "/posts/reactions",
+      extractPostComments: "/posts/comments",
+      extractProfileReactions: "/profile/reactions",
+      extractProfileComments: "/profile/comments",
+      extractProfilePosts: "/profile/posts",
+      extractCompanyPosts: "/companies/posts",
 
       // COMPANY API (corrigés)
-      searchCompaniesApi: "/search/companies",
-      getCompanyInfoApi: "/company/info",
-      getCompanyInfoByDomain: "/company/info-by-domain",
+      searchCompaniesApi: "/companies/search",
+      getCompanyInfoApi: "/companies/info",
+      getCompanyInfoByDomain: "/companies/info-by-domain",
 
       // PERSON API (corrigés)
-      searchProfilesApi: "/search/profiles",
-      searchProfiles: "/search/profiles", // alias pour searchProfiles
-      extractProfileInfoApi: "/profile/extract-info",
+      searchProfilesApi: "/profile/search",
+      searchProfiles: "/profile/search", // alias pour searchProfiles
+      extractProfileInfoApi: "/profile/info",
       profileEnrichment: "/profile/enrich",
-      extractCompanyEmployees: "/company/employees",
+      extractCompanyEmployees: "/companies/employees",
 
       // MULTI-REQUESTS
       customRequest: "/request", // Endpoint générique corrigé
