@@ -131,13 +131,22 @@ export class Linkup implements INodeType {
         let requestOptions: any;
 
         // Pour Multi-Requests, utiliser directement l'URL fournie
-        if (resource === "multiRequests") {
+        if (resource === "multiRequests" && operation === "customRequest") {
+          const queryString = body.queryParams 
+            ? '?' + Object.entries(body.queryParams).map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`).join('&')
+            : '';
+          
           requestOptions = {
-            method: body.method,
-            url: body.url,
-            headers: body.headers || {},
+            method: body.method || 'POST',
+            url: body.url + queryString,
+            headers: {
+              "x-api-key": creds.apiKey,
+              "Content-Type": "application/json",
+              "User-Agent": "n8n-linkup-node/1.2.0",
+              ...body.headers // Fusionner les headers personnalisés
+            },
             body: body.requestBody || {},
-            timeout: timeout,
+            timeout: body.timeout || timeout,
           };
         } else {
           // Pour les autres ressources, utiliser l'endpoint normal

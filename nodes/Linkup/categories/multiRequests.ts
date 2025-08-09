@@ -31,18 +31,16 @@ export class MultiRequestsOperations {
         
         // Ajouter automatiquement les credentials Linkup API
         const creds = await LinkupUtils.getCredentialsWithFallback(context);
-        if (creds.apiKey) {
-          body.apiKey = creds.apiKey;
-        }
+        
+        // Add default headers (les credentials seront ajoutées dans le nœud principal)
+        body.headers = {
+          "Content-Type": "application/json",
+        };
+        
+        // Stocker les credentials pour usage ultérieur si nécessaire
         if (creds.loginToken) {
           body.login_token = creds.loginToken;
         }
-        
-        // Add default headers
-        body.headers = {
-          "x-api-key": creds.apiKey,
-          "Content-Type": "application/json",
-        };
         
         // Add query parameters if enabled
         if (sendQueryParams) {
@@ -61,12 +59,14 @@ export class MultiRequestsOperations {
         if (sendHeaders) {
           const headers = context.getNodeParameter("headers", itemIndex, {}) as any;
           if (headers.headers) {
-            body.headers = {};
+            // Fusionner avec les headers par défaut au lieu de les écraser
+            const customHeaders: any = {};
             for (const header of headers.headers) {
               if (header.name && header.value) {
-                body.headers[header.name] = header.value;
+                customHeaders[header.name] = header.value;
               }
             }
+            body.headers = { ...body.headers, ...customHeaders };
           }
         }
         

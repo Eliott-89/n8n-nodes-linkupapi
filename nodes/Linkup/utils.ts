@@ -104,13 +104,18 @@ export class LinkupUtils {
       getPostReactions: "/posts/reactions",
       reactToPost: "/posts/react",
       repost: "/posts/repost",
+      repostContent: "/posts/repost", // alias pour repostContent
       commentPost: "/posts/comment",
-      extractComments: "/posts/extract-comments",
+      addCommentToPost: "/posts/comment", // alias pour addCommentToPost
+      extractComments: "/posts/comments",
+      getComments: "/posts/comments", // alias pour getComments
       answerComment: "/posts/answer-comment",
       searchPosts: "/posts/search",
       createPost: "/posts/create",
       getFeed: "/posts/feed",
+      getLinkedInFeed: "/posts/feed", // alias pour getLinkedInFeed
       timeSpent: "/posts/time-spent",
+      sendPostTimeSpent: "/posts/time-spent", // alias pour sendPostTimeSpent
 
       // RECRUITER
       getCandidates: "/recruiter/candidates",
@@ -120,27 +125,28 @@ export class LinkupUtils {
       closeJob: "/recruiter/close-job",
       createJob: "/recruiter/create-job",
 
-      // SIGNAL API (nouveaux)
-      extractPostReactions: "/data/signals/posts/reactions",
-      extractPostComments: "/data/signals/posts/comments",
-      extractProfileReactions: "/data/signals/profile/reactions",
-      extractProfileComments: "/data/signals/profile/comments",
-      extractProfilePosts: "/data/signals/profile/posts",
-      extractCompanyPosts: "/data/signals/company/posts",
+      // SIGNAL API (corrigés)
+      extractPostReactions: "/signals/posts/reactions",
+      extractPostComments: "/signals/posts/comments",
+      extractProfileReactions: "/signals/profile/reactions",
+      extractProfileComments: "/signals/profile/comments",
+      extractProfilePosts: "/signals/profile/posts",
+      extractCompanyPosts: "/signals/company/posts",
 
-      // COMPANY API (nouveaux)
-      searchCompaniesApi: "/data/search/companies",
-      getCompanyInfoApi: "/data/company/info",
-      getCompanyInfoByDomain: "/data/company/info-by-domain",
+      // COMPANY API (corrigés)
+      searchCompaniesApi: "/search/companies",
+      getCompanyInfoApi: "/company/info",
+      getCompanyInfoByDomain: "/company/info-by-domain",
 
-      // PERSON API (nouveaux)
-      searchProfilesApi: "/data/search/profiles",
-      extractProfileInfoApi: "/person/extract-info",
-      profileEnrichment: "/data/profil/enrich",
-      extractCompanyEmployees: "/data/employees/extract",
+      // PERSON API (corrigés)
+      searchProfilesApi: "/search/profiles",
+      searchProfiles: "/search/profiles", // alias pour searchProfiles
+      extractProfileInfoApi: "/profile/extract-info",
+      profileEnrichment: "/profile/enrich",
+      extractCompanyEmployees: "/company/employees",
 
       // MULTI-REQUESTS
-      customRequest: "/custom", // Generic endpoint for custom requests
+      customRequest: "/request", // Endpoint générique corrigé
     };
 
     return endpointMap[operation] || "/unknown";
