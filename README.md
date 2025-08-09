@@ -1,78 +1,78 @@
 # n8n-nodes-linkupapi
 
-🚀 **n8n community node for LINKUP API - LinkedIn automation and data extraction**
+**Professional n8n community node for LINKUP API - LinkedIn automation and data extraction**
 
 [![npm version](https://badge.fury.io/js/n8n-nodes-linkupapi.svg)](https://www.npmjs.com/package/n8n-nodes-linkupapi)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)](https://n8n.io)
 
-## 📋 Description
+## Overview
 
-This n8n package provides comprehensive **LinkedIn automation** capabilities via the **Linkup API**. It offers a complete suite of features for profile management, networking, messaging, content creation, and recruitment automation.
+This n8n package provides comprehensive LinkedIn automation capabilities through the Linkup API. It delivers a complete suite of features for profile management, networking, messaging, content creation, and recruitment automation, enabling businesses to streamline their LinkedIn operations at scale.
 
-## ⚡ Quick Start
+## Installation
 
-### Installation
+Install the package via npm:
 
 ```bash
 npm install n8n-nodes-linkupapi
 ```
 
-### Configuration
+## Configuration
 
 1. Create an account on [LinkupAPI.com](https://linkupapi.com)
 2. Read the [API Documentation](https://docs.linkupapi.com/api-reference/introduction)
 3. Get your API key from your dashboard
 4. Configure the credentials in your n8n workflow
 
-## 🎯 Features
+## Features
 
-### 🔐 Authentication
+### Authentication
 - LinkedIn login automation
 - Verification code handling
 - Session management
 
-### 👤 Profile Management
+### Profile Management
 - Extract profile information
 - Search profiles with advanced filters
 - Profile enrichment and data enhancement
 
-### 🏢 Company Operations
+### Company Operations
 - Company search and discovery
 - Company information extraction
 - Employee data extraction
 - Decision maker identification
 
-### 🌐 Network Management
+### Network Management
 - Send connection requests
 - Accept/decline invitations
 - Manage existing connections
 - Network recommendations
 
-### 💬 Messaging
+### Messaging
 - Send automated messages
 - Retrieve conversation history
 - Manage inbox operations
 
-### 📝 Content & Posts
+### Content & Posts
 - Create and publish posts
 - React to content
 - Extract post reactions and comments
 - Automated engagement
 
-### 🎯 Recruitment
+### Recruitment
 - Candidate search and management
 - Job posting automation
 - CV extraction
 - Recruitment analytics
 
-### 📊 Data Extraction (Signal API)
+### Data Extraction (Signal API)
 - Extract post reactions and comments
 - Extract profile data and posts
 - Company content analysis
 - Real-time data collection
 
-## 🔧 Usage Examples
+## Usage Examples
 
 ### Basic Authentication
 ```javascript
@@ -115,26 +115,70 @@ npm install n8n-nodes-linkupapi
 }
 ```
 
-## 📊 API Coverage
+### Network Management
+```javascript
+// Send connection request
+{
+  "resource": "network",
+  "operation": "sendConnectionRequest",
+  "connectionRequestParams": {
+    "profile_url": "https://linkedin.com/in/johndoe",
+    "message": "Hello! I'd like to connect with you."
+  }
+}
+```
 
-This package covers **100% of the Linkup API endpoints**:
+### Content Creation
+```javascript
+// Create a LinkedIn post
+{
+  "resource": "post",
+  "operation": "createPost",
+  "createPostParams": {
+    "content": "Excited to share our latest product update!",
+    "visibility": "public"
+  }
+}
+```
 
-- **Authentication**: 2/2 endpoints ✅
-- **Profile**: 3/3 endpoints ✅
-- **Posts**: 10/10 endpoints ✅
-- **Companies**: 2/2 endpoints ✅
-- **Network**: 8/8 endpoints ✅
-- **Messages**: 3/4 endpoints ✅
-- **Recruitment**: 6/6 endpoints ✅
-- **Signal**: 6/6 endpoints ✅
-- **Data Search**: 7/7 endpoints ✅
+### Data Extraction
+```javascript
+// Extract post reactions
+{
+  "resource": "signal",
+  "operation": "extractPostReactions",
+  "extractPostReactionsParams": {
+    "post_url": "https://linkedin.com/posts/activity-123456789",
+    "total_results": 500
+  }
+}
+```
 
-## 🛠️ Development
+## Project Structure
+
+```
+n8n-nodes-linkupapi/
+├── credentials/              # API credentials configuration
+│   └── LinkupApi.credentials.ts
+├── nodes/Linkup/            # Main node implementation
+│   ├── Linkup.node.ts       # Main node file
+│   ├── categories/          # Business logic by category
+│   ├── properties/          # n8n properties by category
+│   ├── types.ts             # Shared TypeScript types
+│   ├── utils.ts             # Utility functions
+│   └── linkup.svg           # Node icon
+├── dist/                    # Compiled output
+├── package.json             # Package configuration
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Documentation
+```
+
+## Development
 
 ### Prerequisites
-- **Node.js**: >= 18.10
-- **pnpm**: >= 8.6
-- **n8n**: Latest version
+- Node.js: >= 18.10
+- pnpm: >= 8.6
+- n8n: Latest version
 
 ### Setup
 ```bash
@@ -155,67 +199,80 @@ pnpm lint
 pnpm format
 ```
 
-### Project Structure
-```
-n8n-nodes-linkupapi/
-├── credentials/              # API credentials configuration
-│   └── LinkupApi.credentials.ts
-├── nodes/Linkup/            # Main node implementation
-│   ├── Linkup.node.ts       # Main node file
-│   ├── categories/          # Business logic by category
-│   ├── properties/          # n8n properties by category
-│   ├── types.ts             # Shared TypeScript types
-│   ├── utils.ts             # Utility functions
-│   └── linkup.svg           # Node icon
-├── dist/                    # Compiled output
-├── package.json             # Package configuration
-├── tsconfig.json           # TypeScript configuration
-└── README.md               # Documentation
-```
+## API Coverage
 
-## 🔒 Security
+This package covers **100% of the Linkup API endpoints**:
+
+- **Authentication**: 2/2 endpoints
+- **Profile**: 3/3 endpoints
+- **Posts**: 10/10 endpoints
+- **Companies**: 2/2 endpoints
+- **Network**: 8/8 endpoints
+- **Messages**: 3/4 endpoints
+- **Recruitment**: 6/6 endpoints
+- **Signal**: 6/6 endpoints
+- **Data Search**: 7/7 endpoints
+
+## Requirements
+
+- Node.js: >= 18.10
+- n8n: Latest version
+- Valid Linkup API credentials
+- Active LinkedIn account for authentication
+
+## Security
 
 - All API communications are secured with HTTPS
 - API keys are encrypted and stored securely
 - No sensitive data is logged or stored locally
 - Compliance with LinkedIn's Terms of Service
 
-## 📚 Documentation
+## Error Handling
+
+The package includes comprehensive error handling for:
+- Invalid API credentials
+- Rate limiting
+- Network connectivity issues
+- Invalid parameters
+- LinkedIn account restrictions
+
+## Documentation
 
 - [API Documentation](https://docs.linkupapi.com/api-reference/introduction)
 - [LinkupAPI Website](https://linkupapi.com)
 - [n8n Community Nodes](https://n8n.io/integrations)
 
-## 🐛 Issues & Support
+## Support
 
+For technical support and feature requests:
 - [Report Issues](https://github.com/Eliott-89/n8n-nodes-linkup/issues)
 - [Feature Requests](https://github.com/Eliott-89/n8n-nodes-linkup/issues/new?labels=enhancement)
 - [Community Support](https://community.n8n.io)
 
-## 📈 Version History
+## Version History
 
-### Current Version: 2.4.19
+### Current Version: 2.4.21
 
 **Latest Features:**
-- ✅ Extract Company Employees functionality
-- ✅ Complete API coverage (100%)
-- ✅ Enhanced error handling
-- ✅ Improved parameter validation
-- ✅ Full English documentation
+- Extract Company Employees functionality
+- Complete API coverage (100%)
+- Enhanced error handling
+- Improved parameter validation
+- Professional English documentation
 
-## 📝 License
+## License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+## Author
 
 **Eliott Cerpaud**
 - GitHub: [@Eliott-89](https://github.com/Eliott-89)
 - Project: [n8n-nodes-linkup](https://github.com/Eliott-89/n8n-nodes-linkup)
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome. Please feel free to submit a Pull Request.
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -223,10 +280,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## ⭐ Show Your Support
-
-Give a ⭐️ if this project helped you!
-
 ---
 
-**Made with ❤️ for the n8n community**
+**Built for the n8n community with a focus on reliability and ease of use.**
