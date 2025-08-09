@@ -51,6 +51,9 @@ export class Linkup implements INodeType {
       const resource = this.getNodeParameter("resource", i) as string;
       const operation = this.getNodeParameter("operation", i) as string;
 
+      // Déclarer requestOptions en dehors du try-catch pour l'accessibilité
+      let requestOptions: any = {};
+      
       try {
         const timeout = 30000; // Default timeout
 
@@ -128,7 +131,6 @@ export class Linkup implements INodeType {
 
         // Get endpoint
         let endpoint = LinkupUtils.getEndpointForOperation(operation);
-        let requestOptions: any;
 
         // Pour Multi-Requests, utiliser directement l'URL fournie
         if (resource === "multiRequests" && operation === "customRequest") {
@@ -139,7 +141,7 @@ export class Linkup implements INodeType {
           // Construire les headers de base
           const baseHeaders: any = {
             "x-api-key": creds.apiKey,
-            "User-Agent": "n8n-linkup-node/1.2.0",
+            "User-Agent": "n8n-linkup-node/2.4.25",
           };
           
           // Ajouter Content-Type seulement pour les méthodes qui envoient un body
@@ -180,7 +182,19 @@ export class Linkup implements INodeType {
           );
         }
 
+        console.log("🔄 LINKUP Request:", {
+          url: requestOptions.url,
+          method: requestOptions.method,
+          hasApiKey: !!requestOptions.headers["x-api-key"],
+          apiKeyLength: requestOptions.headers["x-api-key"]?.length || 0
+        });
+
         const response = await this.helpers.httpRequest(requestOptions);
+
+        console.log("✅ LINKUP Response received:", {
+          status: response.status || "success",
+          hasData: !!response
+        });
 
         const result = {
           json: {
@@ -203,12 +217,41 @@ export class Linkup implements INodeType {
 
         returnData.push(result);
       } catch (error: any) {
+        console.error("🚨 LINKUP Request failed:", {
+          error: error.message,
+          statusCode: error.statusCode,
+          response: error.response?.body || error.response,
+          resource,
+          operation,
+          url: requestOptions?.url
+        });
+
+        // Améliorer les messages d'erreur selon le code de statut
+        let friendlyMessage = error.message || "Unknown error";
+        if (error.statusCode === 401) {
+          friendlyMessage = "❌ Authentication failed. Please check your LINKUP API key and credentials.";
+        } else if (error.statusCode === 403) {
+          friendlyMessage = "❌ Access forbidden. Your API key may not have sufficient permissions or credits.";
+        } else if (error.statusCode === 404) {
+          friendlyMessage = "❌ API endpoint not found. This operation may not be supported.";
+        } else if (error.statusCode === 400) {
+          friendlyMessage = "❌ Bad request. Please check your input parameters.";
+        }
+
         returnData.push({
           json: {
-            error: error.message || "Unknown error",
+            error: friendlyMessage,
+            originalError: error.message,
+            statusCode: error.statusCode,
+            response: error.response?.body,
             resource,
             operation,
             timestamp: new Date().toISOString(),
+            _debug: {
+              requestUrl: requestOptions?.url,
+              requestMethod: requestOptions?.method,
+              hasApiKey: !!requestOptions?.headers?.["x-api-key"]
+            }
           },
           pairedItem: { item: i },
         });

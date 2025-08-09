@@ -2,52 +2,68 @@ import { IExecuteFunctions } from "n8n-workflow";
 import { LinkupCredentials, RequestBody, LINKUP_API_BASE_URL } from "./types";
 
 export class LinkupUtils {
-  static sanitizeCredentialValue(value: string): string | null {
-    if (!value || value.includes("__n8n_BLANK_VALUE_")) {
+  static sanitizeCredentialValue(value: any): string | null {
+    if (!value || 
+        value === undefined || 
+        value === null || 
+        value === "" || 
+        typeof value !== 'string' ||
+        value.includes("__n8n_BLANK_VALUE_") ||
+        value.trim() === "") {
       return null;
     }
-    return value;
+    return value.trim();
   }
 
   static async getCredentialsWithFallback(
     context: IExecuteFunctions
   ): Promise<LinkupCredentials> {
-    // Always use saved credentials (no more custom credentials)
-    const credentials = await context.getCredentials("linkupApi");
+    try {
+      // Always use saved credentials (no more custom credentials)
+      const credentials = await context.getCredentials("linkupApi");
 
-    if (!credentials) {
-      throw new Error(
-        "Missing API key. Please configure your LINKUP credentials in the node settings."
-      );
+      if (!credentials) {
+        throw new Error(
+          "❌ No LINKUP credentials found. Please configure your LINKUP API credentials in the node settings."
+        );
+      }
+
+      // Debug: log les clés disponibles (sans valeurs sensibles)
+      const availableKeys = Object.keys(credentials);
+      console.log("📝 LINKUP Debug - Available credential keys:", availableKeys);
+
+      const apiKey = LinkupUtils.sanitizeCredentialValue(credentials.apiKey);
+      const email = LinkupUtils.sanitizeCredentialValue(credentials.linkedinEmail);
+      const password = LinkupUtils.sanitizeCredentialValue(credentials.linkedinPassword);
+      const country = LinkupUtils.sanitizeCredentialValue(credentials.country);
+      const loginToken = LinkupUtils.sanitizeCredentialValue(credentials.loginToken);
+
+      if (!apiKey) {
+        throw new Error(
+          "❌ API Key is missing or invalid. Please check your LINKUP API key in the credentials settings. Make sure it's not empty and doesn't contain special characters."
+        );
+      }
+
+      // Valider le format de l'API key (généralement alphanumérique)
+      if (!/^[a-zA-Z0-9_-]+$/.test(apiKey)) {
+        throw new Error(
+          "❌ API Key format appears invalid. LINKUP API keys should contain only letters, numbers, underscores and hyphens."
+        );
+      }
+
+      console.log("✅ LINKUP Debug - API Key format validated, length:", apiKey.length);
+
+      return {
+        apiKey: apiKey!,
+        email: email || "",
+        password: password || "",
+        country: country || "FR",
+        loginToken: loginToken || "",
+      };
+    } catch (error: any) {
+      console.error("🚨 LINKUP Credentials Error:", error.message);
+      throw error;
     }
-
-    const apiKey = LinkupUtils.sanitizeCredentialValue(credentials.apiKey as string);
-    const email = LinkupUtils.sanitizeCredentialValue(
-      credentials.linkedinEmail as string
-    );
-    const password = LinkupUtils.sanitizeCredentialValue(
-      credentials.linkedinPassword as string
-    );
-    const country = LinkupUtils.sanitizeCredentialValue(
-      credentials.country as string
-    );
-    const loginToken = LinkupUtils.sanitizeCredentialValue(
-      credentials.loginToken as string
-    );
-
-    if (!apiKey) {
-      throw new Error(
-        "Missing API key. Please configure your LINKUP credentials in the node settings."
-      );
-    }
-
-    return {
-      apiKey: apiKey!,
-      email: email || "",
-      password: password || "",
-      country: country || "FR",
-      loginToken: loginToken || "",
-    };
   }
 
   static buildRequestOptions(
@@ -63,7 +79,7 @@ export class LinkupUtils {
       headers: {
         "x-api-key": apiKey,
         "Content-Type": "application/json",
-        "User-Agent": "n8n-linkup-node/1.2.0",
+        "User-Agent": "n8n-linkup-node/2.4.25",
       },
       body,
       timeout,
