@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.4.81] - 2025-01-10
+## [0.0.1] - 2025-01-10
 
 ### 🌍 Internationalization
 - **Complete English translation** : All French text translated to English for n8n verification compliance
@@ -30,7 +30,7 @@
 - Professional code structure and documentation
 - Maintained 100% API coverage
 
-## [2.4.80] - 2025-01-10
+## [2.4.81] - 2025-01-10
 
 ### 🔧 Corrections
 - **Gestion des réponses null** : Correction de l'erreur "Cannot read properties of null (reading 'status')"

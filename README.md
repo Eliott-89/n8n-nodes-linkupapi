@@ -265,7 +265,7 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 2.4.81
+### Current Version: 0.0.1
 
 **Latest Features:**
 - Complete English translation for n8n verification compliance
