@@ -227,6 +227,20 @@ This package covers **100% of the Linkup API endpoints**:
 - No sensitive data is logged or stored locally
 - Compliance with LinkedIn's Terms of Service
 
+## n8n Community Node Compliance
+
+This package is fully compliant with n8n's community node verification guidelines:
+
+✅ **Package source verification** - GitHub repository matches npm package  
+✅ **No external dependencies** - Lightweight and maintainable  
+✅ **Proper documentation** - Complete README and API documentation  
+✅ **No environment/file system access** - All data passed through parameters  
+✅ **n8n best practices** - TypeScript, proper error handling, linting passes  
+✅ **English language only** - All interface text and documentation in English  
+✅ **MIT License** - Open source license  
+
+Ready for n8n community node verification! 🚀
+
 ## Error Handling
 
 The package includes comprehensive error handling for:
@@ -251,14 +265,15 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 2.4.21
+### Current Version: 2.4.81
 
 **Latest Features:**
-- Extract Company Employees functionality
-- Complete API coverage (100%)
-- Enhanced error handling
+- Complete English translation for n8n verification compliance
+- Enhanced error handling with detailed English messages
 - Improved parameter validation
-- Professional English documentation
+- Professional documentation and code structure
+- 100% API coverage maintained
+- Clean project structure with removed development files
 
 ## License
 

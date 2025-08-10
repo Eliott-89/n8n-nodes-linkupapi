@@ -1,12 +1,12 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const signalProperties: INodeProperties[] = [
-  // SIGNAL - Parameters
+  // SIGNAL - Parameters for extractPostReactions
   {
-    displayName: "Extract Post Reactions Parameters",
-    name: "extractPostReactionsParams",
+    displayName: "Post Reactions Parameters",
+    name: "postReactionsParams",
     type: "collection",
-    placeholder: "Add parameter",
+    placeholder: "Add post parameter",
     default: {},
     displayOptions: {
       show: {
@@ -38,7 +38,6 @@ export const signalProperties: INodeProperties[] = [
         default: 10,
         description: "Number of results to return",
       },
-
       {
         displayName: "Start Page",
         name: "start_page",
@@ -55,11 +54,12 @@ export const signalProperties: INodeProperties[] = [
       },
     ],
   },
+  // SIGNAL - Parameters for extractPostComments
   {
-    displayName: "Extract Post Comments Parameters",
-    name: "extractPostCommentsParams",
+    displayName: "Post Comments Parameters",
+    name: "postCommentsParams",
     type: "collection",
-    placeholder: "Add parameter",
+    placeholder: "Add post parameter",
     default: {},
     displayOptions: {
       show: {
@@ -91,7 +91,13 @@ export const signalProperties: INodeProperties[] = [
         default: 10,
         description: "Number of results to return",
       },
-
+      {
+        displayName: "Use Pagination",
+        name: "use_pagination",
+        type: "boolean",
+        default: false,
+        description: "Use pagination by pages",
+      },
       {
         displayName: "Start Page",
         name: "start_page",
@@ -109,15 +115,15 @@ export const signalProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Extract Profile Reactions Parameters",
-    name: "extractProfileReactionsParams",
+    displayName: "Profile URL Parameters",
+    name: "profileUrlParams",
     type: "collection",
-    placeholder: "Add parameter",
+    placeholder: "Add profile parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractProfileReactions"],
+        operation: ["extractProfileReactions", "extractProfileComments"],
       },
     },
     options: [
@@ -144,7 +150,6 @@ export const signalProperties: INodeProperties[] = [
         default: 10,
         description: "Number of results to return",
       },
-
       {
         displayName: "Start Page",
         name: "start_page",
@@ -170,71 +175,10 @@ export const signalProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Extract Profile Comments Parameters",
-    name: "extractProfileCommentsParams",
+    displayName: "Profile Posts Parameters",
+    name: "profilePostsParams",
     type: "collection",
-    placeholder: "Add parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["signal"],
-        operation: ["extractProfileComments"],
-      },
-    },
-    options: [
-      {
-        displayName: "Profile URL *",
-        name: "profile_url",
-        type: "string",
-        default: "",
-        placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL to extract data from",
-      },
-      {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-      {
-        displayName: "Total Results",
-        name: "total_results",
-        type: "number",
-        default: 10,
-        description: "Number of results to return",
-      },
-
-      {
-        displayName: "Start Page",
-        name: "start_page",
-        type: "number",
-        default: 1,
-        description: "Starting page number",
-      },
-      {
-        displayName: "End Page",
-        name: "end_page",
-        type: "number",
-        default: 1,
-        description: "Ending page number",
-      },
-      {
-        displayName: "Cursor",
-        name: "cursor",
-        type: "string",
-        default: "",
-        placeholder: "Pagination cursor",
-        description: "Cursor for pagination",
-      },
-    ],
-  },
-  {
-    displayName: "Extract Profile Posts Parameters",
-    name: "extractProfilePostsParams",
-    type: "collection",
-    placeholder: "Add parameter",
+    placeholder: "Add profile posts parameter",
     default: {},
     displayOptions: {
       show: {
@@ -298,7 +242,13 @@ export const signalProperties: INodeProperties[] = [
         placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
         description: "Date filter for posts",
       },
-
+      {
+        displayName: "Use Pagination",
+        name: "use_pagination",
+        type: "boolean",
+        default: false,
+        description: "Use pagination by pages",
+      },
       {
         displayName: "Start Page",
         name: "start_page",
@@ -316,10 +266,10 @@ export const signalProperties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "Extract Company Posts Parameters",
-    name: "extractCompanyPostsParams",
+    displayName: "Company URL Parameters",
+    name: "companyUrlParams",
     type: "collection",
-    placeholder: "Add parameter",
+    placeholder: "Add company parameter",
     default: {},
     displayOptions: {
       show: {
@@ -383,7 +333,13 @@ export const signalProperties: INodeProperties[] = [
         placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
         description: "Date filter for posts",
       },
-
+      {
+        displayName: "Use Pagination",
+        name: "use_pagination",
+        type: "boolean",
+        default: false,
+        description: "Use pagination by pages",
+      },
       {
         displayName: "Start Page",
         name: "start_page",

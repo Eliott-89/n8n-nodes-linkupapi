@@ -12,22 +12,26 @@ export class PostOperations {
     switch (operation) {
       case "getPostReactions":
         const getPostReactionsParams = context.getNodeParameter(
-          "postUrlParams",
+          "getPostReactionsParams",
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!getPostReactionsParams.post_url) {
           throw new Error("Post URL is required for this operation");
         }
-        
-        if (getPostReactionsParams.post_url) body.post_url = getPostReactionsParams.post_url;
-        if (getPostReactionsParams.total_results) body.total_results = getPostReactionsParams.total_results;
-        if (getPostReactionsParams.start_page) body.start_page = getPostReactionsParams.start_page;
-        if (getPostReactionsParams.end_page) body.end_page = getPostReactionsParams.end_page;
-        if (getPostReactionsParams.country) body.country = getPostReactionsParams.country;
-        if (getPostReactionsParams.login_token) body.login_token = getPostReactionsParams.login_token;
+
+        if (getPostReactionsParams.post_url)
+          body.post_url = getPostReactionsParams.post_url;
+        if (getPostReactionsParams.total_results)
+          body.total_results = getPostReactionsParams.total_results;
+        if (getPostReactionsParams.start_page)
+          body.start_page = getPostReactionsParams.start_page;
+        if (getPostReactionsParams.end_page)
+          body.end_page = getPostReactionsParams.end_page;
+        if (getPostReactionsParams.country)
+          body.country = getPostReactionsParams.country;
         break;
 
       case "reactToPost":
@@ -36,25 +40,26 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!reactToPostParams.post_url) {
           throw new Error("Post URL is required for this operation");
         }
-        
-        if (reactToPostParams.post_url) body.post_url = reactToPostParams.post_url;
-        if (reactToPostParams.reaction_type) body.reaction_type = reactToPostParams.reaction_type;
+
+        if (reactToPostParams.post_url)
+          body.post_url = reactToPostParams.post_url;
+        if (reactToPostParams.reaction_type)
+          body.reaction_type = reactToPostParams.reaction_type;
         if (reactToPostParams.country) body.country = reactToPostParams.country;
-        if (reactToPostParams.login_token) body.login_token = reactToPostParams.login_token;
         break;
 
       case "addCommentToPost":
         const commentPostParams = context.getNodeParameter(
-          "commentPostParams",
+          "addCommentToPostParams",
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!commentPostParams.post_url) {
           throw new Error("Post URL is required for this operation");
@@ -62,11 +67,10 @@ export class PostOperations {
         if (!commentPostParams.message) {
           throw new Error("Message is required for this operation");
         }
-        
-        if (commentPostParams.post_url) body.post_url = commentPostParams.post_url;
+
+        if (commentPostParams.post_url)
+          body.post_url = commentPostParams.post_url;
         if (commentPostParams.message) body.message = commentPostParams.message;
-        if (commentPostParams.country) body.country = commentPostParams.country;
-        if (commentPostParams.login_token) body.login_token = commentPostParams.login_token;
         break;
 
       case "answerComment":
@@ -75,7 +79,7 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!answerCommentParams.tracking_id) {
           throw new Error("Tracking ID is required for this operation");
@@ -89,15 +93,21 @@ export class PostOperations {
         if (!answerCommentParams.comment_text) {
           throw new Error("Comment text is required for this operation");
         }
-        
-        if (answerCommentParams.tracking_id) body.tracking_id = answerCommentParams.tracking_id;
-        if (answerCommentParams.profile_urn) body.profile_urn = answerCommentParams.profile_urn;
-        if (answerCommentParams.comment_urn) body.comment_urn = answerCommentParams.comment_urn;
-        if (answerCommentParams.login_token) body.login_token = answerCommentParams.login_token;
-        if (answerCommentParams.comment_text) body.comment_text = answerCommentParams.comment_text;
-        if (answerCommentParams.mention_user !== undefined) body.mention_user = answerCommentParams.mention_user;
-        if (answerCommentParams.commenter_name) body.commenter_name = answerCommentParams.commenter_name;
-        if (answerCommentParams.country) body.country = answerCommentParams.country;
+
+        if (answerCommentParams.tracking_id)
+          body.tracking_id = answerCommentParams.tracking_id;
+        if (answerCommentParams.profile_urn)
+          body.profile_urn = answerCommentParams.profile_urn;
+        if (answerCommentParams.comment_urn)
+          body.comment_urn = answerCommentParams.comment_urn;
+        if (answerCommentParams.comment_text)
+          body.comment_text = answerCommentParams.comment_text;
+        if (answerCommentParams.mention_user !== undefined)
+          body.mention_user = answerCommentParams.mention_user;
+        if (answerCommentParams.commenter_name)
+          body.commenter_name = answerCommentParams.commenter_name;
+        if (answerCommentParams.country)
+          body.country = answerCommentParams.country;
         break;
 
       case "createPost":
@@ -106,14 +116,13 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!createPostParams.message) {
           throw new Error("Message is required for this operation");
         }
-        
+
         if (createPostParams.message) body.message = createPostParams.message;
-        if (createPostParams.login_token) body.login_token = createPostParams.login_token;
         if (createPostParams.country) body.country = createPostParams.country;
         if (createPostParams.file) body.file = createPostParams.file;
         break;
@@ -124,16 +133,20 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        if (searchPostsParams.post_type) body.post_type = searchPostsParams.post_type;
+        if (searchPostsParams.post_type)
+          body.post_type = searchPostsParams.post_type;
         if (searchPostsParams.sort_by) body.sort_by = searchPostsParams.sort_by;
-        if (searchPostsParams.country) body.country = searchPostsParams.country;
         if (searchPostsParams.keyword) body.keyword = searchPostsParams.keyword;
-        if (searchPostsParams.post_date) body.post_date = searchPostsParams.post_date;
-        if (searchPostsParams.linkedin_url) body.linkedin_url = searchPostsParams.linkedin_url;
-        if (searchPostsParams.total_results) body.total_results = searchPostsParams.total_results;
-        if (searchPostsParams.start_page) body.start_page = searchPostsParams.start_page;
-        if (searchPostsParams.end_page) body.end_page = searchPostsParams.end_page;
-        if (searchPostsParams.login_token) body.login_token = searchPostsParams.login_token;
+        if (searchPostsParams.post_date)
+          body.post_date = searchPostsParams.post_date;
+        if (searchPostsParams.linkedin_url)
+          body.linkedin_url = searchPostsParams.linkedin_url;
+        if (searchPostsParams.total_results)
+          body.total_results = searchPostsParams.total_results;
+        if (searchPostsParams.start_page)
+          body.start_page = searchPostsParams.start_page;
+        if (searchPostsParams.end_page)
+          body.end_page = searchPostsParams.end_page;
         break;
 
       case "getLinkedInFeed":
@@ -142,45 +155,46 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        if (getFeedParams.total_results) body.total_results = getFeedParams.total_results;
+        if (getFeedParams.total_results)
+          body.total_results = getFeedParams.total_results;
         if (getFeedParams.country) body.country = getFeedParams.country;
-        if (getFeedParams.login_token) body.login_token = getFeedParams.login_token;
         break;
 
       case "getComments":
         const getCommentsParams = context.getNodeParameter(
-          "extractCommentsParams",
+          "getCommentsParams",
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!getCommentsParams.post_url) {
           throw new Error("Post URL is required for this operation");
         }
-        
-        if (getCommentsParams.post_url) body.post_url = getCommentsParams.post_url;
-        if (getCommentsParams.total_results) body.total_results = getCommentsParams.total_results;
-        if (getCommentsParams.start_page) body.start_page = getCommentsParams.start_page;
-        if (getCommentsParams.end_page) body.end_page = getCommentsParams.end_page;
-        if (getCommentsParams.country) body.country = getCommentsParams.country;
-        if (getCommentsParams.login_token) body.login_token = getCommentsParams.login_token;
+
+        if (getCommentsParams.post_url)
+          body.post_url = getCommentsParams.post_url;
+        if (getCommentsParams.total_results)
+          body.total_results = getCommentsParams.total_results;
+        if (getCommentsParams.start_page)
+          body.start_page = getCommentsParams.start_page;
+        if (getCommentsParams.end_page)
+          body.end_page = getCommentsParams.end_page;
         break;
 
       case "repostContent":
         const repostParams = context.getNodeParameter(
-          "postUrlParams",
+          "repostContentParams",
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
-        if (!repostParams.postUrl) {
+        if (!repostParams.post_url) {
           throw new Error("Post URL is required for this operation");
         }
-        
-        if (repostParams.postUrl) body.post_url = repostParams.postUrl;
-        if (repostParams.country) body.country = repostParams.country;
+
+        if (repostParams.post_url) body.post_url = repostParams.post_url;
         break;
 
       case "sendPostTimeSpent":
@@ -189,7 +203,7 @@ export class PostOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!timeSpentParams.post_url) {
           throw new Error("Post URL is required for this operation");
@@ -197,11 +211,11 @@ export class PostOperations {
         if (!timeSpentParams.duration) {
           throw new Error("Duration is required for this operation");
         }
-        
+
         if (timeSpentParams.post_url) body.post_url = timeSpentParams.post_url;
         if (timeSpentParams.duration) body.duration = timeSpentParams.duration;
-        if (timeSpentParams.duration_start_time) body.duration_start_time = timeSpentParams.duration_start_time;
-        if (timeSpentParams.login_token) body.login_token = timeSpentParams.login_token;
+        if (timeSpentParams.duration_start_time)
+          body.duration_start_time = timeSpentParams.duration_start_time;
         if (timeSpentParams.country) body.country = timeSpentParams.country;
         break;
     }

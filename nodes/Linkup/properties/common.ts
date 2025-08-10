@@ -53,19 +53,19 @@ export const commonProperties: INodeProperties[] = [
         value: "recruiter",
       },
       {
-        name: "Signal",
+        name: "Signal API",
         value: "signal",
       },
       {
-        name: "Company",
+        name: "Company API",
         value: "companyApi",
       },
       {
-        name: "Person",
+        name: "Person API",
         value: "personApi",
       },
       {
-        name: "Multi-Requests",
+        name: "Multi Requests",
         value: "multiRequests",
       },
     ],
@@ -348,25 +348,6 @@ export const commonProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
-      },
-    },
-    options: [
-      {
-        name: "Custom Request",
-        value: "customRequest",
-        description: "Make a custom HTTP request to Linkup API",
-      },
-    ],
-    default: "customRequest",
-  },
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
         resource: ["signal"],
       },
     },
@@ -459,17 +440,12 @@ export const commonProperties: INodeProperties[] = [
         value: "profileEnrichment",
         description: "Enrich profile information",
       },
-      {
-        name: "Extract Company Employees",
-        value: "extractCompanyEmployees",
-        description: "Extract employees from a company",
-      },
     ],
     default: "searchProfiles",
   },
 ];
 
-// Common properties for pagination
+// Propriétés communes pour la pagination
 export const paginationProperties: INodeProperties[] = [
   {
     displayName: "Pagination",
@@ -479,7 +455,17 @@ export const paginationProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["profile", "company", "network", "message", "post", "recruiter", "signal", "companyApi", "personApi"],
+        resource: [
+          "profile",
+          "company",
+          "network",
+          "message",
+          "post",
+          "recruiter",
+          "signal",
+          "companyApi",
+          "personApi",
+        ],
       },
     },
     options: [
@@ -501,7 +487,7 @@ export const paginationProperties: INodeProperties[] = [
   },
 ];
 
-// Country property (used in multiple operations)
+// Propriété pour le pays (utilisée dans plusieurs opérations)
 export const countryProperty: INodeProperties = {
   displayName: "Country",
   name: "country",
@@ -509,4 +495,4 @@ export const countryProperty: INodeProperties = {
   default: "FR",
   placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
   description: "Country code for proxy selection",
-}; 
+};

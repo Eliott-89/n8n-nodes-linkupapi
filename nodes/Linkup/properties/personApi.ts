@@ -134,41 +134,4 @@ export const personApiProperties: INodeProperties[] = [
       },
     ],
   },
-  {
-    displayName: "Extract Company Employees Parameters",
-    name: "extractCompanyEmployeesParams",
-    type: "collection",
-    placeholder: "Add employee extraction parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["personApi"],
-        operation: ["extractCompanyEmployees"],
-      },
-    },
-    options: [
-      {
-        displayName: "Company Name *",
-        name: "company_name",
-        type: "string",
-        default: "",
-        placeholder: "Microsoft",
-        description: "Name of the company to extract employees from",
-      },
-      {
-        displayName: "Total Results",
-        name: "total_results",
-        type: "number",
-        default: 10,
-        description: "Number of employees to extract (1-50,000)",
-      },
-      {
-        displayName: "Decision Makers Only",
-        name: "decision_makers_only",
-        type: "boolean",
-        default: false,
-        description: "Extract only decision makers (CEO, CTO, CMO, Co-Founder, etc.)",
-      },
-    ],
-  },
-]; 
+];

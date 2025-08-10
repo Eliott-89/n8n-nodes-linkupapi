@@ -16,14 +16,21 @@ export class PersonApiOperations {
           itemIndex,
           {}
         ) as any;
-        
-        if (searchProfilesParams.keyword) body.keyword = searchProfilesParams.keyword;
-        if (searchProfilesParams.job_title) body.job_title = searchProfilesParams.job_title;
-        if (searchProfilesParams.industry) body.industry = searchProfilesParams.industry;
-        if (searchProfilesParams.school) body.school = searchProfilesParams.school;
-        if (searchProfilesParams.location) body.location = searchProfilesParams.location;
-        if (searchProfilesParams.current_company) body.current_company = searchProfilesParams.current_company;
-        if (searchProfilesParams.total_results) body.total_results = searchProfilesParams.total_results;
+
+        if (searchProfilesParams.keyword)
+          body.keyword = searchProfilesParams.keyword;
+        if (searchProfilesParams.job_title)
+          body.job_title = searchProfilesParams.job_title;
+        if (searchProfilesParams.industry)
+          body.industry = searchProfilesParams.industry;
+        if (searchProfilesParams.school)
+          body.school = searchProfilesParams.school;
+        if (searchProfilesParams.location)
+          body.location = searchProfilesParams.location;
+        if (searchProfilesParams.current_company)
+          body.current_company = searchProfilesParams.current_company;
+        if (searchProfilesParams.total_results)
+          body.total_results = searchProfilesParams.total_results;
         break;
 
       case "extractProfileInfo":
@@ -32,13 +39,14 @@ export class PersonApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!extractProfileInfoParams.profileUrl) {
           throw new Error("Profile URL is required for this operation");
         }
-        
-        if (extractProfileInfoParams.profileUrl) body.profile_url = extractProfileInfoParams.profileUrl;
+
+        if (extractProfileInfoParams.profileUrl)
+          body.profile_url = extractProfileInfoParams.profileUrl;
         break;
 
       case "profileEnrichment":
@@ -47,7 +55,7 @@ export class PersonApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!profileEnrichmentParams.first_name) {
           throw new Error("First name is required for this operation");
@@ -58,10 +66,13 @@ export class PersonApiOperations {
         if (!profileEnrichmentParams.company_name) {
           throw new Error("Company name is required for this operation");
         }
-        
-        if (profileEnrichmentParams.first_name) body.first_name = profileEnrichmentParams.first_name;
-        if (profileEnrichmentParams.last_name) body.last_name = profileEnrichmentParams.last_name;
-        if (profileEnrichmentParams.company_name) body.company_name = profileEnrichmentParams.company_name;
+
+        if (profileEnrichmentParams.first_name)
+          body.first_name = profileEnrichmentParams.first_name;
+        if (profileEnrichmentParams.last_name)
+          body.last_name = profileEnrichmentParams.last_name;
+        if (profileEnrichmentParams.company_name)
+          body.company_name = profileEnrichmentParams.company_name;
         break;
 
       case "extractCompanyEmployees":
@@ -70,15 +81,19 @@ export class PersonApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!extractCompanyEmployeesParams.company_name) {
           throw new Error("Company name is required for this operation");
         }
-        
-        if (extractCompanyEmployeesParams.company_name) body.company_name = extractCompanyEmployeesParams.company_name;
-        if (extractCompanyEmployeesParams.total_results) body.total_results = extractCompanyEmployeesParams.total_results;
-        if (extractCompanyEmployeesParams.decision_makers_only !== undefined) body.decision_makers_only = extractCompanyEmployeesParams.decision_makers_only;
+
+        if (extractCompanyEmployeesParams.company_name)
+          body.company_name = extractCompanyEmployeesParams.company_name;
+        if (extractCompanyEmployeesParams.total_results)
+          body.total_results = extractCompanyEmployeesParams.total_results;
+        if (extractCompanyEmployeesParams.decision_makers_only !== undefined)
+          body.decision_makers_only =
+            extractCompanyEmployeesParams.decision_makers_only;
         break;
     }
 

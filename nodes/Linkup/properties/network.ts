@@ -78,14 +78,6 @@ export const networkProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
     ],
   },
   {
@@ -192,14 +184,6 @@ export const networkProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
         displayName: "Country",
         name: "country",
         type: "string",
@@ -287,14 +271,6 @@ export const networkProperties: INodeProperties[] = [
         default: "FR",
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
       },
     ],
   },

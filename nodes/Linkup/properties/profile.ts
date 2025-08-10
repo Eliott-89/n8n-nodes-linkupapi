@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const profileProperties: INodeProperties[] = [
-  // PROFILE - Parameters Linkup
+  // PROFILE - Linkup Parameters
   {
     displayName: "Extract Profile Parameters",
     name: "extractProfileParams",
@@ -141,14 +141,6 @@ export const profileProperties: INodeProperties[] = [
         description: "Job title to filter by",
       },
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
         displayName: "Fetch Invitation State",
         name: "fetch_invitation_state",
         type: "boolean",
@@ -157,4 +149,4 @@ export const profileProperties: INodeProperties[] = [
       },
     ],
   },
-]; 
+];

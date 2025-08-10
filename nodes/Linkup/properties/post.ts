@@ -1,17 +1,17 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const postProperties: INodeProperties[] = [
-  // POST - Parameters
+  // POST - Specific parameters for getPostReactions
   {
-    displayName: "Post URL Parameters",
-    name: "postUrlParams",
+    displayName: "Get Post Reactions Parameters",
+    name: "getPostReactionsParams",
     type: "collection",
     placeholder: "Add post parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["getPostReactions", "reactToPost", "repostContent", "addCommentToPost", "getComments", "sendPostTimeSpent"],
+        operation: ["getPostReactions"],
       },
     },
     options: [
@@ -52,21 +52,14 @@ export const postProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
     ],
   },
+  // POST - Specific parameters for reactToPost
   {
-    displayName: "React to Post Parameters",
+    displayName: "React To Post Parameters",
     name: "reactToPostParams",
     type: "collection",
-    placeholder: "Add reaction parameter",
+    placeholder: "Add post parameter",
     default: {},
     displayOptions: {
       show: {
@@ -88,7 +81,8 @@ export const postProperties: INodeProperties[] = [
         name: "reaction_type",
         type: "string",
         default: "like",
-        placeholder: "like, celebrate, support, funny, love, insightful, curious",
+        placeholder:
+          "like, celebrate, support, funny, love, insightful, curious",
         description: "Type of reaction to add",
       },
       {
@@ -99,21 +93,38 @@ export const postProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
+    ],
+  },
+  // POST - Specific parameters for repostContent
+  {
+    displayName: "Repost Content Parameters",
+    name: "repostContentParams",
+    type: "collection",
+    placeholder: "Add post parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["post"],
+        operation: ["repostContent"],
+      },
+    },
+    options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
+        displayName: "Post URL *",
+        name: "post_url",
         type: "string",
         default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
+        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        description: "LinkedIn post URL",
       },
     ],
   },
+  // POST - Specific parameters for addCommentToPost
   {
-    displayName: "Comment Post Parameters",
-    name: "commentPostParams",
+    displayName: "Add Comment To Post Parameters",
+    name: "addCommentToPostParams",
     type: "collection",
-    placeholder: "Add comment parameter",
+    placeholder: "Add post parameter",
     default: {},
     displayOptions: {
       show: {
@@ -138,6 +149,89 @@ export const postProperties: INodeProperties[] = [
         placeholder: "Great post! Thanks for sharing.",
         description: "Comment content to add",
       },
+    ],
+  },
+  // POST - Specific parameters for getComments
+  {
+    displayName: "Get Comments Parameters",
+    name: "getCommentsParams",
+    type: "collection",
+    placeholder: "Add post parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["post"],
+        operation: ["getComments"],
+      },
+    },
+    options: [
+      {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        description: "LinkedIn post URL",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of results to return",
+      },
+      {
+        displayName: "Start Page",
+        name: "start_page",
+        type: "number",
+        default: 1,
+        description: "Starting page number",
+      },
+      {
+        displayName: "End Page",
+        name: "end_page",
+        type: "number",
+        default: 1,
+        description: "Ending page number",
+      },
+    ],
+  },
+  // POST - Specific parameters for sendPostTimeSpent
+  {
+    displayName: "Send Post Time Spent Parameters",
+    name: "sendPostTimeSpentParams",
+    type: "collection",
+    placeholder: "Add post parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["post"],
+        operation: ["sendPostTimeSpent"],
+      },
+    },
+    options: [
+      {
+        displayName: "Post URL *",
+        name: "post_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        description: "LinkedIn post URL",
+      },
+      {
+        displayName: "Duration *",
+        name: "duration",
+        type: "number",
+        default: 30,
+        description: "Duration in seconds",
+      },
+      {
+        displayName: "Duration Start Time",
+        name: "duration_start_time",
+        type: "number",
+        default: 0,
+        description: "Start time in seconds",
+      },
       {
         displayName: "Country",
         name: "country",
@@ -146,16 +240,9 @@ export const postProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
     ],
   },
+
   {
     displayName: "Answer Comment Parameters",
     name: "answerCommentParams",
@@ -192,14 +279,6 @@ export const postProperties: INodeProperties[] = [
         default: "",
         placeholder: "comment_urn_here",
         description: "Comment URN to reply to",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
       },
       {
         displayName: "Comment Text *",
@@ -316,14 +395,6 @@ export const postProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
     ],
   },
   {
@@ -346,14 +417,6 @@ export const postProperties: INodeProperties[] = [
         default: "",
         placeholder: "Share your thoughts here...",
         description: "Post content to create",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
       },
       {
         displayName: "Country",
@@ -401,127 +464,6 @@ export const postProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
     ],
   },
-  {
-    displayName: "Extract Comments Parameters",
-    name: "extractCommentsParams",
-    type: "collection",
-    placeholder: "Add comment parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["post"],
-        operation: ["getComments"],
-      },
-    },
-    options: [
-      {
-        displayName: "Post URL *",
-        name: "post_url",
-        type: "string",
-        default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
-        description: "LinkedIn post URL",
-      },
-      {
-        displayName: "Total Results",
-        name: "total_results",
-        type: "number",
-        default: 10,
-        description: "Number of results to return",
-      },
-      {
-        displayName: "Start Page",
-        name: "start_page",
-        type: "number",
-        default: 1,
-        description: "Starting page number",
-      },
-      {
-        displayName: "End Page",
-        name: "end_page",
-        type: "number",
-        default: 1,
-        description: "Ending page number",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-    ],
-  },
-  {
-    displayName: "Send Post Time Spent Parameters",
-    name: "sendPostTimeSpentParams",
-    type: "collection",
-    placeholder: "Add time spent parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["post"],
-        operation: ["sendPostTimeSpent"],
-      },
-    },
-    options: [
-      {
-        displayName: "Post URL *",
-        name: "post_url",
-        type: "string",
-        default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
-        description: "LinkedIn post URL",
-      },
-      {
-        displayName: "Duration *",
-        name: "duration",
-        type: "number",
-        default: 30,
-        description: "Duration in seconds",
-      },
-      {
-        displayName: "Duration Start Time",
-        name: "duration_start_time",
-        type: "number",
-        default: 0,
-        description: "Start time in seconds",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-    ],
-  },
-]; 
+];

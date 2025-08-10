@@ -1,17 +1,17 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const recruiterProperties: INodeProperties[] = [
-  // RECRUITER - Parameters
+  // RECRUITER - Parameters for getCandidates
   {
-    displayName: "Job Parameters",
-    name: "jobParams",
+    displayName: "Get Candidates Parameters",
+    name: "getCandidatesParams",
     type: "collection",
-    placeholder: "Add job parameter",
+    placeholder: "Add candidate parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["getCandidates", "publishJob", "closeJob"],
+        operation: ["getCandidates"],
       },
     },
     options: [
@@ -100,13 +100,37 @@ export const recruiterProperties: INodeProperties[] = [
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
       },
+    ],
+  },
+  // RECRUITER - Parameters for publishJob and closeJob
+  {
+    displayName: "Publish/Close Job Parameters",
+    name: "publishCloseJobParams",
+    type: "collection",
+    placeholder: "Add job parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["recruiter"],
+        operation: ["publishJob", "closeJob"],
+      },
+    },
+    options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
+        displayName: "Job ID *",
+        name: "job_id",
         type: "string",
         default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
+        placeholder: "job_id_here",
+        description: "LinkedIn Recruiter job ID",
+      },
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
       },
     ],
   },
@@ -132,28 +156,12 @@ export const recruiterProperties: INodeProperties[] = [
         description: "LinkedIn Recruiter application ID",
       },
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
         displayName: "Country",
         name: "country",
         type: "string",
         default: "FR",
         placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
         description: "Country code for proxy selection",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
       },
     ],
   },
@@ -171,15 +179,7 @@ export const recruiterProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
-        displayName: "Company URL",
+        displayName: "Company URL *",
         name: "company_url",
         type: "string",
         default: "",
@@ -282,14 +282,6 @@ export const recruiterProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
         displayName: "Job ID",
         name: "job_id",
         type: "string",
@@ -335,4 +327,4 @@ export const recruiterProperties: INodeProperties[] = [
       },
     ],
   },
-]; 
+];

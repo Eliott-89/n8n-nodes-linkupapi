@@ -13,9 +13,48 @@ export class AuthenticationOperations {
       case "login":
         const creds = await context.getCredentials("linkupApi");
         if (creds) {
-          body.email = creds.linkedinEmail;
-          body.password = creds.linkedinPassword;
+              // Required parameter validation for login
+    if (!creds.linkedinEmail) {
+      throw new Error(
+        "❌ LinkedIn email required. Please configure your email in the credentials."
+      );
+    }
+    if (!creds.linkedinPassword) {
+      throw new Error(
+        "❌ LinkedIn password required. Please configure your password in the credentials."
+      );
+    }
+
+          // Format exact attendu par l'API LINKUP (selon votre exemple)
+          // Ensure values are not empty
+          const email = String(creds.linkedinEmail || "");
+          const password = String(creds.linkedinPassword || "");
+
+          if (!email || email.trim() === "") {
+            throw new Error("❌ LinkedIn email is empty or invalid.");
+          }
+          if (!password || password.trim() === "") {
+            throw new Error("❌ LinkedIn password is empty or invalid.");
+          }
+
+          // Exact format according to the provided curl
+          body.email = email.trim();
+          body.password = password.trim();
           body.country = creds.country || "FR";
+
+          // Debug pour voir ce qui est construit
+          console.log("🔑 AUTH Debug:", {
+            emailProvided: !!email,
+            emailLength: email.length,
+            passwordProvided: !!password,
+            passwordLength: password.length,
+            country: creds.country || "FR",
+            finalBody: body,
+          });
+        } else {
+          throw new Error(
+            "❌ LINKUP credentials not found. Please configure your credentials in the node parameters."
+          );
         }
         break;
 
@@ -28,13 +67,16 @@ export class AuthenticationOperations {
             itemIndex,
             {}
           ) as any;
-          
-          // Required parameters validation
+
+          // Required parameter validation
           if (!verifyCodeParams.verificationCode) {
-            throw new Error("Verification code is required for this operation");
+            throw new Error(
+              "Verification code is required for this operation"
+            );
           }
-          
-          if (verifyCodeParams.verificationCode) body.code = verifyCodeParams.verificationCode;
+
+          if (verifyCodeParams.verificationCode)
+            body.code = verifyCodeParams.verificationCode;
           if (verifyCodeParams.country) body.country = verifyCodeParams.country;
         }
         break;
@@ -42,4 +84,4 @@ export class AuthenticationOperations {
 
     return body;
   }
-} 
+}

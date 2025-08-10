@@ -16,17 +16,20 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
-        if (!sendConnectionParams.profileUrl) {
-          throw new Error("LinkedIn profile URL is required for this operation");
-        }
-        
+
+            // Required parameter validation
+    if (!sendConnectionParams.profileUrl) {
+      throw new Error(
+        "LinkedIn profile URL is required for this operation"
+      );
+    }
+
         if (sendConnectionParams.profileUrl)
           body.linkedin_url = sendConnectionParams.profileUrl;
         if (sendConnectionParams.connectionMessage)
           body.message = sendConnectionParams.connectionMessage;
-        if (sendConnectionParams.country) body.country = sendConnectionParams.country;
+        if (sendConnectionParams.country)
+          body.country = sendConnectionParams.country;
         break;
 
       case "acceptConnectionInvitation":
@@ -35,23 +38,21 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!acceptInvitationParams.shared_secret) {
           throw new Error("Shared secret is required for this operation");
         }
         if (!acceptInvitationParams.entity_urn) {
           throw new Error("Entity URN is required for this operation");
         }
-        
+
         if (acceptInvitationParams.shared_secret)
           body.shared_secret = acceptInvitationParams.shared_secret;
         if (acceptInvitationParams.entity_urn)
           body.entity_urn = acceptInvitationParams.entity_urn;
         if (acceptInvitationParams.country)
           body.country = acceptInvitationParams.country;
-        if (acceptInvitationParams.login_token)
-          body.login_token = acceptInvitationParams.login_token;
         break;
 
       case "withdrawInvitation":
@@ -60,12 +61,12 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!withdrawInvitationParams.invitationId) {
           throw new Error("Invitation ID is required for this operation");
         }
-        
+
         if (withdrawInvitationParams.invitationId)
           body.invitation_id = withdrawInvitationParams.invitationId;
         if (withdrawInvitationParams.country)
@@ -78,12 +79,14 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!getInvitationStatusParams.profileUrl) {
-          throw new Error("LinkedIn profile URL is required for this operation");
+          throw new Error(
+            "LinkedIn profile URL is required for this operation"
+          );
         }
-        
+
         if (getInvitationStatusParams.profileUrl)
           body.linkedin_url = getInvitationStatusParams.profileUrl;
         if (getInvitationStatusParams.country)
@@ -112,8 +115,6 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        if (getReceivedInvitationsParams.login_token)
-          body.login_token = getReceivedInvitationsParams.login_token;
         if (getReceivedInvitationsParams.country)
           body.country = getReceivedInvitationsParams.country;
         if (getReceivedInvitationsParams.start_page)
@@ -142,8 +143,6 @@ export class NetworkOperations {
           body.end_page = getSentInvitationsParams.end_page;
         if (getSentInvitationsParams.country)
           body.country = getSentInvitationsParams.country;
-        if (getSentInvitationsParams.login_token)
-          body.login_token = getSentInvitationsParams.login_token;
         break;
 
       case "getNetworkRecommendations":
@@ -165,4 +164,4 @@ export class NetworkOperations {
 
     return body;
   }
-} 
+}

@@ -16,13 +16,14 @@ export class RecruiterOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!getCandidatesParams.job_id) {
           throw new Error("Job ID is required for this operation");
         }
-        
-        if (getCandidatesParams.job_id) body.job_id = getCandidatesParams.job_id;
+
+        if (getCandidatesParams.job_id)
+          body.job_id = getCandidatesParams.job_id;
         if (getCandidatesParams.country)
           body.country = getCandidatesParams.country;
         if (getCandidatesParams.location)
@@ -42,8 +43,6 @@ export class RecruiterOperations {
           body.start_page = getCandidatesParams.start_page;
         if (getCandidatesParams.end_page)
           body.end_page = getCandidatesParams.end_page;
-        if (getCandidatesParams.login_token)
-          body.login_token = getCandidatesParams.login_token;
         break;
 
       case "getJobPosts":
@@ -52,7 +51,6 @@ export class RecruiterOperations {
           itemIndex,
           {}
         ) as any;
-        if (getJobPostsParams.login_token) body.login_token = getJobPostsParams.login_token;
         if (getJobPostsParams.job_id) body.job_id = getJobPostsParams.job_id;
         if (getJobPostsParams.fetch_details !== undefined)
           body.fetch_details = getJobPostsParams.fetch_details;
@@ -71,35 +69,34 @@ export class RecruiterOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!applicationParams.application_id) {
-          throw new Error("Application ID is required for this operation");
+          throw new Error(
+            "Application ID is required for this operation"
+          );
         }
-        
+
         if (applicationParams.application_id)
           body.application_id = applicationParams.application_id;
-        if (applicationParams.login_token)
-          body.login_token = applicationParams.login_token;
-        if (applicationParams.country)
-          body.country = applicationParams.country;
+        if (applicationParams.country) body.country = applicationParams.country;
         break;
 
       case "publishJob":
       case "closeJob":
         const publishCloseJobParams = context.getNodeParameter(
-          "jobParams",
+          "publishCloseJobParams",
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!publishCloseJobParams.job_id) {
           throw new Error("Job ID is required for this operation");
         }
-        
-        if (publishCloseJobParams.job_id) body.job_id = publishCloseJobParams.job_id;
-        if (publishCloseJobParams.login_token) body.login_token = publishCloseJobParams.login_token;
+
+        if (publishCloseJobParams.job_id)
+          body.job_id = publishCloseJobParams.job_id;
         if (publishCloseJobParams.country)
           body.country = publishCloseJobParams.country;
         break;
@@ -110,8 +107,13 @@ export class RecruiterOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
+        if (!createJobParams.company_url) {
+          throw new Error(
+            "Company URL is required for this operation"
+          );
+        }
         if (!createJobParams.title) {
           throw new Error("Title is required for this operation");
         }
@@ -119,15 +121,18 @@ export class RecruiterOperations {
           throw new Error("Location is required for this operation");
         }
         if (!createJobParams.html_description) {
-          throw new Error("HTML description is required for this operation");
+          throw new Error(
+            "HTML description is required for this operation"
+          );
         }
-        
-        if (createJobParams.login_token) body.login_token = createJobParams.login_token;
-        if (createJobParams.company_url) body.company_url = createJobParams.company_url;
+
+        if (createJobParams.company_url)
+          body.company_url = createJobParams.company_url;
         if (createJobParams.title) body.title = createJobParams.title;
         if (createJobParams.place) body.place = createJobParams.place;
-        if (createJobParams.html_description) body.html_description = createJobParams.html_description;
-        
+        if (createJobParams.html_description)
+          body.html_description = createJobParams.html_description;
+
         if (createJobParams.country) body.country = createJobParams.country;
         if (createJobParams.employment_status)
           body.employment_status = createJobParams.employment_status;
@@ -159,4 +164,4 @@ export class RecruiterOperations {
 
     return body;
   }
-} 
+}

@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const authenticationProperties: INodeProperties[] = [
-  // AUTH - Parameters Linkup
+  // AUTH - Linkup Parameters
   {
     displayName: "Verify Code Parameters",
     name: "verifyCodeParams",
@@ -33,4 +33,4 @@ export const authenticationProperties: INodeProperties[] = [
       },
     ],
   },
-]; 
+];

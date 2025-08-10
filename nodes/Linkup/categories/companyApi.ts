@@ -16,18 +16,26 @@ export class CompanyApiOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!searchCompaniesParams.companyKeyword) {
-          throw new Error("Company keyword is required for this operation");
+          throw new Error(
+            "Company keyword is required for this operation"
+          );
         }
-        
-        if (searchCompaniesParams.companyKeyword) body.keyword = searchCompaniesParams.companyKeyword;
-        if (searchCompaniesParams.industry) body.industry = searchCompaniesParams.industry;
-        if (searchCompaniesParams.location) body.location = searchCompaniesParams.location;
-        if (searchCompaniesParams.employee_range) body.employee_range = searchCompaniesParams.employee_range;
-        if (searchCompaniesParams.founding_company !== undefined) body.founding_company = searchCompaniesParams.founding_company;
-        if (searchCompaniesParams.total_results) body.total_results = searchCompaniesParams.total_results;
+
+        if (searchCompaniesParams.companyKeyword)
+          body.keyword = searchCompaniesParams.companyKeyword;
+        if (searchCompaniesParams.industry)
+          body.industry = searchCompaniesParams.industry;
+        if (searchCompaniesParams.location)
+          body.location = searchCompaniesParams.location;
+        if (searchCompaniesParams.employee_range)
+          body.employee_range = searchCompaniesParams.employee_range;
+        if (searchCompaniesParams.founding_company !== undefined)
+          body.founding_company = searchCompaniesParams.founding_company;
+        if (searchCompaniesParams.total_results)
+          body.total_results = searchCompaniesParams.total_results;
         break;
 
       case "getCompanyInfo":
@@ -36,13 +44,16 @@ export class CompanyApiOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!getCompanyInfoParams.companyUrl) {
-          throw new Error("Company URL is required for this operation");
+          throw new Error(
+            "Company URL is required for this operation"
+          );
         }
-        
-        if (getCompanyInfoParams.companyUrl) body.company_url = getCompanyInfoParams.companyUrl;
+
+        if (getCompanyInfoParams.companyUrl)
+          body.company_url = getCompanyInfoParams.companyUrl;
         break;
 
       case "getCompanyInfoByDomain":
@@ -51,13 +62,16 @@ export class CompanyApiOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!getCompanyInfoByDomainParams.domain) {
-          throw new Error("Company domain is required for this operation");
+          throw new Error(
+            "Company domain is required for this operation"
+          );
         }
-        
-        if (getCompanyInfoByDomainParams.domain) body.domain = getCompanyInfoByDomainParams.domain;
+
+        if (getCompanyInfoByDomainParams.domain)
+          body.domain = getCompanyInfoByDomainParams.domain;
         break;
     }
 

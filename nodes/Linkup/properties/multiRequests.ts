@@ -1,7 +1,40 @@
 import { INodeProperties } from "n8n-workflow";
 
 export const multiRequestsProperties: INodeProperties[] = [
-  // MULTI-REQUESTS - Parameters
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
+        resource: ["multiRequests"],
+      },
+    },
+    options: [
+      {
+        name: "Custom Request",
+        value: "customRequest",
+        description: "Make a custom HTTP request",
+      },
+    ],
+    default: "customRequest",
+  },
+  {
+    displayName: "URL",
+    name: "url",
+    type: "string",
+    default: "",
+    required: true,
+    placeholder: "https://api.linkupapi.com/v1/profile/me",
+    description: "The URL to make the request to",
+    displayOptions: {
+      show: {
+        resource: ["multiRequests"],
+        operation: ["customRequest"],
+      },
+    },
+  },
   {
     displayName: "Method",
     name: "method",
@@ -20,151 +53,23 @@ export const multiRequestsProperties: INodeProperties[] = [
         value: "PUT",
       },
       {
-        name: "PATCH",
-        value: "PATCH",
-      },
-      {
         name: "DELETE",
         value: "DELETE",
       },
+      {
+        name: "PATCH",
+        value: "PATCH",
+      },
     ],
     default: "POST",
+    required: true,
+    description: "The HTTP method to use",
     displayOptions: {
       show: {
         resource: ["multiRequests"],
         operation: ["customRequest"],
       },
     },
-    description: "HTTP method to use",
-  },
-  {
-    displayName: "URL",
-    name: "url",
-    type: "string",
-    default: "",
-    placeholder: "https://api.linkupapi.com/v1/auth/login",
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-      },
-    },
-    description: "Full URL including base URL and endpoint",
-  },
-  {
-    displayName: "Send Query Parameters",
-    name: "sendQueryParams",
-    type: "boolean",
-    default: false,
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-      },
-    },
-    description: "Send query parameters with the request",
-  },
-  {
-    displayName: "Query Parameters",
-    name: "queryParams",
-    type: "fixedCollection",
-    typeOptions: {
-      multipleValues: true,
-    },
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-        sendQueryParams: [true],
-      },
-    },
-    options: [
-      {
-        displayName: "Parameters",
-        name: "parameters",
-        values: [
-          {
-            displayName: "Name",
-            name: "name",
-            type: "string",
-            default: "",
-            description: "Parameter name",
-          },
-          {
-            displayName: "Value",
-            name: "value",
-            type: "string",
-            default: "",
-            description: "Parameter value",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    displayName: "Send Body",
-    name: "sendBody",
-    type: "boolean",
-    default: false,
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-      },
-    },
-    description: "Send body with the request",
-  },
-  {
-    displayName: "Body Parameters",
-    name: "bodyParams",
-    type: "fixedCollection",
-    typeOptions: {
-      multipleValues: true,
-    },
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-        sendBody: [true],
-      },
-    },
-    options: [
-      {
-        displayName: "Parameters",
-        name: "parameters",
-        values: [
-          {
-            displayName: "Name",
-            name: "name",
-            type: "string",
-            default: "",
-            description: "Parameter name",
-          },
-          {
-            displayName: "Value",
-            name: "value",
-            type: "string",
-            default: "",
-            description: "Parameter value",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    displayName: "Send Headers",
-    name: "sendHeaders",
-    type: "boolean",
-    default: false,
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-      },
-    },
-    description: "Send custom headers with the request",
   },
   {
     displayName: "Headers",
@@ -174,70 +79,115 @@ export const multiRequestsProperties: INodeProperties[] = [
       multipleValues: true,
     },
     default: {},
-    displayOptions: {
-      show: {
-        resource: ["multiRequests"],
-        operation: ["customRequest"],
-        sendHeaders: [true],
-      },
-    },
+    placeholder: "Add Header",
     options: [
       {
+        name: "headerParameters",
         displayName: "Headers",
-        name: "headers",
         values: [
           {
             displayName: "Name",
             name: "name",
             type: "string",
             default: "",
-            description: "Header name",
+            description: "Name of the header",
           },
           {
             displayName: "Value",
             name: "value",
             type: "string",
             default: "",
-            description: "Header value",
+            description: "Value of the header",
           },
         ],
       },
     ],
-  },
-  {
-    displayName: "Options",
-    name: "options",
-    type: "collection",
-    placeholder: "Add option",
-    default: {},
+    description: "The headers to send with the request",
     displayOptions: {
       show: {
         resource: ["multiRequests"],
         operation: ["customRequest"],
       },
     },
+  },
+  {
+    displayName: "Body Content Type",
+    name: "bodyContentType",
+    type: "options",
     options: [
       {
-        displayName: "Timeout",
-        name: "timeout",
-        type: "number",
-        default: 30000,
-        description: "Request timeout in milliseconds",
-      },
-      {
-        displayName: "Follow Redirects",
-        name: "followRedirects",
-        type: "boolean",
-        default: true,
-        description: "Follow HTTP redirects",
-      },
-      {
-        displayName: "Allow Self Signed Certificates",
-        name: "allowSelfSignedCertificates",
-        type: "boolean",
-        default: false,
-        description: "Allow self-signed certificates",
+        name: "JSON",
+        value: "json",
       },
     ],
+    default: "json",
+    description: "The content type of the body",
+    displayOptions: {
+      show: {
+        resource: ["multiRequests"],
+        operation: ["customRequest"],
+        method: ["POST", "PUT", "PATCH"],
+      },
+    },
+  },
+  {
+    displayName: "Specify Body",
+    name: "specifyBody",
+    type: "options",
+    options: [
+      {
+        name: "Using Fields Below",
+        value: "fields",
+      },
+    ],
+    default: "fields",
+    description: "How to specify the body",
+    displayOptions: {
+      show: {
+        resource: ["multiRequests"],
+        operation: ["customRequest"],
+        method: ["POST", "PUT", "PATCH"],
+      },
+    },
+  },
+  {
+    displayName: "Body Parameters",
+    name: "bodyParameters",
+    type: "fixedCollection",
+    typeOptions: {
+      multipleValues: true,
+    },
+    default: {},
+    placeholder: "Add Body Parameter",
+    options: [
+      {
+        name: "parameter",
+        displayName: "Parameters",
+        values: [
+          {
+            displayName: "Name",
+            name: "name",
+            type: "string",
+            default: "",
+            description: "Name of the parameter",
+          },
+          {
+            displayName: "Value",
+            name: "value",
+            type: "string",
+            default: "",
+            description: "Value of the parameter",
+          },
+        ],
+      },
+    ],
+    description: "The body parameters to send with the request",
+    displayOptions: {
+      show: {
+        resource: ["multiRequests"],
+        operation: ["customRequest"],
+        method: ["POST", "PUT", "PATCH"],
+      },
+    },
   },
 ];

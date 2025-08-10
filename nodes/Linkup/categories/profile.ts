@@ -16,14 +16,18 @@ export class ProfileOperations {
           itemIndex,
           {}
         ) as any;
-        
-        // Required parameters validation
+
+        // Required parameter validation
         if (!extractProfileParams.profileUrl) {
-          throw new Error("LinkedIn profile URL is required for this operation");
+          throw new Error(
+            "LinkedIn profile URL is required for this operation"
+          );
         }
-        
-        if (extractProfileParams.profileUrl) body.linkedin_url = extractProfileParams.profileUrl;
-        if (extractProfileParams.country) body.country = extractProfileParams.country;
+
+        if (extractProfileParams.profileUrl)
+          body.linkedin_url = extractProfileParams.profileUrl;
+        if (extractProfileParams.country)
+          body.country = extractProfileParams.country;
         break;
 
       case "searchProfile":
@@ -54,12 +58,10 @@ export class ProfileOperations {
           body.first_name = searchProfileParams.first_name;
         if (searchProfileParams.last_name)
           body.last_name = searchProfileParams.last_name;
-        if (searchProfileParams.title) 
-          body.title = searchProfileParams.title;
-        if (searchProfileParams.login_token)
-          body.login_token = searchProfileParams.login_token;
+        if (searchProfileParams.title) body.title = searchProfileParams.title;
         if (searchProfileParams.fetch_invitation_state !== undefined)
-          body.fetch_invitation_state = searchProfileParams.fetch_invitation_state;
+          body.fetch_invitation_state =
+            searchProfileParams.fetch_invitation_state;
         break;
 
       case "getMyProfile":
@@ -75,4 +77,4 @@ export class ProfileOperations {
 
     return body;
   }
-} 
+}

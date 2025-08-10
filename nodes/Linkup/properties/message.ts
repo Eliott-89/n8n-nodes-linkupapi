@@ -44,16 +44,9 @@ export const messageProperties: INodeProperties[] = [
         name: "media_link",
         type: "string",
         default: "",
-        placeholder: "https://example.com/media.jpg",
-        description: "Media link to include in message",
-      },
-      {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
+        placeholder: "https://example.com/image.jpg",
+        description:
+          "Direct URL to a media file (image, video, document). Must be a public URL accessible via HTTP/HTTPS. Local URLs (file://) are not supported.",
       },
     ],
   },
@@ -71,12 +64,13 @@ export const messageProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "LinkedIn URL *",
+        displayName: "LinkedIn URL",
         name: "linkedinUrl",
         type: "string",
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
-        description: "LinkedIn profile URL",
+        description:
+          "LinkedIn profile URL (required if conversation_id is not provided)",
       },
       {
         displayName: "Conversation ID",
@@ -84,7 +78,8 @@ export const messageProperties: INodeProperties[] = [
         type: "string",
         default: "",
         placeholder: "conversation_id_here",
-        description: "LinkedIn conversation ID",
+        description:
+          "LinkedIn conversation ID (required if linkedin_url is not provided)",
       },
       {
         displayName: "Total Results",
@@ -123,14 +118,6 @@ export const messageProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Login Token",
-        name: "login_token",
-        type: "string",
-        default: "",
-        placeholder: "LinkedIn login token",
-        description: "LinkedIn authentication token",
-      },
-      {
         displayName: "Country",
         name: "country",
         type: "string",
@@ -163,4 +150,4 @@ export const messageProperties: INodeProperties[] = [
       },
     ],
   },
-]; 
+];

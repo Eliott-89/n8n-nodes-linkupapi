@@ -16,12 +16,12 @@ export class CompanyOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Required parameters validation
         if (!getCompanyParams.companyUrl) {
           throw new Error("Company URL is required for this operation");
         }
-        
+
         if (getCompanyParams.companyUrl)
           body.company_url = getCompanyParams.companyUrl;
         break;
@@ -53,4 +53,4 @@ export class CompanyOperations {
 
     return body;
   }
-} 
+}

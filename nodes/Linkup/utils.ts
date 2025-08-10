@@ -2,68 +2,68 @@ import { IExecuteFunctions } from "n8n-workflow";
 import { LinkupCredentials, RequestBody, LINKUP_API_BASE_URL } from "./types";
 
 export class LinkupUtils {
-  static sanitizeCredentialValue(value: any): string | null {
-    if (!value || 
-        value === undefined || 
-        value === null || 
-        value === "" || 
-        typeof value !== 'string' ||
-        value.includes("__n8n_BLANK_VALUE_") ||
-        value.trim() === "") {
+  static sanitizeCredentialValue(value: string): string | null {
+    if (!value || value.includes("__n8n_BLANK_VALUE_")) {
       return null;
     }
-    return value.trim();
+    return value;
   }
 
   static async getCredentialsWithFallback(
     context: IExecuteFunctions
   ): Promise<LinkupCredentials> {
-    try {
-      // Always use saved credentials (no more custom credentials)
-      const credentials = await context.getCredentials("linkupApi");
+    // Always use saved credentials (no more custom credentials)
+    const credentials = await context.getCredentials("linkupApi");
 
-      if (!credentials) {
-        throw new Error(
-          "❌ No LINKUP credentials found. Please configure your LINKUP API credentials in the node settings."
-        );
-      }
-
-      // Debug: log les clés disponibles (sans valeurs sensibles)
-      const availableKeys = Object.keys(credentials);
-      console.log("📝 LINKUP Debug - Available credential keys:", availableKeys);
-
-      const apiKey = LinkupUtils.sanitizeCredentialValue(credentials.apiKey);
-      const email = LinkupUtils.sanitizeCredentialValue(credentials.linkedinEmail);
-      const password = LinkupUtils.sanitizeCredentialValue(credentials.linkedinPassword);
-      const country = LinkupUtils.sanitizeCredentialValue(credentials.country);
-      const loginToken = LinkupUtils.sanitizeCredentialValue(credentials.loginToken);
-
-      if (!apiKey) {
-        throw new Error(
-          "❌ API Key is missing or invalid. Please check your LINKUP API key in the credentials settings. Make sure it's not empty and doesn't contain special characters."
-        );
-      }
-
-      // Valider le format de l'API key (généralement alphanumérique)
-      if (!/^[a-zA-Z0-9_-]+$/.test(apiKey)) {
-        throw new Error(
-          "❌ API Key format appears invalid. LINKUP API keys should contain only letters, numbers, underscores and hyphens."
-        );
-      }
-
-      console.log("✅ LINKUP Debug - API Key format validated, length:", apiKey.length);
-
-      return {
-        apiKey: apiKey!,
-        email: email || "",
-        password: password || "",
-        country: country || "FR",
-        loginToken: loginToken || "",
-      };
-    } catch (error: any) {
-      console.error("🚨 LINKUP Credentials Error:", error.message);
-      throw error;
+    if (!credentials) {
+      throw new Error(
+        "Missing API key. Please configure your LINKUP credentials in the node settings."
+      );
     }
+
+    const apiKey = LinkupUtils.sanitizeCredentialValue(
+      credentials.apiKey as string
+    );
+    const email = LinkupUtils.sanitizeCredentialValue(
+      credentials.linkedinEmail as string
+    );
+    const password = LinkupUtils.sanitizeCredentialValue(
+      credentials.linkedinPassword as string
+    );
+    const country = LinkupUtils.sanitizeCredentialValue(
+      credentials.country as string
+    );
+    const loginToken = LinkupUtils.sanitizeCredentialValue(
+      credentials.loginToken as string
+    );
+
+    if (!apiKey) {
+      throw new Error(
+        "Missing API key. Please configure your LINKUP credentials in the node settings."
+      );
+    }
+
+    // Debug: log de la longueur de l'API key (sans exposer la valeur)
+    console.log(
+      "🔑 LINKUP Debug - API Key length:",
+      apiKey.length,
+      "characters"
+    );
+
+    // Vérification basique du format de l'API key
+    if (apiKey.length < 10) {
+      throw new Error(
+        "API key seems too short. Please verify your LINKUP API key."
+      );
+    }
+
+    return {
+      apiKey: apiKey!,
+      email: email || "",
+      password: password || "",
+      country: country || "FR",
+      loginToken: loginToken || "",
+    };
   }
 
   static buildRequestOptions(
@@ -79,7 +79,6 @@ export class LinkupUtils {
       headers: {
         "x-api-key": apiKey,
         "Content-Type": "application/json",
-        "User-Agent": "n8n-linkup-node/2.4.27",
       },
       body,
       timeout,
@@ -94,12 +93,11 @@ export class LinkupUtils {
 
       // PROFILE
       getMyProfile: "/profile/me",
-      extractProfileInfo: "/data/profile/info",
-      searchProfile: "/data/profile/search",
+      searchProfile: "/profile/search",
 
       // COMPANIES
-      searchCompanies: "/data/companies/search",
-      getCompanyInfo: "/data/companies/info",
+      searchCompanies: "/companies/search",
+      getCompanyInfo: "/companies/info",
 
       // NETWORK
       sendConnectionRequest: "/network/connect",
@@ -114,24 +112,24 @@ export class LinkupUtils {
       // MESSAGES
       sendMessage: "/messages/send",
       getMessageInbox: "/messages/inbox",
-      getConversationMessages: "/messages/conversation-messages",
+      getConversationMessages: "/messages/conversation",
 
       // POSTS
       getPostReactions: "/posts/reactions",
       reactToPost: "/posts/react",
       repost: "/posts/repost",
-      repostContent: "/posts/repost", // alias pour repostContent
+      repostContent: "/posts/repost",
       commentPost: "/posts/comment",
-      addCommentToPost: "/posts/comment", // alias pour addCommentToPost
-      extractComments: "/posts/comments",
-      getComments: "/posts/comments", // alias pour getComments
+      addCommentToPost: "/posts/comment",
+      extractComments: "/posts/extract-comments",
+      getComments: "/posts/extract-comments",
       answerComment: "/posts/answer-comment",
       searchPosts: "/posts/search",
       createPost: "/posts/create",
       getFeed: "/posts/feed",
-      getLinkedInFeed: "/posts/feed", // alias pour getLinkedInFeed
+      getLinkedInFeed: "/posts/feed",
       timeSpent: "/posts/time-spent",
-      sendPostTimeSpent: "/posts/time-spent", // alias pour sendPostTimeSpent
+      sendPostTimeSpent: "/posts/time-spent",
 
       // RECRUITER
       getCandidates: "/recruiter/candidates",
@@ -141,30 +139,30 @@ export class LinkupUtils {
       closeJob: "/recruiter/close-job",
       createJob: "/recruiter/create-job",
 
-      // SIGNAL API (corrigés)
-      extractPostReactions: "/data/posts/reactions",
-      extractPostComments: "/data/posts/comments",
-      extractProfileReactions: "/data/profile/reactions",
-      extractProfileComments: "/data/profile/comments",
-      extractProfilePosts: "/data/profile/posts",
-      extractCompanyPosts: "/data/companies/posts",
+      // SIGNAL API (nouveaux)
+      extractPostReactions: "/data/signals/posts/reactions",
+      extractPostComments: "/data/signals/posts/comments",
+      extractProfileReactions: "/data/signals/profile/reactions",
+      extractProfileComments: "/data/signals/profile/comments",
+      extractProfilePosts: "/data/signals/profile/posts",
+      extractCompanyPosts: "/data/signals/company/posts",
 
-      // COMPANY API (corrigés)
+      // COMPANY API (nouveaux)
       searchCompaniesApi: "/data/search/companies",
-      getCompanyInfoApi: "/data/companies/info",
-      getCompanyInfoByDomain: "/data/companies/info-by-domain",
+      getCompanyInfoApi: "/data/company/info",
+      getCompanyInfoByDomain: "/data/company/info-by-domain",
 
-      // PERSON API (corrigés)
+      // PERSON API (nouveaux)
       searchProfilesApi: "/data/search/profiles",
-      searchProfiles: "/data/search/profiles", // alias pour searchProfiles
-      extractProfileInfoApi: "/data/profile/info",
-      profileEnrichment: "/data/profile/enrich",
-      extractCompanyEmployees: "/data/companies/employees",
+      searchProfiles: "/data/search/profiles",
+      extractProfileInfo: "/data/profil/info",
+      profileEnrichment: "/data/profil/enrich",
+      extractCompanyEmployees: "/data/employees/extract",
 
       // MULTI-REQUESTS
-      customRequest: "/request", // Endpoint générique corrigé
+      customRequest: "/custom", // Generic endpoint for custom requests
     };
 
     return endpointMap[operation] || "/unknown";
   }
-} 
+}
