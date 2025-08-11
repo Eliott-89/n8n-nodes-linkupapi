@@ -3,7 +3,6 @@ import {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
-  NodeConnectionType,
 } from "n8n-workflow";
 
 import { NODE_VERSION } from "./types";
@@ -33,8 +32,8 @@ export class Linkup implements INodeType {
       name: "LINKUP",
       color: "#0077b5",
     },
-    inputs: [NodeConnectionType.Main],
-    outputs: [NodeConnectionType.Main],
+    inputs: ["main" as any],
+    outputs: ["main" as any],
     credentials: [
       {
         name: "linkupApi",
