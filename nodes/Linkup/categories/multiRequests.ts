@@ -14,11 +14,7 @@ export class MultiRequestsOperations {
         const url = context.getNodeParameter("url", itemIndex) as string;
         body.url = url;
         
-        console.log("🔧 MULTI-REQUEST URL Debug:", {
-          url: url,
-          urlType: typeof url,
-          urlLength: url ? url.length : 0,
-        });
+
 
         // Get method parameter
         const method = context.getNodeParameter("method", itemIndex, "POST") as string;

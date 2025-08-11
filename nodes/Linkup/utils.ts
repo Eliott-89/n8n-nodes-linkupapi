@@ -44,11 +44,6 @@ export class LinkupUtils {
     }
 
     // Debug: log de la longueur de l'API key (sans exposer la valeur)
-    console.log(
-      "🔑 LINKUP Debug - API Key length:",
-      apiKey.length,
-      "characters"
-    );
 
     // Vérification basique du format de l'API key
     if (apiKey.length < 10) {

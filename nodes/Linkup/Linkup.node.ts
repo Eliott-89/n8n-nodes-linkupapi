@@ -202,15 +202,7 @@ export class Linkup implements INodeType {
             timeout: body.timeout || timeout,
           };
 
-          console.log("🔧 MULTI-REQUEST Debug:", {
-            originalUrl: body.url,
-            finalUrl: requestOptions.url,
-            method: method,
-            hasBody: !!body.requestBody,
-            bodyKeys: body.requestBody ? Object.keys(body.requestBody) : [],
-            bodyContent: body.requestBody,
-            headers: finalHeaders,
-          });
+
 
           // Ajouter le body seulement pour les méthodes qui le supportent
           if (
@@ -230,38 +222,11 @@ export class Linkup implements INodeType {
           );
         }
 
-        console.log("🔄 LINKUP Request:", {
-          url: requestOptions.url,
-          method: requestOptions.method,
-          hasApiKey: !!requestOptions.headers["x-api-key"],
-          apiKeyLength: requestOptions.headers["x-api-key"]?.length || 0,
-          bodyKeys: Object.keys(body || {}),
-          bodyPreview:
-            resource === "authentication"
-              ? "***"
-              : JSON.stringify(body).substring(0, 200) + "...",
-          fullBody:
-            resource === "authentication" ? "***" : JSON.stringify(body),
-          requestBody: JSON.stringify(requestOptions.body),
-          headers: requestOptions.headers,
-          bodyValues:
-            resource === "authentication"
-              ? {
-                  emailLength: body.email?.length || 0,
-                  passwordLength: body.password?.length || 0,
-                  country: body.country,
-                }
-              : "***",
-        });
+
 
         const response = await this.helpers.httpRequest(requestOptions);
 
-        console.log("✅ LINKUP Response received:", {
-          status: response?.status || "success",
-          hasData: !!response,
-          responseType: typeof response,
-          isNull: response === null,
-        });
+
 
         const result = {
           json: {

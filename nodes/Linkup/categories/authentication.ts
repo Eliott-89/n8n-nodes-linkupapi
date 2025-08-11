@@ -43,14 +43,6 @@ export class AuthenticationOperations {
           body.country = creds.country || "FR";
 
           // Debug pour voir ce qui est construit
-          console.log("🔑 AUTH Debug:", {
-            emailProvided: !!email,
-            emailLength: email.length,
-            passwordProvided: !!password,
-            passwordLength: password.length,
-            country: creds.country || "FR",
-            finalBody: body,
-          });
         } else {
           throw new Error(
             "❌ LINKUP credentials not found. Please configure your credentials in the node parameters."
