@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
