@@ -1,36 +1,35 @@
 # Changelog
 
-## [3.3.3] - 2025-01-10
+## [2.4.83] - 2025-01-10
 
 ### 🌍 Internationalization
-- **Complete English translation** : All French text translated to English for n8n verification compliance
-  - Error messages, comments, and parameter descriptions now in English
-  - Interface text and documentation fully localized
-  - Ready for n8n community node verification
+- **Complete English Translation** : Full translation of all French text to English
+  - All error messages now in English for n8n verification compliance
+  - All comments translated to English
+  - All property descriptions in English
+  - All validation messages in English
 
 ### 🧹 Project Cleanup
-- **Removed development files** : Cleaned project structure
-  - Deleted temporary documentation and report files
-  - Removed duplicate folders and system files
-  - Maintained only essential files for production
+- **Code Structure Optimization** : Removed unnecessary files and documentation
+  - Deleted temporary correction files and reports
+  - Removed duplicate directories
+  - Cleaned up project structure
+  - Maintained only essential files for functionality
 
 ### ✅ n8n Compliance
-- **Full compliance** with n8n community node verification guidelines
-  - Package source verification ✅
-  - No external dependencies ✅
-  - Proper documentation ✅
-  - No environment/file system access ✅
-  - n8n best practices ✅
-  - English language only ✅
-  - MIT License ✅
+- **Verification Guidelines** : Full compliance with n8n community node requirements
+  - English language only (interface and documentation)
+  - No external dependencies
+  - Proper error handling and validation
+  - MIT license compliance
+  - Linter passes all security checks
 
 ### 🔧 Technical Improvements
-- Enhanced error handling with detailed English messages
-- Improved parameter validation
-- Professional code structure and documentation
-- Maintained 100% API coverage
+- **Enhanced Error Handling** : Improved user feedback with detailed English messages
+- **Parameter Validation** : Better validation with clear English error messages
+- **Documentation** : Professional English documentation structure
 
-## [2.4.81] - 2025-01-10
+## [2.4.68] - 2025-01-10
 
 ### 🔧 Corrections
 - **Gestion des réponses null** : Correction de l'erreur "Cannot read properties of null (reading 'status')"
