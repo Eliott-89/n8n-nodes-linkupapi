@@ -183,8 +183,8 @@ n8n-nodes-linkupapi/
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/Eliott-89/n8n-nodes-linkup.git
-cd n8n-nodes-linkup
+git clone https://github.com/Eliott-89/n8n-nodes-linkupapi.git
+cd n8n-nodes-linkupapi
 
 # Install dependencies
 pnpm install
@@ -259,13 +259,13 @@ The package includes comprehensive error handling for:
 ## Support
 
 For technical support and feature requests:
-- [Report Issues](https://github.com/Eliott-89/n8n-nodes-linkup/issues)
-- [Feature Requests](https://github.com/Eliott-89/n8n-nodes-linkup/issues/new?labels=enhancement)
+- [Report Issues](https://github.com/Eliott-89/n8n-nodes-linkupapi/issues)
+- [Feature Requests](https://github.com/Eliott-89/n8n-nodes-linkupapi/issues/new?labels=enhancement)
 - [Community Support](https://community.n8n.io)
 
 ## Version History
 
-### Current Version: 0.0.2
+### Current Version: 0.0.7
 
 **Latest Features:**
 - Complete English translation for n8n verification compliance
@@ -283,7 +283,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Eliott Cerpaud**
 - GitHub: [@Eliott-89](https://github.com/Eliott-89)
-- Project: [n8n-nodes-linkup](https://github.com/Eliott-89/n8n-nodes-linkup)
+- Project: [n8n-nodes-linkupapi](https://github.com/Eliott-89/n8n-nodes-linkupapi)
 
 ## Contributing
 
