@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "3.3.16",
+  "version": "0.0.14",
   "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
@@ -28,13 +28,8 @@
   "packageManager": "pnpm@8.6.2",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
-    "build:global": "npx tsc && npx gulp build:icons",
     "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint \"nodes/**/*.ts\" \"credentials/**/*.ts\"",
-    "lintfix": "eslint nodes credentials package.json --fix",
     "prepublishOnly": "npm run build"
   },
   "files": [
@@ -50,15 +45,9 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-n8n-nodes-base": "^1.11.0",
     "gulp": "^4.0.2",
     "n8n-workflow": "*",
-    "prettier": "^2.7.1",
-    "typescript": "^4.8.4",
-    "@n8n/scan-community-package": "^0.1.1"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "n8n-workflow": "*"

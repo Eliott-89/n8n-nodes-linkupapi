@@ -24,8 +24,6 @@ docs/
 # Build tools
 tsconfig.json
 gulpfile.js
-.eslintrc*
-.prettierrc*
 
 # Git
 .git/
