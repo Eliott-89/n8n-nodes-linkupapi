@@ -66,10 +66,13 @@ export class LinkupApi implements ICredentialType {
     request: {
       baseURL: 'https://api.linkupapi.com/v1',
       url: '/data/search/profiles',
-      method: 'GET' as const,
+      method: 'POST' as const,
       headers: {
         'x-api-key': '={{ $credentials.apiKey }}',
         'Content-Type': 'application/json',
+      },
+      body: {
+        query: "test"
       },
     },
   };
