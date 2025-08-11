@@ -62,24 +62,15 @@ export class LinkupApi implements ICredentialType {
   // No generic authentication to prevent automatic "Custom API Call" generation
 
   // Test method for credential validation
-  async test(credentials: any): Promise<any> {
-    // Basic validation - check if required fields are present
-    if (!credentials.apiKey) {
-      throw new Error('API Key is required');
-    }
-    
-    if (!credentials.linkedinEmail) {
-      throw new Error('LinkedIn Email is required');
-    }
-    
-    if (!credentials.linkedinPassword) {
-      throw new Error('LinkedIn Password is required');
-    }
-
-    // Return success if all required fields are present
-    return {
-      status: 'success',
-      message: 'Credentials are valid'
-    };
-  }
+  test = {
+    request: {
+      baseURL: 'https://api.linkupapi.com',
+      url: '/test',
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer {{ $credentials.apiKey }}',
+        'Content-Type': 'application/json',
+      },
+    },
+  };
 }
