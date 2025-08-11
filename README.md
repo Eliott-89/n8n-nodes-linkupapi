@@ -265,10 +265,12 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 0.0.11
+### Current Version: 3.3.12
 
 **Latest Features:**
-- ✅ **Code cleaned** - Removed all console.log debug statements
+- ✅ **Credential testing** - Added proper credential validation method
+- ✅ **n8n verification ready** - Passes all automated pre-checks
+- ✅ **GitHub repository public** - Repository accessible for verification
 - ✅ **Production ready** - Optimized for n8n community node verification
 - ✅ **Enhanced security** - No sensitive data logging
 - ✅ **Improved performance** - Cleaner execution without debug overhead
