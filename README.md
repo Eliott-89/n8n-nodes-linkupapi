@@ -265,7 +265,7 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 3.3.12
+### Current Version: 0.0.13
 
 **Latest Features:**
 - ✅ **Credential testing** - Added proper credential validation method
