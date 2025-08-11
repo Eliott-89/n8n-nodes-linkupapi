@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
@@ -50,18 +50,17 @@
     ]
   },
   "devDependencies": {
+    "@n8n/scan-community-package": "^0.1.1",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^8.57.1",
     "eslint-plugin-n8n-nodes-base": "^1.11.0",
     "gulp": "^4.0.2",
-    "n8n-workflow": "*",
+    "n8n-workflow": "^1.82.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.4",
-    "@n8n/scan-community-package": "^0.1.1"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
   }
-
 }
