@@ -64,12 +64,15 @@ export class LinkupApi implements ICredentialType {
   // Test method for credential validation
   test = {
     request: {
-      baseURL: 'https://api.linkupapi.com',
-      url: '/test',
-      method: 'GET',
+      baseURL: 'https://api.linkupapi.com/v1',
+      url: '/profile/me',
+      method: 'POST',
       headers: {
-        'Authorization': 'Bearer {{ $credentials.apiKey }}',
+        'x-api-key': '{{ $credentials.apiKey }}',
         'Content-Type': 'application/json',
+      },
+      body: {
+        // Empty body for profile/me endpoint
       },
     },
   };
