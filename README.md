@@ -183,8 +183,8 @@ n8n-nodes-linkupapi/
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/Eliott-89/n8n-nodes-linkup.git
-cd n8n-nodes-linkup
+git clone https://github.com/Eliott-89/n8n-nodes-linkupapi.git
+cd n8n-nodes-linkupapi
 
 # Install dependencies
 pnpm install
@@ -231,14 +231,15 @@ This package covers **100% of the Linkup API endpoints**:
 
 This package is fully compliant with n8n's community node verification guidelines:
 
-✅ **Package Source Verification** - GitHub repository matches npm package  
-✅ **No External Dependencies** - Lightweight and maintainable  
-✅ **Proper Documentation** - Comprehensive README and examples  
-✅ **No Environment/File System Access** - All data through node parameters  
-✅ **n8n Best Practices** - TypeScript, error handling, validation  
-✅ **English Language Only** - All interface and documentation in English  
+✅ **Package source verification** - GitHub repository matches npm package  
+✅ **No external dependencies** - Lightweight and maintainable  
+✅ **Proper documentation** - Complete README and API documentation  
+✅ **No environment/file system access** - All data passed through parameters  
+✅ **n8n best practices** - TypeScript, proper error handling, linting passes  
+✅ **English language only** - All interface text and documentation in English  
 ✅ **MIT License** - Open source license  
-✅ **Linter Compliance** - Passes all n8n security checks
+
+Ready for n8n community node verification! 🚀
 
 ## Error Handling
 
@@ -258,21 +259,21 @@ The package includes comprehensive error handling for:
 ## Support
 
 For technical support and feature requests:
-- [Report Issues](https://github.com/Eliott-89/n8n-nodes-linkup/issues)
-- [Feature Requests](https://github.com/Eliott-89/n8n-nodes-linkup/issues/new?labels=enhancement)
+- [Report Issues](https://github.com/Eliott-89/n8n-nodes-linkupapi/issues)
+- [Feature Requests](https://github.com/Eliott-89/n8n-nodes-linkupapi/issues/new?labels=enhancement)
 - [Community Support](https://community.n8n.io)
 
 ## Version History
 
-### Current Version: 2.4.83
+### Current Version: 3.3.7
 
 **Latest Features:**
-- Complete English translation for n8n verification compliance
-- Enhanced error handling with detailed English messages
-- Improved parameter validation and user feedback
+- Updated credentials to follow n8n standards (IAuthenticateGeneric, ICredentialType)
+- Enhanced security with password masking for sensitive fields
+- Improved credential structure for better n8n integration
 - Professional documentation and code structure
 - 100% API coverage maintained
-- Optimized project structure and cleanup
+- Clean project structure with removed development files
 
 ## License
 
@@ -282,7 +283,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Eliott Cerpaud**
 - GitHub: [@Eliott-89](https://github.com/Eliott-89)
-- Project: [n8n-nodes-linkup](https://github.com/Eliott-89/n8n-nodes-linkup)
+- Project: [n8n-nodes-linkupapi](https://github.com/Eliott-89/n8n-nodes-linkupapi)
 
 ## Contributing
 

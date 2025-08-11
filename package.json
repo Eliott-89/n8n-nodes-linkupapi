@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "2.4.83",
+  "version": "3.3.10",
   "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
@@ -12,14 +12,14 @@
     "api"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Eliott-89/n8n-nodes-linkup",
+  "homepage": "https://github.com/Eliott-89/n8n-nodes-linkupapi",
   "author": {
     "name": "Eliott Cerpaud",
     "email": "eliott@example.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eliott-89/n8n-nodes-linkup.git"
+    "url": "git+https://github.com/Eliott-89/n8n-nodes-linkupapi.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -63,5 +63,4 @@
   "peerDependencies": {
     "n8n-workflow": "*"
   }
-
 }

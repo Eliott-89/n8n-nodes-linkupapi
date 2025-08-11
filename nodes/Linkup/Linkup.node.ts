@@ -3,7 +3,6 @@ import {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
-  NodeConnectionType,
 } from "n8n-workflow";
 
 import { NODE_VERSION } from "./types";
@@ -33,8 +32,8 @@ export class Linkup implements INodeType {
       name: "LINKUP",
       color: "#0077b5",
     },
-    inputs: [NodeConnectionType.Main],
-    outputs: [NodeConnectionType.Main],
+    inputs: ["main"],
+    outputs: ["main"],
     credentials: [
       {
         name: "linkupApi",
@@ -52,8 +51,8 @@ export class Linkup implements INodeType {
       const resource = this.getNodeParameter("resource", i) as string;
       const operation = this.getNodeParameter("operation", i) as string;
 
-              // Declare requestOptions outside try-catch for accessibility
-        let requestOptions: any = {};
+      // Déclarer requestOptions en dehors du try-catch pour l'accessibilité
+      let requestOptions: any = {};
 
       try {
         const timeout = 60000; // Default timeout (60 secondes)
@@ -126,7 +125,7 @@ export class Linkup implements INodeType {
           body.country = "FR";
         }
 
-        // Add login token if necessary (AFTER building the body)
+        // Add login token if necessary (APRÈS la construction du body)
         if (
           creds.loginToken &&
           ![
@@ -150,7 +149,7 @@ export class Linkup implements INodeType {
           body.login_token = creds.loginToken;
         }
 
-        // For Multi-Requests, add credentials to body if necessary
+        // Pour Multi-Requests, ajouter les credentials au body si nécessaire
         if (resource === "multiRequests" && operation === "customRequest") {
           if (creds.country && !body.requestBody.country) {
             body.requestBody.country = creds.country;
@@ -163,7 +162,7 @@ export class Linkup implements INodeType {
         // Get endpoint
         let endpoint = LinkupUtils.getEndpointForOperation(operation);
 
-        // For Multi-Requests, use the provided URL directly
+        // Pour Multi-Requests, utiliser directement l'URL fournie
         if (resource === "multiRequests" && operation === "customRequest") {
           const queryString = body.queryParams
             ? "?" +
@@ -175,18 +174,18 @@ export class Linkup implements INodeType {
                 .join("&")
             : "";
 
-          // Build base headers
+          // Construire les headers de base
           const baseHeaders: any = {
             "x-api-key": creds.apiKey,
           };
 
-          // Add Content-Type only for methods that send a body
+          // Ajouter Content-Type seulement pour les méthodes qui envoient un body
           const method = body.method || "POST";
           if (["POST", "PUT", "PATCH"].includes(method.toUpperCase())) {
             baseHeaders["Content-Type"] = "application/json";
           }
 
-          // Merge with custom headers (don't overwrite x-api-key)
+          // Fusionner avec les headers personnalisés (ne pas écraser x-api-key)
           const finalHeaders = { ...baseHeaders };
           if (body.headers) {
             Object.keys(body.headers).forEach((key) => {
@@ -213,7 +212,7 @@ export class Linkup implements INodeType {
             headers: finalHeaders,
           });
 
-          // Add body only for methods that support it
+          // Ajouter le body seulement pour les méthodes qui le supportent
           if (
             ["POST", "PUT", "PATCH"].includes(method.toUpperCase()) &&
             body.requestBody
@@ -221,7 +220,7 @@ export class Linkup implements INodeType {
             requestOptions.body = body.requestBody;
           }
         } else {
-          // For other resources, use the normal endpoint
+          // Pour les autres ressources, utiliser l'endpoint normal
           requestOptions = LinkupUtils.buildRequestOptions(
             endpoint,
             "POST",
@@ -292,7 +291,7 @@ export class Linkup implements INodeType {
           url: requestOptions?.url,
         });
 
-        // Detailed error handling based on status code and message
+        // Gestion détaillée des erreurs selon le code de statut et le message
         let friendlyMessage = error.message || "Unknown error";
         const responseBody = error.response?.body;
         const responseText =
@@ -306,73 +305,73 @@ export class Linkup implements INodeType {
             responseText.includes("Invalid post_url parameter")
           ) {
             friendlyMessage =
-              "❌ Invalid LinkedIn URL format. Please verify that the URL is in the correct format (e.g., https://www.linkedin.com/in/username)";
+              "❌ Format d'URL LinkedIn invalide. Vérifiez que l'URL est au format correct (ex: https://www.linkedin.com/in/username)";
           } else if (
             responseText.includes("Invalid LinkedIn company URL format")
           ) {
             friendlyMessage =
-              "❌ Invalid LinkedIn company URL format. Please verify that the URL is in the correct format (e.g., https://www.linkedin.com/company/company-name)";
+              "❌ Format d'URL d'entreprise LinkedIn invalide. Vérifiez que l'URL est au format correct (ex: https://www.linkedin.com/company/company-name)";
           } else if (responseText.includes("Required fields are missing")) {
             friendlyMessage =
-              "❌ Required fields are missing. Please verify that all required parameters are provided.";
+              "❌ Champs requis manquants. Vérifiez que tous les paramètres obligatoires sont fournis.";
           } else if (
             responseText.includes("total_results must be greater than 0")
           ) {
             friendlyMessage =
-              "❌ The total_results parameter must be greater than 0.";
+              "❌ Le paramètre total_results doit être supérieur à 0.";
           } else if (
             responseText.includes("Error while sending connection request")
           ) {
             friendlyMessage =
-              "❌ Error while sending connection request. Please verify the parameters.";
+              "❌ Erreur lors de l'envoi de la demande de connexion. Vérifiez les paramètres.";
           } else if (responseText.includes("Error while sending message")) {
             friendlyMessage =
-              "❌ Error while sending message. Please verify the recipient, content, and media URL if provided.";
+              "❌ Erreur lors de l'envoi du message. Vérifiez le destinataire, le contenu et l'URL du média si fournie.";
           } else if (
             responseText.includes("Invalid media link") ||
             responseText.includes("Media link error")
           ) {
             friendlyMessage =
-              "❌ The media URL is not valid. Please ensure it's a direct URL to an accessible media file.";
+              "❌ L'URL du média n'est pas valide. Assurez-vous qu'il s'agit d'une URL directe vers un fichier média accessible.";
           } else if (responseText.includes("Error while creating post")) {
             friendlyMessage =
-              "❌ Error while creating post. Please verify the content and parameters.";
+              "❌ Erreur lors de la création du post. Vérifiez le contenu et les paramètres.";
           } else if (responseText.includes("Error while posting comment")) {
             friendlyMessage =
-              "❌ Error while posting comment. Please verify the content.";
+              "❌ Erreur lors de la publication du commentaire. Vérifiez le contenu.";
           } else if (responseText.includes("Bad parameter")) {
             friendlyMessage =
-              "❌ Incorrect parameter. Please verify that all required fields are provided and correct.";
+              "❌ Paramètre incorrect. Vérifiez que tous les champs requis sont fournis et corrects.";
           } else {
             friendlyMessage =
-              "❌ Incorrect parameters. Please verify your input data.";
+              "❌ Paramètres incorrects. Vérifiez vos données d'entrée.";
           }
         } else if (error.statusCode === 401) {
           if (
             responseText.includes("Invalid API key or insufficient credits")
           ) {
             friendlyMessage =
-              "❌ Invalid API key or insufficient credits. Please verify your API key and LINKUP credits.";
+              "❌ Clé API invalide ou crédits insuffisants. Vérifiez votre clé API et vos crédits LINKUP.";
           } else if (responseText.includes("Bad username or password")) {
             friendlyMessage =
-              "❌ Incorrect username or password. Please verify your LinkedIn credentials.";
+              "❌ Nom d'utilisateur ou mot de passe incorrect. Vérifiez vos identifiants LinkedIn.";
           } else if (responseText.includes("Session expired")) {
             friendlyMessage =
-              "❌ Session expired. Please log back into your LinkedIn account.";
+              "❌ Session expirée. Reconnectez-vous à votre compte LinkedIn.";
           } else if (responseText.includes("Verification failed")) {
             friendlyMessage =
-              "❌ Verification failed. Please verify your verification code.";
+              "❌ Échec de la vérification. Vérifiez votre code de vérification.";
           } else {
             friendlyMessage =
-              "❌ Authentication failed. Please verify your LINKUP API key and credentials.";
+              "❌ Échec d'authentification. Vérifiez votre clé API LINKUP et vos identifiants.";
           }
         } else if (error.statusCode === 403) {
           if (responseBody?.includes("LinkedIn token expired")) {
             friendlyMessage =
-              "❌ LinkedIn token expired. Please log back into your LinkedIn account.";
+              "❌ Token LinkedIn expiré. Reconnectez-vous à votre compte LinkedIn.";
           } else {
             friendlyMessage =
-              "❌ Access forbidden. Your API key may not have sufficient permissions.";
+              "❌ Accès interdit. Votre clé API peut ne pas avoir les permissions suffisantes.";
           }
         } else if (error.statusCode === 404) {
           if (
@@ -381,36 +380,36 @@ export class Linkup implements INodeType {
             )
           ) {
             friendlyMessage =
-              "❌ Unable to retrieve contact information. Please verify the LinkedIn profile URL.";
+              "❌ Impossible de récupérer les informations de contact. Vérifiez l'URL du profil LinkedIn.";
           } else {
             friendlyMessage =
-              "❌ API endpoint not found. This operation may not be supported.";
+              "❌ Endpoint API non trouvé. Cette opération peut ne pas être supportée.";
           }
         } else if (error.statusCode === 429) {
           if (responseBody?.includes("LinkedIn Rate limit exceeded")) {
             friendlyMessage =
-              "⚠️ LinkedIn rate limit exceeded. Please try again later.";
+              "⚠️ Limite de taux LinkedIn dépassée. Veuillez réessayer plus tard.";
           } else if (responseBody?.includes("API Rate limit exceeded")) {
             friendlyMessage =
-              "⚠️ API rate limit exceeded. Please try again later.";
+              "⚠️ Limite de taux API dépassée. Veuillez réessayer plus tard.";
           } else {
             friendlyMessage =
-              "⚠️ Too many requests. Please wait before trying again.";
+              "⚠️ Trop de requêtes. Veuillez attendre avant de réessayer.";
           }
         } else if (error.statusCode === 500) {
           if (responseBody?.includes("LinkedIn API error occurred")) {
             friendlyMessage =
-              "🔧 LinkedIn API error. The service may be temporarily unavailable.";
+              "🔧 Erreur de l'API LinkedIn. Le service peut être temporairement indisponible.";
           } else if (
             responseBody?.includes(
               "An error occurred while processing your request"
             )
           ) {
             friendlyMessage =
-              "🔧 Error while processing your request. Please try again.";
+              "🔧 Erreur lors du traitement de votre requête. Veuillez réessayer.";
           } else {
             friendlyMessage =
-              "🔧 Server error. Please try again later.";
+              "🔧 Erreur serveur. Veuillez réessayer plus tard.";
           }
         }
 
@@ -424,12 +423,6 @@ export class Linkup implements INodeType {
             resource,
             operation,
             timestamp: new Date().toISOString(),
-            _debug: {
-              requestUrl: requestOptions?.url,
-              requestMethod: requestOptions?.method,
-              hasApiKey: !!requestOptions?.headers?.["x-api-key"],
-              requestBody: JSON.stringify(requestOptions?.body || {}),
-            },
           },
           pairedItem: { item: i },
         });
