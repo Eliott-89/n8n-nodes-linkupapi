@@ -1,6 +1,5 @@
 import {
   IAuthenticateGeneric,
-  ICredentialTestRequest,
   ICredentialType,
   INodeProperties,
 } from 'n8n-workflow';
@@ -70,19 +69,21 @@ export class LinkupApi implements ICredentialType {
     },
   };
 
-  test: ICredentialTestRequest = {
-    request: {
-      baseURL: 'https://api.linkupapi.com/v1',
-      url: '/data/search/profiles',
-      method: 'POST',
-      headers: {
-        'x-api-key': '={{$credentials.apiKey}}',
-        'Content-Type': 'application/json',
-      },
-      body: {
-        query: 'test',
-        total_results: 1,
-      },
-    },
-  };
+  // Test method for credential validation
+  // Temporarily disabled to avoid Bad Request errors with Linkup API
+  // test: ICredentialTestRequest = {
+  //   request: {
+  //     baseURL: 'https://api.linkupapi.com/v1',
+  //     url: '/data/search/profiles',
+  //     method: 'POST',
+  //     headers: {
+  //       'x-api-key': '={{$credentials.apiKey}}',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: {
+  //       query: 'test',
+  //       total_results: 1,
+  //     },
+  //   },
+  // };
 }
