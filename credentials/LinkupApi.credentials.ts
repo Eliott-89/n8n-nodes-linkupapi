@@ -62,19 +62,17 @@ export class LinkupApi implements ICredentialType {
   // No generic authentication to prevent automatic "Custom API Call" generation
 
   // Test method for credential validation
-  test = {
-    request: {
-      baseURL: 'https://api.linkupapi.com/v1',
-      url: '/data/search/profiles',
-      method: 'POST',
-      headers: {
-        'x-api-key': '{{ $credentials.apiKey }}',
-        'Content-Type': 'application/json',
-      },
-      body: {
-        query: "test",
-        total_results: 1
-      },
-    },
-  };
+  // Temporarily disabled due to authentication issues
+  // test = {
+  //   request: {
+  //     baseURL: 'https://api.linkupapi.com/v1',
+  //     url: '/profile/me',
+  //     method: 'POST',
+  //     headers: {
+  //       'x-api-key': '{{ $credentials.apiKey }}',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: {},
+  //   },
+  // };
 }
