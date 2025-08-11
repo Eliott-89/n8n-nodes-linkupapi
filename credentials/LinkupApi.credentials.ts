@@ -37,6 +37,25 @@ export class LinkupApi implements ICredentialType {
         password: true,
       },
     },
+    {
+      displayName: "Login Token (Optional)",
+      name: "loginToken",
+      type: "string",
+      default: "",
+      description: "LinkedIn authentication token if you have one",
+      typeOptions: {
+        password: true,
+      },
+    },
+    {
+      displayName: "Country Code",
+      name: "country",
+      type: "string",
+      default: "FR",
+      placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+      description:
+        "Country code for proxy selection (e.g., FR for France, US for United States)",
+    },
   ];
 
   // Credentials are only used by the Linkup node
@@ -46,16 +65,13 @@ export class LinkupApi implements ICredentialType {
   test = {
     request: {
       baseURL: 'https://api.linkupapi.com/v1',
-      url: '/data/search/profiles',
+      url: '/profile/me',
       method: 'POST' as const,
       headers: {
         'x-api-key': '={{ $credentials.apiKey }}',
         'Content-Type': 'application/json',
       },
-      body: {
-        query: "test",
-        total_results: 1
-      },
+      body: {},
     },
   };
 }
