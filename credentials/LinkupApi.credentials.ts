@@ -1,4 +1,5 @@
 import {
+  IAuthenticateGeneric,
   ICredentialType,
   INodeProperties,
 } from 'n8n-workflow';
@@ -58,6 +59,13 @@ export class LinkupApi implements ICredentialType {
     },
   ];
 
-  // Credentials are only used by the Linkup node
-  // No generic authentication to prevent automatic "Custom API Call" generation
+  authenticate: IAuthenticateGeneric = {
+    type: 'generic',
+    properties: {
+      headers: {
+        'x-api-key': '={{$credentials.apiKey}}',
+        'Content-Type': 'application/json',
+      },
+    },
+  };
 }
