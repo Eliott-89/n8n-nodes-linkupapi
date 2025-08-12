@@ -1,6 +1,8 @@
 import {
   ICredentialType,
   INodeProperties,
+  IAuthenticateGeneric,
+  ICredentialTestRequest,
 } from "n8n-workflow";
 
 export class LinkupApi implements ICredentialType {
@@ -58,6 +60,20 @@ export class LinkupApi implements ICredentialType {
     },
   ];
 
-  // Credentials are only used by the Linkup node
-  // No generic authentication to prevent automatic "Custom API Call" generation
+  authenticate: IAuthenticateGeneric = {
+    type: "generic",
+    properties: {
+      headers: {
+        "X-API-Key": "={{$credentials.apiKey}}",
+      },
+    },
+  };
+
+  test: ICredentialTestRequest = {
+    request: {
+      baseURL: "https://api.linkupapi.com",
+      url: "/v1/auth/verify",
+      method: "GET",
+    },
+  };
 }
