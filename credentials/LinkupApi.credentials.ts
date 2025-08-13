@@ -71,13 +71,12 @@ export class LinkupApi implements ICredentialType {
   test: ICredentialTestRequest = {
     request: {
       baseURL: "https://api.linkupapi.com",
-      url: "/v1/data/search/profiles",
-      method: "POST",
+      url: "/v1/check",
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "accept": "application/json",
         "x-api-key": "={{$credentials.apiKey}}",
       },
-      body: "{}",
     },
   };
 }

@@ -265,10 +265,10 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 4.0.25
+### Current Version: 4.0.26
 
 **Latest Features:**
-- ✅ **Credential testing** - Added proper credential validation method with API test
+- ✅ **Credential testing** - Added proper credential validation method with API health check
 - ✅ **Authentication support** - Added generic authentication for API calls
 - ✅ **n8n verification ready** - Passes all automated pre-checks
 - ✅ **GitHub repository public** - Repository accessible for verification
