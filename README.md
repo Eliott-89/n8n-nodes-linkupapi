@@ -265,7 +265,7 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 4.0.24
+### Current Version: 4.0.25
 
 **Latest Features:**
 - ✅ **Credential testing** - Added proper credential validation method with API test
