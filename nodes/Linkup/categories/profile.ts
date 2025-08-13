@@ -10,24 +10,24 @@ export class ProfileOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "extractProfileInfo":
-        const extractProfileParams = context.getNodeParameter(
-          "extractProfileParams",
+      case "getProfileInfo":
+        const getProfileInfoParams = context.getNodeParameter(
+          "getProfileInfoParams",
           itemIndex,
           {}
         ) as any;
 
         // Required parameter validation
-        if (!extractProfileParams.profileUrl) {
+        if (!getProfileInfoParams.profileUrl) {
           throw new Error(
             "LinkedIn profile URL is required for this operation"
           );
         }
 
-        if (extractProfileParams.profileUrl)
-          body.linkedin_url = extractProfileParams.profileUrl;
-        if (extractProfileParams.country)
-          body.country = extractProfileParams.country;
+        if (getProfileInfoParams.profileUrl)
+          body.linkedin_url = getProfileInfoParams.profileUrl;
+        if (getProfileInfoParams.country)
+          body.country = getProfileInfoParams.country;
         break;
 
       case "searchProfile":

@@ -3,15 +3,15 @@ import { INodeProperties } from "n8n-workflow";
 export const profileProperties: INodeProperties[] = [
   // PROFILE - Linkup Parameters
   {
-    displayName: "Extract Profile Parameters",
-    name: "extractProfileParams",
+    displayName: "Get Profile Info Parameters",
+    name: "getProfileInfoParams",
     type: "collection",
     placeholder: "Add profile parameter",
     default: {},
     displayOptions: {
       show: {
         resource: ["profile"],
-        operation: ["extractProfileInfo"],
+        operation: ["getProfileInfo"],
       },
     },
     options: [

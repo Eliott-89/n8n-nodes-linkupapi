@@ -141,7 +141,7 @@ export class Linkup implements INodeType {
             "getCompanyInfoApi",
             "getCompanyInfoByDomain",
             "searchProfilesApi",
-            "extractProfileInfoApi",
+            "extractProfileInfo",
             "getProfileInfo",
             "profileEnrichment",
             "extractCompanyEmployees",

@@ -114,9 +114,9 @@ export const commonProperties: INodeProperties[] = [
         description: "Get your LinkedIn profile information",
       },
       {
-        name: "Extract Profile Information",
-        value: "extractProfileInfo",
-        description: "Extract information from a public LinkedIn profile",
+        name: "Get Profile Information",
+        value: "getProfileInfo",
+        description: "Get profile information (profile/info)",
       },
       {
         name: "Search Profile",
