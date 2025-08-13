@@ -28,50 +28,76 @@ npm install n8n-nodes-linkupapi
 ## Features
 
 ### Authentication
-- LinkedIn login automation
-- Verification code handling
-- Session management
+- Login (`/auth/login`)
+- Verify Code (`/auth/verify`)
 
-### Profile Management
-- **Get Profile Information** (`/profile/info`) - Retrieve complete profile data with authentication
-- **Extract Profile Information** (`/data/profil/info`) - Extract public profile data without authentication
-- Search profiles with advanced filters
-- Profile enrichment and data enhancement
+### Profile
+- Get My Profile (`/profile/me`)
+- Search Profile (`/profile/search`)
+- Get Profile Info (`/profile/info`)
 
-### Company Operations
-- Company search and discovery
-- Company information extraction
-- Employee data extraction
-- Decision maker identification
+### Company
+- Search Companies (`/companies/search`)
+- Get Company Info (`/companies/info`)
 
-### Network Management
-- Send connection requests
-- Accept/decline invitations
-- Manage existing connections
-- Network recommendations
+### Network
+- Send Connection Request (`/network/connect`)
+- Get Connections (`/network/connections`)
+- Accept Connection Invitation (`/network/accept-invitations`)
+- Get Received Invitations (`/network/invitations`)
+- Get Sent Invitations (`/network/sent-invitations`)
+- Withdraw Invitation (`/network/withdraw-invitation`)
+- Get Network Recommendations (`/network/recommendations`)
+- Get Invitation Status (`/network/invitation-status`)
 
-### Messaging
-- Send automated messages
-- Retrieve conversation history
-- Manage inbox operations
+### Message
+- Send Message (`/messages/send-message`)
+- Get Message Inbox (`/messages/inbox`)
+- Get Conversation Messages (`/messages/conversation`)
 
-### Content & Posts
-- Create and publish posts
-- React to content
-- Extract post reactions and comments
-- Automated engagement
+### Post
+- Get Post Reactions (`/posts/reactions`)
+- React to Post (`/posts/react`)
+- Repost (`/posts/repost`)
+- Comment Post (`/posts/comment`)
+- Extract Comments (`/posts/extract-comments`)
+- Answer Comment (`/posts/answer-comment`)
+- Search Posts (`/posts/search`)
+- Create Post (`/posts/create`)
+- Get Feed (`/posts/feed`)
+- Time Spent (`/posts/time-spent`)
 
-### Recruitment
-- Candidate search and management
-- Job posting automation
-- CV extraction
-- Recruitment analytics
+### Recruiter
+- Get Candidates (`/recruiter/candidates`)
+- Get Candidate CV (`/recruiter/cv`)
+- Get Job Posts (`/recruiter/job-posts`)
+- Publish Job (`/recruiter/publish-job`)
+- Close Job (`/recruiter/close-job`)
+- Create Job (`/recruiter/create-job`)
 
-### Data Extraction (Signal API)
-- Extract post reactions and comments
-- Extract profile data and posts
-- Company content analysis
-- Real-time data collection
+### Signal API
+- Extract Post Reactions (`/data/signals/posts/reactions`)
+- Extract Post Comments (`/data/signals/posts/comments`)
+- Extract Profile Reactions (`/data/signals/profile/reactions`)
+- Extract Profile Comments (`/data/signals/profile/comments`)
+- Extract Profile Posts (`/data/signals/profile/posts`)
+- Extract Company Posts (`/data/signals/company/posts`)
+
+### Company API
+- Search Companies (`/data/search/companies`)
+- Get Company Info (`/data/company/info`)
+- Get Company Info by Domain (`/data/company/info-by-domain`)
+
+### Person API
+- Search Profiles (`/data/search/profiles`)
+- Extract Profile Info (`/data/profil/info`)
+- Profile Enrichment (`/data/profil/enrich`)
+- Extract Company Employees (`/data/employees/extract`)
+
+### Multi Requests
+- Custom Request (`/custom`)
+
+**Note:** Les 3 parties avec "API" à la fin (Signal API, Company API, Person API) fonctionnent sans compte LinkedIn, uniquement avec la clé API Linkup.
 
 ## Usage Examples
 
@@ -180,29 +206,7 @@ npm install n8n-nodes-linkupapi
 }
 ```
 
-## Profile Operations Comparison
 
-### Get Profile Information vs Extract Profile Information
-
-| Feature | Get Profile Info | Extract Profile Info |
-|---------|------------------|---------------------|
-| **Resource** | `profile` | `personApi` |
-| **Operation** | `getProfileInfo` | `extractProfileInfo` |
-| **Endpoint** | `/profile/info` | `/data/profil/info` |
-| **Authentication** | Requires login token | API key only |
-| **Data Access** | Complete profile data | Public data only |
-| **Parameters** | `linkedin_url`, `country` | `profile_url` |
-| **Use Case** | Full profile analysis | Public data extraction |
-
-**Choose Get Profile Info when:**
-- You need complete profile information
-- You have valid LinkedIn credentials
-- You want to access private profile sections
-
-**Choose Extract Profile Info when:**
-- You only need public profile data
-- You don't have LinkedIn credentials
-- You want faster, lighter data extraction
 
 ## Project Structure
 
