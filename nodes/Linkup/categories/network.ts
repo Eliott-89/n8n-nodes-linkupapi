@@ -17,12 +17,12 @@ export class NetworkOperations {
           {}
         ) as any;
 
-            // Required parameter validation
-    if (!sendConnectionParams.profileUrl) {
-      throw new Error(
-        "LinkedIn profile URL is required for this operation"
-      );
-    }
+        // Required parameter validation
+        if (!sendConnectionParams.profileUrl) {
+          throw new Error(
+            "LinkedIn profile URL is required for this operation"
+          );
+        }
 
         if (sendConnectionParams.profileUrl)
           body.linkedin_url = sendConnectionParams.profileUrl;

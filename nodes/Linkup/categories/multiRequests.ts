@@ -13,18 +13,24 @@ export class MultiRequestsOperations {
         // Get URL parameter
         const url = context.getNodeParameter("url", itemIndex) as string;
         body.url = url;
-        
-
 
         // Get method parameter
-        const method = context.getNodeParameter("method", itemIndex, "POST") as string;
+        const method = context.getNodeParameter(
+          "method",
+          itemIndex,
+          "POST"
+        ) as string;
         body.method = method;
 
         // Get timeout parameter
         body.timeout = 60000; // Default timeout
 
         // Get headers parameter
-        const headersParam = context.getNodeParameter("headers", itemIndex, {}) as any;
+        const headersParam = context.getNodeParameter(
+          "headers",
+          itemIndex,
+          {}
+        ) as any;
         if (headersParam.headerParameters) {
           body.headers = {};
           headersParam.headerParameters.forEach((header: any) => {
@@ -35,8 +41,15 @@ export class MultiRequestsOperations {
         }
 
         // Get body parameters
-        const bodyParametersParam = context.getNodeParameter("bodyParameters", itemIndex, {}) as any;
-        if (bodyParametersParam.parameter && bodyParametersParam.parameter.length > 0) {
+        const bodyParametersParam = context.getNodeParameter(
+          "bodyParameters",
+          itemIndex,
+          {}
+        ) as any;
+        if (
+          bodyParametersParam.parameter &&
+          bodyParametersParam.parameter.length > 0
+        ) {
           body.requestBody = {};
           bodyParametersParam.parameter.forEach((param: any) => {
             if (param.name && param.value !== undefined) {

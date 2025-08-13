@@ -22,9 +22,7 @@ export class MessageOperations {
           throw new Error("LinkedIn URL is required for this operation");
         }
         if (!sendMessageParams.message_text) {
-          throw new Error(
-            "Message text is required for this operation"
-          );
+          throw new Error("Message text is required for this operation");
         }
 
         if (sendMessageParams.linkedin_url)
@@ -39,15 +37,13 @@ export class MessageOperations {
 
             // Vérifier le protocole
             if (mediaUrl.protocol === "file:") {
-                          throw new Error(
-              "Local URLs (file://) are not supported. The file must be hosted on a publicly accessible web server."
-            );
+              throw new Error(
+                "Local URLs (file://) are not supported. The file must be hosted on a publicly accessible web server."
+              );
             }
 
             if (!mediaUrl.protocol.startsWith("http")) {
-                          throw new Error(
-              "Media URL must use HTTP or HTTPS protocol"
-            );
+              throw new Error("Media URL must use HTTP or HTTPS protocol");
             }
 
             // Check that it's not a local URL
@@ -57,9 +53,9 @@ export class MessageOperations {
               mediaUrl.hostname.startsWith("192.168.") ||
               mediaUrl.hostname.startsWith("10.")
             ) {
-                          throw new Error(
-              "Local URLs are not supported. The file must be hosted on a publicly accessible web server."
-            );
+              throw new Error(
+                "Local URLs are not supported. The file must be hosted on a publicly accessible web server."
+              );
             }
 
             body.media_link = sendMessageParams.media_link;

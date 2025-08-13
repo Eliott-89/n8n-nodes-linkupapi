@@ -202,8 +202,6 @@ export class Linkup implements INodeType {
             timeout: body.timeout || timeout,
           };
 
-
-
           // Ajouter le body seulement pour les méthodes qui le supportent
           if (
             ["POST", "PUT", "PATCH"].includes(method.toUpperCase()) &&
@@ -222,11 +220,7 @@ export class Linkup implements INodeType {
           );
         }
 
-
-
         const response = await this.helpers.httpRequest(requestOptions);
-
-
 
         const result = {
           json: {

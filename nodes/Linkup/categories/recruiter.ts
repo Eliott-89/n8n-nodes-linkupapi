@@ -72,9 +72,7 @@ export class RecruiterOperations {
 
         // Required parameter validation
         if (!applicationParams.application_id) {
-          throw new Error(
-            "Application ID is required for this operation"
-          );
+          throw new Error("Application ID is required for this operation");
         }
 
         if (applicationParams.application_id)
@@ -110,9 +108,7 @@ export class RecruiterOperations {
 
         // Required parameter validation
         if (!createJobParams.company_url) {
-          throw new Error(
-            "Company URL is required for this operation"
-          );
+          throw new Error("Company URL is required for this operation");
         }
         if (!createJobParams.title) {
           throw new Error("Title is required for this operation");
@@ -121,9 +117,7 @@ export class RecruiterOperations {
           throw new Error("Location is required for this operation");
         }
         if (!createJobParams.html_description) {
-          throw new Error(
-            "HTML description is required for this operation"
-          );
+          throw new Error("HTML description is required for this operation");
         }
 
         if (createJobParams.company_url)

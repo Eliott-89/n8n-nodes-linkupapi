@@ -19,9 +19,7 @@ export class CompanyApiOperations {
 
         // Required parameter validation
         if (!searchCompaniesParams.companyKeyword) {
-          throw new Error(
-            "Company keyword is required for this operation"
-          );
+          throw new Error("Company keyword is required for this operation");
         }
 
         if (searchCompaniesParams.companyKeyword)
@@ -47,9 +45,7 @@ export class CompanyApiOperations {
 
         // Required parameter validation
         if (!getCompanyInfoParams.companyUrl) {
-          throw new Error(
-            "Company URL is required for this operation"
-          );
+          throw new Error("Company URL is required for this operation");
         }
 
         if (getCompanyInfoParams.companyUrl)
@@ -65,9 +61,7 @@ export class CompanyApiOperations {
 
         // Required parameter validation
         if (!getCompanyInfoByDomainParams.domain) {
-          throw new Error(
-            "Company domain is required for this operation"
-          );
+          throw new Error("Company domain is required for this operation");
         }
 
         if (getCompanyInfoByDomainParams.domain)

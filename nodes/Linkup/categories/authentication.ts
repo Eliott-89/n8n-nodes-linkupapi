@@ -13,17 +13,17 @@ export class AuthenticationOperations {
       case "login":
         const creds = await context.getCredentials("linkupApi");
         if (creds) {
-              // Required parameter validation for login
-    if (!creds.linkedinEmail) {
-      throw new Error(
-        "❌ LinkedIn email required. Please configure your email in the credentials."
-      );
-    }
-    if (!creds.linkedinPassword) {
-      throw new Error(
-        "❌ LinkedIn password required. Please configure your password in the credentials."
-      );
-    }
+          // Required parameter validation for login
+          if (!creds.linkedinEmail) {
+            throw new Error(
+              "❌ LinkedIn email required. Please configure your email in the credentials."
+            );
+          }
+          if (!creds.linkedinPassword) {
+            throw new Error(
+              "❌ LinkedIn password required. Please configure your password in the credentials."
+            );
+          }
 
           // Format exact attendu par l'API LINKUP (selon votre exemple)
           // Ensure values are not empty
@@ -62,9 +62,7 @@ export class AuthenticationOperations {
 
           // Required parameter validation
           if (!verifyCodeParams.verificationCode) {
-            throw new Error(
-              "Verification code is required for this operation"
-            );
+            throw new Error("Verification code is required for this operation");
           }
 
           if (verifyCodeParams.verificationCode)

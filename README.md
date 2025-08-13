@@ -265,10 +265,11 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 4.0.14
+### Current Version: 4.0.24
 
 **Latest Features:**
-- ✅ **Credential testing** - Added proper credential validation method
+- ✅ **Credential testing** - Added proper credential validation method with API test
+- ✅ **Authentication support** - Added generic authentication for API calls
 - ✅ **n8n verification ready** - Passes all automated pre-checks
 - ✅ **GitHub repository public** - Repository accessible for verification
 - ✅ **Production ready** - Optimized for n8n community node verification

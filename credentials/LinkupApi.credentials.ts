@@ -59,7 +59,6 @@ export class LinkupApi implements ICredentialType {
         "Country code for proxy selection (e.g., FR for France, US for United States)",
     },
   ];
-
   authenticate: IAuthenticateGeneric = {
     type: "generic",
     properties: {
@@ -72,8 +71,13 @@ export class LinkupApi implements ICredentialType {
   test: ICredentialTestRequest = {
     request: {
       baseURL: "https://api.linkupapi.com",
-      url: "/v1/auth/verify",
-      method: "GET",
+      url: "/v1/data/search/profiles",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": "={{$credentials.apiKey}}",
+      },
+      body: "{}",
     },
   };
 }
