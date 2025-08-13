@@ -33,7 +33,8 @@ npm install n8n-nodes-linkupapi
 - Session management
 
 ### Profile Management
-- Extract profile information
+- **Get Profile Information** (`/profile/info`) - Retrieve complete profile data with authentication
+- **Extract Profile Information** (`/data/profil/info`) - Extract public profile data without authentication
 - Search profiles with advanced filters
 - Profile enrichment and data enhancement
 
@@ -101,6 +102,31 @@ npm install n8n-nodes-linkupapi
 }
 ```
 
+### Get Profile Information (Authenticated)
+```javascript
+// Get complete profile information with authentication
+{
+  "resource": "profile",
+  "operation": "getProfileInfo",
+  "getProfileInfoParams": {
+    "linkedin_url": "https://www.linkedin.com/in/johndoe",
+    "country": "FR"
+  }
+}
+```
+
+### Extract Profile Information (Public Data)
+```javascript
+// Extract public profile information without authentication
+{
+  "resource": "personApi",
+  "operation": "extractProfileInfo",
+  "extractProfileInfoParams": {
+    "profile_url": "https://www.linkedin.com/in/johndoe"
+  }
+}
+```
+
 ### Company Data Extraction
 ```javascript
 // Extract company employees
@@ -153,6 +179,30 @@ npm install n8n-nodes-linkupapi
   }
 }
 ```
+
+## Profile Operations Comparison
+
+### Get Profile Information vs Extract Profile Information
+
+| Feature | Get Profile Info | Extract Profile Info |
+|---------|------------------|---------------------|
+| **Resource** | `profile` | `personApi` |
+| **Operation** | `getProfileInfo` | `extractProfileInfo` |
+| **Endpoint** | `/profile/info` | `/data/profil/info` |
+| **Authentication** | Requires login token | API key only |
+| **Data Access** | Complete profile data | Public data only |
+| **Parameters** | `linkedin_url`, `country` | `profile_url` |
+| **Use Case** | Full profile analysis | Public data extraction |
+
+**Choose Get Profile Info when:**
+- You need complete profile information
+- You have valid LinkedIn credentials
+- You want to access private profile sections
+
+**Choose Extract Profile Info when:**
+- You only need public profile data
+- You don't have LinkedIn credentials
+- You want faster, lighter data extraction
 
 ## Project Structure
 
