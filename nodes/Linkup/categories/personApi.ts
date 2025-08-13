@@ -49,6 +49,24 @@ export class PersonApiOperations {
           body.profile_url = extractProfileInfoParams.profileUrl;
         break;
 
+      case "getProfileInfo":
+        const getProfileInfoParams = context.getNodeParameter(
+          "getProfileInfoParams",
+          itemIndex,
+          {}
+        ) as any;
+
+        // Required parameters validation
+        if (!getProfileInfoParams.linkedin_url) {
+          throw new Error("LinkedIn URL is required for this operation");
+        }
+
+        if (getProfileInfoParams.linkedin_url)
+          body.linkedin_url = getProfileInfoParams.linkedin_url;
+        if (getProfileInfoParams.country)
+          body.country = getProfileInfoParams.country;
+        break;
+
       case "profileEnrichment":
         const profileEnrichmentParams = context.getNodeParameter(
           "profileEnrichmentParams",

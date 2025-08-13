@@ -96,6 +96,37 @@ export const personApiProperties: INodeProperties[] = [
     ],
   },
   {
+    displayName: "Get Profile Info Parameters",
+    name: "getProfileInfoParams",
+    type: "collection",
+    placeholder: "Add profile parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["personApi"],
+        operation: ["getProfileInfo"],
+      },
+    },
+    options: [
+      {
+        displayName: "LinkedIn URL *",
+        name: "linkedin_url",
+        type: "string",
+        default: "",
+        placeholder: "https://www.linkedin.com/in/username",
+        description: "LinkedIn profile URL",
+      },
+      {
+        displayName: "Country",
+        name: "country",
+        type: "string",
+        default: "FR",
+        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        description: "Country code for proxy selection",
+      },
+    ],
+  },
+  {
     displayName: "Profile Enrichment Parameters",
     name: "profileEnrichmentParams",
     type: "collection",

@@ -151,6 +151,7 @@ export class LinkupUtils {
       searchProfilesApi: "/data/search/profiles",
       searchProfiles: "/data/search/profiles",
       extractProfileInfo: "/data/profil/info",
+      getProfileInfo: "/profile/info",
       profileEnrichment: "/data/profil/enrich",
       extractCompanyEmployees: "/data/employees/extract",
 
