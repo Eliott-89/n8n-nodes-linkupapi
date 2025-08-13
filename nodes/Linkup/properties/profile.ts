@@ -16,8 +16,8 @@ export const profileProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "LinkedIn Profile URL *",
-        name: "profileUrl",
+        displayName: "LinkedIn URL *",
+        name: "linkedin_url",
         type: "string",
         default: "",
         placeholder: "https://www.linkedin.com/in/username",

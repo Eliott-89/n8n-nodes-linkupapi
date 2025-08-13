@@ -18,14 +18,14 @@ export class ProfileOperations {
         ) as any;
 
         // Required parameter validation
-        if (!getProfileInfoParams.profileUrl) {
+        if (!getProfileInfoParams.linkedin_url) {
           throw new Error(
-            "LinkedIn profile URL is required for this operation"
+            "LinkedIn URL is required for this operation"
           );
         }
 
-        if (getProfileInfoParams.profileUrl)
-          body.linkedin_url = getProfileInfoParams.profileUrl;
+        if (getProfileInfoParams.linkedin_url)
+          body.linkedin_url = getProfileInfoParams.linkedin_url;
         if (getProfileInfoParams.country)
           body.country = getProfileInfoParams.country;
         break;

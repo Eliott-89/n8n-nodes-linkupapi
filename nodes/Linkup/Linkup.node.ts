@@ -142,7 +142,7 @@ export class Linkup implements INodeType {
             "getCompanyInfoByDomain",
             "searchProfilesApi",
             "extractProfileInfo",
-            "getProfileInfo",
+
             "profileEnrichment",
             "extractCompanyEmployees",
           ].includes(operation)

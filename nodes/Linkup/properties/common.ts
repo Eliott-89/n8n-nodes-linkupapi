@@ -436,11 +436,6 @@ export const commonProperties: INodeProperties[] = [
         description: "Extract profile information (data/profil/info)",
       },
       {
-        name: "Get Profile Information",
-        value: "getProfileInfo",
-        description: "Get profile information (profile/info)",
-      },
-      {
         name: "Profile Enrichment",
         value: "profileEnrichment",
         description: "Enrich profile information",
