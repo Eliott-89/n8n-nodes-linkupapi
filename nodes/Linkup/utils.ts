@@ -105,7 +105,7 @@ export class LinkupUtils {
       getInvitationStatus: "/network/invitation-status",
 
       // MESSAGES
-      sendMessage: "/messages/send",
+      sendMessage: "/messages/send-message",
       getMessageInbox: "/messages/inbox",
       getConversationMessages: "/messages/conversation",
 

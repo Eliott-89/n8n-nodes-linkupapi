@@ -325,7 +325,7 @@ export class Linkup implements INodeType {
               "❌ Échec d'authentification. Vérifiez votre clé API LINKUP et vos identifiants.";
           }
         } else if (error.statusCode === 403) {
-          if (responseBody?.includes("LinkedIn token expired")) {
+          if (responseText.includes("LinkedIn token expired")) {
             friendlyMessage =
               "❌ Token LinkedIn expiré. Reconnectez-vous à votre compte LinkedIn.";
           } else {
@@ -334,7 +334,7 @@ export class Linkup implements INodeType {
           }
         } else if (error.statusCode === 404) {
           if (
-            responseBody?.includes(
+            responseText.includes(
               "Error while getting contact info, check the linkedin profile url"
             )
           ) {
@@ -345,10 +345,10 @@ export class Linkup implements INodeType {
               "❌ Endpoint API non trouvé. Cette opération peut ne pas être supportée.";
           }
         } else if (error.statusCode === 429) {
-          if (responseBody?.includes("LinkedIn Rate limit exceeded")) {
+          if (responseText.includes("LinkedIn Rate limit exceeded")) {
             friendlyMessage =
               "⚠️ Limite de taux LinkedIn dépassée. Veuillez réessayer plus tard.";
-          } else if (responseBody?.includes("API Rate limit exceeded")) {
+          } else if (responseText.includes("API Rate limit exceeded")) {
             friendlyMessage =
               "⚠️ Limite de taux API dépassée. Veuillez réessayer plus tard.";
           } else {
@@ -356,11 +356,11 @@ export class Linkup implements INodeType {
               "⚠️ Trop de requêtes. Veuillez attendre avant de réessayer.";
           }
         } else if (error.statusCode === 500) {
-          if (responseBody?.includes("LinkedIn API error occurred")) {
+          if (responseText.includes("LinkedIn API error occurred")) {
             friendlyMessage =
               "🔧 Erreur de l'API LinkedIn. Le service peut être temporairement indisponible.";
           } else if (
-            responseBody?.includes(
+            responseText.includes(
               "An error occurred while processing your request"
             )
           ) {

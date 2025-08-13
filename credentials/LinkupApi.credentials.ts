@@ -59,6 +59,7 @@ export class LinkupApi implements ICredentialType {
         "Country code for proxy selection (e.g., FR for France, US for United States)",
     },
   ];
+
   authenticate: IAuthenticateGeneric = {
     type: "generic",
     properties: {
