@@ -44,14 +44,7 @@ export const postProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   // POST - Specific parameters for reactToPost
@@ -85,14 +78,7 @@ export const postProperties: INodeProperties[] = [
           "like, celebrate, support, funny, love, insightful, curious",
         description: "Type of reaction to add",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   // POST - Specific parameters for repostContent
@@ -232,14 +218,7 @@ export const postProperties: INodeProperties[] = [
         default: 0,
         description: "Start time in seconds",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
 
@@ -303,14 +282,7 @@ export const postProperties: INodeProperties[] = [
         placeholder: "John Doe",
         description: "Name of the commenter",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -342,14 +314,7 @@ export const postProperties: INodeProperties[] = [
         placeholder: "relevance, date, engagement",
         description: "Sort order for results",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Keyword",
         name: "keyword",
@@ -418,14 +383,7 @@ export const postProperties: INodeProperties[] = [
         placeholder: "Share your thoughts here...",
         description: "Post content to create",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "File",
         name: "file",

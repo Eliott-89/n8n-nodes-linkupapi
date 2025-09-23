@@ -24,8 +24,7 @@ export class RecruiterOperations {
 
         if (getCandidatesParams.job_id)
           body.job_id = getCandidatesParams.job_id;
-        if (getCandidatesParams.country)
-          body.country = getCandidatesParams.country;
+        // country from node params removed; credentials will inject it
         if (getCandidatesParams.location)
           body.location = getCandidatesParams.location;
         if (getCandidatesParams.yearsOfExperience)
@@ -60,7 +59,7 @@ export class RecruiterOperations {
           body.start_page = getJobPostsParams.start_page;
         if (getJobPostsParams.end_page)
           body.end_page = getJobPostsParams.end_page;
-        if (getJobPostsParams.country) body.country = getJobPostsParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getCandidateCV":
@@ -77,7 +76,7 @@ export class RecruiterOperations {
 
         if (applicationParams.application_id)
           body.application_id = applicationParams.application_id;
-        if (applicationParams.country) body.country = applicationParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "publishJob":
@@ -95,8 +94,7 @@ export class RecruiterOperations {
 
         if (publishCloseJobParams.job_id)
           body.job_id = publishCloseJobParams.job_id;
-        if (publishCloseJobParams.country)
-          body.country = publishCloseJobParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "createJob":
@@ -127,7 +125,7 @@ export class RecruiterOperations {
         if (createJobParams.html_description)
           body.html_description = createJobParams.html_description;
 
-        if (createJobParams.country) body.country = createJobParams.country;
+        // country from node params removed; credentials will inject it
         if (createJobParams.employment_status)
           body.employment_status = createJobParams.employment_status;
         if (createJobParams.workplace)
@@ -154,6 +152,12 @@ export class RecruiterOperations {
         if (createJobParams.contact_email)
           body.contact_email = createJobParams.contact_email;
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

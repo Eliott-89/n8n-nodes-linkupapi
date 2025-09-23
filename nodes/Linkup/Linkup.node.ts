@@ -5,7 +5,7 @@ import {
   INodeTypeDescription,
 } from "n8n-workflow";
 
-import { NODE_VERSION } from "./types";
+// NODE_VERSION supprimé car plus utilisé
 import { LinkupUtils } from "./utils";
 import { nodeProperties } from "./properties";
 import { AuthenticationOperations } from "./categories/authentication";
@@ -19,6 +19,7 @@ import { SignalOperations } from "./categories/signal";
 import { CompanyApiOperations } from "./categories/companyApi";
 import { PersonApiOperations } from "./categories/personApi";
 import { MultiRequestsOperations } from "./categories/multiRequests";
+import { MailApiOperations } from "./categories/mailApi";
 
 export class Linkup implements INodeType {
   description: INodeTypeDescription = {
@@ -113,6 +114,13 @@ export class Linkup implements INodeType {
             break;
           case "multiRequests":
             body = await MultiRequestsOperations.buildRequestBody(
+              this,
+              i,
+              operation
+            );
+            break;
+          case "mailApi":
+            body = await MailApiOperations.buildRequestBody(
               this,
               i,
               operation
@@ -222,168 +230,32 @@ export class Linkup implements INodeType {
         }
 
         const response = await this.helpers.httpRequest(requestOptions);
-
-        const result = {
-          json: {
-            ...(response || {}),
-            _meta: {
-              resource,
-              operation,
-              timestamp: new Date().toISOString(),
-              nodeVersion: NODE_VERSION,
-            },
-          },
+        returnData.push({
+          json: response || {},
           pairedItem: { item: i },
-        };
-
-        returnData.push(result);
-      } catch (error: any) {
-        console.error("🚨 LINKUP Request failed:", {
-          error: error.message,
-          statusCode: error.statusCode,
-          response: error.response?.body || error.response,
-          responseText:
-            typeof error.response?.body === "string"
-              ? error.response.body
-              : JSON.stringify(error.response?.body),
-          resource,
-          operation,
-          url: requestOptions?.url,
         });
+      } catch (error: any) {
+        // Renvoyer strictement le corps renvoyé par le serveur, sans transformation
+        let payload =
+          error?.response?.data !== undefined
+            ? error.response.data
+            : error?.response?.body !== undefined
+            ? error.response.body
+            : {};
 
-        // Gestion détaillée des erreurs selon le code de statut et le message
-        let friendlyMessage = error.message || "Unknown error";
-        const responseBody = error.response?.body;
-        const responseText =
-          typeof responseBody === "string"
-            ? responseBody
-            : JSON.stringify(responseBody || {});
-
-        if (error.statusCode === 400) {
-          if (
-            responseText.includes("Invalid LinkedIn URL format") ||
-            responseText.includes("Invalid post_url parameter")
-          ) {
-            friendlyMessage =
-              "❌ Format d'URL LinkedIn invalide. Vérifiez que l'URL est au format correct (ex: https://www.linkedin.com/in/username)";
-          } else if (
-            responseText.includes("Invalid LinkedIn company URL format")
-          ) {
-            friendlyMessage =
-              "❌ Format d'URL d'entreprise LinkedIn invalide. Vérifiez que l'URL est au format correct (ex: https://www.linkedin.com/company/company-name)";
-          } else if (responseText.includes("Required fields are missing")) {
-            friendlyMessage =
-              "❌ Champs requis manquants. Vérifiez que tous les paramètres obligatoires sont fournis.";
-          } else if (
-            responseText.includes("total_results must be greater than 0")
-          ) {
-            friendlyMessage =
-              "❌ Le paramètre total_results doit être supérieur à 0.";
-          } else if (
-            responseText.includes("Error while sending connection request")
-          ) {
-            friendlyMessage =
-              "❌ Erreur lors de l'envoi de la demande de connexion. Vérifiez les paramètres.";
-          } else if (responseText.includes("Error while sending message")) {
-            friendlyMessage =
-              "❌ Erreur lors de l'envoi du message. Vérifiez le destinataire, le contenu et l'URL du média si fournie.";
-          } else if (
-            responseText.includes("Invalid media link") ||
-            responseText.includes("Media link error")
-          ) {
-            friendlyMessage =
-              "❌ L'URL du média n'est pas valide. Assurez-vous qu'il s'agit d'une URL directe vers un fichier média accessible.";
-          } else if (responseText.includes("Error while creating post")) {
-            friendlyMessage =
-              "❌ Erreur lors de la création du post. Vérifiez le contenu et les paramètres.";
-          } else if (responseText.includes("Error while posting comment")) {
-            friendlyMessage =
-              "❌ Erreur lors de la publication du commentaire. Vérifiez le contenu.";
-          } else if (responseText.includes("Bad parameter")) {
-            friendlyMessage =
-              "❌ Paramètre incorrect. Vérifiez que tous les champs requis sont fournis et corrects.";
-          } else {
-            friendlyMessage =
-              "❌ Paramètres incorrects. Vérifiez vos données d'entrée.";
-          }
-        } else if (error.statusCode === 401) {
-          if (
-            responseText.includes("Invalid API key or insufficient credits")
-          ) {
-            friendlyMessage =
-              "❌ Clé API invalide ou crédits insuffisants. Vérifiez votre clé API et vos crédits LINKUP.";
-          } else if (responseText.includes("Bad username or password")) {
-            friendlyMessage =
-              "❌ Nom d'utilisateur ou mot de passe incorrect. Vérifiez vos identifiants LinkedIn.";
-          } else if (responseText.includes("Session expired")) {
-            friendlyMessage =
-              "❌ Session expirée. Reconnectez-vous à votre compte LinkedIn.";
-          } else if (responseText.includes("Verification failed")) {
-            friendlyMessage =
-              "❌ Échec de la vérification. Vérifiez votre code de vérification.";
-          } else {
-            friendlyMessage =
-              "❌ Échec d'authentification. Vérifiez votre clé API LINKUP et vos identifiants.";
-          }
-        } else if (error.statusCode === 403) {
-          if (responseText.includes("LinkedIn token expired")) {
-            friendlyMessage =
-              "❌ Token LinkedIn expiré. Reconnectez-vous à votre compte LinkedIn.";
-          } else {
-            friendlyMessage =
-              "❌ Accès interdit. Votre clé API peut ne pas avoir les permissions suffisantes.";
-          }
-        } else if (error.statusCode === 404) {
-          if (
-            responseText.includes(
-              "Error while getting contact info, check the linkedin profile url"
-            )
-          ) {
-            friendlyMessage =
-              "❌ Impossible de récupérer les informations de contact. Vérifiez l'URL du profil LinkedIn.";
-          } else {
-            friendlyMessage =
-              "❌ Endpoint API non trouvé. Cette opération peut ne pas être supportée.";
-          }
-        } else if (error.statusCode === 429) {
-          if (responseText.includes("LinkedIn Rate limit exceeded")) {
-            friendlyMessage =
-              "⚠️ Limite de taux LinkedIn dépassée. Veuillez réessayer plus tard.";
-          } else if (responseText.includes("API Rate limit exceeded")) {
-            friendlyMessage =
-              "⚠️ Limite de taux API dépassée. Veuillez réessayer plus tard.";
-          } else {
-            friendlyMessage =
-              "⚠️ Trop de requêtes. Veuillez attendre avant de réessayer.";
-          }
-        } else if (error.statusCode === 500) {
-          if (responseText.includes("LinkedIn API error occurred")) {
-            friendlyMessage =
-              "🔧 Erreur de l'API LinkedIn. Le service peut être temporairement indisponible.";
-          } else if (
-            responseText.includes(
-              "An error occurred while processing your request"
-            )
-          ) {
-            friendlyMessage =
-              "🔧 Erreur lors du traitement de votre requête. Veuillez réessayer.";
-          } else {
-            friendlyMessage =
-              "🔧 Erreur serveur. Veuillez réessayer plus tard.";
-          }
+        // Normaliser {status:'error', data:'...'} -> {status:'error', message:'...'}
+        if (
+          payload &&
+          typeof payload === "object" &&
+          (payload as any).status === "error" &&
+          (payload as any).message === undefined &&
+          typeof (payload as any).data === "string"
+        ) {
+          payload = { status: "error", message: (payload as any).data } as any;
         }
 
         returnData.push({
-          json: {
-            error: friendlyMessage,
-            originalError: error.message,
-            statusCode: error.statusCode,
-            response: error.response?.body,
-            responseText: responseText,
-            resource,
-            operation,
-            timestamp: new Date().toISOString(),
-          },
+          json: payload || {},
           pairedItem: { item: i },
         });
       }

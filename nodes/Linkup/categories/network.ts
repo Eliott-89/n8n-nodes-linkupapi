@@ -28,8 +28,7 @@ export class NetworkOperations {
           body.linkedin_url = sendConnectionParams.profileUrl;
         if (sendConnectionParams.connectionMessage)
           body.message = sendConnectionParams.connectionMessage;
-        if (sendConnectionParams.country)
-          body.country = sendConnectionParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "acceptConnectionInvitation":
@@ -51,8 +50,7 @@ export class NetworkOperations {
           body.shared_secret = acceptInvitationParams.shared_secret;
         if (acceptInvitationParams.entity_urn)
           body.entity_urn = acceptInvitationParams.entity_urn;
-        if (acceptInvitationParams.country)
-          body.country = acceptInvitationParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "withdrawInvitation":
@@ -69,8 +67,7 @@ export class NetworkOperations {
 
         if (withdrawInvitationParams.invitationId)
           body.invitation_id = withdrawInvitationParams.invitationId;
-        if (withdrawInvitationParams.country)
-          body.country = withdrawInvitationParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getInvitationStatus":
@@ -89,8 +86,7 @@ export class NetworkOperations {
 
         if (getInvitationStatusParams.profileUrl)
           body.linkedin_url = getInvitationStatusParams.profileUrl;
-        if (getInvitationStatusParams.country)
-          body.country = getInvitationStatusParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getConnections":
@@ -99,8 +95,7 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        if (getConnectionsParams.country)
-          body.country = getConnectionsParams.country;
+        // country from node params removed; credentials will inject it
         if (getConnectionsParams.total_results)
           body.total_results = getConnectionsParams.total_results;
         if (getConnectionsParams.start_page)
@@ -115,8 +110,7 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        if (getReceivedInvitationsParams.country)
-          body.country = getReceivedInvitationsParams.country;
+        // country from node params removed; credentials will inject it
         if (getReceivedInvitationsParams.start_page)
           body.start_page = getReceivedInvitationsParams.start_page;
         if (getReceivedInvitationsParams.end_page)
@@ -141,8 +135,7 @@ export class NetworkOperations {
           body.start_page = getSentInvitationsParams.start_page;
         if (getSentInvitationsParams.end_page)
           body.end_page = getSentInvitationsParams.end_page;
-        if (getSentInvitationsParams.country)
-          body.country = getSentInvitationsParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getNetworkRecommendations":
@@ -151,8 +144,7 @@ export class NetworkOperations {
           itemIndex,
           {}
         ) as any;
-        if (getNetworkRecommendationsParams.country)
-          body.country = getNetworkRecommendationsParams.country;
+        // country from node params removed; credentials will inject it
         if (getNetworkRecommendationsParams.total_results)
           body.total_results = getNetworkRecommendationsParams.total_results;
         if (getNetworkRecommendationsParams.start_page)
@@ -160,6 +152,12 @@ export class NetworkOperations {
         if (getNetworkRecommendationsParams.end_page)
           body.end_page = getNetworkRecommendationsParams.end_page;
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

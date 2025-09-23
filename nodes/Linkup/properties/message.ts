@@ -31,14 +31,7 @@ export const messageProperties: INodeProperties[] = [
         placeholder: "Hello! How are you?",
         description: "Message content to send",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Media Link",
         name: "media_link",
@@ -117,14 +110,7 @@ export const messageProperties: INodeProperties[] = [
       },
     },
     options: [
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Total Results",
         name: "total_results",

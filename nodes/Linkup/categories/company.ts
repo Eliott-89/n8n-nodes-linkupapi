@@ -46,9 +46,14 @@ export class CompanyOperations {
           body.start_page = searchCompaniesParams.start_page;
         if (searchCompaniesParams.end_page)
           body.end_page = searchCompaniesParams.end_page;
-        if (searchCompaniesParams.country)
-          body.country = searchCompaniesParams.country;
+        // country from node params removed; credentials will inject it
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

@@ -30,8 +30,7 @@ export class PostOperations {
           body.start_page = getPostReactionsParams.start_page;
         if (getPostReactionsParams.end_page)
           body.end_page = getPostReactionsParams.end_page;
-        if (getPostReactionsParams.country)
-          body.country = getPostReactionsParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "reactToPost":
@@ -50,7 +49,7 @@ export class PostOperations {
           body.post_url = reactToPostParams.post_url;
         if (reactToPostParams.reaction_type)
           body.reaction_type = reactToPostParams.reaction_type;
-        if (reactToPostParams.country) body.country = reactToPostParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "addCommentToPost":
@@ -106,8 +105,7 @@ export class PostOperations {
           body.mention_user = answerCommentParams.mention_user;
         if (answerCommentParams.commenter_name)
           body.commenter_name = answerCommentParams.commenter_name;
-        if (answerCommentParams.country)
-          body.country = answerCommentParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "createPost":
@@ -123,7 +121,7 @@ export class PostOperations {
         }
 
         if (createPostParams.message) body.message = createPostParams.message;
-        if (createPostParams.country) body.country = createPostParams.country;
+        // country from node params removed; credentials will inject it
         if (createPostParams.file) body.file = createPostParams.file;
         break;
 
@@ -157,7 +155,7 @@ export class PostOperations {
         ) as any;
         if (getFeedParams.total_results)
           body.total_results = getFeedParams.total_results;
-        if (getFeedParams.country) body.country = getFeedParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getComments":
@@ -216,8 +214,14 @@ export class PostOperations {
         if (timeSpentParams.duration) body.duration = timeSpentParams.duration;
         if (timeSpentParams.duration_start_time)
           body.duration_start_time = timeSpentParams.duration_start_time;
-        if (timeSpentParams.country) body.country = timeSpentParams.country;
+        // country from node params removed; credentials will inject it
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

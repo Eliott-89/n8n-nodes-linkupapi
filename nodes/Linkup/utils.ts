@@ -157,6 +157,11 @@ export class LinkupUtils {
 
       // MULTI-REQUESTS
       customRequest: "/custom", // Generic endpoint for custom requests
+
+      // MAIL API (nouveaux)
+      emailFinder: "/data/mail/finder",
+      emailReverse: "/data/mail/reverse",
+      emailValidate: "/data/mail/validate",
     };
 
     return endpointMap[operation] || "/unknown";

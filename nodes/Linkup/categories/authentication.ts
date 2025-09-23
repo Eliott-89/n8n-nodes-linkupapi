@@ -67,7 +67,7 @@ export class AuthenticationOperations {
 
           if (verifyCodeParams.verificationCode)
             body.code = verifyCodeParams.verificationCode;
-          if (verifyCodeParams.country) body.country = verifyCodeParams.country;
+          // country from node params removed; credentials will inject it
         }
         break;
     }

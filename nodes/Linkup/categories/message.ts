@@ -29,7 +29,7 @@ export class MessageOperations {
           body.linkedin_url = sendMessageParams.linkedin_url;
         if (sendMessageParams.message_text)
           body.message_text = sendMessageParams.message_text;
-        if (sendMessageParams.country) body.country = sendMessageParams.country;
+        // country from node params removed; credentials will inject it
         if (sendMessageParams.media_link) {
           // Media URL validation
           try {
@@ -104,8 +104,7 @@ export class MessageOperations {
           body.start_page = conversationMessagesParams.start_page;
         if (conversationMessagesParams.end_page)
           body.end_page = conversationMessagesParams.end_page;
-        if (conversationMessagesParams.country)
-          body.country = conversationMessagesParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "getMessageInbox":
@@ -115,8 +114,7 @@ export class MessageOperations {
           {}
         ) as any;
         // The login_token is automatically added from credentials
-        if (getMessageInboxParams.country)
-          body.country = getMessageInboxParams.country;
+        // country from node params removed; credentials will inject it
         if (getMessageInboxParams.total_results)
           body.total_results = getMessageInboxParams.total_results;
         if (getMessageInboxParams.category)
@@ -124,6 +122,12 @@ export class MessageOperations {
         if (getMessageInboxParams.next_cursor)
           body.next_cursor = getMessageInboxParams.next_cursor;
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

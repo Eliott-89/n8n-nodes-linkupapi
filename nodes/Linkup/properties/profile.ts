@@ -23,15 +23,7 @@ export const profileProperties: INodeProperties[] = [
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL",
       },
-      {
-        displayName: "Country Code",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description:
-          "Country code for proxy selection (e.g., FR for France, US for United States)",
-      },
+      
     ],
   },
   {
@@ -108,14 +100,7 @@ export const profileProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "First Name",
         name: "first_name",

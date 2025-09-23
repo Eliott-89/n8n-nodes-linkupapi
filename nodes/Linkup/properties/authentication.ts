@@ -23,14 +23,7 @@ export const authenticationProperties: INodeProperties[] = [
         placeholder: "123456",
         description: "Verification code received via email/SMS",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
 ];

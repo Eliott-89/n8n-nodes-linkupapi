@@ -56,7 +56,7 @@ export class LinkupApi implements ICredentialType {
       default: "FR",
       placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
       description:
-        "Country code for proxy selection (e.g., FR for France, US for United States)",
+        "Country code for  selection (e.g., FR for France, US for United States)",
     },
   ];
 

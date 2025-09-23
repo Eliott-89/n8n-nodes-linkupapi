@@ -31,14 +31,7 @@ export const networkProperties: INodeProperties[] = [
         placeholder: "Hi, I'd like to connect with you!",
         description: "Custom message for connection request",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -70,14 +63,7 @@ export const networkProperties: INodeProperties[] = [
         placeholder: "entity_urn_here",
         description: "Entity URN for invitation acceptance",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -139,14 +125,7 @@ export const networkProperties: INodeProperties[] = [
       },
     },
     options: [
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Total Results",
         name: "total_results",
@@ -183,14 +162,7 @@ export const networkProperties: INodeProperties[] = [
       },
     },
     options: [
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Start Page",
         name: "start_page",
@@ -264,14 +236,7 @@ export const networkProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {

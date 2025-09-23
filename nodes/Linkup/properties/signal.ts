@@ -24,14 +24,6 @@ export const signalProperties: INodeProperties[] = [
         description: "LinkedIn post URL to extract data from",
       },
       {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-      {
         displayName: "Total Results",
         name: "total_results",
         type: "number",
@@ -75,14 +67,6 @@ export const signalProperties: INodeProperties[] = [
         default: "",
         placeholder: "https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL to extract data from",
-      },
-      {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
       {
         displayName: "Total Results",
@@ -136,14 +120,6 @@ export const signalProperties: INodeProperties[] = [
         description: "LinkedIn profile URL to extract data from",
       },
       {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
-      {
         displayName: "Total Results",
         name: "total_results",
         type: "number",
@@ -194,14 +170,6 @@ export const signalProperties: INodeProperties[] = [
         default: "",
         placeholder: "https://www.linkedin.com/in/username",
         description: "LinkedIn profile URL to extract data from",
-      },
-      {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
       {
         displayName: "Total Results",
@@ -285,14 +253,6 @@ export const signalProperties: INodeProperties[] = [
         default: "",
         placeholder: "https://www.linkedin.com/company/microsoft",
         description: "LinkedIn company URL to extract data from",
-      },
-      {
-        displayName: "Proxy Country",
-        name: "proxy_country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
       },
       {
         displayName: "Total Results",

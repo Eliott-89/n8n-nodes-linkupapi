@@ -70,14 +70,7 @@ export const companyProperties: INodeProperties[] = [
         placeholder: "1000-5000",
         description: "Company size range",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
       {
         displayName: "Total Results",
         name: "total_results",

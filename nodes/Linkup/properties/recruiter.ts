@@ -92,14 +92,7 @@ export const recruiterProperties: INodeProperties[] = [
         placeholder: "2-5",
         description: "Filter by years of experience",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   // RECRUITER - Parameters for publishJob and closeJob
@@ -124,14 +117,7 @@ export const recruiterProperties: INodeProperties[] = [
         placeholder: "job_id_here",
         description: "LinkedIn Recruiter job ID",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -155,14 +141,7 @@ export const recruiterProperties: INodeProperties[] = [
         placeholder: "application_id_here",
         description: "LinkedIn Recruiter application ID",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -258,14 +237,7 @@ export const recruiterProperties: INodeProperties[] = [
         placeholder: "hr@company.com",
         description: "Contact email for applications",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
   {
@@ -317,14 +289,7 @@ export const recruiterProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      {
-        displayName: "Country",
-        name: "country",
-        type: "string",
-        default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
-        description: "Country code for proxy selection",
-      },
+      
     ],
   },
 ];

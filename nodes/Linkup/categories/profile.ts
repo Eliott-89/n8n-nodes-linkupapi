@@ -26,8 +26,7 @@ export class ProfileOperations {
 
         if (getProfileInfoParams.linkedin_url)
           body.linkedin_url = getProfileInfoParams.linkedin_url;
-        if (getProfileInfoParams.country)
-          body.country = getProfileInfoParams.country;
+        // country from node params removed; credentials will inject it
         break;
 
       case "searchProfile":
@@ -52,8 +51,7 @@ export class ProfileOperations {
           body.start_page = searchProfileParams.start_page;
         if (searchProfileParams.end_page)
           body.end_page = searchProfileParams.end_page;
-        if (searchProfileParams.country)
-          body.country = searchProfileParams.country;
+        // country from node params removed; credentials will inject it
         if (searchProfileParams.first_name)
           body.first_name = searchProfileParams.first_name;
         if (searchProfileParams.last_name)
@@ -65,14 +63,14 @@ export class ProfileOperations {
         break;
 
       case "getMyProfile":
-        const getMyProfileParams = context.getNodeParameter(
-          "getMyProfileParams",
-          itemIndex,
-          {}
-        ) as any;
-        if (getMyProfileParams.country)
-          body.country = getMyProfileParams.country;
+        // country from node params removed; credentials will inject it
         break;
+    }
+
+    // Inject country from credentials (overrides any param)
+    const creds = await context.getCredentials("linkupApi");
+    if (creds && (creds as any).country) {
+      (body as any).country = (creds as any).country;
     }
 
     return body;

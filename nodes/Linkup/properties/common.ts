@@ -65,6 +65,10 @@ export const commonProperties: INodeProperties[] = [
         value: "personApi",
       },
       {
+        name: "Mail API",
+        value: "mailApi",
+      },
+      {
         name: "Multi Requests",
         value: "multiRequests",
       },
