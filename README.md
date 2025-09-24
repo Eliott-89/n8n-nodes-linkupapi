@@ -31,12 +31,12 @@ npm install n8n-nodes-linkupapi
 - Login (`/auth/login`)
 - Verify Code (`/auth/verify`)
 
-### Profile
+### Profiles
 - Get My Profile (`/profile/me`)
 - Search Profile (`/profile/search`)
 - Get Profile Info (`/profile/info`)
 
-### Company
+### Companies
 - Search Companies (`/companies/search`)
 - Get Company Info (`/companies/info`)
 
@@ -50,22 +50,22 @@ npm install n8n-nodes-linkupapi
 - Get Network Recommendations (`/network/recommendations`)
 - Get Invitation Status (`/network/invitation-status`)
 
-### Message
+### Messages
 - Send Message (`/messages/send-message`)
 - Get Message Inbox (`/messages/inbox`)
 - Get Conversation Messages (`/messages/conversation`)
 
-### Post
+### Posts
 - Get Post Reactions (`/posts/reactions`)
-- React to Post (`/posts/react`)
-- Repost (`/posts/repost`)
-- Comment Post (`/posts/comment`)
-- Extract Comments (`/posts/extract-comments`)
+- React To Post (`/posts/react`)
+- Repost Content (`/posts/repost`)
+- Add Comment To Post (`/posts/comment`)
+- Get Comments (`/posts/extract-comments`)
 - Answer Comment (`/posts/answer-comment`)
 - Search Posts (`/posts/search`)
 - Create Post (`/posts/create`)
-- Get Feed (`/posts/feed`)
-- Time Spent (`/posts/time-spent`)
+- Get LinkedIn Feed (`/posts/feed`)
+- Send Post Time Spent (`/posts/time-spent`)
 
 ### Recruiter
 - Get Candidates (`/recruiter/candidates`)
@@ -97,7 +97,7 @@ npm install n8n-nodes-linkupapi
 ### Multi Requests
 - Custom Request (`/custom`)
 
-**Note:** Les 3 parties avec "API" à la fin (Signal API, Company API, Person API) fonctionnent sans compte LinkedIn, uniquement avec la clé API Linkup.
+**Note:** The 3 sections ending with "API" (Signal API, Company API, Person API) work without a LinkedIn account, using only the Linkup API key.
 
 ## Usage Examples
 
@@ -118,8 +118,8 @@ npm install n8n-nodes-linkupapi
 ```javascript
 // Search for profiles
 {
-  "resource": "personApi",
-  "operation": "searchProfiles",
+  "resource": "person api",
+  "operation": "search profiles",
   "searchProfilesParams": {
     "query": "Software Engineer",
     "location": "San Francisco",
@@ -132,8 +132,8 @@ npm install n8n-nodes-linkupapi
 ```javascript
 // Get complete profile information with authentication
 {
-  "resource": "profile",
-  "operation": "getProfileInfo",
+  "resource": "profiles",
+  "operation": "get profile info",
   "getProfileInfoParams": {
     "linkedin_url": "https://www.linkedin.com/in/johndoe",
     "country": "FR"
@@ -145,8 +145,8 @@ npm install n8n-nodes-linkupapi
 ```javascript
 // Extract public profile information without authentication
 {
-  "resource": "personApi",
-  "operation": "extractProfileInfo",
+  "resource": "person api",
+  "operation": "extract profile info",
   "extractProfileInfoParams": {
     "profile_url": "https://www.linkedin.com/in/johndoe"
   }
@@ -157,8 +157,8 @@ npm install n8n-nodes-linkupapi
 ```javascript
 // Extract company employees
 {
-  "resource": "personApi",
-  "operation": "extractCompanyEmployees",
+  "resource": "person api",
+  "operation": "extract company employees",
   "extractCompanyEmployeesParams": {
     "company_name": "Microsoft",
     "total_results": 100,
@@ -172,7 +172,7 @@ npm install n8n-nodes-linkupapi
 // Send connection request
 {
   "resource": "network",
-  "operation": "sendConnectionRequest",
+  "operation": "send connection request",
   "connectionRequestParams": {
     "profile_url": "https://linkedin.com/in/johndoe",
     "message": "Hello! I'd like to connect with you."
@@ -184,8 +184,8 @@ npm install n8n-nodes-linkupapi
 ```javascript
 // Create a LinkedIn post
 {
-  "resource": "post",
-  "operation": "createPost",
+  "resource": "posts",
+  "operation": "create post",
   "createPostParams": {
     "content": "Excited to share our latest product update!",
     "visibility": "public"
@@ -198,7 +198,7 @@ npm install n8n-nodes-linkupapi
 // Extract post reactions
 {
   "resource": "signal",
-  "operation": "extractPostReactions",
+  "operation": "extract post reactions",
   "extractPostReactionsParams": {
     "post_url": "https://linkedin.com/posts/activity-123456789",
     "total_results": 500
@@ -319,11 +319,14 @@ For technical support and feature requests:
 
 ## Version History
 
-### Current Version: 4.0.26
+### Current Version: 4.0.44
 
 **Latest Features:**
-- ✅ **Credential testing** - Added proper credential validation method with API health check
-- ✅ **Authentication support** - Added generic authentication for API calls
+- ✅ **Consistent naming** - All node names now use spaces instead of camelCase for better readability
+- ✅ **Updated resources** - Resource names updated to avoid duplication (Profiles, Companies, Messages, Posts)
+- ✅ **Operation values** - All operation values converted to space-separated format
+- ✅ **Documentation updated** - README and examples updated with new naming convention
+- ✅ **Version 4.0.44** - Latest stable release with improved UX
 - ✅ **n8n verification ready** - Passes all automated pre-checks
 - ✅ **GitHub repository public** - Repository accessible for verification
 - ✅ **Production ready** - Optimized for n8n community node verification
