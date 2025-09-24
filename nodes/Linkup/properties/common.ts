@@ -29,11 +29,11 @@ export const commonProperties: INodeProperties[] = [
         value: "authentication",
       },
       {
-        name: "Profile",
+        name: "Profiles",
         value: "profile",
       },
       {
-        name: "Company",
+        name: "Companies",
         value: "company",
       },
       {
@@ -41,11 +41,11 @@ export const commonProperties: INodeProperties[] = [
         value: "network",
       },
       {
-        name: "Message",
+        name: "Messages",
         value: "message",
       },
       {
-        name: "Post",
+        name: "Posts",
         value: "post",
       },
       {
