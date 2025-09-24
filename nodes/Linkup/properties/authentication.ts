@@ -11,7 +11,7 @@ export const authenticationProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["authentication"],
-        operation: ["verifyCode"],
+        operation: ["verify code"],
       },
     },
     options: [

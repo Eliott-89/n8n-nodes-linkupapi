@@ -11,7 +11,7 @@ export const profileProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["profile"],
-        operation: ["getProfileInfo"],
+        operation: ["get profile info"],
       },
     },
     options: [
@@ -35,7 +35,7 @@ export const profileProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["profile"],
-        operation: ["searchProfile"],
+        operation: ["search profile"],
       },
     },
     options: [

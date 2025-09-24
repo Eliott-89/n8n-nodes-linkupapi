@@ -138,28 +138,28 @@ export class Linkup implements INodeType {
           creds.loginToken &&
           ![
             "login",
-            "verifyCode",
-            "extractPostReactions",
-            "extractPostComments",
-            "extractProfileReactions",
-            "extractProfileComments",
-            "extractProfilePosts",
-            "extractCompanyPosts",
-            "searchCompaniesApi",
-            "getCompanyInfoApi",
-            "getCompanyInfoByDomain",
-            "searchProfilesApi",
-            "extractProfileInfo",
+            "verify code",
+            "extract post reactions",
+            "extract post comments",
+            "extract profile reactions",
+            "extract profile comments",
+            "extract profile posts",
+            "extract company posts",
+            "search companies api",
+            "get company info api",
+            "get company info by domain",
+            "search profiles api",
+            "extract profile info",
 
-            "profileEnrichment",
-            "extractCompanyEmployees",
+            "profile enrichment",
+            "extract company employees",
           ].includes(operation)
         ) {
           body.login_token = creds.loginToken;
         }
 
         // Pour Multi-Requests, ajouter les credentials au body si nécessaire
-        if (resource === "multi requests" && operation === "customRequest") {
+        if (resource === "multi requests" && operation === "custom request") {
           if (creds.country && !body.requestBody.country) {
             body.requestBody.country = creds.country;
           }
@@ -172,7 +172,7 @@ export class Linkup implements INodeType {
         let endpoint = LinkupUtils.getEndpointForOperation(operation);
 
         // Pour Multi-Requests, utiliser directement l'URL fournie
-        if (resource === "multi requests" && operation === "customRequest") {
+        if (resource === "multi requests" && operation === "custom request") {
           const queryString = body.queryParams
             ? "?" +
               Object.entries(body.queryParams)

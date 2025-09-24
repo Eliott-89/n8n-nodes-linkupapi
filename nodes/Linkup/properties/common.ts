@@ -95,7 +95,7 @@ export const commonProperties: INodeProperties[] = [
       },
       {
         name: "Verify Code",
-        value: "verifyCode",
+        value: "verify code",
         description: "Validate the security code received by email",
       },
     ],
@@ -114,21 +114,21 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Get My Profile",
-        value: "getMyProfile",
+        value: "get my profile",
         description: "Get your LinkedIn profile information",
       },
       {
         name: "Get Profile Information",
-        value: "getProfileInfo",
+        value: "get profile info",
         description: "Get profile information (profile/info)",
       },
       {
         name: "Search Profile",
-        value: "searchProfile",
+        value: "search profile",
         description: "Search LinkedIn profiles",
       },
     ],
-    default: "getMyProfile",
+    default: "get my profile",
   },
   {
     displayName: "Operation",
@@ -143,16 +143,16 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Search Companies",
-        value: "searchCompanies",
+        value: "search companies",
         description: "Search for companies on LinkedIn",
       },
       {
         name: "Get Company Information",
-        value: "getCompanyInfo",
+        value: "get company info",
         description: "Get detailed information about a company",
       },
     ],
-    default: "searchCompanies",
+    default: "search companies",
   },
   {
     displayName: "Operation",
@@ -167,42 +167,42 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Send Connection Request",
-        value: "sendConnectionRequest",
+        value: "send connection request",
         description: "Send a connection request to a profile",
       },
       {
         name: "Get Connections",
-        value: "getConnections",
+        value: "get connections",
         description: "Get your LinkedIn connections",
       },
       {
         name: "Accept Connection Invitation",
-        value: "acceptConnectionInvitation",
+        value: "accept connection invitation",
         description: "Accept a received connection invitation",
       },
       {
         name: "Get Received Invitations",
-        value: "getReceivedInvitations",
+        value: "get received invitations",
         description: "Get received connection invitations",
       },
       {
         name: "Get Sent Invitations",
-        value: "getSentInvitations",
+        value: "get sent invitations",
         description: "Get sent connection invitations",
       },
       {
         name: "Withdraw Invitation",
-        value: "withdrawInvitation",
+        value: "withdraw invitation",
         description: "Withdraw a sent invitation",
       },
       {
         name: "Get Network Recommendations",
-        value: "getNetworkRecommendations",
+        value: "get network recommendations",
         description: "Get network recommendations",
       },
       {
         name: "Get Invitation Status",
-        value: "getInvitationStatus",
+        value: "get invitation status",
         description: "Check invitation status for a profile",
       },
     ],
@@ -221,17 +221,17 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Send Message",
-        value: "sendMessage",
+        value: "send message",
         description: "Send a message to a connection",
       },
       {
         name: "Get Message Inbox",
-        value: "getMessageInbox",
+        value: "get message inbox",
         description: "Get your message inbox",
       },
       {
         name: "Get Conversation Messages",
-        value: "getConversationMessages",
+        value: "get conversation messages",
         description: "Get messages from a conversation",
       },
     ],
@@ -250,52 +250,52 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Get Post Reactions",
-        value: "getPostReactions",
+        value: "get post reactions",
         description: "Get reactions on a post",
       },
       {
         name: "React To Post",
-        value: "reactToPost",
+        value: "react to post",
         description: "React to a post",
       },
       {
         name: "Repost Content",
-        value: "repostContent",
+        value: "repost content",
         description: "Repost content",
       },
       {
         name: "Add Comment To Post",
-        value: "addCommentToPost",
+        value: "add comment to post",
         description: "Add a comment to a post",
       },
       {
         name: "Get Comments",
-        value: "getComments",
+        value: "get comments",
         description: "Get comments on a post",
       },
       {
         name: "Answer Comment",
-        value: "answerComment",
+        value: "answer comment",
         description: "Answer a comment",
       },
       {
         name: "Search Posts",
-        value: "searchPosts",
+        value: "search posts",
         description: "Search for posts",
       },
       {
         name: "Create Post",
-        value: "createPost",
+        value: "create post",
         description: "Create a new post",
       },
       {
         name: "Get LinkedIn Feed",
-        value: "getLinkedInFeed",
+        value: "get linkedin feed",
         description: "Get your LinkedIn feed",
       },
       {
         name: "Send Post Time Spent",
-        value: "sendPostTimeSpent",
+        value: "send post time spent",
         description: "Send post time spent signal",
       },
     ],
@@ -314,32 +314,32 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Get Candidates",
-        value: "getCandidates",
+        value: "get candidates",
         description: "Get candidate list",
       },
       {
         name: "Get Candidate CV",
-        value: "getCandidateCV",
+        value: "get candidate cv",
         description: "Get candidate CV",
       },
       {
         name: "Get Job Posts",
-        value: "getJobPosts",
+        value: "get job posts",
         description: "Get job posts",
       },
       {
         name: "Publish Job",
-        value: "publishJob",
+        value: "publish job",
         description: "Publish a job",
       },
       {
         name: "Close Job",
-        value: "closeJob",
+        value: "close job",
         description: "Close a job",
       },
       {
         name: "Create Job",
-        value: "createJob",
+        value: "create job",
         description: "Create a new job",
       },
     ],
@@ -358,32 +358,32 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Extract Post Reactions",
-        value: "extractPostReactions",
+        value: "extract post reactions",
         description: "Extract reactions from a post",
       },
       {
         name: "Extract Post Comments",
-        value: "extractPostComments",
+        value: "extract post comments",
         description: "Extract comments from a post",
       },
       {
         name: "Extract Profile Reactions",
-        value: "extractProfileReactions",
+        value: "extract profile reactions",
         description: "Extract reactions from a profile",
       },
       {
         name: "Extract Profile Comments",
-        value: "extractProfileComments",
+        value: "extract profile comments",
         description: "Extract comments from a profile",
       },
       {
         name: "Extract Profile Posts",
-        value: "extractProfilePosts",
+        value: "extract profile posts",
         description: "Extract posts from a profile",
       },
       {
         name: "Extract Company Posts",
-        value: "extractCompanyPosts",
+        value: "extract company posts",
         description: "Extract posts from a company",
       },
     ],
@@ -402,21 +402,21 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Search Companies",
-        value: "searchCompanies",
+        value: "search companies",
         description: "Search for companies",
       },
       {
         name: "Get Company Information",
-        value: "getCompanyInfo",
+        value: "get company info",
         description: "Get company information",
       },
       {
         name: "Get Company Information By Domain",
-        value: "getCompanyInfoByDomain",
+        value: "get company info by domain",
         description: "Get company information by domain",
       },
     ],
-    default: "searchCompanies",
+    default: "search companies",
   },
   {
     displayName: "Operation",
@@ -431,21 +431,21 @@ export const commonProperties: INodeProperties[] = [
     options: [
       {
         name: "Search Profiles",
-        value: "searchProfiles",
+        value: "search profiles",
         description: "Search for profiles",
       },
       {
         name: "Extract Profile Information",
-        value: "extractProfileInfo",
+        value: "extract profile info",
         description: "Extract profile information (data/profil/info)",
       },
       {
         name: "Profile Enrichment",
-        value: "profileEnrichment",
+        value: "profile enrichment",
         description: "Enrich profile information",
       },
     ],
-    default: "searchProfiles",
+    default: "search profiles",
   },
 ];
 
