@@ -8,7 +8,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
       },
     },
     options: [
@@ -30,7 +30,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "The URL to make the request to",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
       },
     },
@@ -66,7 +66,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "The HTTP method to use",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
       },
     },
@@ -105,7 +105,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "The headers to send with the request",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
       },
     },
@@ -124,7 +124,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "The content type of the body",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
         method: ["POST", "PUT", "PATCH"],
       },
@@ -144,7 +144,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "How to specify the body",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
         method: ["POST", "PUT", "PATCH"],
       },
@@ -184,7 +184,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     description: "The body parameters to send with the request",
     displayOptions: {
       show: {
-        resource: ["multiRequests"],
+        resource: ["multi requests"],
         operation: ["customRequest"],
         method: ["POST", "PUT", "PATCH"],
       },

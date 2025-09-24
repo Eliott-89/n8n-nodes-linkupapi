@@ -98,28 +98,28 @@ export class Linkup implements INodeType {
           case "signal":
             body = await SignalOperations.buildRequestBody(this, i, operation);
             break;
-          case "companyApi":
+          case "company api":
             body = await CompanyApiOperations.buildRequestBody(
               this,
               i,
               operation
             );
             break;
-          case "personApi":
+          case "person api":
             body = await PersonApiOperations.buildRequestBody(
               this,
               i,
               operation
             );
             break;
-          case "multiRequests":
+          case "multi requests":
             body = await MultiRequestsOperations.buildRequestBody(
               this,
               i,
               operation
             );
             break;
-          case "mailApi":
+          case "mail api":
             body = await MailApiOperations.buildRequestBody(
               this,
               i,
@@ -159,7 +159,7 @@ export class Linkup implements INodeType {
         }
 
         // Pour Multi-Requests, ajouter les credentials au body si nécessaire
-        if (resource === "multiRequests" && operation === "customRequest") {
+        if (resource === "multi requests" && operation === "customRequest") {
           if (creds.country && !body.requestBody.country) {
             body.requestBody.country = creds.country;
           }
@@ -172,7 +172,7 @@ export class Linkup implements INodeType {
         let endpoint = LinkupUtils.getEndpointForOperation(operation);
 
         // Pour Multi-Requests, utiliser directement l'URL fournie
-        if (resource === "multiRequests" && operation === "customRequest") {
+        if (resource === "multi requests" && operation === "customRequest") {
           const queryString = body.queryParams
             ? "?" +
               Object.entries(body.queryParams)

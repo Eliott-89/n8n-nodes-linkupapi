@@ -8,7 +8,7 @@ export const mailApiProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
-        resource: ["mailApi"],
+        resource: ["mail api"],
       },
     },
     options: [
@@ -40,7 +40,7 @@ export const mailApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["mailApi"],
+        resource: ["mail api"],
         operation: ["emailFinder"],
       },
     },
@@ -97,7 +97,7 @@ export const mailApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["mailApi"],
+        resource: ["mail api"],
         operation: ["emailReverse"],
       },
     },
@@ -122,7 +122,7 @@ export const mailApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["mailApi"],
+        resource: ["mail api"],
         operation: ["emailValidate"],
       },
     },

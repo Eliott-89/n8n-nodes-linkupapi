@@ -58,19 +58,19 @@ export const commonProperties: INodeProperties[] = [
       },
       {
         name: "Company API",
-        value: "companyApi",
+        value: "company api",
       },
       {
         name: "Person API",
-        value: "personApi",
+        value: "person api",
       },
       {
         name: "Mail API",
-        value: "mailApi",
+        value: "mail api",
       },
       {
         name: "Multi Requests",
-        value: "multiRequests",
+        value: "multi requests",
       },
     ],
     default: "authentication",
@@ -254,7 +254,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Get reactions on a post",
       },
       {
-        name: "React to Post",
+        name: "React To Post",
         value: "reactToPost",
         description: "React to a post",
       },
@@ -264,7 +264,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Repost content",
       },
       {
-        name: "Add Comment to Post",
+        name: "Add Comment To Post",
         value: "addCommentToPost",
         description: "Add a comment to a post",
       },
@@ -396,7 +396,7 @@ export const commonProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
-        resource: ["companyApi"],
+        resource: ["company api"],
       },
     },
     options: [
@@ -411,7 +411,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Get company information",
       },
       {
-        name: "Get Company Information by Domain",
+        name: "Get Company Information By Domain",
         value: "getCompanyInfoByDomain",
         description: "Get company information by domain",
       },
@@ -425,7 +425,7 @@ export const commonProperties: INodeProperties[] = [
     noDataExpression: true,
     displayOptions: {
       show: {
-        resource: ["personApi"],
+        resource: ["person api"],
       },
     },
     options: [
@@ -467,8 +467,8 @@ export const paginationProperties: INodeProperties[] = [
           "post",
           "recruiter",
           "signal",
-          "companyApi",
-          "personApi",
+          "company api",
+          "person api",
         ],
       },
     },

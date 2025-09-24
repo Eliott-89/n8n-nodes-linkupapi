@@ -10,7 +10,7 @@ export const personApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["personApi"],
+        resource: ["person api"],
         operation: ["searchProfiles"],
       },
     },
@@ -80,7 +80,7 @@ export const personApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["personApi"],
+        resource: ["person api"],
         operation: ["extractProfileInfo"],
       },
     },
@@ -104,7 +104,7 @@ export const personApiProperties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ["personApi"],
+        resource: ["person api"],
         operation: ["profileEnrichment"],
       },
     },

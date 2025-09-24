@@ -24,8 +24,6 @@ export class SignalOperations {
 
         if (extractPostReactionsParams.post_url)
           body.post_url = extractPostReactionsParams.post_url;
-        if (extractPostReactionsParams.proxy_country)
-          body.proxy_country = extractPostReactionsParams.proxy_country;
         if (extractPostReactionsParams.total_results)
           body.total_results = extractPostReactionsParams.total_results;
         if (extractPostReactionsParams.start_page)
@@ -48,8 +46,6 @@ export class SignalOperations {
 
         if (extractPostCommentsParams.post_url)
           body.post_url = extractPostCommentsParams.post_url;
-        if (extractPostCommentsParams.proxy_country)
-          body.proxy_country = extractPostCommentsParams.proxy_country;
         if (extractPostCommentsParams.total_results)
           body.total_results = extractPostCommentsParams.total_results;
         if (extractPostCommentsParams.use_pagination !== undefined)
@@ -74,8 +70,6 @@ export class SignalOperations {
 
         if (extractProfileReactionsParams.profile_url)
           body.profile_url = extractProfileReactionsParams.profile_url;
-        if (extractProfileReactionsParams.proxy_country)
-          body.proxy_country = extractProfileReactionsParams.proxy_country;
         if (extractProfileReactionsParams.total_results)
           body.total_results = extractProfileReactionsParams.total_results;
         if (extractProfileReactionsParams.start_page)
@@ -100,8 +94,6 @@ export class SignalOperations {
 
         if (extractProfileCommentsParams.profile_url)
           body.profile_url = extractProfileCommentsParams.profile_url;
-        if (extractProfileCommentsParams.proxy_country)
-          body.proxy_country = extractProfileCommentsParams.proxy_country;
         if (extractProfileCommentsParams.total_results)
           body.total_results = extractProfileCommentsParams.total_results;
         if (extractProfileCommentsParams.start_page)
@@ -126,8 +118,6 @@ export class SignalOperations {
 
         if (extractProfilePostsParams.profile_url)
           body.profile_url = extractProfilePostsParams.profile_url;
-        if (extractProfilePostsParams.proxy_country)
-          body.proxy_country = extractProfilePostsParams.proxy_country;
         if (extractProfilePostsParams.total_results)
           body.total_results = extractProfilePostsParams.total_results;
         if (extractProfilePostsParams.post_type)
@@ -160,8 +150,6 @@ export class SignalOperations {
 
         if (extractCompanyPostsParams.company_url)
           body.company_url = extractCompanyPostsParams.company_url;
-        if (extractCompanyPostsParams.proxy_country)
-          body.proxy_country = extractCompanyPostsParams.proxy_country;
         if (extractCompanyPostsParams.total_results)
           body.total_results = extractCompanyPostsParams.total_results;
         if (extractCompanyPostsParams.post_type)
