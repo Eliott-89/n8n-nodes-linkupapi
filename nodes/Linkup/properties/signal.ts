@@ -11,7 +11,7 @@ export const signalProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractPostReactions"],
+        operation: ["extract post reactions"],
       },
     },
     options: [
@@ -56,7 +56,7 @@ export const signalProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractPostComments"],
+        operation: ["extract post comments"],
       },
     },
     options: [
@@ -107,7 +107,7 @@ export const signalProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractProfileReactions", "extractProfileComments"],
+        operation: ["extract profile reactions", "extract profile comments"],
       },
     },
     options: [
@@ -159,7 +159,7 @@ export const signalProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractProfilePosts"],
+        operation: ["extract profile posts"],
       },
     },
     options: [
@@ -242,7 +242,7 @@ export const signalProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["signal"],
-        operation: ["extractCompanyPosts"],
+        operation: ["extract company posts"],
       },
     },
     options: [

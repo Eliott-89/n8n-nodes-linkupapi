@@ -387,7 +387,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Extract posts from a company",
       },
     ],
-    default: "extractPostReactions",
+    default: "extract post reactions",
   },
   {
     displayName: "Operation",

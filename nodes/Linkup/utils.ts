@@ -136,12 +136,12 @@ export class LinkupUtils {
       createJob: "/recruiter/create-job",
 
       // SIGNAL API (nouveaux)
-      extractPostReactions: "/data/signals/posts/reactions",
-      extractPostComments: "/data/signals/posts/comments",
-      extractProfileReactions: "/data/signals/profile/reactions",
-      extractProfileComments: "/data/signals/profile/comments",
-      extractProfilePosts: "/data/signals/profile/posts",
-      extractCompanyPosts: "/data/signals/company/posts",
+      "extract post reactions": "/data/signals/posts/reactions",
+      "extract post comments": "/data/signals/posts/comments",
+      "extract profile reactions": "/data/signals/profile/reactions",
+      "extract profile comments": "/data/signals/profile/comments",
+      "extract profile posts": "/data/signals/profile/posts",
+      "extract company posts": "/data/signals/company/posts",
 
       // COMPANY API (nouveaux)
       "search companies": "/data/search/companies",

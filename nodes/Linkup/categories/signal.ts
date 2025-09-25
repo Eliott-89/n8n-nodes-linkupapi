@@ -10,7 +10,7 @@ export class SignalOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "extractPostReactions":
+      case "extract post reactions":
         const extractPostReactionsParams = context.getNodeParameter(
           "postReactionsParams",
           itemIndex,
@@ -32,7 +32,7 @@ export class SignalOperations {
           body.end_page = extractPostReactionsParams.end_page;
         break;
 
-      case "extractPostComments":
+      case "extract post comments":
         const extractPostCommentsParams = context.getNodeParameter(
           "postCommentsParams",
           itemIndex,
@@ -56,7 +56,7 @@ export class SignalOperations {
           body.end_page = extractPostCommentsParams.end_page;
         break;
 
-      case "extractProfileReactions":
+      case "extract profile reactions":
         const extractProfileReactionsParams = context.getNodeParameter(
           "profileUrlParams",
           itemIndex,
@@ -80,7 +80,7 @@ export class SignalOperations {
           body.cursor = extractProfileReactionsParams.cursor;
         break;
 
-      case "extractProfileComments":
+      case "extract profile comments":
         const extractProfileCommentsParams = context.getNodeParameter(
           "profileUrlParams",
           itemIndex,
@@ -104,7 +104,7 @@ export class SignalOperations {
           body.cursor = extractProfileCommentsParams.cursor;
         break;
 
-      case "extractProfilePosts":
+      case "extract profile posts":
         const extractProfilePostsParams = context.getNodeParameter(
           "profilePostsParams",
           itemIndex,
@@ -136,7 +136,7 @@ export class SignalOperations {
           body.end_page = extractProfilePostsParams.end_page;
         break;
 
-      case "extractCompanyPosts":
+      case "extract company posts":
         const extractCompanyPostsParams = context.getNodeParameter(
           "companyUrlParams",
           itemIndex,
