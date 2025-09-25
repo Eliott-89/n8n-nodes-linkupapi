@@ -33,25 +33,28 @@ export class MessageOperations {
         if (sendMessageParams.media_link) {
           // Media URL validation
           try {
-            const mediaUrl = new URL(sendMessageParams.media_link);
-
-            // Vérifier le protocole
-            if (mediaUrl.protocol === "file:") {
+            // Simple URL validation without using URL constructor
+            const mediaLink = sendMessageParams.media_link;
+            
+            // Check if it's a file:// URL
+            if (mediaLink.startsWith("file://")) {
               throw new Error(
                 "Local URLs (file://) are not supported. The file must be hosted on a publicly accessible web server."
               );
             }
 
-            if (!mediaUrl.protocol.startsWith("http")) {
+            // Check that it starts with http:// or https://
+            if (!mediaLink.startsWith("http://") && !mediaLink.startsWith("https://")) {
               throw new Error("Media URL must use HTTP or HTTPS protocol");
             }
 
-            // Check that it's not a local URL
+            // Simple check for local URLs (basic validation)
             if (
-              mediaUrl.hostname === "localhost" ||
-              mediaUrl.hostname === "127.0.0.1" ||
-              mediaUrl.hostname.startsWith("192.168.") ||
-              mediaUrl.hostname.startsWith("10.")
+              mediaLink.includes("localhost") ||
+              mediaLink.includes("127.0.0.1") ||
+              mediaLink.includes("192.168.") ||
+              mediaLink.includes("//10.") ||
+              mediaLink.includes("//172.")
             ) {
               throw new Error(
                 "Local URLs are not supported. The file must be hosted on a publicly accessible web server."

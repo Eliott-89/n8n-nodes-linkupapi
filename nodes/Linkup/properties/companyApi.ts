@@ -11,7 +11,7 @@ export const companyApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["company api"],
-        operation: ["searchCompanies"],
+        operation: ["search companies"],
       },
     },
     options: [
@@ -72,7 +72,7 @@ export const companyApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["company api"],
-        operation: ["getCompanyInfo"],
+        operation: ["get company info"],
       },
     },
     options: [
@@ -95,7 +95,7 @@ export const companyApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["company api"],
-        operation: ["getCompanyInfoByDomain"],
+        operation: ["get company info by domain"],
       },
     },
     options: [

@@ -144,9 +144,9 @@ export class LinkupUtils {
       extractCompanyPosts: "/data/signals/company/posts",
 
       // COMPANY API (nouveaux)
-      searchCompaniesApi: "/data/search/companies",
-      getCompanyInfoApi: "/data/company/info",
-      getCompanyInfoByDomain: "/data/company/info-by-domain",
+      "search companies": "/data/search/companies",
+      "get company info": "/data/company/info", 
+      "get company info by domain": "/data/company/info-by-domain",
 
       // PERSON API (nouveaux)
       searchProfilesApi: "/data/search/profiles",

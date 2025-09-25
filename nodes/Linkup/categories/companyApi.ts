@@ -10,7 +10,7 @@ export class CompanyApiOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "searchCompanies":
+      case "search companies":
         const searchCompaniesParams = context.getNodeParameter(
           "searchCompaniesParams",
           itemIndex,
@@ -36,7 +36,7 @@ export class CompanyApiOperations {
           body.total_results = searchCompaniesParams.total_results;
         break;
 
-      case "getCompanyInfo":
+      case "get company info":
         const getCompanyInfoParams = context.getNodeParameter(
           "getCompanyInfoParams",
           itemIndex,
@@ -52,7 +52,7 @@ export class CompanyApiOperations {
           body.company_url = getCompanyInfoParams.companyUrl;
         break;
 
-      case "getCompanyInfoByDomain":
+      case "get company info by domain":
         const getCompanyInfoByDomainParams = context.getNodeParameter(
           "getCompanyInfoByDomainParams",
           itemIndex,
