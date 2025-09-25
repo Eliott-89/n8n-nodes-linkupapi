@@ -149,11 +149,10 @@ export class LinkupUtils {
       "get company info by domain": "/data/company/info-by-domain",
 
       // PERSON API (nouveaux)
-      searchProfilesApi: "/data/search/profiles",
-      searchProfiles: "/data/search/profiles",
-      extractProfileInfo: "/data/profil/info",
-      profileEnrichment: "/data/profil/enrich",
-      extractCompanyEmployees: "/data/employees/extract",
+      "search profiles": "/data/search/profiles",
+      "extract profile info": "/data/profil/info",
+      "profile enrichment": "/data/profil/enrich",
+      "extract company employees": "/data/employees/extract",
 
       // MULTI-REQUESTS
       customRequest: "/custom", // Generic endpoint for custom requests

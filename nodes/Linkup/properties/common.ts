@@ -444,6 +444,11 @@ export const commonProperties: INodeProperties[] = [
         value: "profile enrichment",
         description: "Enrich profile information",
       },
+      {
+        name: "Extract Company Employees",
+        value: "extract company employees",
+        description: "Extract employees from a company",
+      },
     ],
     default: "search profiles",
   },

@@ -10,7 +10,7 @@ export class PersonApiOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "searchProfiles":
+      case "search profiles":
         const searchProfilesParams = context.getNodeParameter(
           "searchProfilesParams",
           itemIndex,
@@ -33,7 +33,7 @@ export class PersonApiOperations {
           body.total_results = searchProfilesParams.total_results;
         break;
 
-      case "extractProfileInfo":
+      case "extract profile info":
         const extractProfileInfoParams = context.getNodeParameter(
           "extractProfileInfoParams",
           itemIndex,
@@ -51,7 +51,7 @@ export class PersonApiOperations {
 
 
 
-      case "profileEnrichment":
+      case "profile enrichment":
         const profileEnrichmentParams = context.getNodeParameter(
           "profileEnrichmentParams",
           itemIndex,
@@ -77,7 +77,7 @@ export class PersonApiOperations {
           body.company_name = profileEnrichmentParams.company_name;
         break;
 
-      case "extractCompanyEmployees":
+      case "extract company employees":
         const extractCompanyEmployeesParams = context.getNodeParameter(
           "extractCompanyEmployeesParams",
           itemIndex,

@@ -11,7 +11,7 @@ export const personApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["person api"],
-        operation: ["searchProfiles"],
+        operation: ["search profiles"],
       },
     },
     options: [
@@ -81,7 +81,7 @@ export const personApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["person api"],
-        operation: ["extractProfileInfo"],
+        operation: ["extract profile info"],
       },
     },
     options: [
@@ -105,7 +105,7 @@ export const personApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["person api"],
-        operation: ["profileEnrichment"],
+        operation: ["profile enrichment"],
       },
     },
     options: [
@@ -132,6 +132,43 @@ export const personApiProperties: INodeProperties[] = [
         default: "",
         placeholder: "Microsoft",
         description: "Company name where the person works",
+      },
+    ],
+  },
+  {
+    displayName: "Extract Company Employees Parameters",
+    name: "extractCompanyEmployeesParams",
+    type: "collection",
+    placeholder: "Add employees extraction parameter",
+    default: {},
+    displayOptions: {
+      show: {
+        resource: ["person api"],
+        operation: ["extract company employees"],
+      },
+    },
+    options: [
+      {
+        displayName: "Company Name *",
+        name: "company_name",
+        type: "string",
+        default: "",
+        placeholder: "Microsoft",
+        description: "Name of the company to extract employees from",
+      },
+      {
+        displayName: "Total Results",
+        name: "total_results",
+        type: "number",
+        default: 10,
+        description: "Number of employees to return",
+      },
+      {
+        displayName: "Decision Makers Only",
+        name: "decision_makers_only",
+        type: "boolean",
+        default: false,
+        description: "Whether to extract only decision makers",
       },
     ],
   },
