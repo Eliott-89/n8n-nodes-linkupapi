@@ -11,7 +11,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["sendConnectionRequest"],
+        operation: ["send connection request"],
       },
     },
     options: [
@@ -43,7 +43,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["acceptConnectionInvitation"],
+        operation: ["accept connection invitation"],
       },
     },
     options: [
@@ -75,7 +75,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["withdrawInvitation"],
+        operation: ["withdraw invitation"],
       },
     },
     options: [
@@ -98,7 +98,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["getInvitationStatus"],
+        operation: ["get invitation status"],
       },
     },
     options: [
@@ -121,7 +121,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["getConnections"],
+        operation: ["get connections"],
       },
     },
     options: [
@@ -158,7 +158,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["getReceivedInvitations"],
+        operation: ["get received invitations"],
       },
     },
     options: [
@@ -203,7 +203,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["getSentInvitations"],
+        operation: ["get sent invitations"],
       },
     },
     options: [
@@ -248,7 +248,7 @@ export const networkProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["network"],
-        operation: ["getNetworkRecommendations"],
+        operation: ["get network recommendations"],
       },
     },
     options: [

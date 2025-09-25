@@ -50,7 +50,7 @@ export class AuthenticationOperations {
         }
         break;
 
-      case "verifyCode":
+      case "verify code":
         const credsVerify = await context.getCredentials("linkupApi");
         if (credsVerify) {
           body.email = credsVerify.linkedinEmail;

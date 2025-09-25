@@ -10,7 +10,7 @@ export class CompanyOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "getCompanyInfo":
+      case "get company info":
         const getCompanyParams = context.getNodeParameter(
           "getCompanyParams",
           itemIndex,
@@ -26,7 +26,7 @@ export class CompanyOperations {
           body.company_url = getCompanyParams.companyUrl;
         break;
 
-      case "searchCompanies":
+      case "search companies":
         const searchCompaniesParams = context.getNodeParameter(
           "searchCompaniesParams",
           itemIndex,

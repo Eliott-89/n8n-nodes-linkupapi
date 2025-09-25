@@ -10,7 +10,7 @@ export class RecruiterOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "getCandidates":
+      case "get candidates":
         const getCandidatesParams = context.getNodeParameter(
           "getCandidatesParams",
           itemIndex,
@@ -44,7 +44,7 @@ export class RecruiterOperations {
           body.end_page = getCandidatesParams.end_page;
         break;
 
-      case "getJobPosts":
+      case "get job posts":
         const getJobPostsParams = context.getNodeParameter(
           "getJobPostsParams",
           itemIndex,
@@ -62,7 +62,7 @@ export class RecruiterOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getCandidateCV":
+      case "get candidate cv":
         const applicationParams = context.getNodeParameter(
           "applicationParams",
           itemIndex,
@@ -79,8 +79,8 @@ export class RecruiterOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "publishJob":
-      case "closeJob":
+      case "publish job":
+      case "close job":
         const publishCloseJobParams = context.getNodeParameter(
           "publishCloseJobParams",
           itemIndex,
@@ -97,7 +97,7 @@ export class RecruiterOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "createJob":
+      case "create job":
         const createJobParams = context.getNodeParameter(
           "createJobParams",
           itemIndex,

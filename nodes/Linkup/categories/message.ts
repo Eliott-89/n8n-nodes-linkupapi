@@ -10,7 +10,7 @@ export class MessageOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "sendMessage":
+      case "send message":
         const sendMessageParams = context.getNodeParameter(
           "sendMessageParams",
           itemIndex,
@@ -80,7 +80,7 @@ export class MessageOperations {
         // The login_token is automatically added from credentials
         break;
 
-      case "getConversationMessages":
+      case "get conversation messages":
         const conversationMessagesParams = context.getNodeParameter(
           "conversationMessagesParams",
           itemIndex,
@@ -110,7 +110,7 @@ export class MessageOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getMessageInbox":
+      case "get message inbox":
         const getMessageInboxParams = context.getNodeParameter(
           "getMessageInboxParams",
           itemIndex,

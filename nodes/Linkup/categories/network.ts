@@ -10,7 +10,7 @@ export class NetworkOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "sendConnectionRequest":
+      case "send connection request":
         const sendConnectionParams = context.getNodeParameter(
           "sendConnectionParams",
           itemIndex,
@@ -31,7 +31,7 @@ export class NetworkOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "acceptConnectionInvitation":
+      case "accept connection invitation":
         const acceptInvitationParams = context.getNodeParameter(
           "acceptInvitationParams",
           itemIndex,
@@ -53,7 +53,7 @@ export class NetworkOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "withdrawInvitation":
+      case "withdraw invitation":
         const withdrawInvitationParams = context.getNodeParameter(
           "withdrawInvitationParams",
           itemIndex,
@@ -70,7 +70,7 @@ export class NetworkOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getInvitationStatus":
+      case "get invitation status":
         const getInvitationStatusParams = context.getNodeParameter(
           "getInvitationStatusParams",
           itemIndex,
@@ -89,7 +89,7 @@ export class NetworkOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getConnections":
+      case "get connections":
         const getConnectionsParams = context.getNodeParameter(
           "getConnectionsParams",
           itemIndex,
@@ -104,7 +104,7 @@ export class NetworkOperations {
           body.end_page = getConnectionsParams.end_page;
         break;
 
-      case "getReceivedInvitations":
+      case "get received invitations":
         const getReceivedInvitationsParams = context.getNodeParameter(
           "getReceivedInvitationsParams",
           itemIndex,
@@ -121,7 +121,7 @@ export class NetworkOperations {
           body.invitation_type = getReceivedInvitationsParams.invitation_type;
         break;
 
-      case "getSentInvitations":
+      case "get sent invitations":
         const getSentInvitationsParams = context.getNodeParameter(
           "getSentInvitationsParams",
           itemIndex,
@@ -138,7 +138,7 @@ export class NetworkOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getNetworkRecommendations":
+      case "get network recommendations":
         const getNetworkRecommendationsParams = context.getNodeParameter(
           "getNetworkRecommendationsParams",
           itemIndex,

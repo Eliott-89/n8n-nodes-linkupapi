@@ -10,7 +10,7 @@ export class ProfileOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "getProfileInfo":
+      case "get profile info":
         const getProfileInfoParams = context.getNodeParameter(
           "getProfileInfoParams",
           itemIndex,
@@ -29,7 +29,7 @@ export class ProfileOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "searchProfile":
+      case "search profile":
         const searchProfileParams = context.getNodeParameter(
           "searchProfileParams",
           itemIndex,
@@ -62,7 +62,7 @@ export class ProfileOperations {
             searchProfileParams.fetch_invitation_state;
         break;
 
-      case "getMyProfile":
+      case "get my profile":
         // country from node params removed; credentials will inject it
         break;
     }

@@ -11,7 +11,7 @@ export const messageProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["message"],
-        operation: ["sendMessage"],
+        operation: ["send message"],
       },
     },
     options: [
@@ -52,7 +52,7 @@ export const messageProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["message"],
-        operation: ["getConversationMessages"],
+        operation: ["get conversation messages"],
       },
     },
     options: [
@@ -106,7 +106,7 @@ export const messageProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["message"],
-        operation: ["getMessageInbox"],
+        operation: ["get message inbox"],
       },
     },
     options: [

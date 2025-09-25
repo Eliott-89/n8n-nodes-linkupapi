@@ -11,7 +11,7 @@ export const companyProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["company"],
-        operation: ["getCompanyInfo"],
+        operation: ["get company info"],
       },
     },
     options: [
@@ -34,7 +34,7 @@ export const companyProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["company"],
-        operation: ["searchCompanies"],
+        operation: ["search companies"],
       },
     },
     options: [

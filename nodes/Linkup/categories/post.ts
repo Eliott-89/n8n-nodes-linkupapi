@@ -10,7 +10,7 @@ export class PostOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "getPostReactions":
+      case "get post reactions":
         const getPostReactionsParams = context.getNodeParameter(
           "getPostReactionsParams",
           itemIndex,
@@ -33,7 +33,7 @@ export class PostOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "reactToPost":
+      case "react to post":
         const reactToPostParams = context.getNodeParameter(
           "reactToPostParams",
           itemIndex,
@@ -52,7 +52,7 @@ export class PostOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "addCommentToPost":
+      case "add comment to post":
         const commentPostParams = context.getNodeParameter(
           "addCommentToPostParams",
           itemIndex,
@@ -72,7 +72,7 @@ export class PostOperations {
         if (commentPostParams.message) body.message = commentPostParams.message;
         break;
 
-      case "answerComment":
+      case "answer comment":
         const answerCommentParams = context.getNodeParameter(
           "answerCommentParams",
           itemIndex,
@@ -108,7 +108,7 @@ export class PostOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "createPost":
+      case "create post":
         const createPostParams = context.getNodeParameter(
           "createPostParams",
           itemIndex,
@@ -125,7 +125,7 @@ export class PostOperations {
         if (createPostParams.file) body.file = createPostParams.file;
         break;
 
-      case "searchPosts":
+      case "search posts":
         const searchPostsParams = context.getNodeParameter(
           "searchPostsParams",
           itemIndex,
@@ -147,7 +147,7 @@ export class PostOperations {
           body.end_page = searchPostsParams.end_page;
         break;
 
-      case "getLinkedInFeed":
+      case "get linkedin feed":
         const getFeedParams = context.getNodeParameter(
           "getFeedParams",
           itemIndex,
@@ -158,7 +158,7 @@ export class PostOperations {
         // country from node params removed; credentials will inject it
         break;
 
-      case "getComments":
+      case "get comments":
         const getCommentsParams = context.getNodeParameter(
           "getCommentsParams",
           itemIndex,
@@ -180,7 +180,7 @@ export class PostOperations {
           body.end_page = getCommentsParams.end_page;
         break;
 
-      case "repostContent":
+      case "repost content":
         const repostParams = context.getNodeParameter(
           "repostContentParams",
           itemIndex,
@@ -195,7 +195,7 @@ export class PostOperations {
         if (repostParams.post_url) body.post_url = repostParams.post_url;
         break;
 
-      case "sendPostTimeSpent":
+      case "send post time spent":
         const timeSpentParams = context.getNodeParameter(
           "sendPostTimeSpentParams",
           itemIndex,

@@ -11,7 +11,7 @@ export const recruiterProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["getCandidates"],
+        operation: ["get candidates"],
       },
     },
     options: [
@@ -105,7 +105,7 @@ export const recruiterProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["publishJob", "closeJob"],
+        operation: ["publish job", "close job"],
       },
     },
     options: [
@@ -129,7 +129,7 @@ export const recruiterProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["getCandidateCV"],
+        operation: ["get candidate cv"],
       },
     },
     options: [
@@ -153,7 +153,7 @@ export const recruiterProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["createJob"],
+        operation: ["create job"],
       },
     },
     options: [
@@ -249,7 +249,7 @@ export const recruiterProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["recruiter"],
-        operation: ["getJobPosts"],
+        operation: ["get job posts"],
       },
     },
     options: [

@@ -11,7 +11,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["getPostReactions"],
+        operation: ["get post reactions"],
       },
     },
     options: [
@@ -57,7 +57,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["reactToPost"],
+        operation: ["react to post"],
       },
     },
     options: [
@@ -91,7 +91,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["repostContent"],
+        operation: ["repost content"],
       },
     },
     options: [
@@ -115,7 +115,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["addCommentToPost"],
+        operation: ["add comment to post"],
       },
     },
     options: [
@@ -147,7 +147,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["getComments"],
+        operation: ["get comments"],
       },
     },
     options: [
@@ -192,7 +192,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["sendPostTimeSpent"],
+        operation: ["send post time spent"],
       },
     },
     options: [
@@ -231,7 +231,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["answerComment"],
+        operation: ["answer comment"],
       },
     },
     options: [
@@ -294,7 +294,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["searchPosts"],
+        operation: ["search posts"],
       },
     },
     options: [
@@ -371,7 +371,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["createPost"],
+        operation: ["create post"],
       },
     },
     options: [
@@ -403,7 +403,7 @@ export const postProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["post"],
-        operation: ["getLinkedInFeed"],
+        operation: ["get linkedin feed"],
       },
     },
     options: [
