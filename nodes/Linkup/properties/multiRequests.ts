@@ -14,11 +14,11 @@ export const multiRequestsProperties: INodeProperties[] = [
     options: [
       {
         name: "Custom Request",
-        value: "customRequest",
+        value: "custom request",
         description: "Make a custom HTTP request",
       },
     ],
-    default: "customRequest",
+    default: "custom request",
   },
   {
     displayName: "URL",
@@ -31,7 +31,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
       },
     },
   },
@@ -67,7 +67,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
       },
     },
   },
@@ -106,7 +106,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
       },
     },
   },
@@ -125,7 +125,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
         method: ["POST", "PUT", "PATCH"],
       },
     },
@@ -145,7 +145,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
         method: ["POST", "PUT", "PATCH"],
       },
     },
@@ -185,7 +185,7 @@ export const multiRequestsProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["multi requests"],
-        operation: ["customRequest"],
+        operation: ["custom request"],
         method: ["POST", "PUT", "PATCH"],
       },
     },

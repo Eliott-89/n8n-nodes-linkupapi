@@ -83,57 +83,48 @@ export class LinkupUtils {
   static getEndpointForOperation(operation: string): string {
     const endpointMap: Record<string, string> = {
       // AUTH
-      login: "/auth/login",
-      verifyCode: "/auth/verify",
+      "login": "/auth/login",
+      "verify code": "/auth/verify",
 
       // PROFILE
-      getMyProfile: "/profile/me",
-      searchProfile: "/profile/search",
-      getProfileInfo: "/profile/info",
-
-      // COMPANIES
-      searchCompanies: "/companies/search",
-      getCompanyInfo: "/companies/info",
+      "get my profile": "/profile/me",
+      "search profile": "/profile/search",
+      "get profile info": "/profile/info",
 
       // NETWORK
-      sendConnectionRequest: "/network/connect",
-      getConnections: "/network/connections",
-      acceptConnectionInvitation: "/network/accept-invitations",
-      getReceivedInvitations: "/network/invitations",
-      getSentInvitations: "/network/sent-invitations",
-      withdrawInvitation: "/network/withdraw-invitation",
-      getNetworkRecommendations: "/network/recommendations",
-      getInvitationStatus: "/network/invitation-status",
+      "send connection request": "/network/connect",
+      "get connections": "/network/connections",
+      "accept connection invitation": "/network/accept-invitations",
+      "get received invitations": "/network/invitations",
+      "get sent invitations": "/network/sent-invitations",
+      "withdraw invitation": "/network/withdraw-invitation",
+      "get network recommendations": "/network/recommendations",
+      "get invitation status": "/network/invitation-status",
 
       // MESSAGES
-      sendMessage: "/messages/send-message",
-      getMessageInbox: "/messages/inbox",
-      getConversationMessages: "/messages/conversation",
+      "send message": "/messages/send-message",
+      "get message inbox": "/messages/inbox",
+      "get conversation messages": "/messages/conversation",
 
       // POSTS
-      getPostReactions: "/posts/reactions",
-      reactToPost: "/posts/react",
-      repost: "/posts/repost",
-      repostContent: "/posts/repost",
-      commentPost: "/posts/comment",
-      addCommentToPost: "/posts/comment",
-      extractComments: "/posts/extract-comments",
-      getComments: "/posts/extract-comments",
-      answerComment: "/posts/answer-comment",
-      searchPosts: "/posts/search",
-      createPost: "/posts/create",
-      getFeed: "/posts/feed",
-      getLinkedInFeed: "/posts/feed",
-      timeSpent: "/posts/time-spent",
-      sendPostTimeSpent: "/posts/time-spent",
+      "get post reactions": "/posts/reactions",
+      "react to post": "/posts/react",
+      "repost content": "/posts/repost",
+      "add comment to post": "/posts/comment",
+      "get comments": "/posts/extract-comments",
+      "answer comment": "/posts/answer-comment",
+      "search posts": "/posts/search",
+      "create post": "/posts/create",
+      "get linkedin feed": "/posts/feed",
+      "send post time spent": "/posts/time-spent",
 
       // RECRUITER
-      getCandidates: "/recruiter/candidates",
-      getCandidateCV: "/recruiter/cv",
-      getJobPosts: "/recruiter/job-posts",
-      publishJob: "/recruiter/publish-job",
-      closeJob: "/recruiter/close-job",
-      createJob: "/recruiter/create-job",
+      "get candidates": "/recruiter/candidates",
+      "get candidate cv": "/recruiter/cv",
+      "get job posts": "/recruiter/job-posts",
+      "publish job": "/recruiter/publish-job",
+      "close job": "/recruiter/close-job",
+      "create job": "/recruiter/create-job",
 
       // SIGNAL API (nouveaux)
       "extract post reactions": "/data/signals/posts/reactions",
@@ -155,12 +146,12 @@ export class LinkupUtils {
       "extract company employees": "/data/employees/extract",
 
       // MULTI-REQUESTS
-      customRequest: "/custom", // Generic endpoint for custom requests
+      "custom request": "/custom", // Generic endpoint for custom requests
 
       // MAIL API (nouveaux)
-      emailFinder: "/data/mail/finder",
-      emailReverse: "/data/mail/reverse",
-      emailValidate: "/data/mail/validate",
+      "email finder": "/data/mail/finder",
+      "email reverse": "/data/mail/reverse",
+      "email validate": "/data/mail/validate",
     };
 
     return endpointMap[operation] || "/unknown";

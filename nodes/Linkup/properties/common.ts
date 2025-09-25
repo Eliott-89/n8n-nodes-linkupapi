@@ -206,7 +206,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Check invitation status for a profile",
       },
     ],
-    default: "sendConnectionRequest",
+    default: "send connection request",
   },
   {
     displayName: "Operation",
@@ -235,7 +235,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Get messages from a conversation",
       },
     ],
-    default: "sendMessage",
+    default: "send message",
   },
   {
     displayName: "Operation",
@@ -299,7 +299,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Send post time spent signal",
       },
     ],
-    default: "getPostReactions",
+    default: "get post reactions",
   },
   {
     displayName: "Operation",
@@ -343,7 +343,7 @@ export const commonProperties: INodeProperties[] = [
         description: "Create a new job",
       },
     ],
-    default: "getCandidates",
+    default: "get candidates",
   },
   {
     displayName: "Operation",

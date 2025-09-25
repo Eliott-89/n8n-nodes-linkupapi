@@ -10,7 +10,7 @@ export class MailApiOperations {
     const body: RequestBody = {};
 
     switch (operation) {
-      case "emailFinder":
+      case "email finder":
         // Paramètres pour la recherche d'email
         const emailFinderParams = context.getNodeParameter(
           "emailFinderParams",
@@ -26,7 +26,7 @@ export class MailApiOperations {
         if (emailFinderParams.company_name) body.company_name = emailFinderParams.company_name;
         break;
 
-      case "emailReverse":
+      case "email reverse":
         // Paramètres pour la recherche inverse d'email
         const emailReverseParams = context.getNodeParameter(
           "emailReverseParams",
@@ -42,7 +42,7 @@ export class MailApiOperations {
         if (emailReverseParams.email) body.email = emailReverseParams.email;
         break;
 
-      case "emailValidate":
+      case "email validate":
         // Paramètres pour la validation d'email
         const emailValidateParams = context.getNodeParameter(
           "emailValidateParams",

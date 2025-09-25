@@ -9,7 +9,7 @@ export class MultiRequestsOperations {
     const body: any = {};
 
     switch (operation) {
-      case "customRequest":
+      case "custom request":
         // Get URL parameter
         const url = context.getNodeParameter("url", itemIndex) as string;
         body.url = url;

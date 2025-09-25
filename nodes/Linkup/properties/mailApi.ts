@@ -14,21 +14,21 @@ export const mailApiProperties: INodeProperties[] = [
     options: [
       {
         name: "Email Finder",
-        value: "emailFinder",
+        value: "email finder",
         description: "Find email addresses from LinkedIn profiles",
       },
       {
         name: "Email Reverse",
-        value: "emailReverse",
+        value: "email reverse",
         description: "Reverse lookup email to get LinkedIn profile information",
       },
       {
         name: "Email Validate",
-        value: "emailValidate",
+        value: "email validate",
         description: "Validate if an email address is valid and deliverable",
       },
     ],
-    default: "emailFinder",
+    default: "email finder",
   },
   
   // MAIL API - Parameters for emailFinder
@@ -41,7 +41,7 @@ export const mailApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["mail api"],
-        operation: ["emailFinder"],
+        operation: ["email finder"],
       },
     },
     options: [
@@ -98,7 +98,7 @@ export const mailApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["mail api"],
-        operation: ["emailReverse"],
+        operation: ["email reverse"],
       },
     },
     options: [
@@ -123,7 +123,7 @@ export const mailApiProperties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ["mail api"],
-        operation: ["emailValidate"],
+        operation: ["email validate"],
       },
     },
     options: [
