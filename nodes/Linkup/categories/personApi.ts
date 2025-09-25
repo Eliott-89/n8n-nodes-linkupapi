@@ -49,8 +49,6 @@ export class PersonApiOperations {
           body.profile_url = extractProfileInfoParams.profileUrl;
         break;
 
-
-
       case "profile enrichment":
         const profileEnrichmentParams = context.getNodeParameter(
           "profileEnrichmentParams",

@@ -17,13 +17,18 @@ export class MailApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Aucun paramètre obligatoire pour emailFinder
-        if (emailFinderParams.linkedin_url) body.linkedin_url = emailFinderParams.linkedin_url;
-        if (emailFinderParams.first_name) body.first_name = emailFinderParams.first_name;
-        if (emailFinderParams.last_name) body.last_name = emailFinderParams.last_name;
-        if (emailFinderParams.company_domain) body.company_domain = emailFinderParams.company_domain;
-        if (emailFinderParams.company_name) body.company_name = emailFinderParams.company_name;
+        if (emailFinderParams.linkedin_url)
+          body.linkedin_url = emailFinderParams.linkedin_url;
+        if (emailFinderParams.first_name)
+          body.first_name = emailFinderParams.first_name;
+        if (emailFinderParams.last_name)
+          body.last_name = emailFinderParams.last_name;
+        if (emailFinderParams.company_domain)
+          body.company_domain = emailFinderParams.company_domain;
+        if (emailFinderParams.company_name)
+          body.company_name = emailFinderParams.company_name;
         break;
 
       case "email reverse":
@@ -33,12 +38,12 @@ export class MailApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Validation des paramètres requis
         if (!emailReverseParams.email) {
           throw new Error("Email address is required for this operation");
         }
-        
+
         if (emailReverseParams.email) body.email = emailReverseParams.email;
         break;
 
@@ -49,12 +54,12 @@ export class MailApiOperations {
           itemIndex,
           {}
         ) as any;
-        
+
         // Validation des paramètres requis
         if (!emailValidateParams.email) {
           throw new Error("Email address is required for this operation");
         }
-        
+
         if (emailValidateParams.email) body.email = emailValidateParams.email;
         break;
 

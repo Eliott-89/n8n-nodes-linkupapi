@@ -20,7 +20,7 @@ export const companyProperties: INodeProperties[] = [
         name: "companyUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/company/microsoft",
+        placeholder: "e.g. https://www.linkedin.com/company/microsoftCorp",
         description: "LinkedIn company URL",
       },
     ],
@@ -43,7 +43,7 @@ export const companyProperties: INodeProperties[] = [
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "Microsoft",
+        placeholder: "e.g. automation",
         description: "Company name or keyword to search",
       },
       {
@@ -51,7 +51,7 @@ export const companyProperties: INodeProperties[] = [
         name: "location",
         type: "string",
         default: "",
-        placeholder: "San Francisco",
+        placeholder: "e.g. sanFrancisco",
         description: "Location to search in",
       },
       {
@@ -59,7 +59,7 @@ export const companyProperties: INodeProperties[] = [
         name: "sector",
         type: "string",
         default: "",
-        placeholder: "Technology",
+        placeholder: "e.g. technology",
         description: "Company sector to filter by",
       },
       {
@@ -67,10 +67,10 @@ export const companyProperties: INodeProperties[] = [
         name: "company_size",
         type: "string",
         default: "",
-        placeholder: "1000-5000",
+        placeholder: "e.g. 1000-5000",
         description: "Company size range",
       },
-      
+
       {
         displayName: "Total Results",
         name: "total_results",

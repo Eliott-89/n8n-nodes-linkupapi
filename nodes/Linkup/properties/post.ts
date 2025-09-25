@@ -20,7 +20,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
       {
@@ -44,7 +44,6 @@ export const postProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      
     ],
   },
   // POST - Specific parameters for reactToPost
@@ -66,7 +65,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
       {
@@ -74,11 +73,9 @@ export const postProperties: INodeProperties[] = [
         name: "reaction_type",
         type: "string",
         default: "like",
-        placeholder:
-          "like, celebrate, support, funny, love, insightful, curious",
+        placeholder: "e.g. like",
         description: "Type of reaction to add",
       },
-      
     ],
   },
   // POST - Specific parameters for repostContent
@@ -100,7 +97,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
     ],
@@ -124,7 +121,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
       {
@@ -132,7 +129,7 @@ export const postProperties: INodeProperties[] = [
         name: "message",
         type: "string",
         default: "",
-        placeholder: "Great post! Thanks for sharing.",
+        placeholder: "e.g. Great post! Thanks for sharing.",
         description: "Comment content to add",
       },
     ],
@@ -156,7 +153,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
       {
@@ -201,7 +198,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL",
       },
       {
@@ -218,7 +215,6 @@ export const postProperties: INodeProperties[] = [
         default: 0,
         description: "Start time in seconds",
       },
-      
     ],
   },
 
@@ -240,7 +236,7 @@ export const postProperties: INodeProperties[] = [
         name: "tracking_id",
         type: "string",
         default: "",
-        placeholder: "tracking_id_here",
+        placeholder: "e.g. trackingId123",
         description: "Tracking ID for the comment",
       },
       {
@@ -248,7 +244,7 @@ export const postProperties: INodeProperties[] = [
         name: "profile_urn",
         type: "string",
         default: "",
-        placeholder: "profile_urn_here",
+        placeholder: "e.g. profileUrn123",
         description: "Profile URN for the comment",
       },
       {
@@ -256,7 +252,7 @@ export const postProperties: INodeProperties[] = [
         name: "comment_urn",
         type: "string",
         default: "",
-        placeholder: "comment_urn_here",
+        placeholder: "e.g. commentUrn123",
         description: "Comment URN to reply to",
       },
       {
@@ -264,7 +260,7 @@ export const postProperties: INodeProperties[] = [
         name: "comment_text",
         type: "string",
         default: "",
-        placeholder: "Thank you for your comment!",
+        placeholder: "e.g. Thank you for your comment!",
         description: "Reply content",
       },
       {
@@ -279,10 +275,9 @@ export const postProperties: INodeProperties[] = [
         name: "commenter_name",
         type: "string",
         default: "",
-        placeholder: "John Doe",
+        placeholder: "e.g. Nathan Smith",
         description: "Name of the commenter",
       },
-      
     ],
   },
   {
@@ -303,7 +298,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_type",
         type: "string",
         default: "",
-        placeholder: "article, video, image, text",
+        placeholder: "e.g. article",
         description: "Type of post to search for",
       },
       {
@@ -311,16 +306,16 @@ export const postProperties: INodeProperties[] = [
         name: "sort_by",
         type: "string",
         default: "",
-        placeholder: "relevance, date, engagement",
+        placeholder: "e.g. relevance",
         description: "Sort order for results",
       },
-      
+
       {
         displayName: "Keyword",
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "artificial intelligence",
+        placeholder: "e.g. automation",
         description: "Keyword to search for in posts",
       },
       {
@@ -328,7 +323,7 @@ export const postProperties: INodeProperties[] = [
         name: "post_date",
         type: "string",
         default: "",
-        placeholder: "2024-01-01",
+        placeholder: "e.g. 2024-01-01",
         description: "Date filter for posts",
       },
       {
@@ -336,7 +331,7 @@ export const postProperties: INodeProperties[] = [
         name: "linkedin_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to filter by",
       },
       {
@@ -380,16 +375,16 @@ export const postProperties: INodeProperties[] = [
         name: "message",
         type: "string",
         default: "",
-        placeholder: "Share your thoughts here...",
+        placeholder: "e.g. Share your thoughts here...",
         description: "Post content to create",
       },
-      
+
       {
         displayName: "File",
         name: "file",
         type: "string",
         default: "",
-        placeholder: "https://example.com/file.jpg",
+        placeholder: "e.g. https://example.com/image.png",
         description: "File URL to attach to post",
       },
     ],
@@ -419,7 +414,7 @@ export const postProperties: INodeProperties[] = [
         name: "country",
         type: "string",
         default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        placeholder: "e.g. FR",
         description: "Country code for proxy selection",
       },
     ],

@@ -35,7 +35,7 @@ export class MessageOperations {
           try {
             // Simple URL validation without using URL constructor
             const mediaLink = sendMessageParams.media_link;
-            
+
             // Check if it's a file:// URL
             if (mediaLink.startsWith("file://")) {
               throw new Error(
@@ -44,7 +44,10 @@ export class MessageOperations {
             }
 
             // Check that it starts with http:// or https://
-            if (!mediaLink.startsWith("http://") && !mediaLink.startsWith("https://")) {
+            if (
+              !mediaLink.startsWith("http://") &&
+              !mediaLink.startsWith("https://")
+            ) {
               throw new Error("Media URL must use HTTP or HTTPS protocol");
             }
 

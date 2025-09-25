@@ -20,10 +20,9 @@ export const profileProperties: INodeProperties[] = [
         name: "linkedin_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL",
       },
-      
     ],
   },
   {
@@ -44,7 +43,7 @@ export const profileProperties: INodeProperties[] = [
         name: "company_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/company/company-name",
+        placeholder: "e.g. https://www.linkedin.com/company/microsoftCorp",
         description: "Company LinkedIn URL to filter by",
       },
       {
@@ -52,7 +51,7 @@ export const profileProperties: INodeProperties[] = [
         name: "location",
         type: "string",
         default: "",
-        placeholder: "San Francisco",
+        placeholder: "e.g. sanFrancisco",
         description: "Location to search in",
       },
       {
@@ -60,7 +59,7 @@ export const profileProperties: INodeProperties[] = [
         name: "school_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/school/school-name",
+        placeholder: "e.g. https://www.linkedin.com/school/stanfordUniversity",
         description: "School LinkedIn URL to filter by",
       },
       {
@@ -68,7 +67,7 @@ export const profileProperties: INodeProperties[] = [
         name: "network",
         type: "string",
         default: "",
-        placeholder: "1st, 2nd, 3rd",
+        placeholder: "e.g. firstConnection",
         description: "Network connection degree",
       },
       {
@@ -76,7 +75,7 @@ export const profileProperties: INodeProperties[] = [
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "software engineer",
+        placeholder: "e.g. automation",
         description: "Search keyword",
       },
       {
@@ -100,13 +99,13 @@ export const profileProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      
+
       {
         displayName: "First Name",
         name: "first_name",
         type: "string",
         default: "",
-        placeholder: "John",
+        placeholder: "e.g. Nathan",
         description: "First name to filter by",
       },
       {
@@ -114,7 +113,7 @@ export const profileProperties: INodeProperties[] = [
         name: "last_name",
         type: "string",
         default: "",
-        placeholder: "Doe",
+        placeholder: "e.g. Smith",
         description: "Last name to filter by",
       },
       {
@@ -122,7 +121,7 @@ export const profileProperties: INodeProperties[] = [
         name: "title",
         type: "string",
         default: "",
-        placeholder: "Software Engineer",
+        placeholder: "e.g. softwareEngineer",
         description: "Job title to filter by",
       },
       {

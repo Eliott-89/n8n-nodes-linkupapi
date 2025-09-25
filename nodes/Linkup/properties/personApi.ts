@@ -20,7 +20,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "John Doe",
+        placeholder: "e.g. Nathan Smith",
         description: "Search keyword for profiles",
       },
       {
@@ -28,7 +28,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "job_title",
         type: "string",
         default: "",
-        placeholder: "Software Engineer",
+        placeholder: "e.g. softwareEngineer",
         description: "Job title to filter by",
       },
       {
@@ -36,7 +36,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "industry",
         type: "string",
         default: "",
-        placeholder: "Technology",
+        placeholder: "e.g. technology",
         description: "Industry to filter by",
       },
       {
@@ -44,7 +44,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "school",
         type: "string",
         default: "",
-        placeholder: "Stanford University",
+        placeholder: "e.g. stanfordUniversity",
         description: "School to filter by",
       },
       {
@@ -52,7 +52,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "location",
         type: "string",
         default: "",
-        placeholder: "San Francisco",
+        placeholder: "e.g. sanFrancisco",
         description: "Location to filter by",
       },
       {
@@ -60,7 +60,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "current_company",
         type: "string",
         default: "",
-        placeholder: "Microsoft",
+        placeholder: "e.g. automation",
         description: "Current company to filter by",
       },
       {
@@ -90,7 +90,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "profileUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL",
       },
     ],
@@ -114,7 +114,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "first_name",
         type: "string",
         default: "",
-        placeholder: "John",
+        placeholder: "e.g. Nathan",
         description: "First name of the person",
       },
       {
@@ -122,7 +122,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "last_name",
         type: "string",
         default: "",
-        placeholder: "Doe",
+        placeholder: "e.g. Smith",
         description: "Last name of the person",
       },
       {
@@ -130,7 +130,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "company_name",
         type: "string",
         default: "",
-        placeholder: "Microsoft",
+        placeholder: "e.g. automation",
         description: "Company name where the person works",
       },
     ],
@@ -153,7 +153,7 @@ export const personApiProperties: INodeProperties[] = [
         name: "company_name",
         type: "string",
         default: "",
-        placeholder: "Microsoft",
+        placeholder: "e.g. automation",
         description: "Name of the company to extract employees from",
       },
       {

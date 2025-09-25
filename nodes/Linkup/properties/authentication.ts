@@ -23,7 +23,6 @@ export const authenticationProperties: INodeProperties[] = [
         placeholder: "123456",
         description: "Verification code received via email/SMS",
       },
-      
     ],
   },
 ];

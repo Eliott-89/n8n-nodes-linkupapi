@@ -20,7 +20,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL to extract data from",
       },
       {
@@ -65,7 +65,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/posts/activity-123456789",
+        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
         description: "LinkedIn post URL to extract data from",
       },
       {
@@ -116,7 +116,7 @@ export const signalProperties: INodeProperties[] = [
         name: "profile_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to extract data from",
       },
       {
@@ -145,7 +145,7 @@ export const signalProperties: INodeProperties[] = [
         name: "cursor",
         type: "string",
         default: "",
-        placeholder: "Pagination cursor",
+        placeholder: "e.g. paginationCursor",
         description: "Cursor for pagination",
       },
     ],
@@ -168,7 +168,7 @@ export const signalProperties: INodeProperties[] = [
         name: "profile_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to extract data from",
       },
       {
@@ -183,7 +183,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_type",
         type: "string",
         default: "ALL",
-        placeholder: "ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT",
+        placeholder: "e.g. ALL",
         description: "Type of posts to extract",
       },
       {
@@ -191,7 +191,7 @@ export const signalProperties: INodeProperties[] = [
         name: "sort_by",
         type: "string",
         default: "DATE_POSTED",
-        placeholder: "RELEVANCE, DATE_POSTED",
+        placeholder: "e.g. RELEVANCE",
         description: "Sort order for posts",
       },
       {
@@ -199,7 +199,7 @@ export const signalProperties: INodeProperties[] = [
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "Filter posts by keyword",
+        placeholder: "e.g. automation",
         description: "Keyword to filter posts",
       },
       {
@@ -207,7 +207,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_date",
         type: "string",
         default: "",
-        placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
+        placeholder: "e.g. PAST_WEEK",
         description: "Date filter for posts",
       },
       {
@@ -251,7 +251,7 @@ export const signalProperties: INodeProperties[] = [
         name: "company_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/company/microsoft",
+        placeholder: "e.g. https://www.linkedin.com/company/microsoftCorp",
         description: "LinkedIn company URL to extract data from",
       },
       {
@@ -266,7 +266,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_type",
         type: "string",
         default: "ALL",
-        placeholder: "ALL, ARTICLE, VIDEO, PHOTO, DOCUMENT",
+        placeholder: "e.g. ALL",
         description: "Type of posts to extract",
       },
       {
@@ -274,7 +274,7 @@ export const signalProperties: INodeProperties[] = [
         name: "sort_by",
         type: "string",
         default: "DATE_POSTED",
-        placeholder: "RELEVANCE, DATE_POSTED",
+        placeholder: "e.g. RELEVANCE",
         description: "Sort order for posts",
       },
       {
@@ -282,7 +282,7 @@ export const signalProperties: INodeProperties[] = [
         name: "keyword",
         type: "string",
         default: "",
-        placeholder: "Filter posts by keyword",
+        placeholder: "e.g. automation",
         description: "Keyword to filter posts",
       },
       {
@@ -290,7 +290,7 @@ export const signalProperties: INodeProperties[] = [
         name: "post_date",
         type: "string",
         default: "",
-        placeholder: "PAST_24_HOURS, PAST_WEEK, PAST_MONTH",
+        placeholder: "e.g. PAST_WEEK",
         description: "Date filter for posts",
       },
       {

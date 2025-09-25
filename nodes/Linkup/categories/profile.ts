@@ -19,9 +19,7 @@ export class ProfileOperations {
 
         // Required parameter validation
         if (!getProfileInfoParams.linkedin_url) {
-          throw new Error(
-            "LinkedIn URL is required for this operation"
-          );
+          throw new Error("LinkedIn URL is required for this operation");
         }
 
         if (getProfileInfoParams.linkedin_url)

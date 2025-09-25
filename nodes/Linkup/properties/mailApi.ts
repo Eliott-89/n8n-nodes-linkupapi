@@ -30,7 +30,7 @@ export const mailApiProperties: INodeProperties[] = [
     ],
     default: "email finder",
   },
-  
+
   // MAIL API - Parameters for emailFinder
   {
     displayName: "Email Finder Parameters",
@@ -50,15 +50,16 @@ export const mailApiProperties: INodeProperties[] = [
         name: "linkedin_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/jeffbezos/",
-        description: "LinkedIn profile URL (e.g., https://www.linkedin.com/in/jeffbezos/)",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
+        description:
+          "LinkedIn profile URL (e.g., https://www.linkedin.com/in/jeffbezos/)",
       },
       {
         displayName: "First Name",
         name: "first_name",
         type: "string",
         default: "",
-        placeholder: "Jeff",
+        placeholder: "e.g. Nathan",
         description: "Person's first name",
       },
       {
@@ -66,7 +67,7 @@ export const mailApiProperties: INodeProperties[] = [
         name: "last_name",
         type: "string",
         default: "",
-        placeholder: "Bezos",
+        placeholder: "e.g. Smith",
         description: "Person's last name",
       },
       {
@@ -74,16 +75,18 @@ export const mailApiProperties: INodeProperties[] = [
         name: "company_domain",
         type: "string",
         default: "",
-        placeholder: "amazon.com",
-        description: "Company domain (e.g., \"company.com\") Recommended over company_name for better accuracy",
+        placeholder: "e.g. amazon.com",
+        description:
+          'Company domain (e.g., "company.com") Recommended over company_name for better accuracy',
       },
       {
         displayName: "Company Name",
         name: "company_name",
         type: "string",
         default: "",
-        placeholder: "Amazon",
-        description: "Company name (will be used to find domain) Less accurate than providing company_domain directly",
+        placeholder: "e.g. automation",
+        description:
+          "Company name (will be used to find domain) Less accurate than providing company_domain directly",
       },
     ],
   },
@@ -107,7 +110,7 @@ export const mailApiProperties: INodeProperties[] = [
         name: "email",
         type: "string",
         default: "",
-        placeholder: "jeff@amazon.com",
+        placeholder: "e.g. nathan@example.com",
         description: "Email address to perform reverse lookup on",
       },
     ],
@@ -132,7 +135,7 @@ export const mailApiProperties: INodeProperties[] = [
         name: "email",
         type: "string",
         default: "",
-        placeholder: "elon.musk@tesla.com",
+        placeholder: "e.g. nathan@example.com",
         description: "Email address to validate (e.g., elon.musk@tesla.com)",
       },
     ],

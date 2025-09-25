@@ -20,7 +20,7 @@ export const messageProperties: INodeProperties[] = [
         name: "linkedin_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to send message to",
       },
       {
@@ -28,16 +28,16 @@ export const messageProperties: INodeProperties[] = [
         name: "message_text",
         type: "string",
         default: "",
-        placeholder: "Hello! How are you?",
+        placeholder: "e.g. Hello! How are you?",
         description: "Message content to send",
       },
-      
+
       {
         displayName: "Media Link",
         name: "media_link",
         type: "string",
         default: "",
-        placeholder: "https://example.com/image.jpg",
+        placeholder: "e.g. https://example.com/image.png",
         description:
           "Direct URL to a media file (image, video, document). Must be a public URL accessible via HTTP/HTTPS. Local URLs (file://) are not supported.",
       },
@@ -61,7 +61,7 @@ export const messageProperties: INodeProperties[] = [
         name: "linkedinUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description:
           "LinkedIn profile URL (required if conversation_id is not provided)",
       },
@@ -70,7 +70,7 @@ export const messageProperties: INodeProperties[] = [
         name: "conversationId",
         type: "string",
         default: "",
-        placeholder: "conversation_id_here",
+        placeholder: "e.g. conversationId123",
         description:
           "LinkedIn conversation ID (required if linkedin_url is not provided)",
       },
@@ -110,7 +110,6 @@ export const messageProperties: INodeProperties[] = [
       },
     },
     options: [
-      
       {
         displayName: "Total Results",
         name: "total_results",
@@ -123,7 +122,7 @@ export const messageProperties: INodeProperties[] = [
         name: "category",
         type: "string",
         default: "",
-        placeholder: "INBOX, INMAIL, JOB, UNREAD",
+        placeholder: "e.g. INBOX",
         description: "Category to filter messages",
       },
       {
@@ -131,7 +130,7 @@ export const messageProperties: INodeProperties[] = [
         name: "next_cursor",
         type: "string",
         default: "",
-        placeholder: "Pagination cursor",
+        placeholder: "e.g. paginationCursor",
         description: "Cursor for pagination",
       },
     ],

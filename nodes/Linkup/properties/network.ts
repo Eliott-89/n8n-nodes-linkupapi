@@ -20,7 +20,7 @@ export const networkProperties: INodeProperties[] = [
         name: "profileUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to connect with",
       },
       {
@@ -28,10 +28,9 @@ export const networkProperties: INodeProperties[] = [
         name: "connectionMessage",
         type: "string",
         default: "",
-        placeholder: "Hi, I'd like to connect with you!",
+        placeholder: "e.g. Hi, I'd like to connect with you!",
         description: "Custom message for connection request",
       },
-      
     ],
   },
   {
@@ -52,7 +51,7 @@ export const networkProperties: INodeProperties[] = [
         name: "shared_secret",
         type: "string",
         default: "",
-        placeholder: "shared_secret_here",
+        placeholder: "e.g. sharedSecretValue",
         description: "Shared secret for invitation acceptance",
       },
       {
@@ -60,10 +59,9 @@ export const networkProperties: INodeProperties[] = [
         name: "entity_urn",
         type: "string",
         default: "",
-        placeholder: "entity_urn_here",
+        placeholder: "e.g. entityUrnValue",
         description: "Entity URN for invitation acceptance",
       },
-      
     ],
   },
   {
@@ -84,7 +82,7 @@ export const networkProperties: INodeProperties[] = [
         name: "invitationId",
         type: "string",
         default: "",
-        placeholder: "invitation_id_here",
+        placeholder: "e.g. invitationId123",
         description: "LinkedIn invitation ID to withdraw",
       },
     ],
@@ -107,7 +105,7 @@ export const networkProperties: INodeProperties[] = [
         name: "profileUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/in/username",
+        placeholder: "e.g. https://www.linkedin.com/in/nathanSmith",
         description: "LinkedIn profile URL to check invitation status",
       },
     ],
@@ -125,7 +123,6 @@ export const networkProperties: INodeProperties[] = [
       },
     },
     options: [
-      
       {
         displayName: "Total Results",
         name: "total_results",
@@ -162,7 +159,6 @@ export const networkProperties: INodeProperties[] = [
       },
     },
     options: [
-      
       {
         displayName: "Start Page",
         name: "start_page",
@@ -189,7 +185,7 @@ export const networkProperties: INodeProperties[] = [
         name: "invitation_type",
         type: "string",
         default: "",
-        placeholder: "Type of invitation",
+        placeholder: "e.g. connectionRequest",
         description: "Type of invitation to filter by",
       },
     ],
@@ -212,7 +208,7 @@ export const networkProperties: INodeProperties[] = [
         name: "invitation_type",
         type: "string",
         default: "",
-        placeholder: "Type of invitation",
+        placeholder: "e.g. connectionRequest",
         description: "Type of invitation to filter by",
       },
       {
@@ -236,7 +232,6 @@ export const networkProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      
     ],
   },
   {
@@ -257,7 +252,7 @@ export const networkProperties: INodeProperties[] = [
         name: "country",
         type: "string",
         default: "FR",
-        placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+        placeholder: "e.g. FR",
         description: "Country code for proxy selection",
       },
       {

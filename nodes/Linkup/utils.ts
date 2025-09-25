@@ -83,7 +83,7 @@ export class LinkupUtils {
   static getEndpointForOperation(operation: string): string {
     const endpointMap: Record<string, string> = {
       // AUTH
-      "login": "/auth/login",
+      login: "/auth/login",
       "verify code": "/auth/verify",
 
       // PROFILE
@@ -136,7 +136,7 @@ export class LinkupUtils {
 
       // COMPANY API (nouveaux)
       "search companies": "/data/search/companies",
-      "get company info": "/data/company/info", 
+      "get company info": "/data/company/info",
       "get company info by domain": "/data/company/info-by-domain",
 
       // PERSON API (nouveaux)

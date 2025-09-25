@@ -75,7 +75,7 @@ export class LinkupApi implements ICredentialType {
       url: "/v1/check",
       method: "GET",
       headers: {
-        "accept": "application/json",
+        accept: "application/json",
         "x-api-key": "={{$credentials.apiKey}}",
       },
     },

@@ -20,7 +20,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "companyKeyword",
         type: "string",
         default: "",
-        placeholder: "Microsoft",
+        placeholder: "e.g. automation",
         description: "Company name or keyword to search",
       },
       {
@@ -28,7 +28,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "industry",
         type: "string",
         default: "",
-        placeholder: "Technology",
+        placeholder: "e.g. technology",
         description: "Industry to filter by",
       },
       {
@@ -36,7 +36,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "location",
         type: "string",
         default: "",
-        placeholder: "San Francisco",
+        placeholder: "e.g. sanFrancisco",
         description: "Location to filter by",
       },
       {
@@ -44,7 +44,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "employee_range",
         type: "string",
         default: "",
-        placeholder: "1000-5000",
+        placeholder: "e.g. 1000-5000",
         description: "Employee count range",
       },
       {
@@ -81,7 +81,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "companyUrl",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/company/microsoft",
+        placeholder: "e.g. https://www.linkedin.com/company/microsoftCorp",
         description: "LinkedIn company URL",
       },
     ],
@@ -104,7 +104,7 @@ export const companyApiProperties: INodeProperties[] = [
         name: "domain",
         type: "string",
         default: "",
-        placeholder: "microsoft.com",
+        placeholder: "e.g. microsoft.com",
         description: "Company domain name",
       },
     ],

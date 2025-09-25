@@ -120,11 +120,7 @@ export class Linkup implements INodeType {
             );
             break;
           case "mail api":
-            body = await MailApiOperations.buildRequestBody(
-              this,
-              i,
-              operation
-            );
+            body = await MailApiOperations.buildRequestBody(this, i, operation);
             break;
         }
 

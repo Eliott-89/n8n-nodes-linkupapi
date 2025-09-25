@@ -20,7 +20,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "job_id",
         type: "string",
         default: "",
-        placeholder: "job_id_here",
+        placeholder: "e.g. jobId123",
         description: "LinkedIn Recruiter job ID",
       },
       {
@@ -49,7 +49,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "start",
         type: "string",
         default: "",
-        placeholder: "Start date or cursor",
+        placeholder: "e.g. startCursor",
         description: "Start parameter for pagination",
       },
       {
@@ -57,7 +57,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "sortType",
         type: "string",
         default: "",
-        placeholder: "relevance, date, experience",
+        placeholder: "e.g. relevance",
         description: "Type of sorting to apply",
       },
       {
@@ -65,7 +65,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "sortOrder",
         type: "string",
         default: "",
-        placeholder: "asc, desc",
+        placeholder: "e.g. asc",
         description: "Sort order (ascending or descending)",
       },
       {
@@ -73,7 +73,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "ratings",
         type: "string",
         default: "",
-        placeholder: "4,5",
+        placeholder: "e.g. 4,5",
         description: "Filter by candidate ratings",
       },
       {
@@ -81,7 +81,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "location",
         type: "string",
         default: "",
-        placeholder: "San Francisco, CA",
+        placeholder: "e.g. sanFrancisco",
         description: "Filter by location",
       },
       {
@@ -89,10 +89,9 @@ export const recruiterProperties: INodeProperties[] = [
         name: "yearsOfExperience",
         type: "string",
         default: "",
-        placeholder: "2-5",
+        placeholder: "e.g. 2-5",
         description: "Filter by years of experience",
       },
-      
     ],
   },
   // RECRUITER - Parameters for publishJob and closeJob
@@ -114,10 +113,9 @@ export const recruiterProperties: INodeProperties[] = [
         name: "job_id",
         type: "string",
         default: "",
-        placeholder: "job_id_here",
+        placeholder: "e.g. jobId123",
         description: "LinkedIn Recruiter job ID",
       },
-      
     ],
   },
   {
@@ -138,10 +136,9 @@ export const recruiterProperties: INodeProperties[] = [
         name: "application_id",
         type: "string",
         default: "",
-        placeholder: "application_id_here",
+        placeholder: "e.g. applicationId123",
         description: "LinkedIn Recruiter application ID",
       },
-      
     ],
   },
   {
@@ -162,7 +159,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "company_url",
         type: "string",
         default: "",
-        placeholder: "https://www.linkedin.com/company/company-name",
+        placeholder: "e.g. https://www.linkedin.com/company/microsoftCorp",
         description: "Company LinkedIn URL",
       },
       {
@@ -170,7 +167,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "title",
         type: "string",
         default: "",
-        placeholder: "Software Engineer",
+        placeholder: "e.g. softwareEngineer",
         description: "Title of the job posting",
       },
       {
@@ -178,7 +175,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "place",
         type: "string",
         default: "",
-        placeholder: "San Francisco, CA",
+        placeholder: "e.g. sanFrancisco",
         description: "Job location",
       },
       {
@@ -186,7 +183,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "html_description",
         type: "string",
         default: "",
-        placeholder: "We are looking for a talented software engineer...",
+        placeholder: "e.g. We are looking for a talented software engineer...",
         description: "Detailed job description in HTML format",
       },
       {
@@ -194,7 +191,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "employment_status",
         type: "string",
         default: "",
-        placeholder: "full-time, part-time, contract",
+        placeholder: "e.g. fullTime",
         description: "Employment status",
       },
       {
@@ -202,7 +199,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "workplace",
         type: "string",
         default: "",
-        placeholder: "remote, on-site, hybrid",
+        placeholder: "e.g. remote",
         description: "Workplace type",
       },
       {
@@ -210,7 +207,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "skills",
         type: "string",
         default: "",
-        placeholder: '["JavaScript", "React", "Node.js"]',
+        placeholder: 'e.g. ["JavaScript", "React", "Node.js"]',
         description: "Required skills as JSON array",
       },
       {
@@ -218,7 +215,8 @@ export const recruiterProperties: INodeProperties[] = [
         name: "screening_questions",
         type: "string",
         default: "",
-        placeholder: '[{"question": "What is your experience with React?"}]',
+        placeholder:
+          'e.g. [{"question": "What is your experience with React?"}]',
         description: "Screening questions as JSON array",
       },
       {
@@ -226,7 +224,7 @@ export const recruiterProperties: INodeProperties[] = [
         name: "auto_rejection_template",
         type: "string",
         default: "",
-        placeholder: "Thank you for your application...",
+        placeholder: "e.g. Thank you for your application...",
         description: "Auto rejection email template",
       },
       {
@@ -234,10 +232,9 @@ export const recruiterProperties: INodeProperties[] = [
         name: "contact_email",
         type: "string",
         default: "",
-        placeholder: "hr@company.com",
+        placeholder: "e.g. nathan@example.com",
         description: "Contact email for applications",
       },
-      
     ],
   },
   {
@@ -289,7 +286,6 @@ export const recruiterProperties: INodeProperties[] = [
         default: 1,
         description: "Ending page number",
       },
-      
     ],
   },
 ];

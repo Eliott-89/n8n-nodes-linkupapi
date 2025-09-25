@@ -502,6 +502,6 @@ export const countryProperty: INodeProperties = {
   name: "country",
   type: "string",
   default: "FR",
-  placeholder: "FR, US, UK, DE, ES, IT, CA, AU, etc.",
+  placeholder: "e.g. FR",
   description: "Country code for proxy selection",
 };
