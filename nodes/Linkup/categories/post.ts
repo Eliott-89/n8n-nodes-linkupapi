@@ -195,27 +195,6 @@ export class PostOperations {
         if (repostParams.post_url) body.post_url = repostParams.post_url;
         break;
 
-      case "send post time spent":
-        const timeSpentParams = context.getNodeParameter(
-          "sendPostTimeSpentParams",
-          itemIndex,
-          {}
-        ) as any;
-
-        // Required parameters validation
-        if (!timeSpentParams.post_url) {
-          throw new Error("Post URL is required for this operation");
-        }
-        if (!timeSpentParams.duration) {
-          throw new Error("Duration is required for this operation");
-        }
-
-        if (timeSpentParams.post_url) body.post_url = timeSpentParams.post_url;
-        if (timeSpentParams.duration) body.duration = timeSpentParams.duration;
-        if (timeSpentParams.duration_start_time)
-          body.duration_start_time = timeSpentParams.duration_start_time;
-        // country from node params removed; credentials will inject it
-        break;
     }
 
     // Inject country from credentials (overrides any param)

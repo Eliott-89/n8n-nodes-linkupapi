@@ -179,44 +179,6 @@ export const postProperties: INodeProperties[] = [
       },
     ],
   },
-  // POST - Specific parameters for sendPostTimeSpent
-  {
-    displayName: "Send Post Time Spent Parameters",
-    name: "sendPostTimeSpentParams",
-    type: "collection",
-    placeholder: "Add post parameter",
-    default: {},
-    displayOptions: {
-      show: {
-        resource: ["post"],
-        operation: ["send post time spent"],
-      },
-    },
-    options: [
-      {
-        displayName: "Post URL *",
-        name: "post_url",
-        type: "string",
-        default: "",
-        placeholder: "e.g. https://www.linkedin.com/posts/activity-123456789",
-        description: "LinkedIn post URL",
-      },
-      {
-        displayName: "Duration *",
-        name: "duration",
-        type: "number",
-        default: 30,
-        description: "Duration in seconds",
-      },
-      {
-        displayName: "Duration Start Time",
-        name: "duration_start_time",
-        type: "number",
-        default: 0,
-        description: "Start time in seconds",
-      },
-    ],
-  },
 
   {
     displayName: "Answer Comment Parameters",

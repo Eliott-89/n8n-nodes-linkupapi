@@ -53,10 +53,6 @@ export const commonProperties: INodeProperties[] = [
         value: "recruiter",
       },
       {
-        name: "Signal API",
-        value: "signal",
-      },
-      {
         name: "Company API",
         value: "company api",
       },
@@ -293,11 +289,6 @@ export const commonProperties: INodeProperties[] = [
         value: "get linkedin feed",
         description: "Get your LinkedIn feed",
       },
-      {
-        name: "Send Post Time Spent",
-        value: "send post time spent",
-        description: "Send post time spent signal",
-      },
     ],
     default: "get post reactions",
   },
@@ -344,50 +335,6 @@ export const commonProperties: INodeProperties[] = [
       },
     ],
     default: "get candidates",
-  },
-  {
-    displayName: "Operation",
-    name: "operation",
-    type: "options",
-    noDataExpression: true,
-    displayOptions: {
-      show: {
-        resource: ["signal"],
-      },
-    },
-    options: [
-      {
-        name: "Extract Post Reactions",
-        value: "extract post reactions",
-        description: "Extract reactions from a post",
-      },
-      {
-        name: "Extract Post Comments",
-        value: "extract post comments",
-        description: "Extract comments from a post",
-      },
-      {
-        name: "Extract Profile Reactions",
-        value: "extract profile reactions",
-        description: "Extract reactions from a profile",
-      },
-      {
-        name: "Extract Profile Comments",
-        value: "extract profile comments",
-        description: "Extract comments from a profile",
-      },
-      {
-        name: "Extract Profile Posts",
-        value: "extract profile posts",
-        description: "Extract posts from a profile",
-      },
-      {
-        name: "Extract Company Posts",
-        value: "extract company posts",
-        description: "Extract posts from a company",
-      },
-    ],
-    default: "extract post reactions",
   },
   {
     displayName: "Operation",
@@ -471,7 +418,6 @@ export const paginationProperties: INodeProperties[] = [
           "message",
           "post",
           "recruiter",
-          "signal",
           "company api",
           "person api",
         ],

@@ -65,7 +65,6 @@ npm install n8n-nodes-linkupapi
 - Search Posts (`/posts/search`)
 - Create Post (`/posts/create`)
 - Get LinkedIn Feed (`/posts/feed`)
-- Send Post Time Spent (`/posts/time-spent`)
 
 ### Recruiter
 - Get Candidates (`/recruiter/candidates`)
@@ -74,14 +73,6 @@ npm install n8n-nodes-linkupapi
 - Publish Job (`/recruiter/publish-job`)
 - Close Job (`/recruiter/close-job`)
 - Create Job (`/recruiter/create-job`)
-
-### Signal API
-- Extract Post Reactions (`/data/signals/posts/reactions`)
-- Extract Post Comments (`/data/signals/posts/comments`)
-- Extract Profile Reactions (`/data/signals/profile/reactions`)
-- Extract Profile Comments (`/data/signals/profile/comments`)
-- Extract Profile Posts (`/data/signals/profile/posts`)
-- Extract Company Posts (`/data/signals/company/posts`)
 
 ### Company API
 - Search Companies (`/data/search/companies`)
@@ -97,7 +88,7 @@ npm install n8n-nodes-linkupapi
 ### Multi Requests
 - Custom Request (`/custom`)
 
-**Note:** The 3 sections ending with "API" (Signal API, Company API, Person API) work without a LinkedIn account, using only the Linkup API key.
+**Note:** The 2 sections ending with "API" (Company API, Person API) work without a LinkedIn account, using only the Linkup API key.
 
 ## Usage Examples
 
@@ -193,20 +184,6 @@ npm install n8n-nodes-linkupapi
 }
 ```
 
-### Data Extraction
-```javascript
-// Extract post reactions
-{
-  "resource": "signal",
-  "operation": "extract post reactions",
-  "extractPostReactionsParams": {
-    "post_url": "https://linkedin.com/posts/activity-123456789",
-    "total_results": 500
-  }
-}
-```
-
-
 
 ## Project Structure
 
@@ -264,7 +241,6 @@ This package covers **100% of the Linkup API endpoints**:
 - **Network**: 8/8 endpoints
 - **Messages**: 3/4 endpoints
 - **Recruitment**: 6/6 endpoints
-- **Signal**: 6/6 endpoints
 - **Data Search**: 7/7 endpoints
 
 ## Requirements

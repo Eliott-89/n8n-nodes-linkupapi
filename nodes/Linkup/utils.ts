@@ -116,7 +116,6 @@ export class LinkupUtils {
       "search posts": "/posts/search",
       "create post": "/posts/create",
       "get linkedin feed": "/posts/feed",
-      "send post time spent": "/posts/time-spent",
 
       // RECRUITER
       "get candidates": "/recruiter/candidates",
@@ -126,13 +125,6 @@ export class LinkupUtils {
       "close job": "/recruiter/close-job",
       "create job": "/recruiter/create-job",
 
-      // SIGNAL API (nouveaux)
-      "extract post reactions": "/data/signals/posts/reactions",
-      "extract post comments": "/data/signals/posts/comments",
-      "extract profile reactions": "/data/signals/profile/reactions",
-      "extract profile comments": "/data/signals/profile/comments",
-      "extract profile posts": "/data/signals/profile/posts",
-      "extract company posts": "/data/signals/company/posts",
 
       // COMPANY API (nouveaux)
       "search companies": "/data/search/companies",

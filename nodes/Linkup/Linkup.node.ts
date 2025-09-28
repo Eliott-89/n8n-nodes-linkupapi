@@ -15,7 +15,6 @@ import { NetworkOperations } from "./categories/network";
 import { MessageOperations } from "./categories/message";
 import { PostOperations } from "./categories/post";
 import { RecruiterOperations } from "./categories/recruiter";
-import { SignalOperations } from "./categories/signal";
 import { CompanyApiOperations } from "./categories/companyApi";
 import { PersonApiOperations } from "./categories/personApi";
 import { MultiRequestsOperations } from "./categories/multiRequests";
@@ -28,7 +27,7 @@ export class Linkup implements INodeType {
     icon: "file:linkup.svg",
     group: ["transform"],
     version: 1,
-    description: "Automate LinkedIn with Linkup",
+    description: "Connect your AI agent to LinkedIn and other B2B channels",
     defaults: {
       name: "LINKUP",
       color: "#0077b5",
@@ -95,9 +94,6 @@ export class Linkup implements INodeType {
               operation
             );
             break;
-          case "signal":
-            body = await SignalOperations.buildRequestBody(this, i, operation);
-            break;
           case "company api":
             body = await CompanyApiOperations.buildRequestBody(
               this,
@@ -135,12 +131,6 @@ export class Linkup implements INodeType {
           ![
             "login",
             "verify code",
-            "extract post reactions",
-            "extract post comments",
-            "extract profile reactions",
-            "extract profile comments",
-            "extract profile posts",
-            "extract company posts",
             "search companies",
             "get company info",
             "get company info by domain",

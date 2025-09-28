@@ -7,7 +7,6 @@ import { networkProperties } from "./network";
 import { messageProperties } from "./message";
 import { postProperties } from "./post";
 import { recruiterProperties } from "./recruiter";
-import { signalProperties } from "./signal";
 import { companyApiProperties } from "./companyApi";
 import { personApiProperties } from "./personApi";
 import { multiRequestsProperties } from "./multiRequests";
@@ -25,7 +24,6 @@ export const nodeProperties: INodeProperties[] = [
   ...messageProperties,
   ...postProperties,
   ...recruiterProperties,
-  ...signalProperties,
   ...companyApiProperties,
   ...personApiProperties,
   ...mailApiProperties,
