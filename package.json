@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-linkupapi",
-  "version": "4.0.52",
+  "version": "4.0.53",
   "description": "n8n node for LINKUP API - Complete LinkedIn automation with 100% API coverage and full documentation",
   "keywords": [
     "n8n-community-node-package",
@@ -12,7 +12,7 @@
     "api"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Eliott-89/n8n-nodes-linkupapi",
+  "homepage": "https://www.linkupapi.com",
   "author": {
     "name": "Eliott Cerpaud",
     "email": "eliott@example.com"
