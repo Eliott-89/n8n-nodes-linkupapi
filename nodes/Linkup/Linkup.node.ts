@@ -28,7 +28,6 @@ export class Linkup implements INodeType {
     icon: "file:linkup.svg",
     group: ["transform"],
     version: 1,
-    subtitle: 'Connect your AI agent to LinkedIn automation',
     description: "Connect your AI agent to LinkedIn and other B2B channels",
     defaults: {
       name: "LINKUP",

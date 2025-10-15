@@ -8,6 +8,24 @@ Official n8n integration for LinkupAPI - Give your AI agents access to LinkedIn,
 npm install n8n-nodes-linkupapi
 ```
 
+## Quick Start
+
+### 1. Get API Credentials
+
+Sign up at [linkupapi.com](https://www.linkupapi.com) and get your API key.
+
+### 2. Configure in n8n
+
+Add your LinkupAPI credentials in n8n:
+- **Credential Type**: LinkupAPI
+- **API Key**: Your API key from the dashboard
+
+### 3. Use in Workflows
+
+Drag and drop LinkupAPI nodes into your workflow and start automating.
+
+
+
 ## Features
 
 ### LinkedIn Automation
@@ -30,25 +48,6 @@ npm install n8n-nodes-linkupapi
 - **Company Search**: Filter companies by industry, size, funding, and location
 - **Hiring Signals**: Track companies actively recruiting
 - **Funding Data**: Monitor companies raising capital
-
-## Quick Start
-
-### 1. Get API Credentials
-
-Sign up at [linkupapi.com](https://www.linkupapi.com) and get your API key.
-
-### 2. Configure in n8n
-
-Add your LinkupAPI credentials in n8n:
-- **Credential Type**: LinkupAPI
-- **API Key**: Your API key from the dashboard
-
-### 3. Use in Workflows
-
-Drag and drop LinkupAPI nodes into your workflow and start automating.
-
-## Use Cases
-
 - **Sales Automation**: Prospect on LinkedIn, find emails, track hiring signals
 - **Recruitment**: Source candidates, monitor job postings, enrich profiles
 - **Lead Generation**: Search companies, enrich data, detect buying intent
@@ -84,6 +83,7 @@ Drag and drop LinkupAPI nodes into your workflow and start automating.
 ## License
 
 Proprietary - See [terms of use](https://www.linkupapi.com/legal/terms-of-use)
+
 
 ## Support
 

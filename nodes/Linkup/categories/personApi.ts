@@ -17,6 +17,11 @@ export class PersonApiOperations {
           {}
         ) as any;
 
+        // Required parameters validation
+        if (!searchProfilesParams.keyword) {
+          throw new Error("Keyword is required for this operation");
+        }
+
         if (searchProfilesParams.keyword)
           body.keyword = searchProfilesParams.keyword;
         if (searchProfilesParams.job_title)

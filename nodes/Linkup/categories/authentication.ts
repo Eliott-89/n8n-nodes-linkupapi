@@ -16,12 +16,12 @@ export class AuthenticationOperations {
           // Required parameter validation for login
           if (!creds.linkedinEmail) {
             throw new Error(
-              "❌ LinkedIn email required. Please configure your email in the credentials."
+              "LinkedIn email required. Please configure your email in the credentials."
             );
           }
           if (!creds.linkedinPassword) {
             throw new Error(
-              "❌ LinkedIn password required. Please configure your password in the credentials."
+              "LinkedIn password required. Please configure your password in the credentials."
             );
           }
 
@@ -31,10 +31,10 @@ export class AuthenticationOperations {
           const password = String(creds.linkedinPassword || "");
 
           if (!email || email.trim() === "") {
-            throw new Error("❌ LinkedIn email is empty or invalid.");
+            throw new Error("LinkedIn email is empty or invalid.");
           }
           if (!password || password.trim() === "") {
-            throw new Error("❌ LinkedIn password is empty or invalid.");
+            throw new Error("LinkedIn password is empty or invalid.");
           }
 
           // Exact format according to the provided curl
@@ -45,7 +45,7 @@ export class AuthenticationOperations {
           // Debug pour voir ce qui est construit
         } else {
           throw new Error(
-            "❌ LINKUP credentials not found. Please configure your credentials in the node parameters."
+            "LINKUP credentials not found. Please configure your credentials in the node parameters."
           );
         }
         break;

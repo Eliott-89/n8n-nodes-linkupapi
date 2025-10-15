@@ -16,12 +16,12 @@ export const personApiProperties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Keyword",
+        displayName: "Keyword *",
         name: "keyword",
         type: "string",
         default: "",
         placeholder: "e.g. Nathan Smith",
-        description: "Search keyword for profiles",
+        description: "Search keyword for profiles (required)",
       },
       {
         displayName: "Job Title",
