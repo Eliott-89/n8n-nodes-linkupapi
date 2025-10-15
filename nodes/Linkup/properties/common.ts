@@ -6,7 +6,9 @@ export const commonProperties: INodeProperties[] = [
   {
     displayName: `Welcome to <b>Linkup API</b> for LinkedIn automation! 🚀<br/><br/>
             If you don't have an account yet, <a href="https://linkupapi.com" target="_blank">visit this page</a> to create your account and get your API key.<br/><br/>
-            This powerful API allows you to automate all your LinkedIn activities including profile management, networking, messaging, and content creation.`,
+            This powerful API gives your AI agents access to LinkedIn, WhatsApp, and real-time web data through a single powerful API
+
+`,
     name: "notice",
     type: "notice" as any,
     default: "",
@@ -390,11 +392,6 @@ export const commonProperties: INodeProperties[] = [
         name: "Profile Enrichment",
         value: "profile enrichment",
         description: "Enrich profile information",
-      },
-      {
-        name: "Extract Company Employees",
-        value: "extract company employees",
-        description: "Extract employees from a company",
       },
     ],
     default: "search profiles",

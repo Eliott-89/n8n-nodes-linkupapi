@@ -74,27 +74,6 @@ export class PersonApiOperations {
         if (profileEnrichmentParams.company_name)
           body.company_name = profileEnrichmentParams.company_name;
         break;
-
-      case "extract company employees":
-        const extractCompanyEmployeesParams = context.getNodeParameter(
-          "extractCompanyEmployeesParams",
-          itemIndex,
-          {}
-        ) as any;
-
-        // Required parameters validation
-        if (!extractCompanyEmployeesParams.company_name) {
-          throw new Error("Company name is required for this operation");
-        }
-
-        if (extractCompanyEmployeesParams.company_name)
-          body.company_name = extractCompanyEmployeesParams.company_name;
-        if (extractCompanyEmployeesParams.total_results)
-          body.total_results = extractCompanyEmployeesParams.total_results;
-        if (extractCompanyEmployeesParams.decision_makers_only !== undefined)
-          body.decision_makers_only =
-            extractCompanyEmployeesParams.decision_makers_only;
-        break;
     }
 
     return body;

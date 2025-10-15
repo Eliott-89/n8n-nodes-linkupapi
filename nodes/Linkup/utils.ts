@@ -135,7 +135,6 @@ export class LinkupUtils {
       "search profiles": "/data/search/profiles",
       "extract profile info": "/data/profil/info",
       "profile enrichment": "/data/profil/enrich",
-      "extract company employees": "/data/employees/extract",
 
       // MULTI-REQUESTS
       "custom request": "/custom", // Generic endpoint for custom requests

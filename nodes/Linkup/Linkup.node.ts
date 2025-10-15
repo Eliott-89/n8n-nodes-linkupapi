@@ -3,6 +3,7 @@ import {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
+  NodeApiError,
 } from "n8n-workflow";
 
 // NODE_VERSION supprimé car plus utilisé
@@ -27,6 +28,7 @@ export class Linkup implements INodeType {
     icon: "file:linkup.svg",
     group: ["transform"],
     version: 1,
+    subtitle: 'Connect your AI agent to LinkedIn automation',
     description: "Connect your AI agent to LinkedIn and other B2B channels",
     defaults: {
       name: "LINKUP",
@@ -138,7 +140,6 @@ export class Linkup implements INodeType {
             "extract profile info",
 
             "profile enrichment",
-            "extract company employees",
           ].includes(operation)
         ) {
           body.login_token = creds.loginToken;
@@ -221,29 +222,35 @@ export class Linkup implements INodeType {
           pairedItem: { item: i },
         });
       } catch (error: any) {
-        // Renvoyer strictement le corps renvoyé par le serveur, sans transformation
-        let payload =
-          error?.response?.data !== undefined
-            ? error.response.data
-            : error?.response?.body !== undefined
-            ? error.response.body
-            : {};
+        if (this.continueOnFail()) {
+          // Si continueOnFail est activé, ajouter l'erreur aux résultats
+          let payload =
+            error?.response?.data !== undefined
+              ? error.response.data
+              : error?.response?.body !== undefined
+              ? error.response.body
+              : {};
 
-        // Normaliser {status:'error', data:'...'} -> {status:'error', message:'...'}
-        if (
-          payload &&
-          typeof payload === "object" &&
-          (payload as any).status === "error" &&
-          (payload as any).message === undefined &&
-          typeof (payload as any).data === "string"
-        ) {
-          payload = { status: "error", message: (payload as any).data } as any;
+          // Normaliser {status:'error', data:'...'} -> {status:'error', message:'...'}
+          if (
+            payload &&
+            typeof payload === "object" &&
+            (payload as any).status === "error" &&
+            (payload as any).message === undefined &&
+            typeof (payload as any).data === "string"
+          ) {
+            payload = { status: "error", message: (payload as any).data } as any;
+          }
+
+          returnData.push({
+            json: payload || { error: error.message },
+            pairedItem: { item: i },
+          });
+          continue;
         }
 
-        returnData.push({
-          json: payload || {},
-          pairedItem: { item: i },
-        });
+        // Utiliser NodeApiError pour les erreurs d'API
+        throw new NodeApiError(this.getNode(), error);
       }
     }
 
