@@ -47,7 +47,7 @@ Drag and drop LinkupAPI nodes into your workflow and start automating.
 - **Company Intelligence**: Get complete company data from any domain
 - **Company Search**: Filter companies by industry, size, funding, and location
 - **Hiring Signals**: Track companies actively recruiting
-- **Funding Data**: Monitor companies raising capital
+- **Funding Data**: Source companies raising capital
 - **Sales Automation**: Prospect on LinkedIn, find emails, track hiring signals
 - **Recruitment**: Source candidates, monitor job postings, enrich profiles
 - **Lead Generation**: Search companies, enrich data, detect buying intent
@@ -57,14 +57,14 @@ Drag and drop LinkupAPI nodes into your workflow and start automating.
 
 | Category | Endpoints | Description |
 |----------|-----------|-------------|
-| **LinkedIn** | Invitations, Messages, Comments | Automate LinkedIn outreach |
+| **LinkedIn** | Invitations, Messages, Comments and more | Automate LinkedIn outreach |
 | **WhatsApp** | Messages | Send WhatsApp messages |
 | **Email** | Finder, Verifier, Reverse | Email intelligence tools |
 | **Web Crawler** | People Search, Company Search, Job Postings, Funding | Real-time B2B intelligence |
 
 ## Documentation
 
-- **Full API Docs**: [linkupapi.com/ressources](https://docs.linkupapi.com/api-reference/introduction)
+- **Full API Docs**: [docs.linkupapi.com](https://docs.linkupapi.com/api-reference/introduction)
 - **Support**: support@linkupapi.com
 
 ## Compliance & Security
