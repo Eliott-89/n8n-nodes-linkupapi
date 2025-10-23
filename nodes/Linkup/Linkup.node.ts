@@ -25,7 +25,7 @@ export class Linkup implements INodeType {
   description: INodeTypeDescription = {
     displayName: "Linkup API for LinkedIn",
     name: "linkup",
-    icon: "file:linkup_api.svg",
+    icon: "file:linkup_api_optimized.svg",
     group: ["transform"],
     version: 1,
     description: "Connect your AI agent to LinkedIn and other B2B channels",
