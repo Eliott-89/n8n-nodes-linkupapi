@@ -170,9 +170,7 @@ export class Linkup implements INodeType {
             : "";
 
           // Construire les headers de base
-          const baseHeaders: any = {
-            "x-api-key": creds.apiKey,
-          };
+          const baseHeaders: any = {};
 
           // Ajouter Content-Type seulement pour les méthodes qui envoient un body
           const method = body.method || "POST";
@@ -180,13 +178,11 @@ export class Linkup implements INodeType {
             baseHeaders["Content-Type"] = "application/json";
           }
 
-          // Fusionner avec les headers personnalisés (ne pas écraser x-api-key)
+          // Fusionner avec les headers personnalisés
           const finalHeaders = { ...baseHeaders };
           if (body.headers) {
             Object.keys(body.headers).forEach((key) => {
-              if (key.toLowerCase() !== "x-api-key") {
-                finalHeaders[key] = body.headers[key];
-              }
+              finalHeaders[key] = body.headers[key];
             });
           }
 
@@ -209,13 +205,16 @@ export class Linkup implements INodeType {
           requestOptions = LinkupUtils.buildRequestOptions(
             endpoint,
             "POST",
-            creds.apiKey,
             body,
             timeout
           );
         }
 
-        const response = await this.helpers.httpRequest(requestOptions);
+        const response = await this.helpers.httpRequestWithAuthentication.call(
+          this,
+          "linkupApi",
+          requestOptions
+        );
         returnData.push({
           json: response || {},
           pairedItem: { item: i },

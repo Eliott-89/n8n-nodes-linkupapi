@@ -64,7 +64,6 @@ export class LinkupUtils {
   static buildRequestOptions(
     endpoint: string,
     method: "POST" | "GET",
-    apiKey: string,
     body: RequestBody,
     timeout: number
   ): any {
@@ -72,7 +71,6 @@ export class LinkupUtils {
       method,
       url: `${LINKUP_API_BASE_URL}${endpoint}`,
       headers: {
-        "x-api-key": apiKey,
         "Content-Type": "application/json",
       },
       body,
